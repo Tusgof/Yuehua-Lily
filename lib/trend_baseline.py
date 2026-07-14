@@ -124,7 +124,7 @@ def run_trial(
     return Trial(
         trial_id=trial_id,
         lookback=lookback,
-        benchmark_net=benchmark["net"],
+        benchmark_net=benchmark["returns_net"],
         **strategy,
     )
 
