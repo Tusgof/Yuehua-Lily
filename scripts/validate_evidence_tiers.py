@@ -41,7 +41,7 @@ POSITIVE_CLAIMS = {
     "ผ่าน",
     "มี edge",
 }
-RESEARCH_REPORT_FOLDERS = {"adversarial", "baselines", "diagnostics", "experiments", "feasibility"}
+RESEARCH_REPORT_FOLDERS = {"adversarial", "baselines", "data_quality", "diagnostics", "experiments", "feasibility"}
 
 
 def validate_evidence_tiers(
