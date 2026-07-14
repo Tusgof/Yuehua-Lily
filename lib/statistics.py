@@ -305,3 +305,36 @@ def independent_bet_equivalent_count(
     time_equivalents = effective_sample_length(sample_length, autocorrelations)
     cross_section_equivalents = effective_independent_bets_from_eigenvalues(cross_section_eigenvalues)
     return time_equivalents * cross_section_equivalents
+
+
+def symmetric_eigenvalues(matrix: Sequence[Sequence[float]], *, tolerance: float = 1e-12) -> list[float]:
+    """Return eigenvalues of a small real symmetric matrix via Jacobi rotations."""
+    size = len(matrix)
+    if size == 0 or any(len(row) != size for row in matrix):
+        raise ValueError("matrix must be non-empty and square")
+    work = [[float(value) for value in row] for row in matrix]
+    for row in range(size):
+        for column in range(size):
+            if abs(work[row][column] - work[column][row]) > tolerance:
+                raise ValueError("matrix must be symmetric")
+    for _ in range(max(1, 50 * size * size)):
+        p, q = max(
+            ((row, column) for row in range(size) for column in range(row + 1, size)),
+            key=lambda pair: abs(work[pair[0]][pair[1]]),
+            default=(0, 0),
+        )
+        if p == q or abs(work[p][q]) <= tolerance:
+            break
+        angle = 0.5 * math.atan2(2.0 * work[p][q], work[q][q] - work[p][p])
+        cosine, sine = math.cos(angle), math.sin(angle)
+        app, aqq, apq = work[p][p], work[q][q], work[p][q]
+        work[p][p] = cosine * cosine * app - 2.0 * sine * cosine * apq + sine * sine * aqq
+        work[q][q] = sine * sine * app + 2.0 * sine * cosine * apq + cosine * cosine * aqq
+        work[p][q] = work[q][p] = 0.0
+        for index in range(size):
+            if index in (p, q):
+                continue
+            aip, aiq = work[index][p], work[index][q]
+            work[index][p] = work[p][index] = cosine * aip - sine * aiq
+            work[index][q] = work[q][index] = sine * aip + cosine * aiq
+    return sorted((work[index][index] for index in range(size)), reverse=True)

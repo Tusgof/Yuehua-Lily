@@ -26,5 +26,80 @@
     "redownloadable_free_daily": ["container_sha256", "request_specification_sha256"],
     "derived": ["artifact_sha256", "parent_dataset_ids", "producing_git_commit"]
   },
-  "datasets": []
+  "datasets": [
+    {
+      "dataset_id": "l1.yahoo.daily.raw.v1",
+      "hypothesis_ids": ["L-1"],
+      "layer": "raw",
+      "status": "scope_restricted",
+      "storage_reference": "${LILY_DATA_ROOT}/raw/yahoo_l1_v1/request_manifest.json",
+      "provider": "Yahoo Finance chart API",
+      "provider_schema_version": "chart_v8_observed_2026-07-15",
+      "license": "Public endpoint; Yahoo terms apply; no redistribution right asserted",
+      "timezone": "America/New_York",
+      "coverage": {
+        "symbols": ["VTI", "VGK", "EWJ", "VWO", "IEF", "TIP", "GLD", "DBC"],
+        "start": "2006-02-03",
+        "end": "2015-12-31"
+      },
+      "point_in_time_status": "limited",
+      "survivorship_status": "limited",
+      "hash_policy": "redownloadable_free_daily",
+      "hashes": {
+        "container_sha256": "3fc9ed52d8b58ad311762b193f6325dda6004dd07ece42db89e5857a21a2e189",
+        "request_specification_sha256": "c38896cd9fd2eed5c655193f0c507b5eb041f1210780d09d9273ef791c1218ff"
+      },
+      "parent_dataset_ids": [],
+      "acquisition": {
+        "network_used": true,
+        "paid_amount_usd": 0,
+        "acquired_at": "2026-07-14T22:31:52Z",
+        "key_provenance_label": "public_no_key",
+        "request_specification": "Eight locked symbols; daily interval; dividend and split events; 2006-02-03 through exclusive 2016-01-01"
+      },
+      "limitations": [
+        "The endpoint is not a point-in-time revision archive.",
+        "The fixed surviving-proxy universe does not eliminate survivorship bias.",
+        "Provider close appears split-normalized rather than exchange-native raw close."
+      ]
+    },
+    {
+      "dataset_id": "l1.yahoo.daily.normalized.v1",
+      "hypothesis_ids": ["L-1"],
+      "layer": "normalized",
+      "status": "scope_restricted",
+      "storage_reference": "${LILY_DATA_ROOT}/normalized/l1_yahoo_daily_v1.json",
+      "provider": "Lily normalization of Yahoo Finance chart API",
+      "provider_schema_version": "lily_l1_daily_dataset_v1",
+      "license": "Derived locally from public endpoint; Yahoo terms apply; no redistribution right asserted",
+      "timezone": "America/New_York",
+      "coverage": {
+        "symbols": ["VTI", "VGK", "EWJ", "VWO", "IEF", "TIP", "GLD", "DBC"],
+        "start": "2006-02-03",
+        "end": "2015-12-31",
+        "maximum_return_date_allowed": "2015-12-31"
+      },
+      "point_in_time_status": "limited",
+      "survivorship_status": "limited",
+      "hash_policy": "hard_to_reproduce",
+      "hashes": {
+        "source_container_sha256": "3fc9ed52d8b58ad311762b193f6325dda6004dd07ece42db89e5857a21a2e189",
+        "normalized_output_sha256": "6608c0ef88f4b7edaef7523738d7a172215aa4f97c8c403adeba884d6582a4dd",
+        "specification_sha256": "c38896cd9fd2eed5c655193f0c507b5eb041f1210780d09d9273ef791c1218ff"
+      },
+      "parent_dataset_ids": ["l1.yahoo.daily.raw.v1"],
+      "acquisition": {
+        "network_used": true,
+        "paid_amount_usd": 0,
+        "acquired_at": "2026-07-14T22:31:52Z",
+        "key_provenance_label": "public_no_key",
+        "request_specification": "Normalize raw close, distributions, split metadata, availability timestamp, currency, and reconstructed total-return close; hard reject dates after 2015-12-31"
+      },
+      "limitations": [
+        "Cash distributions are reconstructed from provider events, while close is already split-normalized.",
+        "The dataset cannot prove what values a user would have received from the provider at historical decision time.",
+        "Implementable PnL claims remain blocked."
+      ]
+    }
+  ]
 }

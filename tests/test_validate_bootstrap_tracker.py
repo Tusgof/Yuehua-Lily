@@ -403,6 +403,22 @@ class BootstrapTrackerValidatorTests(unittest.TestCase):
         self.assertFalse(unverified)
         self.assertIn("B3.1:research_log_requirement_inventory_mismatch", blockers)
 
+    def test_B4_adversarial_status_does_not_fabricate_review_at_E1(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            review = root / "reports" / "adversarial" / "review.json"
+            summary = root / "reports" / "experiments" / "l_1_baseline_summary.json"
+            review.parent.mkdir(parents=True)
+            summary.parent.mkdir(parents=True)
+            review.write_text(json.dumps({"status": "not_started_E1_no_promotion", "promotion_requested": False, "reviewer_is_independent": False}), encoding="utf-8")
+            summary.write_text(json.dumps({"evidence_tier": "E1"}), encoding="utf-8")
+            blockers, checked, unverified = self.validator._validate_l1_adversarial_status(
+                review, "B4", "reports/adversarial/review.json", project_root=root
+            )
+        self.assertEqual([], blockers)
+        self.assertTrue(checked)
+        self.assertFalse(unverified)
+
 
 def _tracker_with_artifact(path: str, must: str) -> dict[str, object]:
     return {
