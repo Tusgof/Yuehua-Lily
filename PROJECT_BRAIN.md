@@ -8,7 +8,7 @@ The research program is the product. A dashboard, backtest, paper account, or br
 
 ## 2. Current Research Thesis
 
-Historical owner source: `Note/Hypothesis.md` (preserved verbatim).
+The owner-authored mechanism and predictions were promoted during refounding into `docs/DECISION_RECORD_001_PROJECT_REFOUNDING.md` and `experiments/hypothesis_registry.json`. Legacy `Note/` files were retired by Decision Record 002.
 
 The proposed mechanism is slow information diffusion followed by herding, which can create continuation rather than immediate reversal. The intended payoff is divergent: many small losses are accepted in exchange for occasional large trends. The mechanism depends on system architecture, especially trend duration, breadth, volatility-aware sizing, and cost control.
 
@@ -89,7 +89,7 @@ Seed order:
 4. L-3 — inverse-volatility sizing versus equal notional;
 5. L-4 — breadth versus single-market dependency.
 
-Only L-0 is active at founding. Later entries remain proposed until their dependencies and preregistrations pass.
+Current machine status is authoritative in `experiments/hypothesis_registry.json`: L-0 is scope-restricted after E0 sizing evidence, L-1 is active with a locked preregistration, and L-2 through L-4 remain proposed.
 
 The family review triggers after three consecutive adequately powered falsifications of distinct edge/mechanism hypotheses. L-0 and engineering failures do not count.
 
@@ -154,7 +154,8 @@ Past reports are reproduced by checking out their recorded commit hash. Do not c
 ## 9. Project Memory And Interfaces
 
 - Git-tracked machine-readable files own state.
-- `Note/` is the owner's thinking space and is not agent state.
+- `research_log/` contains numbered Thai explanations of completed experiments for human readers; `RESEARCH_LOG_FORMAT.md` and its audit define the contract.
+- Exact values and state remain in reports, registries, locked gates, trackers, and Git; prose logs cannot override them.
 - `Dashboard/` is optional visualization only. Its `localStorage` is non-authoritative and disposable.
 - Decision history belongs in `docs/DECISION_RECORD_*.md`, registry decision logs, reports, and git.
 - `PROJECT_BRAIN.md` remains concise and points to those stores.
@@ -162,19 +163,17 @@ Past reports are reproduced by checking out their recorded commit hash. Do not c
 ## 10. Current Verified State
 
 - **Verified date**: 2026-07-15
-- **Git state before refounding**: one commit, `7b25f85`
-- **Existing research code/tests/data/CI**: none
-- **Historical source preserved**: `Note/Hypothesis.md`
+- **Bootstrap**: B0 through B3.1 complete; B4 not started
+- **Legacy Note status**: retired and deleted by `docs/DECISION_RECORD_002_RESEARCH_LOG_CONTRACT.md` after its research content was promoted
+- **Human research logs**: contract active; L-0 is `research_log/001-lily-l0-sizing-feasibility.md`
 - **Dashboard**: retained under `Dashboard/`, demoted from product/state owner
 - **Founding decisions**: `docs/DECISION_RECORD_001_PROJECT_REFOUNDING.md`
-- **Registry**: seeded at L-0 through L-4; no empirical evidence yet
-- **Strategy/backtest work performed during refounding**: none
+- **Registry**: L-0 scope-restricted E0; L-1 active and locked; L-2 through L-4 proposed
+- **L-1 strategy/backtest execution**: none
 
 ## 11. Next Safe Action
 
-Execute bootstrap order B0 from `HANDOFF_FOR_CODEX_BOOTSTRAP.md` and `experiments/bootstrap_tracker.json` in one-session-one-scope increments.
-
-The first implementation session must make the tracker claims machine-checkable and establish the hermetic CI/environment contract. It must not acquire data, write a strategy, run a backtest, or contact a broker.
+Execute B4 only after the B3.1 human-readable research-log contract passes. B4 must begin with the locked falsification window and produce both machine reports and the required Thai L-1 research log.
 
 ## 12. Invariants
 
@@ -194,13 +193,15 @@ Always:
 - report gross and implementable net results separately;
 - report calendar observations, trade counts, and effective independent bets;
 - record provenance, commit hash, environment, evidence tier, blockers, and scope;
+- write the audited Thai research log required for every completed experiment;
 - finish modifying sessions by pushing and reporting `origin/main` hash.
 
 ## 13. Source Lineage
 
 ### Lily Sources Kept
 
-- `Note/Hypothesis.md`: economic rationale, asymmetric payoff, architecture prerequisites, and predictions.
+- `docs/DECISION_RECORD_001_PROJECT_REFOUNDING.md` and `experiments/hypothesis_registry.json`: promoted economic rationale, asymmetric payoff, architecture prerequisites, and predictions.
+- `docs/DECISION_RECORD_002_RESEARCH_LOG_CONTRACT.md`: retirement of legacy notes and adoption of audited Thai experiment narratives.
 - archived `Backup_/2026-07-15/IMPLEMENT_PLAN.md`: baseline, candidate, sizing, target-volatility, cost, and honest-unknown design inputs.
 
 ### Higanbana Sources Adapted

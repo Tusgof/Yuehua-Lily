@@ -1,0 +1,17 @@
+{
+  "schema_version": "lily_research_log_requirements_v1",
+  "entries": [
+    {
+      "experiment_id": "L0-SIZING-FEASIBILITY",
+      "summary_path": "reports/feasibility/l_0_sizing_feasibility.json",
+      "research_log_path": "research_log/001-lily-l0-sizing-feasibility.md",
+      "required_when_summary_exists": true
+    },
+    {
+      "experiment_id": "L1-BASELINE",
+      "summary_path": "reports/experiments/l_1_baseline_summary.json",
+      "research_log_path": "research_log/002-lily-l1-baseline.md",
+      "required_when_summary_exists": true
+    }
+  ]
+}

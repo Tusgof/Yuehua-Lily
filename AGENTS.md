@@ -91,7 +91,9 @@ Agent: Codex (GPT-5.6)
 ## 10. Project Memory
 
 - Versioned machine-readable files in the repo own project state.
-- `Note/` is the owner's Obsidian thinking space, not machine state. Preserve owner-authored notes unless explicitly asked to edit them.
+- `research_log/` contains the required Thai human-readable account of completed experiments. It explains machine artifacts but never overrides them.
+- Every completed experiment named in `config/research_log_requirements.json` must have a sequential audited research log using `RESEARCH_LOG_FORMAT.md`.
+- Research questions must be short, testable, explicitly scoped, and paired with a decision rule; vague topics are not research questions.
 - `Dashboard/` may render exported state but may not write authoritative decisions to browser `localStorage`.
 - Keep `PROJECT_BRAIN.md` concise: pointers, invariants, current state, and next safe action. History belongs in decision records, reports, and git.
 

@@ -2,7 +2,7 @@
 
 - **Machine source**: `experiments/hypothesis_registry.json`
 - **Founding date**: 2026-07-15
-- **Historical owner source**: `Note/Hypothesis.md`
+- **Promoted founding source**: `docs/DECISION_RECORD_001_PROJECT_REFOUNDING.md`
 - **Prior design source**: `Backup_/2026-07-15/IMPLEMENT_PLAN.md`
 
 ## Registry Rules
@@ -17,7 +17,7 @@
 
 ## L-0 — Capital And Broker Sizing Feasibility
 
-- **Status**: active
+- **Status**: scope-restricted after the locked E0 feasibility study; economic ETF sizing passes at 8–10 sleeves but no broker path is fully verified
 - **Statement**: At least one globally diversified US-listed fractional-ETF trend implementation can be sized honestly at USD 1,000 and USD 2,000 after broker constraints and costs, while the study can identify minimum viable capital for 4-, 8-, and 12-market micro-futures variants.
 - **Rationale**: A statistical edge is operationally irrelevant if contract/share granularity, margin, cash buffers, or costs prevent risk-targeted breadth.
 - **Predictions**:
@@ -31,7 +31,7 @@
 
 ## L-1 — Baseline Continuation
 
-- **Status**: proposed; depends on L-0 and the data layer
+- **Status**: active; B3 preregistration is locked, with no L-1 market evidence yet
 - **Statement**: A 60-day directional-count baseline has positive convex payoff after implementable costs on the selected global research universe.
 - **Rationale**: Slow information diffusion and herding can sustain price continuation; trend systems accept frequent small losses to retain infrequent large winners.
 - **Predictions**:
@@ -80,7 +80,7 @@
 
 ## Seed Status
 
-No seed has empirical evidence at founding. L-0 is active because feasibility is tested first. L-1 through L-4 are proposed and may not be promoted by prose edits alone.
+L-0 now has E0 sizing evidence and remains scope-restricted. L-1 is active because B3 locked its protocol, but it has no market-result evidence. L-2 through L-4 remain proposed and may not be promoted by prose edits alone.
 
 ## Source Adaptation
 

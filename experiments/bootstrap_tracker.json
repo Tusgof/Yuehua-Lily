@@ -158,14 +158,39 @@
       ]
     },
     {
+      "id": "B3.1",
+      "title": "Human-readable Thai research-log contract",
+      "status": "done",
+      "depends_on": ["B3"],
+      "required_artifacts": [
+        {"path": "RESEARCH_LOG_FORMAT.md", "must": "define_human_readable_research_log_contract"},
+        {"path": "config/research_log_requirements.json", "must": "contain_l0_and_l1_research_log_requirements"},
+        {"path": "research_log/001-lily-l0-sizing-feasibility.md", "must": "pass_research_log_audit"},
+        {"path": "scripts/audit_research_logs.py", "must": "pass"},
+        {"path": "tests/test_audit_research_logs.py", "must": "pass_in_hermetic_tier"},
+        {"path": "docs/DECISION_RECORD_002_RESEARCH_LOG_CONTRACT.md", "must": "exist"},
+        {"path": "Note", "must": "not_exist"}
+      ],
+      "forbidden": ["strategy execution", "return backtest", "locked-gate edit", "machine-only experiment completion"],
+      "evidence": [
+        "RESEARCH_LOG_FORMAT.md adopts the owner's six-part scientific narrative, requires plain Thai, and makes short scoped questions, hypotheses, and decision criteria mandatory.",
+        "research_log/001-lily-l0-sizing-feasibility.md translates the existing E0 L-0 result into a human-readable research account without adding an edge or deployment claim.",
+        "scripts/audit_research_logs.py and hermetic tests enforce naming, contiguous numbering, heading order, required question/scope fields, Thai narrative, summary-to-log coverage, and mojibake rejection.",
+        "Decision Record 002 retires the legacy Note files after their promoted content was verified in the registry and founding record; active control-document references now point to promoted sources.",
+        "B4 now depends on B3.1 and cannot be marked done without the audited Thai L-1 research log as well as its machine reports."
+      ]
+    },
+    {
       "id": "B4",
       "title": "L-1 bounded baseline execution",
       "status": "not_started",
-      "depends_on": ["B3"],
+      "depends_on": ["B3.1"],
       "required_artifacts": [
         {"path": "reports/experiments/l_1_baseline_summary.json", "must": "pass_summary_validator"},
         {"path": "reports/experiments/l_1_baseline_summary.md", "must": "match_machine_report"},
-        {"path": "reports/adversarial/l_1_baseline_review.json", "must": "exist_before_E2"}
+        {"path": "reports/adversarial/l_1_baseline_review.json", "must": "exist_before_E2"},
+        {"path": "research_log/002-lily-l1-baseline.md", "must": "pass_research_log_audit"},
+        {"path": "scripts/audit_research_logs.py", "must": "pass"}
       ],
       "forbidden": ["E2 claim without adversarial review", "paper trading approval", "real-money approval"],
       "evidence": []

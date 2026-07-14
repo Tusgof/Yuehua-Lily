@@ -129,6 +129,8 @@ No real backtest may run in the same session that first writes or revises this p
 
 Only after B3's hashes and validators pass may a separate session run the bounded baseline. Report E1 unless every E2 criterion, including adversarial review, passes.
 
+The completed run must also write the audited Thai narrative `research_log/002-lily-l1-baseline.md`. It must state the scoped question, hypothesis, method, results, discussion and limitations, conclusion, and next research direction in language that can be understood without opening JSON first.
+
 ## 6. Acceptance Gate
 
 E2 requires all of the following:
@@ -179,15 +181,15 @@ If MinTRL validation cost is unaffordable or undefined against the benchmark nul
 |:--|:--|:--|
 | Founding decisions | Complete | pushed founding pack |
 | P0–P4 | Not started | B0 bootstrap |
-| L-0 | Active, untested | B1 then B2 |
-| L-1 | Proposed | L-0 decision and B3 |
+| L-0 | Scope-restricted E0 feasibility complete | Broker capability remains unverified |
+| L-1 | Active; preregistration locked | B4 falsification window |
 | L-2 | Proposed | L-1 evidence |
 | L-3 | Proposed | baseline infrastructure and preregistration |
 | L-4 | Proposed | universe/data integrity and preregistration |
 
 ## 11. Source Lineage
 
-- Lily `Note/Hypothesis.md`: L-1 through L-4 rationale and predictions.
+- Lily `docs/DECISION_RECORD_001_PROJECT_REFOUNDING.md` and `experiments/hypothesis_registry.json`: promoted L-1 through L-4 rationale and predictions.
 - Archived Lily `Backup_/2026-07-15/IMPLEMENT_PLAN.md`: baseline/candidate/sizing/cost inputs.
 - Higanbana `docs/FABLE5_UPGRADE_PROPOSAL.md`: registry, tiers, dual MinTRL, data decisions, tracks, and acceptance gate.
 - Higanbana `docs/HIGANBANA_TECHNICAL_DUE_DILIGENCE.md`: B0/P1/P2/P4 requirements.

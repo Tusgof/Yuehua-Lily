@@ -13,7 +13,7 @@ Implement Lily's foundation in bounded orders without writing strategy code or r
 5. `experiments/hypothesis_registry.json`
 6. `IMPLEMENT_PLAN.md`
 7. `experiments/bootstrap_tracker.json`
-8. `Note/Hypothesis.md` — preserve verbatim
+8. `docs/DECISION_RECORD_002_RESEARCH_LOG_CONTRACT.md` — owner supersession that retires legacy `Note/` files and requires audited Thai research logs
 
 Methodology source priority is the local LLM Wiki. Use wiki-relative citations with SHA-256 values in preregistrations.
 
@@ -171,6 +171,8 @@ Run only the locked bounded baseline. Reports must include:
 - survivorship/roll/currency limitations;
 - exact next safe action.
 
+The completed run must also create `research_log/002-lily-l1-baseline.md` in plain Thai using the six sections in `RESEARCH_LOG_FORMAT.md`. Machine reports alone do not complete B4.
+
 Default to E1. Promotion to E2 requires a separate adversarial review and no unresolved critical blocker.
 
 ## Hard Stops
@@ -193,6 +195,6 @@ This order adapts:
 - Higanbana `docs/FABLE5_UPGRADE_PROPOSAL.md` for registry/tier/data/acceptance rules;
 - Higanbana `docs/HIGANBANA_TECHNICAL_DUE_DILIGENCE.md` for self-verification, `lib/`, golden statistics, locked gates, and restore requirements;
 - Higanbana `experiments/dd_remediation_tracker.json` for required-artifact completion;
-- Lily `Note/Hypothesis.md` and archived `IMPLEMENT_PLAN.md` for domain content.
+- Lily `docs/DECISION_RECORD_001_PROJECT_REFOUNDING.md`, `experiments/hypothesis_registry.json`, and archived `IMPLEMENT_PLAN.md` for promoted domain content.
 
 It intentionally excludes Higanbana's 0DTE logic, state, credentials, providers, cost guard, and legacy code patterns.

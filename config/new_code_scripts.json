@@ -6,6 +6,7 @@
     "scripts/validate_bootstrap_tracker.py"
   ],
   "scripts": [
+    "scripts/audit_research_logs.py",
     "scripts/audit_new_script_lib_usage.py",
     "scripts/validate_data_layer.py",
     "scripts/validate_evidence_tiers.py",

@@ -257,6 +257,22 @@ def _validate_done_artifact(
         )
     if must == "contain_active_l_1_hashes":
         return _validate_l1_manifest(target, order_id, artifact_path, project_root=project_root)
+    if must == "define_human_readable_research_log_contract":
+        return _validate_research_log_format(target, order_id, artifact_path)
+    if must == "contain_l0_and_l1_research_log_requirements":
+        return _validate_research_log_requirements(target, order_id, artifact_path)
+    if must == "pass_research_log_audit":
+        return _validate_research_log(
+            target,
+            order_id,
+            artifact_path,
+            project_root=project_root,
+            verify_runtime=verify_runtime,
+            runtime_cache=runtime_cache,
+        )
+    if must == "not_exist":
+        absent = not target.exists()
+        return ([] if absent else [f"{order_id}:forbidden_legacy_artifact_present:{artifact_path}"], absent, False)
     if must == "classify_current_and_minimum_capital":
         return _validate_l0_machine_report(target, order_id, artifact_path)
     if must == "match_machine_report":
@@ -381,6 +397,120 @@ def _validate_l1_manifest(
         if any(other.get("supersedes_gate_id") == "l_1_baseline_v1" for other in rows):
             blockers.append(f"{order_id}:l1_gate_is_not_active")
     return blockers, not blockers, False
+
+
+def _validate_research_log_format(
+    target: Path,
+    order_id: str,
+    artifact_path: str,
+) -> tuple[list[str], bool, bool]:
+    if not target.is_file():
+        return [f"{order_id}:missing_artifact:{artifact_path}"], False, False
+    text = target.read_text(encoding="utf-8")
+    required = (
+        "## 1. ข้อมูลพื้นฐาน",
+        "## 2. ปัญหา (คำถาม) และสมมติฐาน",
+        "## 3. ขั้นตอนการทดลอง",
+        "## 4. ผลลัพธ์",
+        "## 5. อภิปรายผล ปัญหา และข้อจำกัด",
+        "## 6. สรุปผลการทดลองและแนวทางพัฒนาต่อ",
+        "- คำถามวิจัย:",
+        "- ขอบเขต:",
+        "- สมมติฐาน:",
+        "- เกณฑ์ตัดสิน:",
+        "ไม่เกิน 240 ตัวอักษร",
+        "mojibake",
+        "config/research_log_requirements.json",
+    )
+    missing = [item for item in required if item not in text]
+    blockers = [f"{order_id}:research_log_format_missing:{item}" for item in missing]
+    return blockers, not blockers, False
+
+
+def _validate_research_log_requirements(
+    target: Path,
+    order_id: str,
+    artifact_path: str,
+) -> tuple[list[str], bool, bool]:
+    if not target.is_file():
+        return [f"{order_id}:missing_artifact:{artifact_path}"], False, False
+    try:
+        payload = json.loads(target.read_text(encoding="utf-8"))
+    except json.JSONDecodeError:
+        return [f"{order_id}:research_log_requirements_invalid_json"], False, False
+    blockers: list[str] = []
+    if payload.get("schema_version") != "lily_research_log_requirements_v1":
+        blockers.append(f"{order_id}:research_log_requirements_schema_mismatch")
+    expected = {
+        (
+            "L0-SIZING-FEASIBILITY",
+            "reports/feasibility/l_0_sizing_feasibility.json",
+            "research_log/001-lily-l0-sizing-feasibility.md",
+            True,
+        ),
+        (
+            "L1-BASELINE",
+            "reports/experiments/l_1_baseline_summary.json",
+            "research_log/002-lily-l1-baseline.md",
+            True,
+        ),
+    }
+    entries = payload.get("entries", [])
+    actual = {
+        (
+            row.get("experiment_id"),
+            row.get("summary_path"),
+            row.get("research_log_path"),
+            row.get("required_when_summary_exists"),
+        )
+        for row in entries
+        if isinstance(row, dict)
+    }
+    if actual != expected:
+        blockers.append(f"{order_id}:research_log_requirement_inventory_mismatch")
+    return blockers, not blockers, False
+
+
+def _validate_research_log(
+    target: Path,
+    order_id: str,
+    artifact_path: str,
+    *,
+    project_root: Path,
+    verify_runtime: bool,
+    runtime_cache: dict[str, bool],
+) -> tuple[list[str], bool, bool]:
+    if not target.is_file():
+        return [f"{order_id}:missing_artifact:{artifact_path}"], False, False
+    text = target.read_text(encoding="utf-8")
+    static_required = (
+        "# บันทึกการวิจัย ",
+        "## 2. ปัญหา (คำถาม) และสมมติฐาน",
+        "- คำถามวิจัย:",
+        "- ขอบเขต:",
+        "- เกณฑ์ตัดสิน:",
+        "สิ่งที่ห้ามสรุปจากการทดลองนี้:",
+    )
+    blockers = [
+        f"{order_id}:research_log_missing:{item}"
+        for item in static_required
+        if item not in text
+    ]
+    if blockers:
+        return blockers, False, False
+    if not verify_runtime:
+        return [], False, True
+    if "research_logs" not in runtime_cache:
+        completed = subprocess.run(
+            [sys.executable, "scripts/audit_research_logs.py"],
+            cwd=project_root,
+            text=True,
+            capture_output=True,
+            check=False,
+        )
+        runtime_cache["research_logs"] = completed.returncode == 0
+    passed = runtime_cache["research_logs"]
+    return ([] if passed else [f"{order_id}:research_log_audit_failed"]), passed, False
 
 
 def _validate_l0_machine_report(

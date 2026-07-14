@@ -349,6 +349,60 @@ class BootstrapTrackerValidatorTests(unittest.TestCase):
         self.assertTrue(manifest_checked)
         self.assertFalse(manifest_unverified)
 
+    def test_B31_format_requires_scoped_question_contract(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            (root / "format.md").write_text("## 1. ข้อมูลพื้นฐาน\n", encoding="utf-8")
+            blockers, checked, unverified = self.validator._validate_done_artifact(
+                "B3.1",
+                "format.md",
+                "define_human_readable_research_log_contract",
+                project_root=root,
+                verify_runtime=False,
+                runtime_cache={},
+            )
+        self.assertFalse(checked)
+        self.assertFalse(unverified)
+        self.assertIn(
+            "B3.1:research_log_format_missing:- คำถามวิจัย:",
+            blockers,
+        )
+
+    def test_B31_legacy_note_must_be_absent(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            (root / "Note").mkdir()
+            blockers, checked, unverified = self.validator._validate_done_artifact(
+                "B3.1",
+                "Note",
+                "not_exist",
+                project_root=root,
+                verify_runtime=False,
+                runtime_cache={},
+            )
+        self.assertFalse(checked)
+        self.assertFalse(unverified)
+        self.assertEqual(["B3.1:forbidden_legacy_artifact_present:Note"], blockers)
+
+    def test_B31_requirements_must_cover_L0_and_L1(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            (root / "requirements.json").write_text(
+                json.dumps({"schema_version": "lily_research_log_requirements_v1", "entries": []}),
+                encoding="utf-8",
+            )
+            blockers, checked, unverified = self.validator._validate_done_artifact(
+                "B3.1",
+                "requirements.json",
+                "contain_l0_and_l1_research_log_requirements",
+                project_root=root,
+                verify_runtime=False,
+                runtime_cache={},
+            )
+        self.assertFalse(checked)
+        self.assertFalse(unverified)
+        self.assertIn("B3.1:research_log_requirement_inventory_mismatch", blockers)
+
 
 def _tracker_with_artifact(path: str, must: str) -> dict[str, object]:
     return {
