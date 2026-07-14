@@ -65,7 +65,7 @@ class Trial:
     covariance_clipped_mass: float
 
 
-def load_market(payload: dict[str, Any]) -> dict[str, Any]:
+def load_market(payload: dict[str, Any], *, cash_returns: dict[str, float] | None = None) -> dict[str, Any]:
     if payload.get("cutoff_inclusive") != "2015-12-31":
         raise ValueError("dataset cutoff does not match the locked falsification boundary")
     by_symbol = {item["symbol"]: item for item in payload.get("symbols", [])}
@@ -108,7 +108,16 @@ def load_market(payload: dict[str, Any]) -> dict[str, Any]:
                 [second[i][j] - means[i] * means[j] for j in range(len(ASSETS))]
                 for i in range(len(ASSETS))
             ]
-    return {"dates": dates, "returns": returns, "availability": availability, "risk_covariance": risk_covariance}
+    selected_cash = cash_returns or {}
+    if any(session > "2015-12-31" for session in selected_cash):
+        raise ValueError("cash data must not cross the locked cutoff")
+    return {
+        "dates": dates,
+        "returns": returns,
+        "availability": availability,
+        "risk_covariance": risk_covariance,
+        "cash_returns": {session: float(selected_cash.get(session, 0.0)) for session in dates},
+    }
 
 
 def run_trial(
@@ -173,7 +182,9 @@ def _run_branch(
     for index in range(1, end + 1):
         session = dates[index]
         asset_returns = {symbol: returns[symbol][session] for symbol in ASSETS}
-        gross_return = sum(weights[symbol] * asset_returns[symbol] for symbol in ASSETS)
+        cash_weight = max(0.0, 1.0 - sum(abs(weights[symbol]) for symbol in ASSETS))
+        cash_contribution = cash_weight * market["cash_returns"].get(session, 0.0)
+        gross_return = sum(weights[symbol] * asset_returns[symbol] for symbol in ASSETS) + cash_contribution
         expense = sum(abs(weights[symbol]) * CURRENT_EXPENSE_RATIOS[symbol] / ANNUALIZATION for symbol in ASSETS)
         borrow = sum(max(-weights[symbol], 0.0) * cost_model.borrow_annual / ANNUALIZATION for symbol in ASSETS)
         net_return = gross_return - expense - borrow
@@ -186,6 +197,7 @@ def _run_branch(
         if index >= start:
             costs["expense_ratio"] += expense
             costs["short_borrow"] += borrow
+            costs["cash_yield"] += cash_contribution
 
         denominator = 1.0 + gross_return
         drifted = {
