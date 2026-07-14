@@ -1,0 +1,74 @@
+{
+  "schema_version": "lily_l1_data_quality_remediation_v1",
+  "order_id": "B4.1",
+  "hypothesis_id": "L-1",
+  "created_at": "2026-07-15T00:00:00Z",
+  "status": "locked_before_remediation_measurement",
+  "evidence_ceiling": "E1",
+  "edge_claim": "none",
+  "owner_authorization": "User requested completion of the four named B4 data-quality remediations on 2026-07-15.",
+  "purpose": "Resolve or decision-bound the corporate-action, historical-fee, cash-series, and Webull Thailand capability gaps without opening L-1 validation data or changing the primary signal.",
+  "data_boundary": {
+    "maximum_market_or_cash_date_inclusive": "2015-12-31",
+    "untouched_validation_start": "2016-01-04",
+    "untouched_validation_end": "2026-06-30",
+    "validation_status_required": "sealed_not_accessed"
+  },
+  "workstreams": {
+    "corporate_actions": {
+      "source": "Existing hashed Yahoo chart containers for VTI, VGK, EWJ, VWO, IEF, TIP, GLD, and DBC.",
+      "method": "Reconstruct total-return growth from provider close plus dividend events and compare it with the independently supplied adjusted-close field; inspect every split event for continuity.",
+      "pass_rule": "All eight symbols have complete event fields, maximum absolute cumulative relative divergence is at most 0.002, maximum daily return divergence is at most 0.0005, and no record crosses 2015-12-31.",
+      "claim_limit": "A pass verifies within-container arithmetic only. It does not create a point-in-time revision archive or independent exchange-native raw-close provenance."
+    },
+    "historical_expense_ratios": {
+      "sources_in_priority_order": [
+        "SEC EDGAR filing full-text search and filing archives",
+        "Official fund sponsor prospectus or fee disclosures"
+      ],
+      "method": "Acquire dated official fee disclosures for each of the eight instruments and record effective or filing dates, stated annual expense or sponsor fee, source URL, and content hash.",
+      "full_resolution_rule": "Every falsification session is covered by an official then-current fee observation or a legally fixed contractual fee with no uncovered interval longer than 18 months.",
+      "decision_bound_rule": "If full history is unavailable, report the uncovered intervals and compare the original booked expense drag with the gross-to-net gap. The fee gap is decision-bounded only when removing 100% of booked ETF expenses cannot make the primary net geometric return positive.",
+      "selection_rule": "Historical fee evidence may not be selected to improve the L-1 result; no revised expense path becomes claim-eligible without a superseding experiment gate."
+    },
+    "cash_series": {
+      "source_url_template": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/daily-treasury-rates.csv/{year}/all?type=daily_treasury_bill_rates&field_tdr_date_value={year}&page&_format=csv",
+      "field": "13 WEEKS COUPON EQUIVALENT",
+      "source_years": [2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015],
+      "availability_rule": "A published yield may affect cash only from the next NYSE session; missing publication days carry the last known yield, not a price.",
+      "return_formula": "cash_return[t] = (1 + lagged_coupon_equivalent_yield / 100) ** (calendar_days_since_prior_session / 365) - 1",
+      "coverage_rule": "Every opened falsification session must have a prior published yield after the initial warmup; no value after 2015-12-31 may be read.",
+      "rerun_rule": "Run the same five locked L-1 trials once with the cash series as the only economic-model change. primary_60 remains the result; sensitivities remain non-claim-eligible; append all trials to the complete search log.",
+      "comparison_rule": "Report original-zero-cash versus remediated-cash metrics and never replace or rewrite the original B4 report."
+    },
+    "webull_thailand": {
+      "official_sources": [
+        "https://www.webull.co.th/help/faq/355-ฉันสามารถซื้อขายแบบเศษหุ้นได้หรือไม่",
+        "https://www.webull.co.th/open-api",
+        "https://developer.webull.co.th/apis/docs/trade-api/stock",
+        "https://developer.webull.co.th/apis/docs/trade-api/overview",
+        "https://www.webull.co.th/pricing"
+      ],
+      "manual_capability_rule": "Public documentation may verify general Thailand mobile fractional capability, order type, session, and precision, but not per-symbol green-diamond eligibility.",
+      "openapi_capability_rule": "Fractional OpenAPI is verified only if Thailand documentation explicitly supports notional orders or fractional quantity. General US stock/ETF and QTY order documentation is insufficient.",
+      "ticker_eligibility_rule": "Each current-capital candidate requires a dated account/app observation of the green-diamond indicator. No login, account query, token, credential, preview, paper order, or real order is authorized in B4.1.",
+      "outcome_rule": "Classify each item as verified_public, requires_account_observation, or not_documented; do not substitute global Webull capability for Thailand capability."
+    }
+  },
+  "required_outputs": [
+    "reports/data_quality/l_1_data_quality_remediation.json",
+    "reports/data_quality/l_1_data_quality_remediation.md",
+    "reports/data_quality/l_1_cash_remediation.json",
+    "reports/feasibility/webull_th_capability.json",
+    "research_log/003-lily-l1-data-quality-remediation.md",
+    "dataset registry entries and complete source hashes",
+    "exact next safe action"
+  ],
+  "hard_stops": [
+    "Any market or cash observation after 2015-12-31 would be read.",
+    "A source requires credentials, account identifiers, order preview, paper order, or real order.",
+    "A paid source or external message is required without separate owner authorization.",
+    "The locked L-1 primary signal, universe, costs other than cash yield, or decision rules would change.",
+    "A result would be promoted above E1 or described as edge evidence."
+  ]
+}

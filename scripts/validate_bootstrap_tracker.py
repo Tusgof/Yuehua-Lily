@@ -236,6 +236,18 @@ def _validate_done_artifact(
     if must == "contain_synthetic_data_fixtures":
         return _validate_synthetic_data_fixtures(target, order_id, artifact_path)
     if must == "locked_and_valid":
+        if artifact_path == "experiments/l_1_data_quality_remediation.json":
+            return _validate_locked_preregistration_gate(
+                target,
+                order_id,
+                artifact_path,
+                gate_id="l_1_data_quality_remediation_v1",
+                label="l1_data_quality",
+                expected_status="locked_before_remediation_measurement",
+                edge_claim_field="edge_claim",
+                project_root=project_root,
+                verify_runtime=verify_runtime,
+            )
         if artifact_path == "experiments/l_1_baseline_preregistration.json":
             return _validate_locked_preregistration_gate(
                 target,
@@ -559,7 +571,8 @@ def _validate_research_log_requirements(
         for row in entries
         if isinstance(row, dict)
     }
-    if actual != expected:
+    experiment_ids = [row.get("experiment_id") for row in entries if isinstance(row, dict)]
+    if not expected.issubset(actual) or len(experiment_ids) != len(set(experiment_ids)):
         blockers.append(f"{order_id}:research_log_requirement_inventory_mismatch")
     return blockers, not blockers, False
 

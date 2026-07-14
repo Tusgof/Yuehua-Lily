@@ -12,6 +12,12 @@
       "summary_path": "reports/experiments/l_1_baseline_summary.json",
       "research_log_path": "research_log/002-lily-l1-baseline.md",
       "required_when_summary_exists": true
+    },
+    {
+      "experiment_id": "L1-DATA-QUALITY-REMEDIATION",
+      "summary_path": "reports/data_quality/l_1_data_quality_remediation.json",
+      "research_log_path": "research_log/003-lily-l1-data-quality-remediation.md",
+      "required_when_summary_exists": true
     }
   ]
 }

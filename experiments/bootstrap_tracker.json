@@ -200,6 +200,21 @@
         "research_log/002-lily-l1-baseline.md passes the Thai six-section audit and explains gross-versus-net performance, cost drag, payoff failure, concentration, limitations, prohibited conclusions, and the next safe action.",
         "reports/adversarial/l_1_baseline_review.json honestly records not_started_E1_no_promotion; no independent review, E2 promotion, paper trade, broker action, credential, paid data, or real-money approval occurred."
       ]
+    },
+    {
+      "id": "B4.1",
+      "title": "L-1 data-quality remediation",
+      "status": "in_progress",
+      "depends_on": ["B4"],
+      "required_artifacts": [
+        {"path": "experiments/l_1_data_quality_remediation.json", "must": "locked_and_valid"},
+        {"path": "reports/data_quality/l_1_data_quality_remediation.json", "must": "pass_data_quality_remediation_validator"},
+        {"path": "reports/data_quality/l_1_data_quality_remediation.md", "must": "match_data_quality_machine_report"},
+        {"path": "reports/feasibility/webull_th_capability.json", "must": "exist"},
+        {"path": "research_log/003-lily-l1-data-quality-remediation.md", "must": "pass_research_log_audit"}
+      ],
+      "forbidden": ["validation data access", "credential or account access", "unregistered search", "E2 or edge claim", "paper or real order"],
+      "evidence": []
     }
   ]
 }
