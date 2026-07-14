@@ -96,6 +96,24 @@ class BootstrapTrackerValidatorTests(unittest.TestCase):
             blockers = self.validator._scan_active_artifacts(root)
         self.assertEqual([], blockers)
 
+    def test_b02_lib_claim_requires_every_shared_module(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            lib_dir = root / "lib"
+            lib_dir.mkdir()
+            (lib_dir / "environment.py").write_text("", encoding="utf-8")
+            blockers, checked, unverified = self.validator._validate_done_artifact(
+                "B0.2",
+                "lib",
+                "contain_environment_io_timestamp_provenance_guardrail_report_search_modules",
+                project_root=root,
+                verify_runtime=False,
+                runtime_cache={},
+            )
+        self.assertFalse(checked)
+        self.assertFalse(unverified)
+        self.assertIn("B0.2:lib_module_missing:io.py", blockers)
+
 
 def _tracker_with_artifact(path: str, must: str) -> dict[str, object]:
     return {

@@ -202,6 +202,10 @@ def _validate_done_artifact(
         return _validate_pyproject(target, project_root, order_id, artifact_path)
     if must == "contain_placeholders_only":
         return _validate_machine_example(target, order_id, artifact_path)
+    if must == "contain_environment_io_timestamp_provenance_guardrail_report_search_modules":
+        return _validate_lib_skeleton(target, order_id, artifact_path)
+    if must == "contain_hermetic_lib_unit_tests":
+        return _validate_lib_tests(target, order_id, artifact_path)
     if must == "no_active_absolute_paths_or_credentials_excluding_immutable_backup_history":
         blockers = _scan_active_artifacts(project_root)
         return ([f"{order_id}:{item}" for item in blockers], not blockers, False)
@@ -284,6 +288,33 @@ def _validate_machine_example(target: Path, order_id: str, artifact_path: str) -
         blockers.append(f"{order_id}:machine_example_contains_non_placeholder_value")
     if set(payload) != {"schema_version", "environment_variables"}:
         blockers.append(f"{order_id}:machine_example_contains_extra_fields")
+    return blockers, not blockers, False
+
+
+def _validate_lib_skeleton(target: Path, order_id: str, artifact_path: str) -> tuple[list[str], bool, bool]:
+    required = {
+        "__init__.py",
+        "environment.py",
+        "guardrails.py",
+        "io.py",
+        "provenance.py",
+        "report.py",
+        "search_log.py",
+        "timestamps.py",
+    }
+    if not target.is_dir():
+        return [f"{order_id}:missing_artifact:{artifact_path}"], False, False
+    missing = sorted(name for name in required if not (target / name).is_file())
+    blockers = [f"{order_id}:lib_module_missing:{name}" for name in missing]
+    return blockers, not blockers, False
+
+
+def _validate_lib_tests(target: Path, order_id: str, artifact_path: str) -> tuple[list[str], bool, bool]:
+    required = {"test_lib_foundation.py", "test_audit_new_script_lib_usage.py"}
+    if not target.is_dir():
+        return [f"{order_id}:missing_artifact:{artifact_path}"], False, False
+    missing = sorted(name for name in required if not (target / name).is_file())
+    blockers = [f"{order_id}:lib_test_missing:{name}" for name in missing]
     return blockers, not blockers, False
 
 

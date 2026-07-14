@@ -28,7 +28,7 @@
     {
       "id": "B0.2",
       "title": "Shared infrastructure skeleton",
-      "status": "not_started",
+      "status": "done",
       "depends_on": ["B0.1"],
       "required_artifacts": [
         {"path": "lib", "must": "contain_environment_io_timestamp_provenance_guardrail_report_search_modules"},
@@ -36,7 +36,11 @@
         {"path": "scripts/audit_new_script_lib_usage.py", "must": "pass"}
       ],
       "forbidden": ["signal logic", "portfolio logic", "provider integration", "copied helper infrastructure"],
-      "evidence": []
+      "evidence": [
+        "lib/ contains only hypothesis-independent environment, IO, timestamp, provenance, guardrail, report, and search-log modules.",
+        "python scripts/run_test_tier.py hermetic passes the shared-infrastructure unit tests.",
+        "python scripts/audit_new_script_lib_usage.py reports zero unregistered scripts, zero lib bypasses, and zero copied shared helpers."
+      ]
     },
     {
       "id": "B0.3",

@@ -1,0 +1,11 @@
+{
+  "schema_version": "lily_new_code_scripts_v1",
+  "enforcement_start_order": "B0.2",
+  "grandfathered_scripts": [
+    "scripts/run_test_tier.py",
+    "scripts/validate_bootstrap_tracker.py"
+  ],
+  "scripts": [
+    "scripts/audit_new_script_lib_usage.py"
+  ]
+}
