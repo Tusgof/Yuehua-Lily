@@ -236,6 +236,18 @@ def _validate_done_artifact(
     if must == "contain_synthetic_data_fixtures":
         return _validate_synthetic_data_fixtures(target, order_id, artifact_path)
     if must == "locked_and_valid":
+        if artifact_path == "experiments/l_1_baseline_preregistration.json":
+            return _validate_locked_preregistration_gate(
+                target,
+                order_id,
+                artifact_path,
+                gate_id="l_1_baseline_v1",
+                label="l1",
+                expected_status="locked_before_execution",
+                edge_claim_field="edge_claim_before_execution",
+                project_root=project_root,
+                verify_runtime=verify_runtime,
+            )
         return _validate_l0_locked_gate(
             target,
             order_id,
@@ -243,6 +255,8 @@ def _validate_done_artifact(
             project_root=project_root,
             verify_runtime=verify_runtime,
         )
+    if must == "contain_active_l_1_hashes":
+        return _validate_l1_manifest(target, order_id, artifact_path, project_root=project_root)
     if must == "classify_current_and_minimum_capital":
         return _validate_l0_machine_report(target, order_id, artifact_path)
     if must == "match_machine_report":
@@ -266,6 +280,31 @@ def _validate_l0_locked_gate(
     project_root: Path,
     verify_runtime: bool,
 ) -> tuple[list[str], bool, bool]:
+    return _validate_locked_preregistration_gate(
+        target,
+        order_id,
+        artifact_path,
+        gate_id="l_0_sizing_feasibility_v1",
+        label="l0",
+        expected_status="locked_before_measurement",
+        edge_claim_field="edge_claim",
+        project_root=project_root,
+        verify_runtime=verify_runtime,
+    )
+
+
+def _validate_locked_preregistration_gate(
+    target: Path,
+    order_id: str,
+    artifact_path: str,
+    *,
+    gate_id: str,
+    label: str,
+    expected_status: str,
+    edge_claim_field: str,
+    project_root: Path,
+    verify_runtime: bool,
+) -> tuple[list[str], bool, bool]:
     if not target.is_file():
         return [f"{order_id}:missing_artifact:{artifact_path}"], False, False
     blockers: list[str] = []
@@ -279,20 +318,20 @@ def _validate_l0_locked_gate(
             if line.strip()
         ]
     except (FileNotFoundError, json.JSONDecodeError) as exc:
-        return [f"{order_id}:l0_locked_gate_unreadable:{exc.__class__.__name__}"], False, False
-    matching = [row for row in rows if row.get("gate_id") == "l_0_sizing_feasibility_v1"]
+        return [f"{order_id}:{label}_locked_gate_unreadable:{exc.__class__.__name__}"], False, False
+    matching = [row for row in rows if row.get("gate_id") == gate_id]
     if len(matching) != 1:
-        blockers.append(f"{order_id}:l0_locked_gate_entry_count:{len(matching)}")
+        blockers.append(f"{order_id}:{label}_locked_gate_entry_count:{len(matching)}")
     else:
         row = matching[0]
         digest = hashlib.sha256(target.read_bytes()).hexdigest()
         if row.get("artifact_path") != artifact_path or row.get("artifact_sha256") != digest:
-            blockers.append(f"{order_id}:l0_preregistration_hash_mismatch")
+            blockers.append(f"{order_id}:{label}_preregistration_hash_mismatch")
         validator_path = project_root / str(row.get("validator_path", ""))
         if not validator_path.is_file():
-            blockers.append(f"{order_id}:l0_preregistration_validator_missing")
+            blockers.append(f"{order_id}:{label}_preregistration_validator_missing")
         elif row.get("validator_sha256") != hashlib.sha256(validator_path.read_bytes()).hexdigest():
-            blockers.append(f"{order_id}:l0_preregistration_validator_hash_mismatch")
+            blockers.append(f"{order_id}:{label}_preregistration_validator_hash_mismatch")
         elif verify_runtime:
             completed = subprocess.run(
                 [sys.executable, str(validator_path)],
@@ -302,11 +341,45 @@ def _validate_l0_locked_gate(
                 check=False,
             )
             if completed.returncode != 0:
-                blockers.append(f"{order_id}:l0_preregistration_validator_failed")
-    if preregistration.get("status") != "locked_before_measurement":
-        blockers.append(f"{order_id}:l0_preregistration_not_locked")
-    if preregistration.get("edge_claim") != "none":
-        blockers.append(f"{order_id}:l0_preregistration_edge_claim_not_none")
+                blockers.append(f"{order_id}:{label}_preregistration_validator_failed")
+    if preregistration.get("status") != expected_status:
+        blockers.append(f"{order_id}:{label}_preregistration_not_locked")
+    if preregistration.get(edge_claim_field) != "none":
+        blockers.append(f"{order_id}:{label}_preregistration_edge_claim_not_none")
+    return blockers, not blockers, False
+
+
+def _validate_l1_manifest(
+    target: Path,
+    order_id: str,
+    artifact_path: str,
+    *,
+    project_root: Path,
+) -> tuple[list[str], bool, bool]:
+    if not target.is_file():
+        return [f"{order_id}:missing_artifact:{artifact_path}"], False, False
+    try:
+        rows = [json.loads(line) for line in target.read_text(encoding="utf-8").splitlines() if line.strip()]
+    except json.JSONDecodeError:
+        return [f"{order_id}:l1_locked_gate_manifest_invalid_jsonl"], False, False
+    matching = [row for row in rows if row.get("gate_id") == "l_1_baseline_v1"]
+    blockers: list[str] = []
+    if len(matching) != 1:
+        blockers.append(f"{order_id}:l1_locked_gate_entry_count:{len(matching)}")
+    else:
+        row = matching[0]
+        artifact = project_root / "experiments" / "l_1_baseline_preregistration.json"
+        validator = project_root / "scripts" / "validate_l_1_baseline_preregistration.py"
+        if row.get("artifact_path") != "experiments/l_1_baseline_preregistration.json":
+            blockers.append(f"{order_id}:l1_manifest_artifact_path_mismatch")
+        elif not artifact.is_file() or row.get("artifact_sha256") != hashlib.sha256(artifact.read_bytes()).hexdigest():
+            blockers.append(f"{order_id}:l1_manifest_artifact_hash_mismatch")
+        if row.get("validator_path") != "scripts/validate_l_1_baseline_preregistration.py":
+            blockers.append(f"{order_id}:l1_manifest_validator_path_mismatch")
+        elif not validator.is_file() or row.get("validator_sha256") != hashlib.sha256(validator.read_bytes()).hexdigest():
+            blockers.append(f"{order_id}:l1_manifest_validator_hash_mismatch")
+        if any(other.get("supersedes_gate_id") == "l_1_baseline_v1" for other in rows):
+            blockers.append(f"{order_id}:l1_gate_is_not_active")
     return blockers, not blockers, False
 
 

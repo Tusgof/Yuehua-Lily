@@ -1,0 +1,308 @@
+{
+  "schema_version": "lily_l1_baseline_preregistration_v1",
+  "hypothesis_id": "L-1",
+  "created_at": "2026-07-15T00:00:00Z",
+  "status": "locked_before_execution",
+  "evidence_ceiling_without_adversarial_review": "E1",
+  "edge_claim_before_execution": "none",
+  "purpose": "Test whether a fixed 60-day directional-count baseline produces a positive right-tailed trend payoff after locked costs, without tuning the baseline after observing results.",
+  "owner_authorization": "User explicitly requested execution of B3 on 2026-07-15.",
+  "pre_measurement_state": {
+    "L1_analysis_code_written": false,
+    "L1_market_data_acquired": false,
+    "L1_market_returns_inspected": false,
+    "L1_backtest_run": false,
+    "untouched_validation_opened": false,
+    "paid_data_used": false,
+    "broker_credentials_used": false,
+    "orders_or_paper_trades_sent": false
+  },
+  "scope_decisions": {
+    "primary_research_question": "Does the signed baseline exhibit continuation and right-tail convexity across economically distinct global sleeves?",
+    "current_capital_question": "Does the same fixed baseline remain economically interpretable in a long-or-cash fractional-ETF branch at USD 1,000 and USD 2,000?",
+    "primary_inference_branch": "research_signed",
+    "current_capital_branch": "implementable_long_or_cash",
+    "futures": "excluded_from_L1 because L-0 minimum capital is outside current scope; adding futures requires a new preregistration",
+    "capital_scenarios_usd": [1000, 2000],
+    "data_cutoff_inclusive": "2026-06-30",
+    "paid_data_guard_usd_cumulative_through_L1": 50,
+    "paid_action_rule": "No paid action without a named data gap, true-provenance cost-ledger entry, remaining-room check, owner authorization, and smallest-recoverable-block rule."
+  },
+  "signal": {
+    "name": "60_day_directional_count_raw",
+    "price_input": "corporate-action-aware daily total-return close in instrument trading currency",
+    "daily_return": "r[i,t] = total_return_close[i,t] / total_return_close[i,t-1] - 1",
+    "direction": "d[i,t] = 1 if r[i,t] > 0; -1 if r[i,t] < 0; 0 if r[i,t] = 0 exactly",
+    "formula": "q[i,t] = sum(d[i,t-k] for k=0..59) / 60",
+    "minimum_complete_observations": 60,
+    "missing_return_rule": "Any missing return inside the 60-session window makes q missing; do not shorten the denominator or forward fill.",
+    "scaling": "none; do not apply the source paper's rolling three-year extreme scaling",
+    "research_exposure": "signed q in [-1,1]",
+    "current_capital_exposure": "max(q,0) in [0,1]",
+    "neutral_rule": "q = 0 means zero target exposure",
+    "no_stop_loss_or_take_profit": true
+  },
+  "universes": {
+    "research_signed": {
+      "selection_time": "locked before L-1 data acquisition and independent of L-1 returns",
+      "interpretation": "fixed surviving-proxy study, not a survivorship-clean claim about the historical ETF opportunity set",
+      "minimum_common_start_after_warmup": "2007-02-05",
+      "instruments": [
+        {"order":1,"ticker":"VTI","sleeve":"US_equity","region":"United_States","live_inception":"2001-05-24"},
+        {"order":2,"ticker":"VGK","sleeve":"Europe_equity","region":"Europe","live_inception":"2005-03-04"},
+        {"order":3,"ticker":"EWJ","sleeve":"Japan_equity","region":"Japan","live_inception":"1996-03-12"},
+        {"order":4,"ticker":"VWO","sleeve":"emerging_markets_equity","region":"Emerging_markets","live_inception":"2005-03-04"},
+        {"order":5,"ticker":"IEF","sleeve":"intermediate_US_Treasuries","region":"United_States","live_inception":"2002-07-22"},
+        {"order":6,"ticker":"TIP","sleeve":"US_inflation_linked_bonds","region":"United_States","live_inception":"2003-12-04"},
+        {"order":7,"ticker":"GLD","sleeve":"gold","region":"Global","live_inception":"2004-11-18"},
+        {"order":8,"ticker":"DBC","sleeve":"broad_commodities","region":"Global","live_inception":"2006-02-03"}
+      ],
+      "replacement_rule": "No performance-driven replacement. A symbol, inception, total-return, or tradability failure blocks the affected branch and is reported; a replacement requires a superseding preregistration.",
+      "history_rule": "Use only live ETF history on or after legal inception; index backfill and pre-inception synthetic history are forbidden."
+    },
+    "implementable_long_or_cash": {
+      "source": "L-0 locked candidate order and E0 feasibility report",
+      "candidate_tickers_in_order": ["VTI","VGK","EWJ","IPAC","VWO","IEF","SCHP","GLDM","PDBC","VNQI"],
+      "required_sleeves_in_order": ["US_equity","Europe_equity","Japan_equity","Pacific_ex_Japan_equity","emerging_markets_equity","intermediate_government_bonds","inflation_linked_bonds","gold","broad_commodities","global_ex_US_real_estate"],
+      "minimum_breadth": 8,
+      "primary_breadth": 10,
+      "eligibility_snapshot_rule": "Before reading L-1 returns, record exact Webull Thailand green-diamond eligibility, minimum order, fractional precision, funding FX, and manual versus OpenAPI capability for every ticker.",
+      "failure_rule": "If fewer than 8 ordered sleeves have verified manual fractional eligibility, do not substitute; classify the current-capital branch scope_restricted and continue research only.",
+      "api_rule": "Webull global fractional documentation never proves Thailand OpenAPI fractional capability.",
+      "shorting": false,
+      "leverage": false
+    }
+  },
+  "timing_and_calendar": {
+    "calendar": "NYSE trading sessions for the US-listed ETF proxies",
+    "signal_timestamp": "after the official close of the last NYSE trading session of each week",
+    "decision_data": "only records with availability_timestamp at or before that signal timestamp",
+    "execution_timestamp": "official close of the next NYSE trading session after the signal timestamp",
+    "position_effective_interval": "from that execution close until the next executable rebalance close",
+    "execution_delay_sessions": 1,
+    "holiday_rule": "Use the actual last session of the week and the next actual NYSE session; never manufacture Friday rows.",
+    "same_close_execution_forbidden": true,
+    "timezone": "America/New_York"
+  },
+  "portfolio_construction": {
+    "asset_volatility": {
+      "estimator": "EWMA standard deviation of daily total returns",
+      "span_sessions": 60,
+      "adjust": false,
+      "annualization_factor": 252,
+      "minimum_complete_observations": 60,
+      "annualized_floor": 0.05
+    },
+    "covariance": {
+      "estimator": "pairwise-complete EWMA covariance",
+      "span_sessions": 60,
+      "annualization_factor": 252,
+      "minimum_complete_pair_observations": 60,
+      "non_positive_semidefinite_rule": "Apply deterministic eigenvalue clipping at zero and report the clipped eigenvalue mass; no other shrinkage in the primary run."
+    },
+    "unscaled_score": "u[i,t] = branch_signal[i,t] / max(annualized_volatility[i,t],0.05)",
+    "gross_normalization": "If sum(abs(u)) > 0, normalize u to 90% gross exposure; otherwise hold cash.",
+    "portfolio_target_volatility": 0.10,
+    "target_volatility_scaling": "Scale normalized weights down by min(1, 0.10 / predicted_portfolio_volatility); never scale up beyond normalized gross.",
+    "maximum_gross_exposure": 0.90,
+    "minimum_cash_fraction": 0.10,
+    "maximum_absolute_asset_weight": 0.25,
+    "cap_algorithm": "Clip at 25%, redistribute remaining gross pro rata among uncapped nonzero targets, repeat until no cap breach; any unallocatable residual stays cash.",
+    "maximum_leverage": 1.0,
+    "risk_contribution_rule": "Report ex-ante marginal and standalone contribution by asset and sleeve; do not silently rescale on an observed performance result.",
+    "rebalance": "weekly",
+    "rebalance_threshold": "Trade only when absolute target-minus-current notional is at least 2% of current sleeve notional; opening or closing a zero position is not exempt.",
+    "research_trade_floor": "No fixed-dollar floor; use the 2% threshold on a unit-NAV portfolio.",
+    "current_capital_trade_floor": "maximum of USD 5, verified broker minimum, or 2% of current sleeve notional",
+    "fractional_precision_usd": 0.01
+  },
+  "costs": {
+    "primary_model": {
+      "Webull_Thailand_commission_one_way_fraction_including_VAT": 0.00107,
+      "spread_and_slippage_one_way_bps": 25.0,
+      "sell_regulatory_surcharge_bps": 1.0,
+      "research_short_borrow_annual_fraction": 0.03,
+      "ETF_expense_ratio": "accrue each instrument's then-current disclosed annual expense ratio daily on absolute held notional",
+      "cash_yield": "use the matched public 3-month Treasury total-return or yield series when available; otherwise set cash yield to zero and report a blocker",
+      "funding_FX": "exclude from recurring strategy PnL, report separately as a one-time current-capital implementation cost",
+      "market_impact": "not modeled; absence is an E2 scope blocker if order size exceeds 1% of 30-day ADV"
+    },
+    "locked_sensitivities": [
+      {"id":"lower_spread","spread_and_slippage_one_way_bps":12.5,"short_borrow_annual_fraction":0.03},
+      {"id":"severe_cost","spread_and_slippage_one_way_bps":50.0,"short_borrow_annual_fraction":0.06}
+    ],
+    "cost_booking": "Deduct commission, spread/slippage, and sell surcharge at each executed notional change; accrue expenses, borrow, and cash return each session.",
+    "gross_before_costs_required": true,
+    "net_after_all_locked_costs_required": true,
+    "zero_cost_result_may_not_support_a_claim": true
+  },
+  "return_accounting": {
+    "economic_return": "Use corporate-action-aware total return built from raw close, splits, cash distributions, and capital returns; vendor adjusted close alone is a diagnostic fallback and blocks implementable claims.",
+    "signal_and_PnL_separation": "Signal is fixed at the decision close; PnL begins only after the next-session execution close.",
+    "portfolio_return": "previous effective weights times next-session instrument total returns plus cash return minus booked costs",
+    "short_return": "signed instrument total return plus borrow cost; distributions owed by shorts are included by the total-return series",
+    "currency": "USD portfolio accounting; underlying non-US currency exposure remains an economic exposure and must be labeled",
+    "risk_free_for_Sharpe": "daily cash benchmark return; if unavailable, zero with an explicit blocker and mandatory sensitivity when cash data becomes available",
+    "annualization_sessions": 252,
+    "geometric_compounding": true,
+    "bankruptcy_rule": "Any portfolio NAV at or below zero is a hard failure; do not restart or clip the path."
+  },
+  "benchmarks": {
+    "matched_implementable": "Always-long inverse-volatility portfolio on the same branch universe with identical volatility estimator, target-vol scaling, caps, rebalance timing, trade floor, and costs; replace q with +1 only.",
+    "cash": "Public 3-month US Treasury cash return in USD, with source and availability timestamp recorded.",
+    "active_return": "L-1 net return minus matched benchmark net return on identical dates.",
+    "benchmark_selection_after_results_forbidden": true
+  },
+  "sample_and_unlock_order": {
+    "warmup_and_data_QA": {"start":"2006-02-03","end":"2007-02-02","performance_claim_allowed":false},
+    "falsification_window": {"start":"2007-02-05","end":"2015-12-31","opened_first":true},
+    "untouched_validation_window": {"start":"2016-01-04","end":"2026-06-30","initially_sealed":true},
+    "unlock_rule": "Open untouched validation only after the falsification window passes data integrity, funds MinTRL_falsify using actual dependence estimates, does not meet the full falsification decision, and the locked validation window can fund every MinTRL_validate null after recalculation with those dependence estimates.",
+    "underfunded_rule": "If either stage is underfunded, stop at E1 scope_restricted; do not pool the windows to manufacture power.",
+    "validation_reuse_rule": "Once opened, the validation window cannot be reused to revise L-1; any revised hypothesis gets a new registry ID and later untouched data."
+  },
+  "dual_MinTRL": {
+    "observation_frequency": "daily",
+    "annualization_sessions": 252,
+    "one_sided_significance": 0.05,
+    "power": 0.80,
+    "planning_skewness": 0.0,
+    "planning_raw_Pearson_kurtosis": 6.0,
+    "planning_autocorrelations_lags_1_to_5": [0.10,0.05,0.025,0.0125,0.00625],
+    "planning_cross_sectional_effective_dimensions": 4.0,
+    "actual_recalculation": "Use observed lags 1-5 from the prior opened stage and cross-sectional eigenvalue participation ratio; report calendar observations, trades, overlap, time-effective observations, cross-sectional dimensions, and joint independent-bet equivalents separately.",
+    "falsify": {
+      "sequence": 1,
+      "claimed_minimum_annual_Sharpe": 0.25,
+      "adverse_true_annual_Sharpe": -0.50,
+      "required_joint_independent_bet_equivalents": 3850,
+      "planning_minimum_calendar_observations_at_dimension_4": 963,
+      "funding_status": "funded_by_locked_falsification_window_if_actual_effective_dimensions_are_at_least_4_and_data_integrity_passes"
+    },
+    "validate": {
+      "sequence": 2,
+      "null_plans": [
+        {"id":"portfolio_excess_zero","expected_annual_Sharpe":0.75,"null_annual_Sharpe":0.0,"required_joint_independent_bet_equivalents":3856},
+        {"id":"minimum_acceptable_Sharpe","expected_annual_Sharpe":0.75,"null_annual_Sharpe":0.25,"required_joint_independent_bet_equivalents":8673},
+        {"id":"active_vs_matched_benchmark","expected_annual_Sharpe":0.50,"null_annual_Sharpe":0.0,"required_joint_independent_bet_equivalents":8660}
+      ],
+      "binding_required_joint_independent_bet_equivalents": 8673,
+      "planning_minimum_calendar_observations_at_dimension_4": 2169,
+      "funding_status": "planned_funded_by_locked_untouched_window_only_after_falsification_unlock_and_actual_dependence_recalculation"
+    },
+    "kernel": "lib/statistics.py minimum_track_record_length_falsify and minimum_track_record_length_validate",
+    "raw_trade_count_never_substitutes_for_effective_observations": true
+  },
+  "regime_matrix": {
+    "asset_trend_state": {
+      "uptrend": "q >= 0.20",
+      "downtrend": "q <= -0.20",
+      "neutral": "abs(q) < 0.20"
+    },
+    "asset_whipsaw": "At least 4 nonzero q-sign changes over the prior 20 signal dates and current abs(q) < 0.20.",
+    "global_state": {
+      "broad_uptrend": "at least 50% of available assets are uptrend and fewer than 25% are downtrend",
+      "broad_downtrend": "at least 50% are downtrend and fewer than 25% are uptrend",
+      "whipsaw": "at least 50% meet the asset-whipsaw rule",
+      "mixed": "all other dates"
+    },
+    "volatility_state": "Low, middle, or high according to expanding prior-only 33.3% and 66.7% quantiles of median 60-day asset volatility, with at least 756 prior sessions.",
+    "required_breakdowns": ["global_state","volatility_state","asset_sleeve","country_or_region","calendar_subperiod","fixed_crisis_window"],
+    "fixed_crisis_windows_are_diagnostic_not_ex_ante": [
+      {"id":"GFC","start":"2007-07-01","end":"2009-06-30"},
+      {"id":"COVID","start":"2020-02-01","end":"2020-06-30"},
+      {"id":"inflation_2022","start":"2022-01-01","end":"2022-12-31"}
+    ],
+    "minimum_validation_coverage": "Each claimed global-state bucket needs at least 252 time-effective daily observations and 4 episodes separated by at least 60 sessions; otherwise restrict the claim."
+  },
+  "payoff_and_concentration_tests": {
+    "right_tail_ratio": "95th percentile of daily net return divided by absolute 5th percentile; pass if greater than 1.0.",
+    "return_skewness": "Population daily net-return skewness; pass if greater than 0.",
+    "quadratic_convexity": "OLS net strategy return on intercept, matched-benchmark return, and squared matched-benchmark return; pass if squared coefficient is positive with one-sided Newey-West t-statistic at least 1.645 using 5 lags.",
+    "convex_payoff_gate": "At least two of right-tail ratio, positive skewness, and quadratic convexity must pass, and quadratic convexity is mandatory for an explicit convexity claim.",
+    "asset_contribution_concentration": "Largest asset share of total positive PnL must be at most 35%; report Herfindahl index across positive asset contributions.",
+    "episode_definition": "Per asset, a trend episode is consecutive weekly nonzero q of one sign; allow at most one neutral rebalance between same-sign observations and end on opposite sign or two consecutive neutral rebalances.",
+    "largest_episode_concentration": "Largest positive asset-episode share of total positive PnL must be at most 50%.",
+    "best_market_removal": "Remove the asset with greatest full-window net PnL, hold its weight as cash, and recompute every metric without re-optimizing.",
+    "best_trend_removal": "Set the largest positive asset-episode PnL contribution to cash over its original dates and recompute without re-optimizing.",
+    "removal_pass": "After each removal, net geometric return remains positive and PSR versus zero is at least 0.90."
+  },
+  "decision_rules": {
+    "falsified": [
+      "Actual joint independent-bet equivalents in the falsification window meet or exceed 3850.",
+      "Primary research_signed annualized net geometric return is non-positive and PSR for exceeding annual Sharpe 0.25 is at most 0.05.",
+      "The right-tail ratio is at most 1.0 and net geometric return is non-positive in at least two adequately covered global-state buckets.",
+      "A mechanism autopsy attributes the failure among continuation, breadth, whipsaw, sizing, cost, or data mechanisms."
+    ],
+    "not_falsified_but_not_validated": "Any partial pass, underpowered result, missing regime, data limitation, cost uncertainty, or failure to fund every validation null remains E1 and scope_restricted.",
+    "validation_grade_candidate": [
+      "Untouched validation was opened only through the sequential unlock rule and supplies at least 8673 joint independent-bet equivalents.",
+      "Primary net geometric return is positive; PSR is at least 0.95 against zero, annual Sharpe 0.25, and zero active Sharpe versus the matched benchmark.",
+      "DSR probability is at least 0.95 using the complete locked trial log and effective-trial rule.",
+      "Convex payoff, concentration, best-market removal, best-trend removal, cost sensitivity, and required regime coverage pass.",
+      "No critical survivorship, timestamp, corporate-action, currency, or implementation blocker remains."
+    ],
+    "E2_promotion": "Even if every validation-grade-candidate rule passes, status remains E1 until a separate adversarial review is completed with no unresolved critical issue.",
+    "current_capital_outcome": "Report separately for USD 1,000 and USD 2,000; it cannot validate the research_signed branch or approve deployment."
+  },
+  "search_and_robustness": {
+    "primary_never_changes": "60-day directional count with the primary cost and sizing rules",
+    "locked_trial_inventory": [
+      {"trial_id":"primary_60","lookback":60,"cost":"primary","claim_eligible":true},
+      {"trial_id":"sensitivity_40","lookback":40,"cost":"primary","claim_eligible":false},
+      {"trial_id":"sensitivity_80","lookback":80,"cost":"primary","claim_eligible":false},
+      {"trial_id":"sensitivity_low_cost","lookback":60,"cost":"lower_spread","claim_eligible":false},
+      {"trial_id":"sensitivity_severe_cost","lookback":60,"cost":"severe_cost","claim_eligible":false}
+    ],
+    "effective_trials_for_DSR": "maximum of 5 and the effective-rank estimate from the complete trial-return correlation matrix",
+    "selection_rule": "Never select a sensitivity as the L-1 result; all trials and failures remain in the search log.",
+    "additional_search_forbidden": ["lookback optimization","universe replacement","regime filter optimization","cost selection","volatility-target selection","benchmark replacement","date-window selection"],
+    "unexpected_debug_run_rule": "Any run that reads returns is logged as a trial even when labeled debugging; implementation-only synthetic fixture tests are not trials."
+  },
+  "data_integrity": {
+    "required_fields": ["raw_close","total_return_close","split","cash_distribution","availability_timestamp","exchange_calendar","trading_currency","legal_inception","provider_revision","is_backfilled"],
+    "point_in_time_rule": "The study is conditional on fixed preregistered proxies; do not generalize to the historical ETF opportunity set or project current membership backward.",
+    "delisting_rule": "A delisting during the test remains in the path through its final distribution or documented terminal-value rule; do not drop its history.",
+    "backfill_rule": "Reject observations before legal inception and flag provider first-available dates that precede inception.",
+    "corporate_action_rule": "Raw close, splits, distributions, and total-return construction must reconcile; silent adjusted-close revisions create a new dataset version.",
+    "FX_rule": "Record trading currency and economic region; USD listing does not remove underlying FX exposure.",
+    "futures_roll_rule": "Not applicable because futures are excluded. Any futures row is a hard schema failure for L-1.",
+    "provider_drift_rule": "Boundary-schema failure blocks execution; do not coerce renamed or missing fields.",
+    "hash_rule": "Every input container and normalized/derived artifact follows datasets/registry.json container or dual-hash policy and records the producing commit.",
+    "missingness_rule": "No price forward fill and no silent complete-case date deletion; portfolio dates and unavailable assets are reported explicitly."
+  },
+  "B4_report_requirements": [
+    "hypothesis_id L-1, evidence tier, tier blockers, edge claim, and producing git commit",
+    "environment and dataset IDs/hashes plus complete search log",
+    "gross and primary/sensitivity net returns with turnover, exposure, leverage, cash, and cost decomposition",
+    "calendar observations, trades, holding overlap, autocorrelations, time-effective observations, cross-sectional dimensions, and joint independent-bet equivalents",
+    "PSR, DSR, dual-MinTRL funding, unlock decision, and untouched-data status",
+    "trend/whipsaw, volatility, sleeve, country/region, subperiod, and diagnostic crisis matrices",
+    "right-tail, skewness, quadratic convexity, contribution concentration, best-market removal, and best-trend removal",
+    "survivorship, inception/backfill, corporate-action, currency, broker, and current-capital limitations",
+    "machine JSON and matching Markdown with exact next safe action"
+  ],
+  "wiki_sources": [
+    {"path":"wiki/concepts/directional-count-trend-signal.md","sha256":"0eb4e3cbd6eceab838d5fc88c0500bedfbe345389eb3646fb19200b6b97b7490"},
+    {"path":"wiki/concepts/backtest-validation-protocol.md","sha256":"c7f843310706d902120651e677429e66cbde9ce96ee526544de5419ee99aefa0"},
+    {"path":"wiki/concepts/minimum-track-record-length.md","sha256":"ca65225740673bd363be7461b8022281da08ae32e6ff42f8887f1072eb51ad81"},
+    {"path":"wiki/concepts/probabilistic-sharpe-ratio.md","sha256":"a644495d207403711a55d815abb0722018bba23d428d3d904dd6c4b5a8cef6a5"},
+    {"path":"wiki/concepts/deflated-sharpe-ratio.md","sha256":"90663b67e49dcec90bd641e801f9464e593ff8fe9091b2d70e9f4645381af556"},
+    {"path":"wiki/concepts/trend-following-transaction-cost-control.md","sha256":"f92fb361bfcc89e4e65dce958ca63447d3563e04fc77332187d8a3f68322631a"},
+    {"path":"wiki/concepts/rebalance-threshold.md","sha256":"e76182197eccf2772311f82666e033073e303854d788d884a355bc5d8138022f"},
+    {"path":"wiki/concepts/inverse-volatility-weighting.md","sha256":"c59b512d3df9499a738b1ee256d388376f04edee1c59727f2f79ddcc905e7f72"},
+    {"path":"wiki/concepts/global-trend-regime-diversification.md","sha256":"6f1bf76c6730f1dfdde19809608f6533e7bf371830f58c132c3f47870ab4f0fb"},
+    {"path":"wiki/concepts/volatility-drag-and-whipsaw-tax.md","sha256":"304b7c2542a5fa4cf9dc1080665e60ffbefd55ef666ea7a8ddab0c4509988b6c"},
+    {"path":"wiki/concepts/outlier-return-distribution.md","sha256":"e1122f82b251859ed4a582984067a65ebc080902a2302343e8321d4acd6ddee1"}
+  ],
+  "hard_stops": [
+    "L-1 return or backtest execution during B3",
+    "opening untouched validation before the sequential unlock",
+    "paid action without the locked cost-guard workflow",
+    "credential, account identifier, or order transmission",
+    "same-close execution or future-data leakage",
+    "pre-inception history, survivor substitution, or silent adjusted-close backfill",
+    "in-place change to this preregistration or validator after hashing",
+    "edge, E2, paper-trading, or deployment claim from B3"
+  ]
+}

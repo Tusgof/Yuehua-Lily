@@ -103,7 +103,7 @@
       "id": "L-1",
       "family": "baseline_continuation",
       "counts_toward_family_stop": true,
-      "status": "proposed",
+      "status": "active",
       "statement": "A 60-day directional-count baseline has positive convex payoff after implementable costs on the selected global research universe.",
       "economic_rationale": "Slow information diffusion followed by herding can produce continuation, while the system accepts frequent small losses to retain infrequent large trends.",
       "testable_predictions": [
@@ -155,6 +155,11 @@
           "date": "2026-07-15",
           "decision": "seeded_from_owner_hypothesis_prediction_1",
           "notes": "No empirical evidence exists at founding."
+        },
+        {
+          "date": "2026-07-15",
+          "decision": "activated_after_B3_preregistration_lock",
+          "notes": "Gate l_1_baseline_v1 locks the 60-day baseline and sequential falsification-before-validation protocol. This is a research specification only; no L-1 market evidence, edge claim, or execution result exists."
         }
       ]
     },

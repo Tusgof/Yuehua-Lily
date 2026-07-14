@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import importlib.util
+import hashlib
 import json
 import sys
 import tempfile
@@ -301,6 +302,52 @@ class BootstrapTrackerValidatorTests(unittest.TestCase):
             f"B2:l0_markdown_missing_machine_value:{'b' * 64}",
             blockers,
         )
+
+    def test_B3_locked_rule_uses_L1_gate_and_hashes(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            experiments = root / "experiments"
+            scripts = root / "scripts"
+            experiments.mkdir()
+            scripts.mkdir()
+            artifact = experiments / "l_1_baseline_preregistration.json"
+            validator = scripts / "validate_l_1_baseline_preregistration.py"
+            artifact.write_text(
+                json.dumps({"status": "locked_before_execution", "edge_claim_before_execution": "none"}),
+                encoding="utf-8",
+            )
+            validator.write_text("print('pass')\n", encoding="utf-8")
+            entry = {
+                "gate_id": "l_1_baseline_v1",
+                "artifact_path": "experiments/l_1_baseline_preregistration.json",
+                "artifact_sha256": hashlib.sha256(artifact.read_bytes()).hexdigest(),
+                "validator_path": "scripts/validate_l_1_baseline_preregistration.py",
+                "validator_sha256": hashlib.sha256(validator.read_bytes()).hexdigest(),
+            }
+            manifest = experiments / "locked_gates.jsonl"
+            manifest.write_text(json.dumps(entry) + "\n", encoding="utf-8")
+            locked_blockers, locked_checked, locked_unverified = self.validator._validate_done_artifact(
+                "B3",
+                "experiments/l_1_baseline_preregistration.json",
+                "locked_and_valid",
+                project_root=root,
+                verify_runtime=False,
+                runtime_cache={},
+            )
+            manifest_blockers, manifest_checked, manifest_unverified = self.validator._validate_done_artifact(
+                "B3",
+                "experiments/locked_gates.jsonl",
+                "contain_active_l_1_hashes",
+                project_root=root,
+                verify_runtime=False,
+                runtime_cache={},
+            )
+        self.assertEqual([], locked_blockers)
+        self.assertTrue(locked_checked)
+        self.assertFalse(locked_unverified)
+        self.assertEqual([], manifest_blockers)
+        self.assertTrue(manifest_checked)
+        self.assertFalse(manifest_unverified)
 
 
 def _tracker_with_artifact(path: str, must: str) -> dict[str, object]:

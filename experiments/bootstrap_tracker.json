@@ -142,7 +142,7 @@
     {
       "id": "B3",
       "title": "L-1 baseline preregistration",
-      "status": "not_started",
+      "status": "done",
       "depends_on": ["B2"],
       "required_artifacts": [
         {"path": "experiments/l_1_baseline_preregistration.json", "must": "locked_and_valid"},
@@ -150,7 +150,12 @@
         {"path": "experiments/locked_gates.jsonl", "must": "contain_active_l_1_hashes"}
       ],
       "forbidden": ["L-1 execution in the preregistration session", "post-result gate changes"],
-      "evidence": []
+      "evidence": [
+        "experiments/l_1_baseline_preregistration.json locks the raw 60-day directional-count formula, zero and missing-return handling, one-session execution delay, separate signed-research and current-capital long/cash branches, weekly sizing, costs, benchmarks, return accounting, regimes, payoff tests, and fixed search inventory before any L-1 measurement.",
+        "Dual MinTRL is recalculated by the validator: falsification requires 3,850 joint independent-bet equivalents before validation is considered; validation is bound by 8,673 and the untouched 2016-01-04 through 2026-06-30 window remains sealed behind the sequential unlock rule.",
+        "experiments/locked_gates.jsonl appends active gate l_1_baseline_v1 with SHA-256 91527c2f4ec00134767df86849f36b9876b00eb44cd56dc01650d33bf938fe29 for the preregistration and c568f5db8236e253e63056ed2797ead9259397d293c478e7f0abf53bfda70232 for its validator.",
+        "scripts/validate_l_1_baseline_preregistration.py and hermetic tamper tests pass; no L-1 strategy code, market data, return result, broker request, or backtest was created in B3."
+      ]
     },
     {
       "id": "B4",
