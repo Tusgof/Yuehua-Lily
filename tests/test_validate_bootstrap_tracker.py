@@ -114,6 +114,60 @@ class BootstrapTrackerValidatorTests(unittest.TestCase):
         self.assertFalse(unverified)
         self.assertIn("B0.2:lib_module_missing:io.py", blockers)
 
+    def test_b03_statistics_kernel_claim_requires_documented_primitives(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            (root / "statistics.py").write_text(
+                '"""raw Pearson kurtosis and finite-sample Bartlett conventions."""\n'
+                "def probabilistic_sharpe_ratio(): pass\n",
+                encoding="utf-8",
+            )
+            blockers, checked, unverified = self.validator._validate_done_artifact(
+                "B0.3",
+                "statistics.py",
+                "document_conventions_and_exist",
+                project_root=root,
+                verify_runtime=False,
+                runtime_cache={},
+            )
+        self.assertFalse(checked)
+        self.assertFalse(unverified)
+        self.assertIn(
+            "B0.3:statistics_kernel_missing:def independent_bet_equivalent_count",
+            blockers,
+        )
+
+    def test_b03_conventions_claim_requires_source_hashes(self) -> None:
+        required_text = "\n".join(
+            (
+                "Published-method anchor",
+                "Offline library cross-check",
+                "independent-bet",
+                "Wiki-relative source",
+                "SHA-256",
+                "probabilistic-sharpe-ratio.md",
+                "deflated-sharpe-ratio.md",
+                "newey-west-validation.md",
+            )
+        )
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            (root / "conventions.md").write_text(required_text, encoding="utf-8")
+            blockers, checked, unverified = self.validator._validate_done_artifact(
+                "B0.3",
+                "conventions.md",
+                "cite_published_anchors_and_independent_bets",
+                project_root=root,
+                verify_runtime=False,
+                runtime_cache={},
+            )
+        self.assertFalse(checked)
+        self.assertFalse(unverified)
+        self.assertEqual(
+            ["B0.3:statistics_conventions_require_source_hashes"],
+            blockers,
+        )
+
 
 def _tracker_with_artifact(path: str, must: str) -> dict[str, object]:
     return {

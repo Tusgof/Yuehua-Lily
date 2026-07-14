@@ -45,7 +45,7 @@
     {
       "id": "B0.3",
       "title": "Golden-number statistics anchors",
-      "status": "not_started",
+      "status": "done",
       "depends_on": ["B0.1", "B0.2"],
       "required_artifacts": [
         {"path": "lib/statistics.py", "must": "document_conventions_and_exist"},
@@ -53,7 +53,11 @@
         {"path": "docs/STATISTICS_CONVENTIONS.md", "must": "cite_published_anchors_and_independent_bets"}
       ],
       "forbidden": ["real strategy data", "unanchored acceptance statistics"],
-      "evidence": []
+      "evidence": [
+        "lib/statistics.py implements dependency-free Sharpe, autocorrelation, PSR, DSR, dual-MinTRL, Newey-West, and independent-bet primitives with explicit conventions.",
+        "tests/fixtures/statistics_golden.json binds published-method inputs, expected values, local wiki source paths, and an offline SciPy 1.17.1 cross-check; the hermetic golden tests pass without SciPy at runtime.",
+        "docs/STATISTICS_CONVENTIONS.md records source SHA-256 hashes, raw-kurtosis and lag conventions, limitations, and separate effective-observation reporting requirements."
+      ]
     },
     {
       "id": "B0.4",

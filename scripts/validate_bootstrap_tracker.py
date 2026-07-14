@@ -206,6 +206,10 @@ def _validate_done_artifact(
         return _validate_lib_skeleton(target, order_id, artifact_path)
     if must == "contain_hermetic_lib_unit_tests":
         return _validate_lib_tests(target, order_id, artifact_path)
+    if must == "document_conventions_and_exist":
+        return _validate_statistics_kernel(target, order_id, artifact_path)
+    if must == "cite_published_anchors_and_independent_bets":
+        return _validate_statistics_conventions(target, order_id, artifact_path)
     if must == "no_active_absolute_paths_or_credentials_excluding_immutable_backup_history":
         blockers = _scan_active_artifacts(project_root)
         return ([f"{order_id}:{item}" for item in blockers], not blockers, False)
@@ -315,6 +319,57 @@ def _validate_lib_tests(target: Path, order_id: str, artifact_path: str) -> tupl
         return [f"{order_id}:missing_artifact:{artifact_path}"], False, False
     missing = sorted(name for name in required if not (target / name).is_file())
     blockers = [f"{order_id}:lib_test_missing:{name}" for name in missing]
+    return blockers, not blockers, False
+
+
+def _validate_statistics_kernel(
+    target: Path,
+    order_id: str,
+    artifact_path: str,
+) -> tuple[list[str], bool, bool]:
+    if not target.is_file():
+        return [f"{order_id}:missing_artifact:{artifact_path}"], False, False
+    text = target.read_text(encoding="utf-8")
+    required = (
+        "raw Pearson kurtosis",
+        "finite-sample Bartlett",
+        "def probabilistic_sharpe_ratio",
+        "def minimum_track_record_length_falsify",
+        "def minimum_track_record_length_validate",
+        "def deflated_sharpe_ratio",
+        "def newey_west_variance_of_mean",
+        "def independent_bet_equivalent_count",
+    )
+    missing = [item for item in required if item not in text]
+    blockers = [f"{order_id}:statistics_kernel_missing:{item}" for item in missing]
+    return blockers, not blockers, False
+
+
+def _validate_statistics_conventions(
+    target: Path,
+    order_id: str,
+    artifact_path: str,
+) -> tuple[list[str], bool, bool]:
+    if not target.is_file():
+        return [f"{order_id}:missing_artifact:{artifact_path}"], False, False
+    text = target.read_text(encoding="utf-8")
+    required = (
+        "Published-method anchor",
+        "Offline library cross-check",
+        "independent-bet",
+        "Wiki-relative source",
+        "SHA-256",
+        "probabilistic-sharpe-ratio.md",
+        "deflated-sharpe-ratio.md",
+        "newey-west-validation.md",
+    )
+    blockers = [
+        f"{order_id}:statistics_conventions_missing:{item}"
+        for item in required
+        if item not in text
+    ]
+    if len(re.findall(r"\b[0-9a-f]{64}\b", text)) < 3:
+        blockers.append(f"{order_id}:statistics_conventions_require_source_hashes")
     return blockers, not blockers, False
 
 

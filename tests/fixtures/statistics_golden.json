@@ -1,0 +1,99 @@
+{
+  "schema_version": "lily_statistics_golden_v1",
+  "provenance": {
+    "methodology_sources": [
+      "wiki/concepts/minimum-track-record-length.md",
+      "wiki/concepts/probabilistic-sharpe-ratio.md",
+      "wiki/concepts/deflated-sharpe-ratio.md",
+      "wiki/concepts/newey-west-validation.md",
+      "wiki/concepts/sharpe-ratio-inference.md",
+      "wiki/sources/how-to-use-the-sharpe-ratio.md"
+    ],
+    "published_method_anchor": "Bailey/Lopez de Prado finite-sample Sharpe approximation as documented in the local source snapshot and independently reproduced in the Higanbana technical review.",
+    "offline_reference": "SciPy 1.17.1 scipy.stats Normal CDF/PPF, skew(bias=True), and kurtosis(fisher=False,bias=True); used to generate anchors only, not required at runtime."
+  },
+  "conventions": {
+    "sharpe": "mean divided by population standard deviation; unannualized",
+    "skewness": "population standardized third central moment",
+    "kurtosis": "raw Pearson population kurtosis, not excess kurtosis",
+    "autocorrelation": "finite-sample Bartlett inflation for observed inference; asymptotic sum for prospective MinTRL planning",
+    "newey_west": "Bartlett kernel with autocovariance divisor N",
+    "independent_bets": "eigenvalue participation ratio multiplied by autocorrelation-adjusted time observations"
+  },
+  "psr_mintrl": {
+    "inputs": {
+      "observed_sharpe": 0.092203,
+      "sample_length": 90,
+      "skewness": 1.221374,
+      "raw_kurtosis": 3.09085,
+      "null_sharpe": 0.0
+    },
+    "expected": {
+      "generalized_variance_term": 0.891829437576,
+      "probabilistic_sharpe_ratio": 0.821496666525,
+      "minimum_track_record_length": 285
+    },
+    "wrong_excess_kurtosis_variance_term": 0.885453392669
+  },
+  "scipy_cross_check": {
+    "normal_input": 0.75,
+    "normal_cdf": 0.773372647623,
+    "normal_ppf_95": 1.644853626951,
+    "returns": [-0.03, -0.01, 0.0, 0.02, 0.08],
+    "expected_sharpe": 0.318896402072,
+    "expected_skewness": 0.857597103876,
+    "expected_raw_kurtosis": 2.468974432634
+  },
+  "autocorrelation": {
+    "sample_length": 120,
+    "coefficients": [0.3, 0.15, 0.05],
+    "expected_finite_inflation": 1.9875,
+    "expected_asymptotic_inflation": 2.0,
+    "expected_effective_sample_length": 60.377358490566
+  },
+  "dual_mintrl": {
+    "common": {
+      "skewness": 0.0,
+      "raw_kurtosis": 3.0,
+      "autocorrelations": [0.2],
+      "significance": 0.05,
+      "power": 0.8
+    },
+    "validate": {
+      "expected_sharpe": 0.12,
+      "null_sharpe": 0.0,
+      "expected_length": 607
+    },
+    "falsify": {
+      "claimed_minimum_sharpe": 0.1,
+      "adverse_true_sharpe": -0.1,
+      "expected_length": 219
+    }
+  },
+  "deflated_sharpe": {
+    "inputs": {
+      "observed_sharpe": 0.6,
+      "sample_length": 120,
+      "skewness": -0.2,
+      "raw_kurtosis": 4.0,
+      "trial_sharpe_std": 0.15,
+      "effective_trials": 20.0,
+      "autocorrelations": [0.1]
+    },
+    "expected_search_hurdle": 0.285106192677,
+    "expected_deflated_sharpe_ratio": 0.996085681764
+  },
+  "newey_west": {
+    "values": [0.01, -0.005, 0.012, 0.004, -0.003, 0.009, 0.002, 0.011],
+    "lags": 2,
+    "expected_variance_of_mean": 0.000001260416667,
+    "expected_t_statistic": 4.453617714151
+  },
+  "independent_bets": {
+    "eigenvalues": [2.4, 1.0, 0.4, 0.2],
+    "expected_cross_section_bets": 2.298850574713,
+    "sample_length": 120,
+    "autocorrelations": [0.3, 0.15, 0.05],
+    "expected_joint_bet_equivalents": 138.798525265669
+  }
+}
