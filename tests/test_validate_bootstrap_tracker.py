@@ -248,6 +248,60 @@ class BootstrapTrackerValidatorTests(unittest.TestCase):
             blockers,
         )
 
+    def test_B2_machine_report_rejects_wrong_minimum_capital(self) -> None:
+        payload = {
+            "schema_version": "lily_l0_sizing_feasibility_report_v1",
+            "hypothesis_id": "L-0",
+            "evidence_tier": "E0",
+            "edge_claim": "none",
+            "decision": "scope_restricted",
+            "guardrails": {},
+            "etf": {"broker_results": []},
+            "futures": {"micro": [], "full_size_comparator": []},
+            "source_inventory": [{}],
+            "tier_blockers": ["test"],
+        }
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            (root / "report.json").write_text(json.dumps(payload), encoding="utf-8")
+            blockers, checked, unverified = self.validator._validate_done_artifact(
+                "B2",
+                "report.json",
+                "classify_current_and_minimum_capital",
+                project_root=root,
+                verify_runtime=False,
+                runtime_cache={},
+            )
+        self.assertFalse(checked)
+        self.assertFalse(unverified)
+        self.assertIn("B2:l0_report_micro_capital_mismatch", blockers)
+        self.assertIn("B2:l0_report_broker_scenarios_incomplete", blockers)
+
+    def test_B2_markdown_claim_requires_machine_digest(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            report_dir = root / "reports" / "feasibility"
+            report_dir.mkdir(parents=True)
+            (report_dir / "l_0_sizing_feasibility.json").write_text(
+                json.dumps({"producing_git_commit": "a" * 40, "report_digest_sha256": "b" * 64}),
+                encoding="utf-8",
+            )
+            (root / "report.md").write_text("scope_restricted\n", encoding="utf-8")
+            blockers, checked, unverified = self.validator._validate_done_artifact(
+                "B2",
+                "report.md",
+                "match_machine_report",
+                project_root=root,
+                verify_runtime=False,
+                runtime_cache={},
+            )
+        self.assertFalse(checked)
+        self.assertFalse(unverified)
+        self.assertIn(
+            f"B2:l0_markdown_missing_machine_value:{'b' * 64}",
+            blockers,
+        )
+
 
 def _tracker_with_artifact(path: str, must: str) -> dict[str, object]:
     return {

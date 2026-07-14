@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import re
 import subprocess
@@ -234,10 +235,158 @@ def _validate_done_artifact(
         return _validate_provider_boundary_schemas(target, order_id, artifact_path)
     if must == "contain_synthetic_data_fixtures":
         return _validate_synthetic_data_fixtures(target, order_id, artifact_path)
+    if must == "locked_and_valid":
+        return _validate_l0_locked_gate(
+            target,
+            order_id,
+            artifact_path,
+            project_root=project_root,
+            verify_runtime=verify_runtime,
+        )
+    if must == "classify_current_and_minimum_capital":
+        return _validate_l0_machine_report(target, order_id, artifact_path)
+    if must == "match_machine_report":
+        return _validate_l0_markdown_report(
+            target,
+            order_id,
+            artifact_path,
+            project_root=project_root,
+        )
     if must == "no_active_absolute_paths_or_credentials_excluding_immutable_backup_history":
         blockers = _scan_active_artifacts(project_root)
         return ([f"{order_id}:{item}" for item in blockers], not blockers, False)
     return [f"{order_id}:unsupported_done_rule:{must}"], False, False
+
+
+def _validate_l0_locked_gate(
+    target: Path,
+    order_id: str,
+    artifact_path: str,
+    *,
+    project_root: Path,
+    verify_runtime: bool,
+) -> tuple[list[str], bool, bool]:
+    if not target.is_file():
+        return [f"{order_id}:missing_artifact:{artifact_path}"], False, False
+    blockers: list[str] = []
+    try:
+        preregistration = json.loads(target.read_text(encoding="utf-8"))
+        rows = [
+            json.loads(line)
+            for line in (project_root / "experiments" / "locked_gates.jsonl")
+            .read_text(encoding="utf-8")
+            .splitlines()
+            if line.strip()
+        ]
+    except (FileNotFoundError, json.JSONDecodeError) as exc:
+        return [f"{order_id}:l0_locked_gate_unreadable:{exc.__class__.__name__}"], False, False
+    matching = [row for row in rows if row.get("gate_id") == "l_0_sizing_feasibility_v1"]
+    if len(matching) != 1:
+        blockers.append(f"{order_id}:l0_locked_gate_entry_count:{len(matching)}")
+    else:
+        row = matching[0]
+        digest = hashlib.sha256(target.read_bytes()).hexdigest()
+        if row.get("artifact_path") != artifact_path or row.get("artifact_sha256") != digest:
+            blockers.append(f"{order_id}:l0_preregistration_hash_mismatch")
+        validator_path = project_root / str(row.get("validator_path", ""))
+        if not validator_path.is_file():
+            blockers.append(f"{order_id}:l0_preregistration_validator_missing")
+        elif row.get("validator_sha256") != hashlib.sha256(validator_path.read_bytes()).hexdigest():
+            blockers.append(f"{order_id}:l0_preregistration_validator_hash_mismatch")
+        elif verify_runtime:
+            completed = subprocess.run(
+                [sys.executable, str(validator_path)],
+                cwd=project_root,
+                text=True,
+                capture_output=True,
+                check=False,
+            )
+            if completed.returncode != 0:
+                blockers.append(f"{order_id}:l0_preregistration_validator_failed")
+    if preregistration.get("status") != "locked_before_measurement":
+        blockers.append(f"{order_id}:l0_preregistration_not_locked")
+    if preregistration.get("edge_claim") != "none":
+        blockers.append(f"{order_id}:l0_preregistration_edge_claim_not_none")
+    return blockers, not blockers, False
+
+
+def _validate_l0_machine_report(
+    target: Path,
+    order_id: str,
+    artifact_path: str,
+) -> tuple[list[str], bool, bool]:
+    if not target.is_file():
+        return [f"{order_id}:missing_artifact:{artifact_path}"], False, False
+    try:
+        payload = json.loads(target.read_text(encoding="utf-8"))
+    except json.JSONDecodeError:
+        return [f"{order_id}:l0_machine_report_invalid_json"], False, False
+    blockers: list[str] = []
+    expected_root = {
+        "schema_version": "lily_l0_sizing_feasibility_report_v1",
+        "hypothesis_id": "L-0",
+        "evidence_tier": "E0",
+        "edge_claim": "none",
+        "decision": "scope_restricted",
+    }
+    for field, expected in expected_root.items():
+        if payload.get(field) != expected:
+            blockers.append(f"{order_id}:l0_report_{field}_mismatch")
+    if any(payload.get("guardrails", {}).values()):
+        blockers.append(f"{order_id}:l0_report_forbidden_activity")
+    broker_rows = payload.get("etf", {}).get("broker_results", [])
+    expected_pairs = {
+        (capital, broker)
+        for capital in (1000, 2000)
+        for broker in (
+            "Webull_Thailand_manual_fractional",
+            "Webull_Thailand_OpenAPI_fractional",
+            "IBKR_fractional_reference",
+        )
+    }
+    actual_pairs = {(row.get("capital_usd"), row.get("broker_path")) for row in broker_rows}
+    if actual_pairs != expected_pairs:
+        blockers.append(f"{order_id}:l0_report_broker_scenarios_incomplete")
+    if any(row.get("classification") != "scope_restricted" for row in broker_rows):
+        blockers.append(f"{order_id}:l0_report_broker_classification_mismatch")
+    micro = payload.get("futures", {}).get("micro", [])
+    full = payload.get("futures", {}).get("full_size_comparator", [])
+    if [row.get("minimum_capital_usd") for row in micro] != [40600, 54200, 95400]:
+        blockers.append(f"{order_id}:l0_report_micro_capital_mismatch")
+    if [row.get("minimum_capital_usd") for row in full] != [405900, 541200, 1614600]:
+        blockers.append(f"{order_id}:l0_report_full_capital_mismatch")
+    if not payload.get("source_inventory") or not payload.get("tier_blockers"):
+        blockers.append(f"{order_id}:l0_report_sources_or_blockers_missing")
+    return blockers, not blockers, False
+
+
+def _validate_l0_markdown_report(
+    target: Path,
+    order_id: str,
+    artifact_path: str,
+    *,
+    project_root: Path,
+) -> tuple[list[str], bool, bool]:
+    if not target.is_file():
+        return [f"{order_id}:missing_artifact:{artifact_path}"], False, False
+    json_path = project_root / "reports" / "feasibility" / "l_0_sizing_feasibility.json"
+    try:
+        payload = json.loads(json_path.read_text(encoding="utf-8"))
+        markdown = target.read_text(encoding="utf-8")
+    except (FileNotFoundError, json.JSONDecodeError) as exc:
+        return [f"{order_id}:l0_report_pair_unreadable:{exc.__class__.__name__}"], False, False
+    required = (
+        str(payload.get("producing_git_commit", "")),
+        str(payload.get("report_digest_sha256", "")),
+        "$40,600",
+        "$54,200",
+        "$95,400",
+        "scope_restricted",
+        "No edge or deployment claim",
+    )
+    missing = [value for value in required if not value or value not in markdown]
+    blockers = [f"{order_id}:l0_markdown_missing_machine_value:{value}" for value in missing]
+    return blockers, not blockers, False
 
 
 def _run_hermetic_once(project_root: Path, cache: dict[str, bool]) -> bool:

@@ -37,7 +37,7 @@
       "id": "L-0",
       "family": "sizing_feasibility",
       "counts_toward_family_stop": false,
-      "status": "active",
+      "status": "scope_restricted",
       "statement": "At least one globally diversified US-listed fractional-ETF trend implementation is honestly sizeable at USD 1,000 and USD 2,000 after broker constraints and costs, and the same study can identify minimum viable capital for 4-, 8-, and 12-market micro-futures variants.",
       "economic_rationale": "A statistical edge has no operational value when share or contract granularity, margin, cash buffers, costs, or concentration prevent risk-targeted breadth.",
       "testable_predictions": [
@@ -80,12 +80,22 @@
         "B0 governance bootstrap",
         "B1 data layer"
       ],
-      "evidence": [],
+      "evidence": [
+        {
+          "path": "reports/feasibility/l_0_sizing_feasibility.json",
+          "evidence_tier": "E0"
+        }
+      ],
       "decision_log": [
         {
           "date": "2026-07-15",
           "decision": "activated_at_founding",
           "notes": "Owner capital is USD 1,000-2,000; Webull Thailand is the ETF candidate and IBKR is the micro-futures reference."
+        },
+        {
+          "date": "2026-07-15",
+          "decision": "scope_restricted_after_locked_E0_feasibility_study",
+          "notes": "Eight- and ten-sleeve ETF economic sizing passes at USD 1,000 and USD 2,000, while twelve sleeves breach the locked 25% weight cap. No broker path is fully verified because exact fractional eligibility, Thailand OpenAPI capability, funding FX, or account permissions remain unknown. Micro-futures minimum capital is USD 40,600, 54,200, and 95,400 for 4, 8, and 12 markets; no edge or deployment claim is made."
         }
       ]
     },

@@ -11,6 +11,8 @@
     "scripts/validate_evidence_tiers.py",
     "scripts/validate_hypothesis_registry.py",
     "scripts/validate_l_0_sizing_feasibility_preregistration.py",
+    "scripts/run_l_0_sizing_feasibility.py",
+    "scripts/validate_l_0_sizing_feasibility_report.py",
     "scripts/validate_locked_gates.py"
   ]
 }

@@ -1,0 +1,1564 @@
+{
+  "claims": {
+    "calculation": "ETF 8- and 10-sleeve economic sizing passes at USD 1,000 and USD 2,000; the 12-sleeve case breaches the 25% weight cap because the locked 3% volatility for SGOV creates a 29.67% target weight.",
+    "caveat": "This is deterministic E0 feasibility evidence, not evidence of trend-following returns, edge, broker approval, or deployment readiness.",
+    "fact": "Public broker terms establish general fractional availability and published fees, but not a fully verified exact Thailand implementation path.",
+    "inference": "Fractional ETFs are the only economically plausible current-capital branch, while micro futures require capital far above USD 2,000.",
+    "locked_assumption": "Capital, breadth, inverse-volatility inputs, cash, concentration, turnover, spread, margin, and stress gates are copied from the locked preregistration.",
+    "recommendation": "Carry a scope restriction into B3 and verify exact Webull Thailand ticker/minimum/FX and OpenAPI fractional capability before any implementation study."
+  },
+  "decision": "scope_restricted",
+  "edge_claim": "none",
+  "etf": {
+    "broker_results": [
+      {
+        "allocation_feasible_breadths_under_recorded_cost_model": [
+          8,
+          10
+        ],
+        "blockers": [
+          "exact_candidate_green_diamond_eligibility_unverified",
+          "public_minimum_fractional_order_unverified",
+          "funding_FX_cost_unverified",
+          "sell_side_regulatory_fees_not_quantified"
+        ],
+        "broker_path": "Webull_Thailand_manual_fractional",
+        "capital_usd": 1000,
+        "classification": "scope_restricted",
+        "fully_verified_feasible": false
+      },
+      {
+        "allocation_feasible_breadths_under_recorded_cost_model": [
+          8,
+          10
+        ],
+        "blockers": [
+          "Thailand_OpenAPI_fractional_order_support_unverified",
+          "exact_candidate_API_eligibility_unverified",
+          "public_minimum_fractional_order_unverified",
+          "funding_FX_cost_unverified",
+          "sell_side_regulatory_fees_not_quantified"
+        ],
+        "broker_path": "Webull_Thailand_OpenAPI_fractional",
+        "capital_usd": 1000,
+        "classification": "scope_restricted",
+        "fully_verified_feasible": false
+      },
+      {
+        "allocation_feasible_breadths_under_recorded_cost_model": [
+          8,
+          10
+        ],
+        "blockers": [
+          "exact_candidate_fractional_eligibility_unverified",
+          "Thailand_account_permission_unverified",
+          "minimum_commission_requires_unlocked_order_count_sensitivity",
+          "funding_FX_cost_unverified"
+        ],
+        "broker_path": "IBKR_fractional_reference",
+        "capital_usd": 1000,
+        "classification": "scope_restricted",
+        "fully_verified_feasible": false
+      },
+      {
+        "allocation_feasible_breadths_under_recorded_cost_model": [
+          8,
+          10
+        ],
+        "blockers": [
+          "exact_candidate_green_diamond_eligibility_unverified",
+          "public_minimum_fractional_order_unverified",
+          "funding_FX_cost_unverified",
+          "sell_side_regulatory_fees_not_quantified"
+        ],
+        "broker_path": "Webull_Thailand_manual_fractional",
+        "capital_usd": 2000,
+        "classification": "scope_restricted",
+        "fully_verified_feasible": false
+      },
+      {
+        "allocation_feasible_breadths_under_recorded_cost_model": [
+          8,
+          10
+        ],
+        "blockers": [
+          "Thailand_OpenAPI_fractional_order_support_unverified",
+          "exact_candidate_API_eligibility_unverified",
+          "public_minimum_fractional_order_unverified",
+          "funding_FX_cost_unverified",
+          "sell_side_regulatory_fees_not_quantified"
+        ],
+        "broker_path": "Webull_Thailand_OpenAPI_fractional",
+        "capital_usd": 2000,
+        "classification": "scope_restricted",
+        "fully_verified_feasible": false
+      },
+      {
+        "allocation_feasible_breadths_under_recorded_cost_model": [
+          8,
+          10
+        ],
+        "blockers": [
+          "exact_candidate_fractional_eligibility_unverified",
+          "Thailand_account_permission_unverified",
+          "minimum_commission_requires_unlocked_order_count_sensitivity",
+          "funding_FX_cost_unverified"
+        ],
+        "broker_path": "IBKR_fractional_reference",
+        "capital_usd": 2000,
+        "classification": "scope_restricted",
+        "fully_verified_feasible": false
+      }
+    ],
+    "candidate_sleeves": [
+      {
+        "base_annual_volatility": 0.2,
+        "category": "equity_or_real_estate",
+        "expense_ratio": 0.0003,
+        "inception": "2001-05-24",
+        "order": 1,
+        "sleeve": "US_equity",
+        "source_url": "https://investor.vanguard.com/investment-products/etfs/profile/vti",
+        "ticker": "VTI",
+        "trading_currency": "USD"
+      },
+      {
+        "base_annual_volatility": 0.2,
+        "category": "equity_or_real_estate",
+        "expense_ratio": 0.0006,
+        "inception": "2005-03-04",
+        "order": 2,
+        "sleeve": "Europe_equity",
+        "source_url": "https://investor.vanguard.com/investment-products/etfs/profile/vgk",
+        "ticker": "VGK",
+        "trading_currency": "USD"
+      },
+      {
+        "base_annual_volatility": 0.2,
+        "category": "equity_or_real_estate",
+        "expense_ratio": 0.0049,
+        "inception": "1996-03-12",
+        "order": 3,
+        "sleeve": "Japan_equity",
+        "source_url": "https://www.ishares.com/us/products/239665/ishares-msci-japan-etf",
+        "ticker": "EWJ",
+        "trading_currency": "USD"
+      },
+      {
+        "base_annual_volatility": 0.2,
+        "category": "equity_or_real_estate",
+        "expense_ratio": 0.0009,
+        "inception": "2014-06-10",
+        "order": 4,
+        "sleeve": "Pacific_ex_Japan_equity",
+        "source_url": "https://www.ishares.com/us/products/264623/ishares-core-msci-pacific-etf",
+        "ticker": "IPAC",
+        "trading_currency": "USD"
+      },
+      {
+        "base_annual_volatility": 0.2,
+        "category": "equity_or_real_estate",
+        "expense_ratio": 0.0007,
+        "inception": "2005-03-04",
+        "order": 5,
+        "sleeve": "emerging_markets_equity",
+        "source_url": "https://investor.vanguard.com/investment-products/etfs/profile/vwo",
+        "ticker": "VWO",
+        "trading_currency": "USD"
+      },
+      {
+        "base_annual_volatility": 0.1,
+        "category": "government_or_inflation_linked_bonds",
+        "expense_ratio": 0.0015,
+        "inception": "2002-07-22",
+        "order": 6,
+        "sleeve": "intermediate_government_bonds",
+        "source_url": "https://www.ishares.com/us/products/239456/ishares-7-10-year-treasury-bond-etf",
+        "ticker": "IEF",
+        "trading_currency": "USD"
+      },
+      {
+        "base_annual_volatility": 0.1,
+        "category": "government_or_inflation_linked_bonds",
+        "expense_ratio": 0.0003,
+        "inception": "2010-08-05",
+        "order": 7,
+        "sleeve": "inflation_linked_bonds",
+        "source_url": "https://www.schwabassetmanagement.com/products/schp",
+        "ticker": "SCHP",
+        "trading_currency": "USD"
+      },
+      {
+        "base_annual_volatility": 0.18,
+        "category": "gold_or_broad_commodities",
+        "expense_ratio": 0.001,
+        "inception": "2018-06-25",
+        "order": 8,
+        "sleeve": "gold",
+        "source_url": "https://www.ssga.com/us/en/intermediary/etfs/spdr-gold-minishares-trust-gldm",
+        "ticker": "GLDM",
+        "trading_currency": "USD"
+      },
+      {
+        "base_annual_volatility": 0.18,
+        "category": "gold_or_broad_commodities",
+        "expense_ratio": 0.0059,
+        "inception": "2014-11-07",
+        "order": 9,
+        "sleeve": "broad_commodities",
+        "source_url": "https://www.invesco.com/us/financial-products/etfs/product-detail?productId=ETF-PDBC",
+        "ticker": "PDBC",
+        "trading_currency": "USD"
+      },
+      {
+        "base_annual_volatility": 0.2,
+        "category": "equity_or_real_estate",
+        "expense_ratio": 0.0012,
+        "inception": "2010-11-01",
+        "order": 10,
+        "sleeve": "global_ex_US_real_estate",
+        "source_url": "https://investor.vanguard.com/investment-products/etfs/profile/vnqi",
+        "ticker": "VNQI",
+        "trading_currency": "USD"
+      },
+      {
+        "base_annual_volatility": 0.15,
+        "category": "managed_futures_proxy",
+        "expense_ratio": 0.0085,
+        "inception": "2019-05-08",
+        "order": 11,
+        "sleeve": "managed_futures_proxy",
+        "source_url": "https://imgpfunds.com/im-dbi-managed-futures-strategy-etf/",
+        "ticker": "DBMF",
+        "trading_currency": "USD"
+      },
+      {
+        "base_annual_volatility": 0.03,
+        "category": "short_Treasury_cash_proxy",
+        "expense_ratio": 0.0009,
+        "inception": "2020-05-26",
+        "order": 12,
+        "sleeve": "short_Treasury_cash_proxy",
+        "source_url": "https://www.ishares.com/us/products/314116/ishares-0-3-month-treasury-bond-etf",
+        "ticker": "SGOV",
+        "trading_currency": "USD"
+      }
+    ],
+    "economic_scenarios": [
+      {
+        "allocations": [
+          {
+            "sleeve": "US_equity",
+            "standalone_risk_contribution": 0.125,
+            "target_notional_usd": 89.01,
+            "ticker": "VTI",
+            "weight": 0.08901099
+          },
+          {
+            "sleeve": "Europe_equity",
+            "standalone_risk_contribution": 0.125,
+            "target_notional_usd": 89.01,
+            "ticker": "VGK",
+            "weight": 0.08901099
+          },
+          {
+            "sleeve": "Japan_equity",
+            "standalone_risk_contribution": 0.125,
+            "target_notional_usd": 89.01,
+            "ticker": "EWJ",
+            "weight": 0.08901099
+          },
+          {
+            "sleeve": "Pacific_ex_Japan_equity",
+            "standalone_risk_contribution": 0.125,
+            "target_notional_usd": 89.01,
+            "ticker": "IPAC",
+            "weight": 0.08901099
+          },
+          {
+            "sleeve": "emerging_markets_equity",
+            "standalone_risk_contribution": 0.125,
+            "target_notional_usd": 89.01,
+            "ticker": "VWO",
+            "weight": 0.08901099
+          },
+          {
+            "sleeve": "intermediate_government_bonds",
+            "standalone_risk_contribution": 0.125,
+            "target_notional_usd": 178.02,
+            "ticker": "IEF",
+            "weight": 0.17802198
+          },
+          {
+            "sleeve": "inflation_linked_bonds",
+            "standalone_risk_contribution": 0.125,
+            "target_notional_usd": 178.02,
+            "ticker": "SCHP",
+            "weight": 0.17802198
+          },
+          {
+            "sleeve": "gold",
+            "standalone_risk_contribution": 0.125,
+            "target_notional_usd": 98.9,
+            "ticker": "GLDM",
+            "weight": 0.0989011
+          }
+        ],
+        "breadth": 8,
+        "capital_usd": 1000,
+        "cash_fraction": 0.1,
+        "economic_classification": "feasible",
+        "gates": {
+          "breadth_at_least_8": true,
+          "cash_buffer_at_least_10_percent": true,
+          "gross_exposure_at_most_90_percent": true,
+          "maximum_notional_weight_met": true,
+          "maximum_standalone_risk_contribution_met": true,
+          "minimum_trade_met": true,
+          "no_leverage": true,
+          "primary_stressed_recurring_cost_met": true
+        },
+        "gross_exposure": 0.9,
+        "maximum_observed_standalone_risk_contribution": 0.125,
+        "maximum_observed_weight": 0.17802198,
+        "minimum_observed_trade_usd": 89.01,
+        "webull_cost_grid": [
+          {
+            "annual_one_way_turnover_multiple": 1.0,
+            "commission_plus_25bps_spread_fraction": 0.00357,
+            "total_recurring_cost_fraction": 0.0047678,
+            "weighted_expense_fraction": 0.0011978
+          },
+          {
+            "annual_one_way_turnover_multiple": 2.0,
+            "commission_plus_25bps_spread_fraction": 0.00714,
+            "total_recurring_cost_fraction": 0.0083378,
+            "weighted_expense_fraction": 0.0011978
+          },
+          {
+            "annual_one_way_turnover_multiple": 4.0,
+            "commission_plus_25bps_spread_fraction": 0.01428,
+            "total_recurring_cost_fraction": 0.0154778,
+            "weighted_expense_fraction": 0.0011978
+          }
+        ]
+      },
+      {
+        "allocations": [
+          {
+            "sleeve": "US_equity",
+            "standalone_risk_contribution": 0.1,
+            "target_notional_usd": 73.64,
+            "ticker": "VTI",
+            "weight": 0.07363636
+          },
+          {
+            "sleeve": "Europe_equity",
+            "standalone_risk_contribution": 0.1,
+            "target_notional_usd": 73.64,
+            "ticker": "VGK",
+            "weight": 0.07363636
+          },
+          {
+            "sleeve": "Japan_equity",
+            "standalone_risk_contribution": 0.1,
+            "target_notional_usd": 73.64,
+            "ticker": "EWJ",
+            "weight": 0.07363636
+          },
+          {
+            "sleeve": "Pacific_ex_Japan_equity",
+            "standalone_risk_contribution": 0.1,
+            "target_notional_usd": 73.64,
+            "ticker": "IPAC",
+            "weight": 0.07363636
+          },
+          {
+            "sleeve": "emerging_markets_equity",
+            "standalone_risk_contribution": 0.1,
+            "target_notional_usd": 73.64,
+            "ticker": "VWO",
+            "weight": 0.07363636
+          },
+          {
+            "sleeve": "intermediate_government_bonds",
+            "standalone_risk_contribution": 0.1,
+            "target_notional_usd": 147.27,
+            "ticker": "IEF",
+            "weight": 0.14727273
+          },
+          {
+            "sleeve": "inflation_linked_bonds",
+            "standalone_risk_contribution": 0.1,
+            "target_notional_usd": 147.27,
+            "ticker": "SCHP",
+            "weight": 0.14727273
+          },
+          {
+            "sleeve": "gold",
+            "standalone_risk_contribution": 0.1,
+            "target_notional_usd": 81.82,
+            "ticker": "GLDM",
+            "weight": 0.08181818
+          },
+          {
+            "sleeve": "broad_commodities",
+            "standalone_risk_contribution": 0.1,
+            "target_notional_usd": 81.82,
+            "ticker": "PDBC",
+            "weight": 0.08181818
+          },
+          {
+            "sleeve": "global_ex_US_real_estate",
+            "standalone_risk_contribution": 0.1,
+            "target_notional_usd": 73.64,
+            "ticker": "VNQI",
+            "weight": 0.07363636
+          }
+        ],
+        "breadth": 10,
+        "capital_usd": 1000,
+        "cash_fraction": 0.1,
+        "economic_classification": "feasible",
+        "gates": {
+          "breadth_at_least_8": true,
+          "cash_buffer_at_least_10_percent": true,
+          "gross_exposure_at_most_90_percent": true,
+          "maximum_notional_weight_met": true,
+          "maximum_standalone_risk_contribution_met": true,
+          "minimum_trade_met": true,
+          "no_leverage": true,
+          "primary_stressed_recurring_cost_met": true
+        },
+        "gross_exposure": 0.9,
+        "maximum_observed_standalone_risk_contribution": 0.1,
+        "maximum_observed_weight": 0.14727273,
+        "minimum_observed_trade_usd": 73.64,
+        "webull_cost_grid": [
+          {
+            "annual_one_way_turnover_multiple": 1.0,
+            "commission_plus_25bps_spread_fraction": 0.00357,
+            "total_recurring_cost_fraction": 0.00519545,
+            "weighted_expense_fraction": 0.00162545
+          },
+          {
+            "annual_one_way_turnover_multiple": 2.0,
+            "commission_plus_25bps_spread_fraction": 0.00714,
+            "total_recurring_cost_fraction": 0.00876545,
+            "weighted_expense_fraction": 0.00162545
+          },
+          {
+            "annual_one_way_turnover_multiple": 4.0,
+            "commission_plus_25bps_spread_fraction": 0.01428,
+            "total_recurring_cost_fraction": 0.01590545,
+            "weighted_expense_fraction": 0.00162545
+          }
+        ]
+      },
+      {
+        "allocations": [
+          {
+            "sleeve": "US_equity",
+            "standalone_risk_contribution": 0.08333333,
+            "target_notional_usd": 44.51,
+            "ticker": "VTI",
+            "weight": 0.04450549
+          },
+          {
+            "sleeve": "Europe_equity",
+            "standalone_risk_contribution": 0.08333333,
+            "target_notional_usd": 44.51,
+            "ticker": "VGK",
+            "weight": 0.04450549
+          },
+          {
+            "sleeve": "Japan_equity",
+            "standalone_risk_contribution": 0.08333333,
+            "target_notional_usd": 44.51,
+            "ticker": "EWJ",
+            "weight": 0.04450549
+          },
+          {
+            "sleeve": "Pacific_ex_Japan_equity",
+            "standalone_risk_contribution": 0.08333333,
+            "target_notional_usd": 44.51,
+            "ticker": "IPAC",
+            "weight": 0.04450549
+          },
+          {
+            "sleeve": "emerging_markets_equity",
+            "standalone_risk_contribution": 0.08333333,
+            "target_notional_usd": 44.51,
+            "ticker": "VWO",
+            "weight": 0.04450549
+          },
+          {
+            "sleeve": "intermediate_government_bonds",
+            "standalone_risk_contribution": 0.08333333,
+            "target_notional_usd": 89.01,
+            "ticker": "IEF",
+            "weight": 0.08901099
+          },
+          {
+            "sleeve": "inflation_linked_bonds",
+            "standalone_risk_contribution": 0.08333333,
+            "target_notional_usd": 89.01,
+            "ticker": "SCHP",
+            "weight": 0.08901099
+          },
+          {
+            "sleeve": "gold",
+            "standalone_risk_contribution": 0.08333333,
+            "target_notional_usd": 49.45,
+            "ticker": "GLDM",
+            "weight": 0.04945055
+          },
+          {
+            "sleeve": "broad_commodities",
+            "standalone_risk_contribution": 0.08333333,
+            "target_notional_usd": 49.45,
+            "ticker": "PDBC",
+            "weight": 0.04945055
+          },
+          {
+            "sleeve": "global_ex_US_real_estate",
+            "standalone_risk_contribution": 0.08333333,
+            "target_notional_usd": 44.51,
+            "ticker": "VNQI",
+            "weight": 0.04450549
+          },
+          {
+            "sleeve": "managed_futures_proxy",
+            "standalone_risk_contribution": 0.08333333,
+            "target_notional_usd": 59.34,
+            "ticker": "DBMF",
+            "weight": 0.05934066
+          },
+          {
+            "sleeve": "short_Treasury_cash_proxy",
+            "standalone_risk_contribution": 0.08333333,
+            "target_notional_usd": 296.7,
+            "ticker": "SGOV",
+            "weight": 0.2967033
+          }
+        ],
+        "breadth": 12,
+        "capital_usd": 1000,
+        "cash_fraction": 0.1,
+        "economic_classification": "infeasible",
+        "gates": {
+          "breadth_at_least_8": true,
+          "cash_buffer_at_least_10_percent": true,
+          "gross_exposure_at_most_90_percent": true,
+          "maximum_notional_weight_met": false,
+          "maximum_standalone_risk_contribution_met": true,
+          "minimum_trade_met": true,
+          "no_leverage": true,
+          "primary_stressed_recurring_cost_met": true
+        },
+        "gross_exposure": 0.9,
+        "maximum_observed_standalone_risk_contribution": 0.08333333,
+        "maximum_observed_weight": 0.2967033,
+        "minimum_observed_trade_usd": 44.51,
+        "webull_cost_grid": [
+          {
+            "annual_one_way_turnover_multiple": 1.0,
+            "commission_plus_25bps_spread_fraction": 0.00357,
+            "total_recurring_cost_fraction": 0.00540956,
+            "weighted_expense_fraction": 0.00183956
+          },
+          {
+            "annual_one_way_turnover_multiple": 2.0,
+            "commission_plus_25bps_spread_fraction": 0.00714,
+            "total_recurring_cost_fraction": 0.00897956,
+            "weighted_expense_fraction": 0.00183956
+          },
+          {
+            "annual_one_way_turnover_multiple": 4.0,
+            "commission_plus_25bps_spread_fraction": 0.01428,
+            "total_recurring_cost_fraction": 0.01611956,
+            "weighted_expense_fraction": 0.00183956
+          }
+        ]
+      },
+      {
+        "allocations": [
+          {
+            "sleeve": "US_equity",
+            "standalone_risk_contribution": 0.125,
+            "target_notional_usd": 178.02,
+            "ticker": "VTI",
+            "weight": 0.08901099
+          },
+          {
+            "sleeve": "Europe_equity",
+            "standalone_risk_contribution": 0.125,
+            "target_notional_usd": 178.02,
+            "ticker": "VGK",
+            "weight": 0.08901099
+          },
+          {
+            "sleeve": "Japan_equity",
+            "standalone_risk_contribution": 0.125,
+            "target_notional_usd": 178.02,
+            "ticker": "EWJ",
+            "weight": 0.08901099
+          },
+          {
+            "sleeve": "Pacific_ex_Japan_equity",
+            "standalone_risk_contribution": 0.125,
+            "target_notional_usd": 178.02,
+            "ticker": "IPAC",
+            "weight": 0.08901099
+          },
+          {
+            "sleeve": "emerging_markets_equity",
+            "standalone_risk_contribution": 0.125,
+            "target_notional_usd": 178.02,
+            "ticker": "VWO",
+            "weight": 0.08901099
+          },
+          {
+            "sleeve": "intermediate_government_bonds",
+            "standalone_risk_contribution": 0.125,
+            "target_notional_usd": 356.04,
+            "ticker": "IEF",
+            "weight": 0.17802198
+          },
+          {
+            "sleeve": "inflation_linked_bonds",
+            "standalone_risk_contribution": 0.125,
+            "target_notional_usd": 356.04,
+            "ticker": "SCHP",
+            "weight": 0.17802198
+          },
+          {
+            "sleeve": "gold",
+            "standalone_risk_contribution": 0.125,
+            "target_notional_usd": 197.8,
+            "ticker": "GLDM",
+            "weight": 0.0989011
+          }
+        ],
+        "breadth": 8,
+        "capital_usd": 2000,
+        "cash_fraction": 0.1,
+        "economic_classification": "feasible",
+        "gates": {
+          "breadth_at_least_8": true,
+          "cash_buffer_at_least_10_percent": true,
+          "gross_exposure_at_most_90_percent": true,
+          "maximum_notional_weight_met": true,
+          "maximum_standalone_risk_contribution_met": true,
+          "minimum_trade_met": true,
+          "no_leverage": true,
+          "primary_stressed_recurring_cost_met": true
+        },
+        "gross_exposure": 0.9,
+        "maximum_observed_standalone_risk_contribution": 0.125,
+        "maximum_observed_weight": 0.17802198,
+        "minimum_observed_trade_usd": 178.02,
+        "webull_cost_grid": [
+          {
+            "annual_one_way_turnover_multiple": 1.0,
+            "commission_plus_25bps_spread_fraction": 0.00357,
+            "total_recurring_cost_fraction": 0.0047678,
+            "weighted_expense_fraction": 0.0011978
+          },
+          {
+            "annual_one_way_turnover_multiple": 2.0,
+            "commission_plus_25bps_spread_fraction": 0.00714,
+            "total_recurring_cost_fraction": 0.0083378,
+            "weighted_expense_fraction": 0.0011978
+          },
+          {
+            "annual_one_way_turnover_multiple": 4.0,
+            "commission_plus_25bps_spread_fraction": 0.01428,
+            "total_recurring_cost_fraction": 0.0154778,
+            "weighted_expense_fraction": 0.0011978
+          }
+        ]
+      },
+      {
+        "allocations": [
+          {
+            "sleeve": "US_equity",
+            "standalone_risk_contribution": 0.1,
+            "target_notional_usd": 147.27,
+            "ticker": "VTI",
+            "weight": 0.07363636
+          },
+          {
+            "sleeve": "Europe_equity",
+            "standalone_risk_contribution": 0.1,
+            "target_notional_usd": 147.27,
+            "ticker": "VGK",
+            "weight": 0.07363636
+          },
+          {
+            "sleeve": "Japan_equity",
+            "standalone_risk_contribution": 0.1,
+            "target_notional_usd": 147.27,
+            "ticker": "EWJ",
+            "weight": 0.07363636
+          },
+          {
+            "sleeve": "Pacific_ex_Japan_equity",
+            "standalone_risk_contribution": 0.1,
+            "target_notional_usd": 147.27,
+            "ticker": "IPAC",
+            "weight": 0.07363636
+          },
+          {
+            "sleeve": "emerging_markets_equity",
+            "standalone_risk_contribution": 0.1,
+            "target_notional_usd": 147.27,
+            "ticker": "VWO",
+            "weight": 0.07363636
+          },
+          {
+            "sleeve": "intermediate_government_bonds",
+            "standalone_risk_contribution": 0.1,
+            "target_notional_usd": 294.55,
+            "ticker": "IEF",
+            "weight": 0.14727273
+          },
+          {
+            "sleeve": "inflation_linked_bonds",
+            "standalone_risk_contribution": 0.1,
+            "target_notional_usd": 294.55,
+            "ticker": "SCHP",
+            "weight": 0.14727273
+          },
+          {
+            "sleeve": "gold",
+            "standalone_risk_contribution": 0.1,
+            "target_notional_usd": 163.64,
+            "ticker": "GLDM",
+            "weight": 0.08181818
+          },
+          {
+            "sleeve": "broad_commodities",
+            "standalone_risk_contribution": 0.1,
+            "target_notional_usd": 163.64,
+            "ticker": "PDBC",
+            "weight": 0.08181818
+          },
+          {
+            "sleeve": "global_ex_US_real_estate",
+            "standalone_risk_contribution": 0.1,
+            "target_notional_usd": 147.27,
+            "ticker": "VNQI",
+            "weight": 0.07363636
+          }
+        ],
+        "breadth": 10,
+        "capital_usd": 2000,
+        "cash_fraction": 0.1,
+        "economic_classification": "feasible",
+        "gates": {
+          "breadth_at_least_8": true,
+          "cash_buffer_at_least_10_percent": true,
+          "gross_exposure_at_most_90_percent": true,
+          "maximum_notional_weight_met": true,
+          "maximum_standalone_risk_contribution_met": true,
+          "minimum_trade_met": true,
+          "no_leverage": true,
+          "primary_stressed_recurring_cost_met": true
+        },
+        "gross_exposure": 0.9,
+        "maximum_observed_standalone_risk_contribution": 0.1,
+        "maximum_observed_weight": 0.14727273,
+        "minimum_observed_trade_usd": 147.27,
+        "webull_cost_grid": [
+          {
+            "annual_one_way_turnover_multiple": 1.0,
+            "commission_plus_25bps_spread_fraction": 0.00357,
+            "total_recurring_cost_fraction": 0.00519545,
+            "weighted_expense_fraction": 0.00162545
+          },
+          {
+            "annual_one_way_turnover_multiple": 2.0,
+            "commission_plus_25bps_spread_fraction": 0.00714,
+            "total_recurring_cost_fraction": 0.00876545,
+            "weighted_expense_fraction": 0.00162545
+          },
+          {
+            "annual_one_way_turnover_multiple": 4.0,
+            "commission_plus_25bps_spread_fraction": 0.01428,
+            "total_recurring_cost_fraction": 0.01590545,
+            "weighted_expense_fraction": 0.00162545
+          }
+        ]
+      },
+      {
+        "allocations": [
+          {
+            "sleeve": "US_equity",
+            "standalone_risk_contribution": 0.08333333,
+            "target_notional_usd": 89.01,
+            "ticker": "VTI",
+            "weight": 0.04450549
+          },
+          {
+            "sleeve": "Europe_equity",
+            "standalone_risk_contribution": 0.08333333,
+            "target_notional_usd": 89.01,
+            "ticker": "VGK",
+            "weight": 0.04450549
+          },
+          {
+            "sleeve": "Japan_equity",
+            "standalone_risk_contribution": 0.08333333,
+            "target_notional_usd": 89.01,
+            "ticker": "EWJ",
+            "weight": 0.04450549
+          },
+          {
+            "sleeve": "Pacific_ex_Japan_equity",
+            "standalone_risk_contribution": 0.08333333,
+            "target_notional_usd": 89.01,
+            "ticker": "IPAC",
+            "weight": 0.04450549
+          },
+          {
+            "sleeve": "emerging_markets_equity",
+            "standalone_risk_contribution": 0.08333333,
+            "target_notional_usd": 89.01,
+            "ticker": "VWO",
+            "weight": 0.04450549
+          },
+          {
+            "sleeve": "intermediate_government_bonds",
+            "standalone_risk_contribution": 0.08333333,
+            "target_notional_usd": 178.02,
+            "ticker": "IEF",
+            "weight": 0.08901099
+          },
+          {
+            "sleeve": "inflation_linked_bonds",
+            "standalone_risk_contribution": 0.08333333,
+            "target_notional_usd": 178.02,
+            "ticker": "SCHP",
+            "weight": 0.08901099
+          },
+          {
+            "sleeve": "gold",
+            "standalone_risk_contribution": 0.08333333,
+            "target_notional_usd": 98.9,
+            "ticker": "GLDM",
+            "weight": 0.04945055
+          },
+          {
+            "sleeve": "broad_commodities",
+            "standalone_risk_contribution": 0.08333333,
+            "target_notional_usd": 98.9,
+            "ticker": "PDBC",
+            "weight": 0.04945055
+          },
+          {
+            "sleeve": "global_ex_US_real_estate",
+            "standalone_risk_contribution": 0.08333333,
+            "target_notional_usd": 89.01,
+            "ticker": "VNQI",
+            "weight": 0.04450549
+          },
+          {
+            "sleeve": "managed_futures_proxy",
+            "standalone_risk_contribution": 0.08333333,
+            "target_notional_usd": 118.68,
+            "ticker": "DBMF",
+            "weight": 0.05934066
+          },
+          {
+            "sleeve": "short_Treasury_cash_proxy",
+            "standalone_risk_contribution": 0.08333333,
+            "target_notional_usd": 593.41,
+            "ticker": "SGOV",
+            "weight": 0.2967033
+          }
+        ],
+        "breadth": 12,
+        "capital_usd": 2000,
+        "cash_fraction": 0.1,
+        "economic_classification": "infeasible",
+        "gates": {
+          "breadth_at_least_8": true,
+          "cash_buffer_at_least_10_percent": true,
+          "gross_exposure_at_most_90_percent": true,
+          "maximum_notional_weight_met": false,
+          "maximum_standalone_risk_contribution_met": true,
+          "minimum_trade_met": true,
+          "no_leverage": true,
+          "primary_stressed_recurring_cost_met": true
+        },
+        "gross_exposure": 0.9,
+        "maximum_observed_standalone_risk_contribution": 0.08333333,
+        "maximum_observed_weight": 0.2967033,
+        "minimum_observed_trade_usd": 89.01,
+        "webull_cost_grid": [
+          {
+            "annual_one_way_turnover_multiple": 1.0,
+            "commission_plus_25bps_spread_fraction": 0.00357,
+            "total_recurring_cost_fraction": 0.00540956,
+            "weighted_expense_fraction": 0.00183956
+          },
+          {
+            "annual_one_way_turnover_multiple": 2.0,
+            "commission_plus_25bps_spread_fraction": 0.00714,
+            "total_recurring_cost_fraction": 0.00897956,
+            "weighted_expense_fraction": 0.00183956
+          },
+          {
+            "annual_one_way_turnover_multiple": 4.0,
+            "commission_plus_25bps_spread_fraction": 0.01428,
+            "total_recurring_cost_fraction": 0.01611956,
+            "weighted_expense_fraction": 0.00183956
+          }
+        ]
+      }
+    ],
+    "overall_current_capital_result": {
+      "capital_scenarios_usd": [
+        1000,
+        2000
+      ],
+      "classification": "scope_restricted",
+      "economic_sizing_passes_for_breadths": [
+        8,
+        10
+      ],
+      "fully_verified_broker_path_exists": false
+    }
+  },
+  "evidence_tier": "E0",
+  "futures": {
+    "current_capital_feasible": false,
+    "full_size_comparator": [
+      {
+        "aggregate_stress_loss_usd": 90078.063313,
+        "binding_component": "single_market_concentration",
+        "breadth": 4,
+        "classification": "minimum_capital_only",
+        "contracts": [
+          {
+            "contract_id": "E-mini S&P 500",
+            "initial_margin_usd": 35596.0,
+            "root_symbol": "ES",
+            "stress_loss_usd": 30364.0
+          },
+          {
+            "contract_id": "Euro FX",
+            "initial_margin_usd": 4050.48,
+            "root_symbol": "6E",
+            "stress_loss_usd": 7156.562813
+          },
+          {
+            "contract_id": "Gold",
+            "initial_margin_usd": 47094.27,
+            "root_symbol": "GC",
+            "stress_loss_usd": 40583.0005
+          },
+          {
+            "contract_id": "WTI Crude Oil",
+            "initial_margin_usd": 19280.0,
+            "root_symbol": "CL",
+            "stress_loss_usd": 11974.5
+          }
+        ],
+        "diagnostics_at_minimum_capital": {
+          "aggregate_stress_loss_fraction": 0.22192181,
+          "cash_after_initial_margin_fraction": 0.73880081,
+          "initial_margin_fraction": 0.26119919,
+          "maximum_single_market_stress_fraction": 0.09998276,
+          "portfolio_round_turn_broker_commission_floor_usd": 6.8,
+          "round_turn_total_cost_status": "unverified_exchange_and_regulatory_fees",
+          "stressed_margin_fraction": 0.39179878
+        },
+        "formula_components_usd": {
+          "aggregate_stress_loss": 300260.211043,
+          "initial_margin_occupancy": 265051.875,
+          "single_market_concentration": 405830.005,
+          "stressed_margin_occupancy": 265051.875
+        },
+        "initial_margin_sum_usd": 106020.75,
+        "maximum_single_market_stress_loss_usd": 40583.0005,
+        "minimum_capital_usd": 405900,
+        "per_market_stress_limit": 0.1,
+        "stressed_margin_sum_usd": 159031.125
+      },
+      {
+        "aggregate_stress_loss_usd": 134974.800913,
+        "binding_component": "single_market_concentration",
+        "breadth": 8,
+        "classification": "minimum_capital_only",
+        "contracts": [
+          {
+            "contract_id": "E-mini S&P 500",
+            "initial_margin_usd": 35596.0,
+            "root_symbol": "ES",
+            "stress_loss_usd": 30364.0
+          },
+          {
+            "contract_id": "Euro FX",
+            "initial_margin_usd": 4050.48,
+            "root_symbol": "6E",
+            "stress_loss_usd": 7156.562813
+          },
+          {
+            "contract_id": "Gold",
+            "initial_margin_usd": 47094.27,
+            "root_symbol": "GC",
+            "stress_loss_usd": 40583.0005
+          },
+          {
+            "contract_id": "WTI Crude Oil",
+            "initial_margin_usd": 19280.0,
+            "root_symbol": "CL",
+            "stress_loss_usd": 11974.5
+          },
+          {
+            "contract_id": "E-mini Russell 2000",
+            "initial_margin_usd": 13106.8,
+            "root_symbol": "RTY",
+            "stress_loss_usd": 11924.7998
+          },
+          {
+            "contract_id": "Japanese Yen",
+            "initial_margin_usd": 2953.97,
+            "root_symbol": "6J",
+            "stress_loss_usd": 3870.9375
+          },
+          {
+            "contract_id": "Copper",
+            "initial_margin_usd": 27153.75,
+            "root_symbol": "HG",
+            "stress_loss_usd": 19101.0003
+          },
+          {
+            "contract_id": "10-Year Treasury Note proxy",
+            "initial_margin_usd": 2578.24,
+            "root_symbol": "ZN",
+            "stress_loss_usd": 10000.0
+          }
+        ],
+        "diagnostics_at_minimum_capital": {
+          "aggregate_stress_loss_fraction": 0.24939911,
+          "cash_after_initial_margin_fraction": 0.71948723,
+          "initial_margin_fraction": 0.28051277,
+          "maximum_single_market_stress_fraction": 0.07498707,
+          "portfolio_round_turn_broker_commission_floor_usd": 13.6,
+          "round_turn_total_cost_status": "unverified_exchange_and_regulatory_fees",
+          "stressed_margin_fraction": 0.42076915
+        },
+        "formula_components_usd": {
+          "aggregate_stress_loss": 449916.003043,
+          "initial_margin_occupancy": 379533.775,
+          "single_market_concentration": 541106.673333,
+          "stressed_margin_occupancy": 379533.775
+        },
+        "initial_margin_sum_usd": 151813.51,
+        "maximum_single_market_stress_loss_usd": 40583.0005,
+        "minimum_capital_usd": 541200,
+        "per_market_stress_limit": 0.075,
+        "stressed_margin_sum_usd": 227720.265
+      },
+      {
+        "aggregate_stress_loss_usd": 277558.600132,
+        "binding_component": "single_market_concentration",
+        "breadth": 12,
+        "classification": "minimum_capital_only",
+        "contracts": [
+          {
+            "contract_id": "E-mini S&P 500",
+            "initial_margin_usd": 35596.0,
+            "root_symbol": "ES",
+            "stress_loss_usd": 30364.0
+          },
+          {
+            "contract_id": "Euro FX",
+            "initial_margin_usd": 4050.48,
+            "root_symbol": "6E",
+            "stress_loss_usd": 7156.562813
+          },
+          {
+            "contract_id": "Gold",
+            "initial_margin_usd": 47094.27,
+            "root_symbol": "GC",
+            "stress_loss_usd": 40583.0005
+          },
+          {
+            "contract_id": "WTI Crude Oil",
+            "initial_margin_usd": 19280.0,
+            "root_symbol": "CL",
+            "stress_loss_usd": 11974.5
+          },
+          {
+            "contract_id": "E-mini Russell 2000",
+            "initial_margin_usd": 13106.8,
+            "root_symbol": "RTY",
+            "stress_loss_usd": 11924.7998
+          },
+          {
+            "contract_id": "Japanese Yen",
+            "initial_margin_usd": 2953.97,
+            "root_symbol": "6J",
+            "stress_loss_usd": 3870.9375
+          },
+          {
+            "contract_id": "Copper",
+            "initial_margin_usd": 27153.75,
+            "root_symbol": "HG",
+            "stress_loss_usd": 19101.0003
+          },
+          {
+            "contract_id": "10-Year Treasury Note proxy",
+            "initial_margin_usd": 2578.24,
+            "root_symbol": "ZN",
+            "stress_loss_usd": 10000.0
+          },
+          {
+            "contract_id": "E-mini Nasdaq-100",
+            "initial_margin_usd": 72365.75,
+            "root_symbol": "NQ",
+            "stress_loss_usd": 47669.6
+          },
+          {
+            "contract_id": "British Pound",
+            "initial_margin_usd": 2556.63,
+            "root_symbol": "6B",
+            "stress_loss_usd": 4184.6875
+          },
+          {
+            "contract_id": "Bitcoin",
+            "initial_margin_usd": 123169.07,
+            "root_symbol": "BTC",
+            "stress_loss_usd": 80729.511719
+          },
+          {
+            "contract_id": "2-Year Treasury Note proxy",
+            "initial_margin_usd": 1684.19,
+            "root_symbol": "ZT",
+            "stress_loss_usd": 10000.0
+          }
+        ],
+        "diagnostics_at_minimum_capital": {
+          "aggregate_stress_loss_fraction": 0.17190549,
+          "cash_after_initial_margin_fraction": 0.78224381,
+          "initial_margin_fraction": 0.21775619,
+          "maximum_single_market_stress_fraction": 0.0499997,
+          "portfolio_round_turn_broker_commission_floor_usd": 20.4,
+          "round_turn_total_cost_status": "unverified_exchange_and_regulatory_fees",
+          "stressed_margin_fraction": 0.32663429
+        },
+        "formula_components_usd": {
+          "aggregate_stress_loss": 925195.333773,
+          "initial_margin_occupancy": 878972.875,
+          "single_market_concentration": 1614590.23438,
+          "stressed_margin_occupancy": 878972.875
+        },
+        "initial_margin_sum_usd": 351589.15,
+        "maximum_single_market_stress_loss_usd": 80729.511719,
+        "minimum_capital_usd": 1614600,
+        "per_market_stress_limit": 0.05,
+        "stressed_margin_sum_usd": 527383.725
+      }
+    ],
+    "limitations": [
+      "Thailand is absent from the public IBKR margin wizard.",
+      "Maintenance margins and expiry-specific first-notice or last-trade dates were not captured.",
+      "Round-turn total cost excludes exchange and regulatory fees.",
+      "ZN and ZT are imperfect full-size proxy comparators for Micro Yield contracts."
+    ],
+    "micro": [
+      {
+        "aggregate_stress_loss_usd": 9007.806331,
+        "binding_component": "single_market_concentration",
+        "breadth": 4,
+        "classification": "minimum_capital_only",
+        "contracts": [
+          {
+            "contract_id": "Micro E-mini S&P 500",
+            "initial_margin_usd": 3559.6,
+            "root_symbol": "MES",
+            "stress_loss_usd": 3036.4
+          },
+          {
+            "contract_id": "Micro EUR/USD",
+            "initial_margin_usd": 405.048,
+            "root_symbol": "M6E",
+            "stress_loss_usd": 715.656281
+          },
+          {
+            "contract_id": "Micro Gold",
+            "initial_margin_usd": 4709.43,
+            "root_symbol": "MGC",
+            "stress_loss_usd": 4058.30005
+          },
+          {
+            "contract_id": "Micro WTI Crude Oil",
+            "initial_margin_usd": 1928.0,
+            "root_symbol": "MCL",
+            "stress_loss_usd": 1197.45
+          }
+        ],
+        "diagnostics_at_minimum_capital": {
+          "aggregate_stress_loss_fraction": 0.22186715,
+          "cash_after_initial_margin_fraction": 0.73886507,
+          "initial_margin_fraction": 0.26113493,
+          "maximum_single_market_stress_fraction": 0.09995813,
+          "portfolio_round_turn_broker_commission_floor_usd": 6.8,
+          "round_turn_total_cost_status": "unverified_exchange_and_regulatory_fees",
+          "stressed_margin_fraction": 0.39170239
+        },
+        "formula_components_usd": {
+          "aggregate_stress_loss": 30026.021103,
+          "initial_margin_occupancy": 26505.195,
+          "single_market_concentration": 40583.0005,
+          "stressed_margin_occupancy": 26505.195
+        },
+        "initial_margin_sum_usd": 10602.078,
+        "maximum_single_market_stress_loss_usd": 4058.30005,
+        "minimum_capital_usd": 40600,
+        "per_market_stress_limit": 0.1,
+        "stressed_margin_sum_usd": 15903.117
+      },
+      {
+        "aggregate_stress_loss_usd": 13497.480091,
+        "binding_component": "single_market_concentration",
+        "breadth": 8,
+        "classification": "minimum_capital_only",
+        "contracts": [
+          {
+            "contract_id": "Micro E-mini S&P 500",
+            "initial_margin_usd": 3559.6,
+            "root_symbol": "MES",
+            "stress_loss_usd": 3036.4
+          },
+          {
+            "contract_id": "Micro EUR/USD",
+            "initial_margin_usd": 405.048,
+            "root_symbol": "M6E",
+            "stress_loss_usd": 715.656281
+          },
+          {
+            "contract_id": "Micro Gold",
+            "initial_margin_usd": 4709.43,
+            "root_symbol": "MGC",
+            "stress_loss_usd": 4058.30005
+          },
+          {
+            "contract_id": "Micro WTI Crude Oil",
+            "initial_margin_usd": 1928.0,
+            "root_symbol": "MCL",
+            "stress_loss_usd": 1197.45
+          },
+          {
+            "contract_id": "Micro E-mini Russell 2000",
+            "initial_margin_usd": 1310.68,
+            "root_symbol": "M2K",
+            "stress_loss_usd": 1192.47998
+          },
+          {
+            "contract_id": "Micro JPY/USD",
+            "initial_margin_usd": 292.272,
+            "root_symbol": "MJY",
+            "stress_loss_usd": 387.09375
+          },
+          {
+            "contract_id": "Micro Copper",
+            "initial_margin_usd": 2714.125,
+            "root_symbol": "MHG",
+            "stress_loss_usd": 1910.10003
+          },
+          {
+            "contract_id": "Micro 10-Year Yield",
+            "initial_margin_usd": 603.795,
+            "root_symbol": "10Y",
+            "stress_loss_usd": 1000.0
+          }
+        ],
+        "diagnostics_at_minimum_capital": {
+          "aggregate_stress_loss_fraction": 0.249031,
+          "cash_after_initial_margin_fraction": 0.71359871,
+          "initial_margin_fraction": 0.28640129,
+          "maximum_single_market_stress_fraction": 0.07487638,
+          "portfolio_round_turn_broker_commission_floor_usd": 13.6,
+          "round_turn_total_cost_status": "unverified_exchange_and_regulatory_fees",
+          "stressed_margin_fraction": 0.42960194
+        },
+        "formula_components_usd": {
+          "aggregate_stress_loss": 44991.600303,
+          "initial_margin_occupancy": 38807.375,
+          "single_market_concentration": 54110.667333,
+          "stressed_margin_occupancy": 38807.375
+        },
+        "initial_margin_sum_usd": 15522.95,
+        "maximum_single_market_stress_loss_usd": 4058.30005,
+        "minimum_capital_usd": 54200,
+        "per_market_stress_limit": 0.075,
+        "stressed_margin_sum_usd": 23284.425
+      },
+      {
+        "aggregate_stress_loss_usd": 21297.499075,
+        "binding_component": "single_market_concentration",
+        "breadth": 12,
+        "classification": "minimum_capital_only",
+        "contracts": [
+          {
+            "contract_id": "Micro E-mini S&P 500",
+            "initial_margin_usd": 3559.6,
+            "root_symbol": "MES",
+            "stress_loss_usd": 3036.4
+          },
+          {
+            "contract_id": "Micro EUR/USD",
+            "initial_margin_usd": 405.048,
+            "root_symbol": "M6E",
+            "stress_loss_usd": 715.656281
+          },
+          {
+            "contract_id": "Micro Gold",
+            "initial_margin_usd": 4709.43,
+            "root_symbol": "MGC",
+            "stress_loss_usd": 4058.30005
+          },
+          {
+            "contract_id": "Micro WTI Crude Oil",
+            "initial_margin_usd": 1928.0,
+            "root_symbol": "MCL",
+            "stress_loss_usd": 1197.45
+          },
+          {
+            "contract_id": "Micro E-mini Russell 2000",
+            "initial_margin_usd": 1310.68,
+            "root_symbol": "M2K",
+            "stress_loss_usd": 1192.47998
+          },
+          {
+            "contract_id": "Micro JPY/USD",
+            "initial_margin_usd": 292.272,
+            "root_symbol": "MJY",
+            "stress_loss_usd": 387.09375
+          },
+          {
+            "contract_id": "Micro Copper",
+            "initial_margin_usd": 2714.125,
+            "root_symbol": "MHG",
+            "stress_loss_usd": 1910.10003
+          },
+          {
+            "contract_id": "Micro 10-Year Yield",
+            "initial_margin_usd": 603.795,
+            "root_symbol": "10Y",
+            "stress_loss_usd": 1000.0
+          },
+          {
+            "contract_id": "Micro E-mini Nasdaq-100",
+            "initial_margin_usd": 7236.57,
+            "root_symbol": "MNQ",
+            "stress_loss_usd": 4766.96
+          },
+          {
+            "contract_id": "Micro GBP/USD",
+            "initial_margin_usd": 255.663,
+            "root_symbol": "M6B",
+            "stress_loss_usd": 418.46875
+          },
+          {
+            "contract_id": "Micro Bitcoin",
+            "initial_margin_usd": 2463.88,
+            "root_symbol": "MBT",
+            "stress_loss_usd": 1614.590234
+          },
+          {
+            "contract_id": "Micro 2-Year Yield",
+            "initial_margin_usd": 664.125,
+            "root_symbol": "2YY",
+            "stress_loss_usd": 1000.0
+          }
+        ],
+        "diagnostics_at_minimum_capital": {
+          "aggregate_stress_loss_fraction": 0.22324423,
+          "cash_after_initial_margin_fraction": 0.72596239,
+          "initial_margin_fraction": 0.27403761,
+          "maximum_single_market_stress_fraction": 0.04996813,
+          "portfolio_round_turn_broker_commission_floor_usd": 20.4,
+          "round_turn_total_cost_status": "unverified_exchange_and_regulatory_fees",
+          "stressed_margin_fraction": 0.41105642
+        },
+        "formula_components_usd": {
+          "aggregate_stress_loss": 70991.663583,
+          "initial_margin_occupancy": 65357.97,
+          "single_market_concentration": 95339.2,
+          "stressed_margin_occupancy": 65357.97
+        },
+        "initial_margin_sum_usd": 26143.188,
+        "maximum_single_market_stress_loss_usd": 4766.96,
+        "minimum_capital_usd": 95400,
+        "per_market_stress_limit": 0.05,
+        "stressed_margin_sum_usd": 39214.782
+      }
+    ],
+    "operational_classification": "minimum_capital_only"
+  },
+  "guardrails": {
+    "credentialed_broker_request_used": false,
+    "orders_sent": false,
+    "paid_data_used": false,
+    "paper_trades_sent": false,
+    "return_backtest_run": false
+  },
+  "hypothesis_id": "L-0",
+  "measurement_date": "2026-07-15",
+  "methodology_sources": [
+    {
+      "path": "wiki/concepts/position-sizing.md",
+      "sha256": "6d24c4ffc6770590baaeb90402af4e413040ff6856b0585773657da85dc68343"
+    },
+    {
+      "path": "wiki/concepts/inverse-volatility-weighting.md",
+      "sha256": "c59b512d3df9499a738b1ee256d388376f04edee1c59727f2f79ddcc905e7f72"
+    },
+    {
+      "path": "wiki/concepts/target-volatility.md",
+      "sha256": "dc921ae790975a6a16b2397e1a1ee1ce6db7842e03a336f84d3e489f8096206b"
+    },
+    {
+      "path": "wiki/concepts/trend-following-transaction-cost-control.md",
+      "sha256": "f92fb361bfcc89e4e65dce958ca63447d3563e04fc77332187d8a3f68322631a"
+    },
+    {
+      "path": "wiki/concepts/rebalance-threshold.md",
+      "sha256": "e76182197eccf2772311f82666e033073e303854d788d884a355bc5d8138022f"
+    }
+  ],
+  "producing_git_commit": "a91f01ca029d977e04f78457148c572c4a0c7f0c",
+  "provenance": {
+    "git_commit": "a91f01ca029d977e04f78457148c572c4a0c7f0c",
+    "interpreter": {
+      "platform": "windows",
+      "python_executable": "python.exe",
+      "python_implementation": "cpython",
+      "python_version": "3.14.3"
+    }
+  },
+  "report_digest_sha256": "3fc21e158e5a6d8f2dedea41f812b0fb55123c8070640cd0ae05c80e2fe6c94c",
+  "schema_version": "lily_l0_sizing_feasibility_report_v1",
+  "source_inventory": [
+    {
+      "accessed_at": "2026-07-15T00:00:00Z",
+      "claim_supported": "US stock and ETF commission is 0.10% of trade value with no minimum, excluding 7% VAT; sell-side regulatory fees also apply.",
+      "publisher": "Webull Thailand",
+      "source_id": "webull_th_pricing",
+      "staleness_or_scope_note": "Public Thailand schedule; funding FX cost is not established.",
+      "url": "https://www.webull.co.th/pricing"
+    },
+    {
+      "accessed_at": "2026-07-15T00:00:00Z",
+      "claim_supported": "Fractional trading is mobile-app only, regular-hours, market-order only, and limited to securities marked with a green diamond; quantity supports four decimals.",
+      "publisher": "Webull Thailand",
+      "source_id": "webull_th_fractional_faq",
+      "staleness_or_scope_note": "Does not verify the 12 candidate tickers, a minimum order, or OpenAPI support.",
+      "url": "https://www.webull.co.th/help/faq/355-ฉันสามารถซื้อขายแบบเศษหุ้นได้หรือไม่"
+    },
+    {
+      "accessed_at": "2026-07-15T00:00:00Z",
+      "claim_supported": "Thailand OpenAPI advertises US stock and ETF access.",
+      "publisher": "Webull Thailand",
+      "source_id": "webull_th_openapi",
+      "staleness_or_scope_note": "Does not establish fractional-order support; other services are described as in development.",
+      "url": "https://www.webull.co.th/open-api"
+    },
+    {
+      "accessed_at": "2026-07-15T00:00:00Z",
+      "claim_supported": "Global developer documentation describes fractional trading.",
+      "publisher": "Webull",
+      "source_id": "webull_global_fractional_api",
+      "staleness_or_scope_note": "Not evidence of Webull Thailand capability under the locked regional rule.",
+      "url": "https://developer.webull.com/apis/docs/trade-api/overview"
+    },
+    {
+      "accessed_at": "2026-07-15T00:00:00Z",
+      "claim_supported": "Individual account minimum is USD 0.",
+      "publisher": "Interactive Brokers",
+      "source_id": "ibkr_minimums",
+      "staleness_or_scope_note": "Trading permissions and funding methods remain account-specific.",
+      "url": "https://www.interactivebrokers.com/en/accounts/required-minimums.php"
+    },
+    {
+      "accessed_at": "2026-07-15T00:00:00Z",
+      "claim_supported": "IBKR advertises fractional trading in more than 10,500 eligible US stocks and ETFs from USD 1.",
+      "publisher": "Interactive Brokers",
+      "source_id": "ibkr_fractional",
+      "staleness_or_scope_note": "Exact candidate-ticker eligibility and Thailand-account permission were not queried.",
+      "url": "https://www.interactivebrokers.com/en/trading/fractional-trading.php"
+    },
+    {
+      "accessed_at": "2026-07-15T00:00:00Z",
+      "claim_supported": "IBKR Pro US stock schedules show tiered USD 0.0035/share with USD 0.35 minimum or fixed USD 0.005/share with USD 1 minimum; Lite is limited to US residents.",
+      "publisher": "Interactive Brokers",
+      "source_id": "ibkr_stock_commission",
+      "staleness_or_scope_note": "Annual cost depends on order count, which was not locked before measurement.",
+      "url": "https://www.interactivebrokers.com/en/pricing/commissions-stocks.php"
+    },
+    {
+      "accessed_at": "2026-07-15T00:00:00Z",
+      "claim_supported": "IBKR publishes API options for individual clients.",
+      "publisher": "Interactive Brokers",
+      "source_id": "ibkr_api",
+      "staleness_or_scope_note": "No Thailand-account permission or entitlement was queried.",
+      "url": "https://www.interactivebrokers.com/campus/ibkr-api-page/"
+    },
+    {
+      "accessed_at": "2026-07-15T00:00:00Z",
+      "claim_supported": "Low-volume US futures broker commission is USD 0.85 per contract per side before exchange and regulatory fees.",
+      "publisher": "Interactive Brokers",
+      "source_id": "ibkr_futures_commission",
+      "staleness_or_scope_note": "USD 1.70 round-turn is a broker-commission floor, not total execution cost.",
+      "url": "https://www.interactivebrokers.com/en/pricing/commissions-futures.php"
+    },
+    {
+      "accessed_at": "2026-07-15T00:00:00Z",
+      "claim_supported": "Public overnight initial-margin snapshot used for the contract roots in this study.",
+      "publisher": "Interactive Brokers",
+      "source_id": "ibkr_hk_margin_snapshot",
+      "staleness_or_scope_note": "Hong Kong-resident schedule used because Thailand was absent from the public wizard; actual Thai-account margin is an operational blocker.",
+      "url": "https://www.interactivebrokers.com/en/trading/margin-futures-fops.php?hm=hk&ex=us&rgt=0&rsk=1&pm=0&rst=020204110401"
+    },
+    {
+      "accessed_at": "2026-07-15T00:00:00Z",
+      "claim_supported": "Public daily chart endpoints supplied the 2026-07-14 reference prices for the 12 exposure roots.",
+      "publisher": "Yahoo Finance",
+      "source_id": "yahoo_reference_prices",
+      "staleness_or_scope_note": "Indicative public reference prices, not executable quotes; the ES endpoint is the recorded example and the same endpoint pattern was used for other roots.",
+      "url": "https://query1.finance.yahoo.com/v8/finance/chart/ES%3DF?interval=1d&range=5d"
+    },
+    {
+      "accessed_at": "2026-07-15T00:00:00Z",
+      "claim_supported": "Issuer product pages/factsheets identify ticker, economic sleeve, US listing, USD trading currency, inception, and expense ratio for the candidate set.",
+      "publisher": "Vanguard, iShares, Schwab, State Street, Invesco, and iM Global Partner",
+      "source_id": "etf_issuer_pages",
+      "staleness_or_scope_note": "VTI is the recorded example URL; facts are research identifiers, not a recommendation, and exact broker fractional eligibility remains unverified.",
+      "url": "https://investor.vanguard.com/investment-products/etfs/profile/vti"
+    },
+    {
+      "accessed_at": "2026-07-15T00:00:00Z",
+      "claim_supported": "Official product specifications support the contract multipliers or risk units used for CME exposure roots.",
+      "publisher": "CME Group",
+      "source_id": "cme_contract_specs",
+      "staleness_or_scope_note": "Automated page access was limited; ZN/ZT are imperfect full-size proxies for Micro Yield 10Y/2Y contracts and expiry-specific rules were not captured.",
+      "url": "https://www.cmegroup.com/markets/equities/sp/e-mini-sandp500.contractSpecs.html"
+    }
+  ],
+  "tier_blockers": [
+    "no_strategy_return_evidence",
+    "no_account_reported_permissions",
+    "no_exact_Webull_Thailand_fractional_ticker_check",
+    "no_Webull_Thailand_fractional_OpenAPI_confirmation",
+    "funding_FX_cost_unverified",
+    "Webull_sell_side_regulatory_fees_not_quantified",
+    "futures_margin_uses_Hong_Kong_public_proxy_not_Thailand_account",
+    "futures_total_round_turn_cost_and_expiry_rules_incomplete"
+  ]
+}

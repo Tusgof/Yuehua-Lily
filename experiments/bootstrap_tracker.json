@@ -123,15 +123,21 @@
     {
       "id": "B2",
       "title": "L-0 sizing feasibility study",
-      "status": "in_progress",
+      "status": "done",
       "depends_on": ["B1"],
       "required_artifacts": [
         {"path": "experiments/l_0_sizing_feasibility_preregistration.json", "must": "locked_and_valid"},
         {"path": "reports/feasibility/l_0_sizing_feasibility.json", "must": "classify_current_and_minimum_capital"},
-        {"path": "reports/feasibility/l_0_sizing_feasibility.md", "must": "match_machine_report"}
+        {"path": "reports/feasibility/l_0_sizing_feasibility.md", "must": "match_machine_report"},
+        {"path": "scripts/validate_l_0_sizing_feasibility_report.py", "must": "pass"}
       ],
       "forbidden": ["paid data", "order transmission", "credential storage", "edge claim", "return backtest"],
-      "evidence": []
+      "evidence": [
+        "The hash-bound preregistration and validator remain unchanged and scripts/validate_l_0_sizing_feasibility_preregistration.py passes.",
+        "The deterministic E0 report classifies all six capital/broker combinations as scope_restricted: 8- and 10-sleeve ETF economic sizing passes, but no exact broker path is fully verified; 12 sleeves fail the locked 25% notional-weight cap.",
+        "The locked futures formula produces micro minimum capital of USD 40,600, USD 54,200, and USD 95,400 and full-size comparator capital of USD 405,900, USD 541,200, and USD 1,614,600 for 4, 8, and 12 markets.",
+        "scripts/validate_l_0_sizing_feasibility_report.py verifies the calculation, report digest, JSON/Markdown agreement, E0/no-edge boundaries, and broker/futures scenario coverage."
+      ]
     },
     {
       "id": "B3",
