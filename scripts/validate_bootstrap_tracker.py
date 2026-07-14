@@ -168,6 +168,9 @@ def _validate_done_artifact(
     runtime_cache: dict[str, bool],
 ) -> tuple[list[str], bool, bool]:
     target = (project_root / artifact_path).resolve()
+    if must == "exist":
+        exists = target.exists()
+        return ([] if exists else [f"{order_id}:missing_artifact:{artifact_path}"], exists, False)
     if must == "pass":
         if not target.is_file():
             return [f"{order_id}:missing_artifact:{artifact_path}"], False, False
@@ -210,6 +213,12 @@ def _validate_done_artifact(
         return _validate_statistics_kernel(target, order_id, artifact_path)
     if must == "cite_published_anchors_and_independent_bets":
         return _validate_statistics_conventions(target, order_id, artifact_path)
+    if must == "pin_lf_for_hash_bound_artifacts":
+        return _validate_lf_attributes(target, order_id, artifact_path)
+    if must == "contain_registry_tier_and_locked_gate_tests":
+        return _validate_governance_tests(target, order_id, artifact_path)
+    if must == "require_adversarial_review_for_E2":
+        return _validate_evidence_policy(target, order_id, artifact_path)
     if must == "no_active_absolute_paths_or_credentials_excluding_immutable_backup_history":
         blockers = _scan_active_artifacts(project_root)
         return ([f"{order_id}:{item}" for item in blockers], not blockers, False)
@@ -370,6 +379,56 @@ def _validate_statistics_conventions(
     ]
     if len(re.findall(r"\b[0-9a-f]{64}\b", text)) < 3:
         blockers.append(f"{order_id}:statistics_conventions_require_source_hashes")
+    return blockers, not blockers, False
+
+
+def _validate_lf_attributes(
+    target: Path,
+    order_id: str,
+    artifact_path: str,
+) -> tuple[list[str], bool, bool]:
+    if not target.is_file():
+        return [f"{order_id}:missing_artifact:{artifact_path}"], False, False
+    lines = set(target.read_text(encoding="utf-8").splitlines())
+    required = {"*.json text eol=lf", "*.jsonl text eol=lf", "*.md text eol=lf", "*.py text eol=lf"}
+    missing = sorted(required - lines)
+    blockers = [f"{order_id}:gitattributes_missing:{line}" for line in missing]
+    return blockers, not blockers, False
+
+
+def _validate_governance_tests(
+    target: Path,
+    order_id: str,
+    artifact_path: str,
+) -> tuple[list[str], bool, bool]:
+    if not target.is_dir():
+        return [f"{order_id}:missing_artifact:{artifact_path}"], False, False
+    required = {
+        "test_validate_hypothesis_registry.py",
+        "test_validate_evidence_tiers.py",
+        "test_validate_locked_gates.py",
+    }
+    missing = sorted(name for name in required if not (target / name).is_file())
+    blockers = [f"{order_id}:governance_test_missing:{name}" for name in missing]
+    return blockers, not blockers, False
+
+
+def _validate_evidence_policy(
+    target: Path,
+    order_id: str,
+    artifact_path: str,
+) -> tuple[list[str], bool, bool]:
+    if not target.is_file():
+        return [f"{order_id}:missing_artifact:{artifact_path}"], False, False
+    text = target.read_text(encoding="utf-8")
+    required = (
+        "Adversarial Review Before E2",
+        "reviewer_is_independent: true",
+        "unresolved_critical_issues",
+        "append-only",
+        "supersedes_gate_id",
+    )
+    blockers = [f"{order_id}:evidence_policy_missing:{item}" for item in required if item not in text]
     return blockers, not blockers, False
 
 

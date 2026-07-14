@@ -62,7 +62,7 @@
     {
       "id": "B0.4",
       "title": "Registry, evidence tiers, and locked gates",
-      "status": "not_started",
+      "status": "done",
       "depends_on": ["B0.1", "B0.2", "B0.3"],
       "required_artifacts": [
         {"path": "schemas/hypothesis_registry.schema.json", "must": "exist"},
@@ -75,7 +75,12 @@
         {"path": "docs/EVIDENCE_TIER_POLICY.md", "must": "require_adversarial_review_for_E2"}
       ],
       "forbidden": ["silent locked-gate edit", "validated status without E2 evidence"],
-      "evidence": []
+      "evidence": [
+        "schemas/hypothesis_registry.schema.json and scripts/validate_hypothesis_registry.py enforce the Lily registry contract and block validated status without E2 or E3 evidence.",
+        "scripts/validate_evidence_tiers.py blocks acceptance or edge claims below E2 and requires an independent completed adversarial review with no unresolved critical issue at E2 or E3.",
+        "experiments/locked_gates.jsonl starts empty by design; scripts/validate_locked_gates.py and hermetic tests enforce append-only history, active hashes, human approval, reviewer identity, and replacement hashes for future supersession.",
+        ".gitattributes pins hash-bound files to LF and the hermetic governance tests pass."
+      ]
     },
     {
       "id": "B0.5",

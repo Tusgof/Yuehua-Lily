@@ -168,6 +168,22 @@ class BootstrapTrackerValidatorTests(unittest.TestCase):
             blockers,
         )
 
+    def test_b04_LF_claim_requires_all_hash_bound_patterns(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            (root / ".gitattributes").write_text("*.json text eol=lf\n", encoding="utf-8")
+            blockers, checked, unverified = self.validator._validate_done_artifact(
+                "B0.4",
+                ".gitattributes",
+                "pin_lf_for_hash_bound_artifacts",
+                project_root=root,
+                verify_runtime=False,
+                runtime_cache={},
+            )
+        self.assertFalse(checked)
+        self.assertFalse(unverified)
+        self.assertIn("B0.4:gitattributes_missing:*.jsonl text eol=lf", blockers)
+
 
 def _tracker_with_artifact(path: str, must: str) -> dict[str, object]:
     return {

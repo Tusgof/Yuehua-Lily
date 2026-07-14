@@ -6,6 +6,9 @@
     "scripts/validate_bootstrap_tracker.py"
   ],
   "scripts": [
-    "scripts/audit_new_script_lib_usage.py"
+    "scripts/audit_new_script_lib_usage.py",
+    "scripts/validate_evidence_tiers.py",
+    "scripts/validate_hypothesis_registry.py",
+    "scripts/validate_locked_gates.py"
   ]
 }
