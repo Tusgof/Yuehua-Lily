@@ -173,6 +173,8 @@ def main() -> int:
             "schema_version": "lily_adversarial_review_status_v1",
             "hypothesis_id": "L-1",
             "evidence_tier": "E1",
+            "edge_claim": "none",
+            "tier_blockers": tier_blockers,
             "promotion_requested": False,
             "status": "not_started_E1_no_promotion",
             "reviewer_is_independent": False,
