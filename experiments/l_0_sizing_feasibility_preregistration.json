@@ -1,0 +1,233 @@
+{
+  "schema_version": "lily_l0_sizing_feasibility_preregistration_v1",
+  "hypothesis_id": "L-0",
+  "created_at": "2026-07-15T00:00:00Z",
+  "status": "locked_before_measurement",
+  "evidence_tier": "E0",
+  "edge_claim": "none",
+  "purpose": "Classify current-capital ETF implementation paths and estimate minimum viable capital for nested micro-futures breadth without a return backtest.",
+  "owner_authorization": "User explicitly requested execution of B2 on 2026-07-15.",
+  "pre_measurement_state": {
+    "analysis_code_written": false,
+    "broker_account_queried": false,
+    "credentials_used": false,
+    "orders_sent": false,
+    "paid_data_used": false,
+    "return_backtest_run": false
+  },
+  "capital_scenarios_usd": [1000, 2000],
+  "classification_values": [
+    "feasible",
+    "scope_restricted",
+    "minimum_capital_only",
+    "infeasible"
+  ],
+  "data_rules": {
+    "allowed": [
+      "official public broker terms and API documentation",
+      "official exchange contract specifications and public margin information",
+      "official ETF issuer pages and public quote or factsheet fields",
+      "read-only public pages and downloadable public reference files"
+    ],
+    "forbidden": [
+      "paid data",
+      "credentialed broker request",
+      "account identifier capture",
+      "order transmission",
+      "strategy return history",
+      "performance optimization"
+    ],
+    "source_record_fields": [
+      "source_id",
+      "publisher",
+      "url",
+      "accessed_at",
+      "claim_supported",
+      "staleness_or_scope_note"
+    ],
+    "regional_capability_rule": "Global Webull documentation is not evidence of Webull Thailand capability.",
+    "unknown_rule": "An unverified broker, fractional, margin, permission, currency, or API fact becomes a scope blocker and is never imputed as available."
+  },
+  "etf_branch": {
+    "implementation_style": "US-listed fractional ETFs with global economic exposure; long or cash only",
+    "breadth_scenarios": [8, 10, 12],
+    "primary_breadth": 10,
+    "candidate_sleeves": [
+      "US_equity",
+      "Europe_equity",
+      "Japan_equity",
+      "Pacific_ex_Japan_equity",
+      "emerging_markets_equity",
+      "intermediate_government_bonds",
+      "inflation_linked_bonds",
+      "gold",
+      "broad_commodities",
+      "global_ex_US_real_estate",
+      "managed_futures_proxy",
+      "short_Treasury_cash_proxy"
+    ],
+    "selection_rule": {
+      "requirements": [
+        "US-listed ETF",
+        "economic exposure matches one candidate sleeve",
+        "inception date and trading currency disclosed",
+        "fractional eligibility verified for the classified broker path",
+        "public fee and minimum-order terms available",
+        "no silent pre-inception index backfill"
+      ],
+      "tie_break_order": [
+        "lower stated expense ratio",
+        "higher disclosed liquidity or trading volume",
+        "longer live ETF history",
+        "alphabetical ticker"
+      ]
+    },
+    "risk_budget": {
+      "method": "inverse_locked_base_volatility_then_normalize_to_gross_cap",
+      "base_annual_volatility_by_sleeve": {
+        "equity_or_real_estate": 0.20,
+        "government_or_inflation_linked_bonds": 0.10,
+        "gold_or_broad_commodities": 0.18,
+        "managed_futures_proxy": 0.15,
+        "short_Treasury_cash_proxy": 0.03
+      },
+      "stress_annual_volatility_by_sleeve": {
+        "equity_or_real_estate": 0.35,
+        "government_or_inflation_linked_bonds": 0.18,
+        "gold_or_broad_commodities": 0.30,
+        "managed_futures_proxy": 0.25,
+        "short_Treasury_cash_proxy": 0.06
+      },
+      "portfolio_target_volatility": "diagnostic_only_until_return_covariance_is_preregistered",
+      "maximum_standalone_risk_contribution": 0.16,
+      "maximum_notional_weight": 0.25
+    },
+    "capital_and_trade_limits": {
+      "minimum_cash_buffer": 0.10,
+      "maximum_gross_exposure": 0.90,
+      "maximum_leverage": 1.0,
+      "minimum_trade_usd": 5.0,
+      "fractional_notional_precision_usd": 0.01,
+      "rebalance_frequency": "weekly_candidate_with_trade_floor",
+      "trade_floor": "maximum of USD 5, broker minimum, or 2 percent of current sleeve notional"
+    },
+    "cost_grid": {
+      "commission": "official broker schedule including applicable VAT or mandatory fees",
+      "one_way_spread_bps": [12.5, 25.0],
+      "annual_one_way_turnover_multiples": [1.0, 2.0, 4.0],
+      "primary_cost_gate_turnover_multiple": 2.0,
+      "maximum_recurring_cost_fraction_of_capital": 0.015,
+      "funding_or_FX_cost": "reported separately as one-time cost; unknown is a scope blocker"
+    },
+    "broker_paths": [
+      "Webull_Thailand_manual_fractional",
+      "Webull_Thailand_OpenAPI_fractional",
+      "IBKR_fractional_reference"
+    ],
+    "feasible_gate": [
+      "at least 8 selected sleeves",
+      "every target trade meets the trade floor and verified broker minimum",
+      "cash buffer is at least 10 percent and gross exposure is at most 90 percent",
+      "no leverage or margin is required",
+      "maximum standalone risk contribution is at most 16 percent",
+      "maximum notional sleeve weight is at most 25 percent",
+      "primary stressed recurring cost is at most 1.5 percent of capital",
+      "fractional order capability is verified for the exact broker path"
+    ]
+  },
+  "futures_branch": {
+    "purpose": "minimum-capital sizing study only; not a deployment path",
+    "breadth_scenarios": [4, 8, 12],
+    "nested_candidate_markets": [
+      "US_large_cap_equity",
+      "EURUSD_FX",
+      "gold",
+      "WTI_crude_oil",
+      "US_small_cap_equity",
+      "JPYUSD_FX",
+      "silver_or_copper",
+      "US_10Y_rate_or_yield",
+      "US_tech_equity",
+      "GBPUSD_FX",
+      "Bitcoin",
+      "US_2Y_or_5Y_rate_or_yield"
+    ],
+    "contract_selection": {
+      "micro_rule": "smallest exchange-listed contract with public specifications and a plausible IBKR symbol for the market",
+      "full_size_rule": "standard contract for the same root exposure where available",
+      "measurement_contract": "nearest sufficiently liquid non-delivery contract shown by the official source at access time",
+      "unavailable_market_rule": "retain the slot as a blocker; do not replace it after observing a favorable capital result"
+    },
+    "required_contract_fields": [
+      "contract_id",
+      "root_symbol",
+      "asset_class",
+      "contract_multiplier_or_tick_value",
+      "reference_price_or_risk_unit",
+      "initial_margin_usd",
+      "maintenance_margin_usd",
+      "first_notice_or_last_trade_rule",
+      "round_turn_cost_usd",
+      "source_ids"
+    ],
+    "stress_move_by_asset_class": {
+      "equity_index": 0.08,
+      "FX": 0.05,
+      "precious_metals": 0.10,
+      "energy": 0.15,
+      "industrial_metals": 0.12,
+      "rates_or_yield": "100_basis_point_adverse_yield_move_using_contract_DV01_or_exchange_risk_unit",
+      "crypto": 0.25
+    },
+    "margin_and_cash_limits": {
+      "base_initial_margin_max_fraction_of_capital": 0.40,
+      "margin_stress_multiplier": 1.50,
+      "stressed_margin_max_fraction_of_capital": 0.60,
+      "minimum_cash_buffer_after_initial_margin": 0.40
+    },
+    "stress_concentration_limits": {
+      "aggregate_stress_loss_max_fraction_of_capital": 0.30,
+      "per_market_max_fraction_by_breadth": {
+        "4": 0.10,
+        "8": 0.075,
+        "12": 0.05
+      }
+    },
+    "minimum_capital_formula": "round up to the next USD 100 the maximum of initial_margin_sum/0.40, stressed_margin_sum/0.60, aggregate_stress_loss/0.30, and maximum_single_market_stress_loss/per_market_limit",
+    "operational_rule": "Economic minimum capital does not prove IBKR permission, market-data entitlement, or order capability; unverified account capability is a separate scope blocker.",
+    "full_size_comparator": true
+  },
+  "decision_rules": {
+    "ETF_feasible": "All ETF feasible gates pass for the named capital and broker path.",
+    "ETF_scope_restricted": "Economic sizing passes but broker/API/fractional/currency capability remains unverified, or only a narrower manual path passes.",
+    "ETF_infeasible": "Fewer than 8 sleeves or any locked capital, concentration, trade-floor, leverage, or cost gate fails.",
+    "futures_minimum_capital_only": "A reproducible minimum capital is calculated but current capital or operational permission fails.",
+    "futures_infeasible": "Required contract or margin/risk inputs are too incomplete to calculate the locked formula honestly."
+  },
+  "report_requirements": [
+    "machine JSON and matching Markdown",
+    "producing Git commit",
+    "hypothesis_id, evidence_tier E0, tier_blockers, edge_claim none",
+    "source inventory with access dates and regional-scope caveats",
+    "USD 1000 and USD 2000 ETF results by broker path",
+    "4, 8, and 12 market micro-futures minimum capital",
+    "full-size comparator",
+    "one-contract granularity, margin stress, cost, cash, and concentration diagnostics",
+    "explicit distinction between fact, locked assumption, calculation, and recommendation"
+  ],
+  "wiki_sources": [
+    {"path": "wiki/concepts/position-sizing.md", "sha256": "6d24c4ffc6770590baaeb90402af4e413040ff6856b0585773657da85dc68343"},
+    {"path": "wiki/concepts/inverse-volatility-weighting.md", "sha256": "c59b512d3df9499a738b1ee256d388376f04edee1c59727f2f79ddcc905e7f72"},
+    {"path": "wiki/concepts/target-volatility.md", "sha256": "dc921ae790975a6a16b2397e1a1ee1ce6db7842e03a336f84d3e489f8096206b"},
+    {"path": "wiki/concepts/trend-following-transaction-cost-control.md", "sha256": "f92fb361bfcc89e4e65dce958ca63447d3563e04fc77332187d8a3f68322631a"},
+    {"path": "wiki/concepts/rebalance-threshold.md", "sha256": "e76182197eccf2772311f82666e033073e303854d788d884a355bc5d8138022f"}
+  ],
+  "hard_stops": [
+    "paid data or paid API",
+    "credential or account identifier required",
+    "order or paper-trade transmission",
+    "post-result weakening of a locked threshold",
+    "strategy return backtest",
+    "edge, acceptance, or deployment claim"
+  ]
+}

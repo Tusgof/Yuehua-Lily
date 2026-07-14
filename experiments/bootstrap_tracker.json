@@ -123,7 +123,7 @@
     {
       "id": "B2",
       "title": "L-0 sizing feasibility study",
-      "status": "not_started",
+      "status": "in_progress",
       "depends_on": ["B1"],
       "required_artifacts": [
         {"path": "experiments/l_0_sizing_feasibility_preregistration.json", "must": "locked_and_valid"},

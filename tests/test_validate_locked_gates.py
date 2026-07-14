@@ -20,7 +20,10 @@ class LockedGateValidatorTests(unittest.TestCase):
             self.assertIn(pattern, lines)
 
     def test_empty_initial_manifest_passes_without_locking_an_experiment(self) -> None:
-        result = validate_locked_gates(committed_lines=[])
+        with tempfile.TemporaryDirectory() as tmp:
+            manifest = Path(tmp) / "locked_gates.jsonl"
+            manifest.write_text("", encoding="utf-8")
+            result = validate_locked_gates(manifest, committed_lines=[])
         self.assertEqual("pass", result["status"], result["blockers"])
         self.assertEqual(0, result["entry_count"])
 
