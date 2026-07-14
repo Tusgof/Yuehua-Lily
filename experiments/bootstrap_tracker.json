@@ -1,0 +1,135 @@
+{
+  "schema_version": "lily_bootstrap_tracker_v1",
+  "updated": "2026-07-15",
+  "done_claim_rule": "A workstream may be marked done only after scripts/validate_bootstrap_tracker.py verifies every required artifact and named check. Prose evidence alone is insufficient.",
+  "orders": [
+    {
+      "id": "B0.1",
+      "title": "Tracker and hermetic contract",
+      "status": "not_started",
+      "depends_on": [],
+      "required_artifacts": [
+        {"path": "scripts/validate_bootstrap_tracker.py", "must": "pass"},
+        {"path": "tests/test_validate_bootstrap_tracker.py", "must": "pass_in_hermetic_tier"},
+        {"path": "scripts/run_test_tier.py", "must": "pass_hermetic_tier"},
+        {"path": ".github/workflows/ci.yml", "must": "run_hermetic_on_push"},
+        {"path": ".python-version", "must": "pin_supported_python"},
+        {"path": "pyproject.toml", "must": "declare_python_and_dependencies"},
+        {"path": "config/machine.example.json", "must": "contain_placeholders_only"},
+        {"path": ".", "must": "no_active_absolute_paths_or_credentials_excluding_immutable_backup_history"}
+      ],
+      "forbidden": ["data acquisition", "strategy code", "backtest", "broker request"],
+      "evidence": []
+    },
+    {
+      "id": "B0.2",
+      "title": "Shared infrastructure skeleton",
+      "status": "not_started",
+      "depends_on": ["B0.1"],
+      "required_artifacts": [
+        {"path": "lib", "must": "contain_environment_io_timestamp_provenance_guardrail_report_search_modules"},
+        {"path": "tests", "must": "contain_hermetic_lib_unit_tests"},
+        {"path": "scripts/audit_new_script_lib_usage.py", "must": "pass"}
+      ],
+      "forbidden": ["signal logic", "portfolio logic", "provider integration", "copied helper infrastructure"],
+      "evidence": []
+    },
+    {
+      "id": "B0.3",
+      "title": "Golden-number statistics anchors",
+      "status": "not_started",
+      "depends_on": ["B0.1", "B0.2"],
+      "required_artifacts": [
+        {"path": "lib/statistics.py", "must": "document_conventions_and_exist"},
+        {"path": "tests/test_statistics_golden.py", "must": "pass_in_hermetic_tier"},
+        {"path": "docs/STATISTICS_CONVENTIONS.md", "must": "cite_published_anchors_and_independent_bets"}
+      ],
+      "forbidden": ["real strategy data", "unanchored acceptance statistics"],
+      "evidence": []
+    },
+    {
+      "id": "B0.4",
+      "title": "Registry, evidence tiers, and locked gates",
+      "status": "not_started",
+      "depends_on": ["B0.1", "B0.2", "B0.3"],
+      "required_artifacts": [
+        {"path": "schemas/hypothesis_registry.schema.json", "must": "exist"},
+        {"path": "scripts/validate_hypothesis_registry.py", "must": "pass"},
+        {"path": "scripts/validate_evidence_tiers.py", "must": "pass"},
+        {"path": "experiments/locked_gates.jsonl", "must": "exist"},
+        {"path": ".gitattributes", "must": "pin_lf_for_hash_bound_artifacts"},
+        {"path": "scripts/validate_locked_gates.py", "must": "pass"},
+        {"path": "tests", "must": "contain_registry_tier_and_locked_gate_tests"},
+        {"path": "docs/EVIDENCE_TIER_POLICY.md", "must": "require_adversarial_review_for_E2"}
+      ],
+      "forbidden": ["silent locked-gate edit", "validated status without E2 evidence"],
+      "evidence": []
+    },
+    {
+      "id": "B0.5",
+      "title": "Backup and restore",
+      "status": "not_started",
+      "depends_on": ["B0.1"],
+      "required_artifacts": [
+        {"path": "docs/BACKUP_AND_RESTORE.md", "must": "exist"},
+        {"path": "reports/restore_rehearsal.json", "must": "record_successful_committed_artifact_restore"}
+      ],
+      "forbidden": ["claiming untested backup is complete"],
+      "evidence": []
+    },
+    {
+      "id": "B1",
+      "title": "Data layer design and fixtures",
+      "status": "not_started",
+      "depends_on": ["B0.1", "B0.2", "B0.3", "B0.4", "B0.5"],
+      "required_artifacts": [
+        {"path": "docs/DATA_ACQUISITION_DECISION_TREE.md", "must": "exist"},
+        {"path": "docs/DATA_INTEGRITY_AND_SURVIVORSHIP_POLICY.md", "must": "cover_etf_and_futures_traps"},
+        {"path": "schemas", "must": "contain_provider_boundary_schemas"},
+        {"path": "tests/fixtures", "must": "contain_synthetic_data_fixtures"},
+        {"path": "scripts/run_test_tier.py", "must": "pass_all_available_tiers"}
+      ],
+      "forbidden": ["paid data", "strategy code", "real backtest", "silent survivorship compromise"],
+      "evidence": []
+    },
+    {
+      "id": "B2",
+      "title": "L-0 sizing feasibility study",
+      "status": "not_started",
+      "depends_on": ["B1"],
+      "required_artifacts": [
+        {"path": "experiments/l_0_sizing_feasibility_preregistration.json", "must": "locked_and_valid"},
+        {"path": "reports/feasibility/l_0_sizing_feasibility.json", "must": "classify_current_and_minimum_capital"},
+        {"path": "reports/feasibility/l_0_sizing_feasibility.md", "must": "match_machine_report"}
+      ],
+      "forbidden": ["paid data", "order transmission", "credential storage", "edge claim", "return backtest"],
+      "evidence": []
+    },
+    {
+      "id": "B3",
+      "title": "L-1 baseline preregistration",
+      "status": "not_started",
+      "depends_on": ["B2"],
+      "required_artifacts": [
+        {"path": "experiments/l_1_baseline_preregistration.json", "must": "locked_and_valid"},
+        {"path": "scripts/validate_l_1_baseline_preregistration.py", "must": "pass"},
+        {"path": "experiments/locked_gates.jsonl", "must": "contain_active_l_1_hashes"}
+      ],
+      "forbidden": ["L-1 execution in the preregistration session", "post-result gate changes"],
+      "evidence": []
+    },
+    {
+      "id": "B4",
+      "title": "L-1 bounded baseline execution",
+      "status": "not_started",
+      "depends_on": ["B3"],
+      "required_artifacts": [
+        {"path": "reports/experiments/l_1_baseline_summary.json", "must": "pass_summary_validator"},
+        {"path": "reports/experiments/l_1_baseline_summary.md", "must": "match_machine_report"},
+        {"path": "reports/adversarial/l_1_baseline_review.json", "must": "exist_before_E2"}
+      ],
+      "forbidden": ["E2 claim without adversarial review", "paper trading approval", "real-money approval"],
+      "evidence": []
+    }
+  ]
+}

@@ -1,344 +1,196 @@
 # IMPLEMENT_PLAN.md
 
-## Lily 0.0-1.0 Implementation Plan
-
 ## 1. Plan Definition
-- **Project**: Trend Following - Lily
-- **Version Range**: Lily 0.0-1.0
-- **Plan Type**: Research-led implementation plan
-- **Primary Driver**: Human research and decision-making by the project owner
-- **AI Role**: Documentation assistant, structure keeper, checklist generator, code/tooling assistant only when explicitly requested
-- **Core Principle**: This project advances when the owner researches, decides, and updates the plan; Codex should not invent missing research or silently make investment decisions.
 
-## 2. Version Goal
-Lily 1.0 is reached when the project has a documented, research-backed, paper-trading-ready trend-following system specification.
+- **Program**: Lily systematic trend-following research
+- **Plan version**: Refounding v2
+- **Date**: 2026-07-15
+- **Operating model**: parallel hypothesis tracks plus standing governance programs
+- **End state**: Lily can honestly classify hypotheses as proposed, active, parked, falsified, scope-restricted, E2-validated, or E3 deployment-grade.
 
-Lily 1.0 does not mean live trading, broker execution, production automation, or real-money deployment.
+This plan does not authorize strategy code, a backtest, paper trading, broker requests, or real-money trading by itself.
 
-## 3. Assumptions
-- The current project contains a static dashboard in `Main/`.
-- The dashboard is a planning and monitoring surface, not the trading system itself.
-- The research thesis is multi-asset futures trend following.
-- Candidate signal direction is multi-lookback t-stat / delta-straddle.
-- Baseline comparison is 60-day directional count.
-- Position sizing direction is `signal x risk weight / volatility`.
-- Portfolio construction should be covariance/correlation-aware.
-- Portfolio leverage should come from target volatility and caps, not ad hoc per-asset leverage.
-- Cost controls are required before any result is trusted.
-- The owner will bring research findings into the project over time.
+## 2. Accepted Design Inputs
 
-## 4. Scope for Lily 0.0-1.0
-### In Scope
-- Trading plan markdown.
-- Research journal / decision log.
-- Futures universe research.
-- Data source and roll methodology selection.
-- Baseline strategy definition.
-- Candidate strategy definition.
-- Risk engine specification.
-- Backtest design specification.
-- Validation gate definition.
-- Paper trading process design.
-- Weekly monitoring process design.
+Pre-refounding, owner-authored inputs carried forward:
 
-### Out of Scope
-- Live broker integration.
-- Automated order execution.
-- Real-money deployment.
-- Paid data vendor commitment without owner approval.
-- Production infrastructure.
-- Alerting system.
-- Reconciliation automation.
-- Optimization-heavy research without a documented baseline.
+- baseline: 60-day directional count;
+- candidate: multi-lookback t-stat / delta-straddle interpretation;
+- sizing: `signal × risk weight / volatility`;
+- portfolio leverage: target volatility plus caps;
+- costs before trust;
+- unknowns remain explicit.
 
-## 5. Success Criteria
-### Lily 1.0 Is Usable When:
-- A human can read the documents and understand exactly what will be tested.
-- The system thesis, baseline, candidate signal, sizing, portfolio layer, cost assumptions, and validation gates are written down.
-- Open questions are explicitly marked instead of hidden.
-- Each research decision has a dated rationale.
-- The next backtest implementation step is clear.
+Founding decisions are in `docs/DECISION_RECORD_001_PROJECT_REFOUNDING.md`.
 
-### Lily 1.0 Is Not Ready If:
-- Futures universe is still undefined.
-- Roll methodology is missing.
-- Data source is undecided.
-- Cost model is absent.
-- Baseline is skipped.
-- Candidate signal is not compared against baseline.
-- Paper trading rules are vague.
-- Any live trading step is implied without explicit approval.
+## 3. Standing Programs
 
-## 6. Operating Model
-- The owner researches and updates source decisions.
-- Codex converts owner research into structured documents, checklists, templates, and code only when asked.
-- When data or finance assumptions are missing, Codex must mark `[REQUIRES_RESEARCH]` or `[REQUIRES_INPUT]`.
-- The dashboard can track progress, but markdown documents are the source of research truth.
-- Research updates should be additive and dated; do not overwrite prior reasoning unless correcting an explicit error.
+### P0 — Governance And Audit
 
-## 7. Artifact Map
-| Artifact | Target Location | Owner | Status | Purpose |
-|:---------|:----------------|:------|:-------|:--------|
-| `PROJECT_BRAIN.md` | Project root | Codex + owner | Exists | Single source of project state and guardrails. |
-| `IMPLEMENT_PLAN.md` | Project root | Codex + owner | Exists | Lily 0.0-1.0 implementation plan. |
-| `Trading Plan.md` | Project root or research folder | Owner-led | Pending | Defines the trading system rules. |
-| `Research Journal.md` | `Investment Research Log/` or project root | Owner-led | Pending | Records findings, decisions, rejected ideas. |
-| `Futures Universe.md` | Research folder | Owner-led | Pending | Defines instruments, sectors, liquidity filters. |
-| `Data & Roll Methodology.md` | Research folder | Owner-led | Pending | Defines data source, continuous futures construction, roll rules. |
-| `Baseline Backtest Spec.md` | Research folder | Owner-led | Pending | Defines 60-day directional-count baseline. |
-| `Candidate Signal Spec.md` | Research folder | Owner-led | Pending | Defines multi-lookback t-stat / delta-straddle signal. |
-| `Risk Engine Spec.md` | Research folder | Owner-led | Pending | Defines sizing, covariance layer, target volatility, caps. |
-| `Validation Report.md` | Research folder | Owner-led | Pending | Summarizes out-of-sample checks and promotion decision. |
-| `Paper Trading Runbook.md` | Research folder | Owner-led | Pending | Defines live-like dry run process. |
+Maintain evidence tiers, hypothesis registry, preregistration, locked-gate hashes, adversarial E2 review, anti-overstatement checks, and machine-checkable trackers.
 
-## 8. Version Roadmap
-### Lily 0.0 - Project Memory Exists
-- **Goal**: Establish the project as a documented workspace.
-- **Current State**: Static dashboard, `AGENTS.md`, and `PROJECT_BRAIN.md` exist.
-- **Work**:
-  - Keep dashboard as reference surface.
-  - Keep `PROJECT_BRAIN.md` current when major scope decisions change.
-  - Use `IMPLEMENT_PLAN.md` as the release path.
-- **Exit Criteria**:
-  - `PROJECT_BRAIN.md` exists.
-  - `IMPLEMENT_PLAN.md` exists.
-  - Next document to create is clear.
+### P1 — Reproducibility And Environment
 
-### Lily 0.1 - Trading Plan Skeleton
-- **Goal**: Create the first written system constitution.
-- **Work**:
-  - Define thesis.
-  - Define intended market universe at high level.
-  - Define baseline and candidate signal families.
-  - Define sizing and portfolio construction direction.
-  - Define validation gates.
-  - Define what is explicitly not allowed before paper trading.
-- **Owner Research Needed**:
-  - Preferred trading horizon.
-  - Account/broker constraints, if any.
-  - Risk tolerance and target volatility range.
-- **Exit Criteria**:
-  - `Trading Plan.md` exists.
-  - Unknowns are marked `[REQUIRES_RESEARCH]`.
-  - No live trading action is implied.
+Maintain pinned Python, dependency manifests, hermetic/state-audit tiers, CI, environment resolution, commit provenance, and zero tracked absolute paths.
 
-### Lily 0.2 - Research Journal / Decision Log
-- **Goal**: Create a place to record research updates without losing context.
-- **Work**:
-  - Create a journal template.
-  - Add fields for date, source, claim, evidence, decision, impact, open question.
-  - Add rejected-idea tracking.
-  - Add parameter-change tracking.
-- **Owner Research Needed**:
-  - Preferred folder location.
-  - Preferred language style: Thai, English, or mixed.
-- **Exit Criteria**:
-  - Journal file exists.
-  - First entry records the current thesis and pending research queue.
+### P2 — Statistics Kernel
 
-### Lily 0.3 - Futures Universe Definition
-- **Goal**: Define what markets the system is allowed to trade or test.
-- **Work**:
-  - Draft candidate universe by sleeve: equity index, rates, FX, metals, energy, agriculture, softs.
-  - Mark liquidity, contract multiplier, tick size, session, and roll considerations as research fields.
-  - Define exclusion rules.
-  - Define sleeve-level risk weight placeholder.
-- **Owner Research Needed**:
-  - Target exchanges.
-  - Broker accessibility.
-  - Data availability.
-  - Contract liquidity thresholds.
-- **Exit Criteria**:
-  - Universe has a first-pass table.
-  - Each instrument has status: `candidate`, `watch`, `excluded`, or `[REQUIRES_RESEARCH]`.
+Maintain one `lib/` implementation for autocorrelation-adjusted Sharpe variance, PSR, DSR, dual MinTRL, HAC sensitivity, independent-bet-equivalent counts, and golden-number anchors.
 
-### Lily 0.4 - Data Source and Roll Methodology
-- **Goal**: Define how futures price histories will be constructed.
-- **Work**:
-  - Compare data source options.
-  - Define adjusted vs unadjusted continuous futures policy.
-  - Define roll trigger: date-based, volume/open-interest-based, or vendor-provided.
-  - Define timestamp and holiday handling.
-  - Define data-quality checks.
-- **Owner Research Needed**:
-  - Vendor candidates.
-  - Budget constraints.
-  - Whether intraday data is needed or daily bars are enough.
-- **Exit Criteria**:
-  - Data source decision is documented or explicitly deferred.
-  - Roll methodology is documented enough to implement a reproducible dataset.
+### P3 — Data Integrity And Cost
 
-### Lily 0.5 - Baseline Backtest Specification
-- **Goal**: Define the baseline before candidate complexity is added.
-- **Work**:
-  - Specify 60-day directional count rule.
-  - Specify signal bounds and neutral zone, if any.
-  - Specify volatility estimate.
-  - Specify rebalance cadence.
-  - Specify costs required for baseline evaluation.
-- **Owner Research Needed**:
-  - Baseline formula details.
-  - Cost assumptions.
-  - Evaluation period.
-- **Exit Criteria**:
-  - Baseline spec can be implemented without guessing.
-  - Metrics are defined before seeing results.
+Maintain acquisition decisions, provider schemas, survivorship/roll policy, dataset registry, dual hashes, true-provenance per-key cost ledger, and budget guards.
 
-### Lily 0.6 - Candidate Signal Specification
-- **Goal**: Define the multi-lookback t-stat / delta-straddle candidate.
-- **Work**:
-  - Define lookbacks: initial candidates are 32/64/126/252/504 days unless research changes them.
-  - Define return or regression input.
-  - Define t-stat calculation.
-  - Define horizon aggregation.
-  - Define signal clipping/bounding.
-  - Define comparison against baseline.
-- **Owner Research Needed**:
-  - Final formula source.
-  - Whether delta-straddle is used directly or as an interpretation layer.
-  - Parameter ranges allowed before final test lock.
-- **Exit Criteria**:
-  - Candidate signal spec can be implemented without guessing.
-  - Candidate promotion requires net-of-cost comparison to baseline.
+### P4 — Backup, Restore, And Retention
 
-### Lily 0.7 - Risk Engine Specification
-- **Goal**: Define position and portfolio risk construction.
-- **Work**:
-  - Define inverse volatility sizing.
-  - Define sleeve/asset risk weights.
-  - Define covariance/correlation estimation.
-  - Define portfolio target volatility scaling.
-  - Define leverage cap, exposure cap, concentration cap.
-  - Define trade floor and rebalance threshold.
-- **Owner Research Needed**:
-  - Target volatility.
-  - Max leverage.
-  - Sleeve weights.
-  - Volatility and covariance windows.
-- **Exit Criteria**:
-  - Risk engine formulas and caps are documented.
-  - No per-asset leverage override exists without portfolio-level control.
+Maintain `BACKUP_AND_RESTORE.md`, restore rehearsals, durable evidence indices, and later retention policy. A backup is not trusted until restored successfully.
 
-### Lily 0.8 - Event-Driven Backtest Design
-- **Goal**: Define the backtest architecture before implementation.
-- **Work**:
-  - Define event types: market data, signal, rebalance, order, fill, roll, cost, portfolio valuation.
-  - Define contract sizing and multiplier handling.
-  - Define transaction cost model.
-  - Define daily portfolio accounting.
-  - Define no-lookahead constraints.
-- **Owner Research Needed**:
-  - Required fidelity level.
-  - Cost model assumptions.
-  - Whether backtest should be built in this workspace or another repo.
-- **Exit Criteria**:
-  - Backtest design can be converted to code later.
-  - Known simplifications are documented.
+## 4. Hypothesis Tracks
 
-### Lily 0.9 - Validation and Paper Trading Design
-- **Goal**: Define promotion gates before any live use.
-- **Work**:
-  - Define chronological split.
-  - Define untouched final test.
-  - Define gross vs net reporting.
-  - Define turnover, drawdown, skew, crash-period, and sleeve-level checks.
-  - Define paper trading workflow.
-  - Define weekly review checklist.
-- **Owner Research Needed**:
-  - Minimum acceptable result profile.
-  - Paper trading duration.
-  - Pause/reduce/retire rules.
-- **Exit Criteria**:
-  - Validation report template exists.
-  - Paper trading runbook exists.
-  - Limited live is still blocked until owner approval.
+### T0 / L-0 — Sizing Feasibility First
 
-### Lily 1.0 - Research-Backed Paper-Ready Specification
-- **Goal**: Complete a human-reviewed system specification ready for implementation or paper trading preparation.
-- **Work**:
-  - Review all documents for contradictions.
-  - Lock v1 research assumptions.
-  - Mark unresolved items clearly.
-  - Decide whether the next phase is code implementation, deeper research, or pause.
-- **Owner Research Needed**:
-  - Final sign-off on thesis, universe, signal, risk, costs, and validation plan.
-- **Exit Criteria**:
-  - Trading plan is complete enough for implementation.
-  - Journal contains decision history.
-  - Universe and data methodology are defined.
-  - Baseline and candidate specs are ready.
-  - Risk engine and validation gates are ready.
-  - No live deployment is authorized by default.
+Question: can a globally diversified trend implementation be sized honestly at USD 1,000 and USD 2,000, and what capital is required for broader futures variants?
 
-## 9. Priority Order
-1. Trading Plan
-2. Research Journal / Decision Log
-3. Futures Universe
-4. Data Source and Roll Methodology
-5. Baseline Backtest Spec
-6. Candidate Signal Spec
-7. Risk Engine Spec
-8. Event-Driven Backtest Design
-9. Validation Report Template
-10. Paper Trading Runbook
+Required branches:
 
-## 10. Quality Bar
-- Documents must be clear enough that a future implementation does not need hidden assumptions.
-- Unknowns must be labeled, not guessed.
-- Each promoted idea needs evidence or a dated rationale.
-- Each backtest rule must be reproducible.
-- Each risk rule must state the stop condition or cap.
-- Each live-related step must remain blocked until explicit owner approval.
+1. US-listed fractional ETF portfolio with global country and asset-class exposure;
+2. micro-futures feasibility at 4, 8, and 12 markets;
+3. full-size futures as a documented out-of-current-scope comparator.
 
-## 11. Codex Operating Rules for This Plan
-- Do not turn research gaps into invented facts.
-- Do not choose broker, vendor, universe, roll rule, target volatility, or leverage cap without owner input.
-- Do not implement backtest code until the relevant spec exists or the owner explicitly asks to prototype.
-- Do not update dashboard state as if research is complete unless the owner confirms.
-- When asked to help, produce small, reviewable artifacts.
-- When editing files, keep changes scoped to the requested document or directly related index.
+Include whole/fractional granularity, margin, cash buffer, target risk, volatility, cost, turnover, concentration, currency, and broker capability. No return backtest is needed to resolve L-0.
 
-## 12. Update Cadence
-- **After each research session**: Add journal entry.
-- **After each major decision**: Update relevant spec and decision log.
-- **After each artifact is created**: Update this plan status if useful.
-- **Before backtest implementation**: Review `Trading Plan.md`, `Baseline Backtest Spec.md`, `Candidate Signal Spec.md`, and `Risk Engine Spec.md`.
-- **Before paper trading**: Review validation report and paper trading runbook.
+Exit: classify each branch as current-capital feasible, scope-restricted, minimum-capital-only, or infeasible under the preregistered constraints.
 
-## 13. Current Next Action
-- **Action**: Create `Trading Plan.md`.
-- **Reason**: It becomes the constitution for all later research and implementation.
-- **Minimum Contents**:
-  - Thesis
-  - Universe assumptions
-  - Baseline signal
-  - Candidate signal
-  - Position sizing
-  - Portfolio construction
-  - Cost controls
-  - Validation gates
-  - Paper trading rules
-  - Explicit stop conditions
-- **Stop If**:
-  - The plan starts requiring specific data vendor or broker decisions that the owner has not researched yet.
-  - The document begins implying live trading before validation and paper trading.
+### T1 / L-1 — Baseline Continuation
 
-## 14. Status Snapshot
-| Version | Status | Notes |
-|:--------|:-------|:------|
-| Lily 0.0 | Complete | Project memory and dashboard exist. |
-| Lily 0.1 | Next | Trading plan skeleton. |
-| Lily 0.2 | Pending | Research journal / decision log. |
-| Lily 0.3 | Pending | Futures universe. |
-| Lily 0.4 | Pending | Data source and roll methodology. |
-| Lily 0.5 | Pending | Baseline backtest spec. |
-| Lily 0.6 | Pending | Candidate signal spec. |
-| Lily 0.7 | Pending | Risk engine spec. |
-| Lily 0.8 | Pending | Event-driven backtest design. |
-| Lily 0.9 | Pending | Validation and paper trading design. |
-| Lily 1.0 | Pending | Paper-ready research-backed specification. |
+Test the 60-day directional-count baseline on the chosen research universe after implementable costs. Evaluate convex/right-tail behavior, whipsaw regimes, concentration, and scope restrictions.
 
-## 15. Last Updated
-- **Last Updated**: 2026-06-01
-- **Updated By**: Codex AI agent
-- **Basis**: Existing `PROJECT_BRAIN.md`, dashboard files, and owner instruction that this should be a research-led plan maintained primarily by the owner.
+Exit: falsified with mechanism autopsy, parked as underpowered, or E2-eligible after all gates and adversarial review.
+
+### T2 / L-2 — Candidate Versus Baseline
+
+Compare the multi-lookback t-stat candidate with a matched-horizon baseline on the same universe, dates, sizing, cost model, and search accounting.
+
+Exit: candidate improves a preregistered utility criterion without relying on unlogged search, or is falsified/parked.
+
+### T3 / L-3 — Sizing Architecture
+
+Compare inverse-volatility sizing with equal notional using ex-ante and realized risk contribution, concentration, turnover, leverage, drawdown, and regime stability.
+
+Exit: inverse-vol sizing materially reduces preregistered concentration measures without unacceptable cost or leverage side effects, or the claim is falsified.
+
+### T4 / L-4 — Breadth
+
+Test whether additional countries, sleeves, and independent markets reduce single-market trend dependency after accounting for trend-state correlation and costs.
+
+Exit: breadth reduces preregistered dependency/concentration measures, produces an explicit scope restriction, or is falsified.
+
+## 5. Execution Orders
+
+### B0 — Governance Bootstrap
+
+Source of truth: `HANDOFF_FOR_CODEX_BOOTSTRAP.md` and `experiments/bootstrap_tracker.json`.
+
+Deliver the self-verifying repository contract before research code. The tracker validator must reject false `done` claims. CI must run the hermetic tier on every push.
+
+Forbidden: data acquisition, broker contact, strategy rules, backtests, and performance claims.
+
+### B1 — Data Layer Design And Fixtures
+
+After B0 passes:
+
+- write the data acquisition decision tree;
+- define dataset registry and dual-hash rules;
+- define ETF survivorship/inception/delisting policy;
+- define futures contract/roll and adjusted-series policy;
+- add provider-boundary schemas and committed synthetic fixtures;
+- keep paid spend at USD 0.
+
+Exit: hermetic ingestion/normalization fixtures pass and no real strategy is executed.
+
+### B2 — L-0 Feasibility Study
+
+After B1 passes, preregister L-0 and run only the sizing/capability study. Use read-only public terms, sandbox, or account-reported permissions; never store credentials.
+
+Exit: current-capital and minimum-capital classifications are reproducible and costed.
+
+### B3 — L-1 Baseline Specification
+
+After L-0 decision:
+
+- lock research universe and observation unit;
+- lock 60-day formula, timing, neutral handling, volatility estimate, rebalance rule, cost model, benchmarks, regimes, and untouched test;
+- compute/fund `MinTRL_falsify` before `MinTRL_validate`;
+- create locked manifest entry and adversarial-review plan.
+
+No real backtest may run in the same session that first writes or revises this preregistration.
+
+### B4 — L-1 Baseline Execution
+
+Only after B3's hashes and validators pass may a separate session run the bounded baseline. Report E1 unless every E2 criterion, including adversarial review, passes.
+
+## 6. Acceptance Gate
+
+E2 requires all of the following:
+
+1. preregistration and locked-gate integrity;
+2. implementable net PnL with spread, commission, slippage, roll/currency costs, and turnover;
+3. sample adequacy against zero, matched benchmark, and minimum acceptable nulls using autocorrelation-adjusted effective observations;
+4. PSR threshold and DSR/search-log handling;
+5. regime matrix including trend/whipsaw, volatility, asset sleeve, country/region, major subperiod, and crisis behavior, or explicit scope restrictions;
+6. big-trend/outlier dependency and concentration analysis;
+7. survivorship, inception, backfill, and futures-roll controls;
+8. an independent adversarial review with no unresolved critical blocker.
+
+Paper trading after E2 validates operations, not edge. An earlier E0 dry run must contain `edge_claim: none`.
+
+## 7. Family Stop And Resurrection
+
+After three consecutive adequately powered falsifications of distinct edge/mechanism hypotheses, stop new family expansion and run a Lily family review. L-0 and engineering/data failures are excluded.
+
+Each kill needs a mechanism autopsy. Resurrection requires a new registry entry and a new testable prediction.
+
+## 8. Data Purchase Rule
+
+No paid data through L-0. Cumulative guard through L-1 is USD 50.
+
+A purchase is rejected unless it:
+
+1. serves a named hypothesis and gap;
+2. cannot be filled from cache/free sources;
+3. funds falsification first or an affordable validation plan;
+4. fits remaining guard room using a live estimate;
+5. is the smallest recoverable block;
+6. records the selected key environment name and true provenance without recording its value.
+
+If MinTRL validation cost is unaffordable or undefined against the benchmark null, revise or falsify; do not buy completionist data.
+
+## 9. Broker And Credential Rule
+
+- Webull Thailand: preferred current-capital ETF candidate; fractional API capability remains unverified.
+- IBKR: micro-futures/reference API candidate; actual permissions remain unverified.
+- No shared Higanbana credentials or cost state.
+- No tracked credentials, account identifiers, or absolute local paths.
+- Broker order transmission is outside this plan until E3 and separate owner approval.
+
+## 10. Current Status
+
+| Program/track | Status | Next gate |
+|:--|:--|:--|
+| Founding decisions | Complete | pushed founding pack |
+| P0–P4 | Not started | B0 bootstrap |
+| L-0 | Active, untested | B1 then B2 |
+| L-1 | Proposed | L-0 decision and B3 |
+| L-2 | Proposed | L-1 evidence |
+| L-3 | Proposed | baseline infrastructure and preregistration |
+| L-4 | Proposed | universe/data integrity and preregistration |
+
+## 11. Source Lineage
+
+- Lily `Note/Hypothesis.md`: L-1 through L-4 rationale and predictions.
+- Archived Lily `Backup_/2026-07-15/IMPLEMENT_PLAN.md`: baseline/candidate/sizing/cost inputs.
+- Higanbana `docs/FABLE5_UPGRADE_PROPOSAL.md`: registry, tiers, dual MinTRL, data decisions, tracks, and acceptance gate.
+- Higanbana `docs/HIGANBANA_TECHNICAL_DUE_DILIGENCE.md`: B0/P1/P2/P4 requirements.
+- Higanbana `experiments/dd_remediation_tracker.json`: evidence-backed order completion.
+
+Lily changes the statistical observation model for persistent trend positions and adds country/asset breadth, survivorship, futures-roll, and small-account sizing gates.

@@ -1,252 +1,213 @@
 # PROJECT_BRAIN.md
 
 ## 1. Project Definition
-- **Purpose**: Static interactive dashboard and working memory for building a multi-asset futures trend-following system.
-- **Primary Users**: Project owner and AI agents working on the Trend Following - Lily research/build plan.
-- **Problem Solved**: Keeps the long-range trading-system build plan, gates, risk controls, weekly checklist, and local progress state in one browser-based dashboard.
-- **Desired Outcome**: A documented path from research to validation, paper trading, limited live deployment, and weekly monitoring.
-- **In Scope**: Static dashboard, roadmap tracking, architecture map, risk engine controls, validation gates, weekly monitor checklist, journal note capture, JSON export/import, local browser state.
-- **Out of Scope**: Real backtesting engine, data pipeline, broker integration, live order execution, alerts, production infrastructure, reconciliation automation.
 
-## 2. Success Criteria
-### Usable When:
-- `Main/index.html` opens directly in a browser without a build step.
-- Roadmap progress sliders update the summary state.
-- Risk controls update target volatility, universe count, rebalance cadence, and deployment mode.
-- Validation and weekly checklist states persist in browser `localStorage`.
-- Journal notes can be added and exported through JSON.
+Lily is a systematic trend-following research program. Its purpose is to determine, with reproducible and implementable evidence, whether trend continuation can support a globally diversified strategy and what capital is required to trade it honestly.
 
-### Production-Ready When:
-- Trading plan and research decision log exist and are referenced from this project.
-- Futures universe, data source, and roll methodology are specified.
-- Baseline backtest and candidate signal backtest exist outside the static dashboard.
-- Risk engine, transaction cost assumptions, validation report, and paper-trading process are implemented and documented.
-- Live deployment requires explicit human approval after paper trading.
+The research program is the product. A dashboard, backtest, paper account, or broker integration is only a supporting artifact.
 
-## 3. Tech Stack
-| Layer | Technology | Version | Notes |
-|:------|:-----------|:--------|:------|
-| Language | HTML | HTML5 doctype | Verified in `Main/index.html`. |
-| Language | CSS | CSS custom properties / media queries | Verified in `Main/styles.css`. |
-| Language | JavaScript | Browser JavaScript | Verified in `Main/app.js`; no transpilation. |
-| Runtime | Web browser | [REQUIRES_INPUT] | Runs by opening `Main/index.html`. |
-| Framework | None | N/A | No framework markers found. |
-| UI Library | None | N/A | DOM is created with native browser APIs. |
-| Styling | Plain CSS | N/A | `Main/styles.css` only. |
-| State Management | Browser `localStorage` | N/A | Uses key `trend-following-system-dashboard-v1`. |
-| Database | None | N/A | No database config found. |
-| ORM / Data Layer | None | N/A | No data-layer package found. |
-| Authentication | None | N/A | Static local dashboard. |
-| API Layer | None | N/A | No network/API code verified. |
-| Testing | Node syntax check | Node version [REQUIRES_INPUT] | `node --check Main/app.js` passed on 2026-06-01. |
-| Build Tool | None | N/A | No package/build config found. |
-| Package Manager | None | N/A | No `package.json`, lock file, or package manager config found. |
-| CI/CD | None | N/A | No CI config found in project. |
-| Hosting/Deploy | Local static file | N/A | Open `Main/index.html` directly. |
-| Key Dependencies | Google Fonts | Remote CSS endpoint | `index.html` loads Kanit via Google Fonts. |
-| Key Assets | PNG logo | N/A | `Main/assets/yuehua-logo.png`. |
+## 2. Current Research Thesis
 
-## 4. Architecture Overview
-- **System Type**: Static browser app.
-- **Core Flow**: User opens `Main/index.html`; CSS renders the visual system; `Main/app.js` initializes default dashboard state, merges saved `localStorage`, renders sections, binds inputs, and exports/imports JSON state.
-- **Core Components**:
-  - `Main/index.html`: Static HTML shell, sections, controls, script/style references.
-  - `Main/styles.css`: Visual system, responsive layout, lunar/premium theme, component styling.
-  - `Main/app.js`: Default state, persistence, rendering, event handlers, JSON import/export.
-  - `Main/assets/yuehua-logo.png`: Watermark and monitor stamp asset.
-  - `Main/README.md`: Minimal local usage note.
-- **External Dependencies**: Google Fonts stylesheet for `Kanit`.
-- **Persistence/State**: Browser `localStorage` plus manual JSON export/import.
-- **Integration Points**: None implemented. Future integrations require explicit design for data source, broker, alerting, and reconciliation.
+Historical owner source: `Note/Hypothesis.md` (preserved verbatim).
 
-## 5. Design Principles
-- Keep the dashboard static and runnable without build tooling unless a real implementation need appears.
-- Separate roadmap documentation from actual trading/backtest code.
-- Treat research, validation, paper trading, limited live, and monitoring as distinct gates.
-- Keep leverage at portfolio level through target volatility and caps.
-- Include costs, trade floors, and rebalance thresholds before judging any backtest result.
-- Mark unknown operational decisions as `[REQUIRES_INPUT]` rather than guessing.
+The proposed mechanism is slow information diffusion followed by herding, which can create continuation rather than immediate reversal. The intended payoff is divergent: many small losses are accepted in exchange for occasional large trends. The mechanism depends on system architecture, especially trend duration, breadth, volatility-aware sizing, and cost control.
 
-## 6. Current Verified State
-- **Last Verified**: 2026-06-01
-- **Current Milestone**: Research planning dashboard exists; trading plan and research journal are pending.
-- **Completed**:
-  - Static dashboard exists in `Main/`.
-  - Dashboard has roadmap, architecture map, risk controls, validation gates, weekly monitor, journal, export/import.
-  - `Main/README.md` documents direct browser opening and `localStorage` persistence.
-  - `AGENTS.md` exists with caution-first coding guidelines for AI agents.
-  - `IMPLEMENT_PLAN.md` exists as a Lily 0.0-1.0 research-led implementation plan.
-  - Logo asset exists at `Main/assets/yuehua-logo.png`.
-  - `node --check Main/app.js` passed on 2026-06-01.
-- **In Progress**:
-  - Project-level operational documentation.
-- **Pending**:
-  - Trading plan markdown.
-  - Research journal / decision log.
-  - Futures universe definition.
-  - Data source selection.
-  - Futures roll methodology.
-  - Baseline 60-day directional-count backtest.
-  - Candidate multi-lookback t-stat / delta-straddle backtest.
-  - Inverse volatility + risk weight + covariance-aware risk engine.
-  - Event-driven backtest with costs.
-  - Validation report.
-  - Paper trading workflow.
-  - Limited live approval process.
-  - Production monitoring, alerting, and reconciliation.
-- **Latest Validation**: `node --check "D:\Fogust\Workspace\Investment\Project\Trend Following - Lily\Main\app.js"` exited successfully on 2026-06-01.
+The pre-refounding design inputs from the archived `IMPLEMENT_PLAN.md` are:
 
-## 7. Next Safe Action
-- **Action**: Create `Trading Plan.md` at the project root or inside a clearly named docs folder.
-- **Preconditions**:
-  - Keep current static dashboard unchanged unless the trading plan requires new links.
-  - Confirm whether the trading plan should be Thai, English, or mixed Thai/English.
-  - Confirm whether `Investment Research Log/` should hold the journal or remain separate.
-- **Stop If**:
-  - User requests live trading, broker execution, or real-money deployment before validation artifacts exist.
-  - Required market data source, roll methodology, or broker assumption is missing for implementation work.
-  - A proposed change requires modifying unrelated workspace files.
-- **Verify With**:
-  - Confirm the new markdown file exists.
-  - Confirm it defines thesis, universe, signal, sizing, portfolio layer, costs, validation gates, paper/live rules, and stop conditions.
-  - If dashboard links are added, open `Main/index.html` and confirm no broken local links.
+- baseline: 60-day directional count;
+- candidate: multi-lookback t-stat / delta-straddle interpretation;
+- sizing direction: `signal × risk weight / volatility`;
+- leverage: portfolio target volatility and caps, never ad hoc per-asset leverage;
+- trust rule: include realistic costs before judging results;
+- honesty rule: unknowns remain explicit and are never guessed.
 
-## 8. Invariants & Guardrails
-### Never:
-- Never treat the dashboard as a validated trading system.
-- Never add broker execution, live order routing, or real-money automation without explicit human approval.
-- Never judge a signal only on gross returns; net costs must be included before promotion.
-- Never tune parameters on the final untouched test period.
-- Never increase leverage per asset ad hoc; use portfolio-level target volatility and caps.
-- Never overwrite browser state without giving the user an export path.
-- Never fabricate undocumented data source, broker, roll rules, or production controls.
+These are prior design inputs, not validated findings.
 
-### Always:
-- Always preserve static-file usability unless the user explicitly asks for a framework or backend.
-- Always run `node --check` after editing `Main/app.js`.
-- Always check direct browser behavior after changing HTML/CSS/JS.
-- Always keep research artifacts separate from execution/live trading artifacts.
-- Always document assumptions and rejected decisions in the research journal once that file exists.
-- Always include transaction costs, spread/slippage, trade floor, and rebalance threshold in backtest design.
-- Always compare candidate signals against the 60-day directional-count baseline.
+## 3. Research Standards
 
-### Requires Approval:
-- Selecting broker, data vendor, or paid infrastructure.
-- Moving from research to paper trading.
-- Moving from paper trading to limited live.
-- Any live order placement, broker API credential storage, or real-money execution.
-- Changing portfolio target volatility, leverage cap, concentration cap, or deployment mode for live use.
+### Evidence Tiers
 
-## 9. Operating Commands
-```powershell
-# Setup
-Get-ChildItem -LiteralPath "D:\Fogust\Workspace\Investment\Project\Trend Following - Lily" -Force
+| Tier | Meaning | Allowed claim |
+|:--|:--|:--|
+| E0 | Infrastructure, fixtures, synthetic evidence, or operational dry run | The machinery works. No edge claim. |
+| E1 | Real-data diagnostic that is under-sampled, underpowered, or blocked | Hypothesis-generating only. |
+| E2 | Preregistered validation passes statistics, regimes, robustness, costs, and adversarial review | Edge exists only in the tested scope. |
+| E3 | E2 plus operational validation, account feasibility, and launch checklist | Eligible for a separate owner decision about real money. |
 
-# Development
-Start-Process "D:\Fogust\Workspace\Investment\Project\Trend Following - Lily\Main\index.html"
+Any acceptance language below E2 is a blocker. Paper trading is allowed only after E2 or as a labeled E0 dry run with `edge_claim: none`.
 
-# Test
-node --check "D:\Fogust\Workspace\Investment\Project\Trend Following - Lily\Main\app.js"
+### Preregistration And Falsification
 
-# Build
-Write-Output "No build step: static HTML/CSS/JS project."
+- Hypotheses own experiments; experiment IDs are foreign keys.
+- Each run locks the observation unit, benchmark null, costs, regimes, search space, validation rule, falsification rule, and outputs before results are observed.
+- Fund `MinTRL_falsify` before `MinTRL_validate`.
+- A kill needs both preregistered statistical evidence and a mechanism autopsy.
+- Resurrection uses a new ID and at least one new prediction.
+- Scope restriction is a first-class result.
 
-# Deploy
-Write-Output "No deploy target configured. Use local static file unless hosting is explicitly added."
+### Trend-Specific Statistics
 
-# Status Check
-rg --files "D:\Fogust\Workspace\Investment\Project\Trend Following - Lily"
+Trend positions persist and overlap. Do not treat raw trade counts as independent observations.
 
-# Rollback
-Write-Output "No git repository detected at D:\Fogust\Workspace\Investment. Restore from backup or browser JSON export if needed."
-```
+Before any real backtest, the statistics kernel must:
 
-## 10. Tech Stack Details & Conventions
-- **Naming Convention**: Existing files use simple lowercase names for app files: `index.html`, `app.js`, `styles.css`; project/folder names may contain spaces.
-- **Directory Structure Convention**:
-  - Static app lives in `Main/`.
-  - Static assets live in `Main/assets/`.
-  - Research artifacts can use `Investment Research Log/` after scope is confirmed.
-  - Project-level coordination documents should live at the project root.
-- **Import Convention**: `index.html` uses relative paths: `./styles.css`, `./app.js`, `./assets/yuehua-logo.png`.
-- **Error Handling Pattern**:
-  - `loadState()` catches invalid saved JSON and falls back to default state.
-  - Import JSON catches parsing errors and shows browser `alert`.
-  - Clipboard write failure is caught and ignored.
-- **Logging Pattern**: No logging pattern implemented.
+- use autocorrelation-adjusted Sharpe variance and report lag choices;
+- report effective independent-bet-equivalent counts alongside calendar and trade counts;
+- use PSR for Sharpe inference and DSR when signals, parameters, universes, or filters were searched;
+- use HAC/Newey-West-style inference for mean return or alpha where appropriate;
+- pin skewness, kurtosis, annualization, excess-return, and missing-data conventions;
+- pass golden-number tests anchored to published worked examples and an offline reference implementation.
 
-## 11. Known Risks & Failure Modes
-| Symptom | Cause | Impact | First Response |
-|:--------|:------|:-------|:---------------|
-| Dashboard opens but saved progress is missing | Browser `localStorage` was cleared, different browser/profile used, or reset was confirmed | User loses local dashboard state | Import last exported JSON if available. |
-| JSON import fails | Imported file is not valid dashboard JSON | State remains unchanged or falls back during merge | Validate JSON, export current state first, retry with known dashboard export. |
-| Export copies nothing to clipboard | Clipboard API unavailable or blocked by browser context | User must manually copy JSON from textarea | Select text in export area and copy manually. |
-| Thai text appears garbled in terminal output | Console/codepage encoding mismatch | Terminal inspection is unreliable | Inspect in browser or read as UTF-8 with an editor/tool that supports Thai. |
-| Layout breaks on small screens | CSS change affects responsive rules | Mobile usability degrades | Open `Main/index.html` at mobile width and inspect affected sections. |
-| Backtest results look strong but cannot be trusted | Costs, roll rules, or leakage checks are missing | False confidence before paper/live stage | Stop promotion and complete validation checklist. |
-| Live deployment pressure appears before validation | Process gate bypass | Real capital risk | Require trading plan, validation report, paper run, and approval. |
+Primary local methodology pages include:
 
-## 12. Recovery Playbooks
-### If dashboard state is corrupted:
-1. Check: export current textarea content if the page still opens.
-2. Run: import a known-good JSON export through the dashboard.
-3. Do NOT: edit `localStorage` manually unless no export exists.
-4. Escalate if: no valid export exists and the lost state is required for decision tracking.
+- `wiki/questions/trend-following-research-track-synthesis.md`
+- `wiki/concepts/directional-count-trend-signal.md`
+- `wiki/concepts/multi-lookback-trend-following.md`
+- `wiki/concepts/inverse-volatility-weighting.md`
+- `wiki/concepts/target-volatility.md`
+- `wiki/concepts/trend-following-transaction-cost-control.md`
+- `wiki/concepts/minimum-track-record-length.md`
+- `wiki/concepts/probabilistic-sharpe-ratio.md`
+- `wiki/concepts/deflated-sharpe-ratio.md`
+- `wiki/concepts/newey-west-validation.md`
+- `wiki/concepts/global-trend-regime-diversification.md`
 
-### If `app.js` has a syntax error:
-1. Check: `node --check "D:\Fogust\Workspace\Investment\Project\Trend Following - Lily\Main\app.js"`.
-2. Run: inspect the line reported by Node and repair the smallest failing edit.
-3. Do NOT: refactor unrelated rendering or state code while fixing syntax.
-4. Escalate if: the syntax error is caused by ambiguous merge/conflicting user edits.
+Preregistrations must record wiki-relative paths and SHA-256 values so later wiki edits cannot rewrite the historical basis.
 
-### If the dashboard page renders incorrectly:
-1. Check: open `D:\Fogust\Workspace\Investment\Project\Trend Following - Lily\Main\index.html` in a browser.
-2. Run: inspect the changed HTML/CSS/JS file and revert only the specific change that caused the rendering issue.
-3. Do NOT: reset all project files or delete local state.
-4. Escalate if: the issue depends on browser-specific behavior or unavailable assets.
+## 4. Hypothesis Registry
 
-### If research work needs implementation:
-1. Check: whether `Trading Plan.md` and `Research Journal.md` exist.
-2. Run: create or update the missing planning document before writing backtest code.
-3. Do NOT: build broker/live execution before validation and paper-trading gates.
-4. Escalate if: data vendor, roll methodology, or broker assumptions are not confirmed.
+Authoritative files:
 
-## 13. Decision Log
-| Date | Decision | Reason | Consequence |
-|:-----|:---------|:-------|:------------|
-| 2026-06-01 | Keep dashboard as static HTML/CSS/JS | Verified project has no build tooling and README says open `index.html` directly | Future edits should preserve no-build usability. |
-| 2026-06-01 | Store dashboard state in browser `localStorage` | Verified `Main/app.js` uses `trend-following-system-dashboard-v1` | State is local to browser/profile and should be exported for backups. |
-| 2026-06-01 | Treat trading/backtest/live system as pending | No backtest, broker, data pipeline, or production code exists in project | Next work should start with plan/journal and then baseline backtest. |
-| 2026-06-01 | Candidate system path uses multi-asset futures, multi-lookback t-stat, inverse volatility, covariance-aware portfolio construction, and portfolio-level target volatility | Verified in dashboard content and project context | Validation must compare baseline and candidate net of realistic costs. |
-| 2026-06-01 | Lily 0.0-1.0 plan is research-led by the owner | Owner stated that the work mainly depends on their research and updates, not Codex-led implementation | Codex should support structure, documentation, and small requested artifacts without inventing research decisions. |
+- human view: `docs/HYPOTHESIS_REGISTRY.md`
+- machine view: `experiments/hypothesis_registry.json`
 
-## 14. Document Map
-| Document | Purpose | Location |
-|:---------|:--------|:---------|
-| PROJECT_BRAIN.md | Single source of truth for project state and next actions | `D:\Fogust\Workspace\Investment\Project\Trend Following - Lily\PROJECT_BRAIN.md` |
-| IMPLEMENT_PLAN.md | Lily 0.0-1.0 research-led implementation plan | `D:\Fogust\Workspace\Investment\Project\Trend Following - Lily\IMPLEMENT_PLAN.md` |
-| README.md | Dashboard usage note | `D:\Fogust\Workspace\Investment\Project\Trend Following - Lily\Main\README.md` |
-| index.html | Static dashboard shell | `D:\Fogust\Workspace\Investment\Project\Trend Following - Lily\Main\index.html` |
-| app.js | Dashboard state/rendering/event logic | `D:\Fogust\Workspace\Investment\Project\Trend Following - Lily\Main\app.js` |
-| styles.css | Dashboard visual system and responsive layout | `D:\Fogust\Workspace\Investment\Project\Trend Following - Lily\Main\styles.css` |
-| yuehua-logo.png | Dashboard logo/watermark asset | `D:\Fogust\Workspace\Investment\Project\Trend Following - Lily\Main\assets\yuehua-logo.png` |
-| AGENTS.md | AI agent behavioral guidelines | `D:\Fogust\Workspace\Investment\Project\Trend Following - Lily\AGENTS.md` |
-| Trading Plan.md | Trading system rules and validation gates | `[REQUIRES_INPUT]` |
-| Research Journal.md | Research notes and decision log | `[REQUIRES_INPUT]` |
+Seed order:
 
-## 15. Roles
-- **Owner**: [REQUIRES_INPUT]
-- **Architect**: [REQUIRES_INPUT]
-- **Implementer**: Human user and AI agent, subject to owner approval.
-- **Reviewer**: [REQUIRES_INPUT]
+1. L-0 — capital and broker sizing feasibility;
+2. L-1 — 60-day baseline continuation after costs;
+3. L-2 — multi-lookback candidate versus matched-horizon baseline;
+4. L-3 — inverse-volatility sizing versus equal notional;
+5. L-4 — breadth versus single-market dependency.
 
-## 16. Operating Policy
-- **Main Policy**: Use the dashboard as a planning and monitoring surface; use markdown research artifacts and code repositories for actual trading-system implementation.
-- **Sub Policy**: Follow `D:\Fogust\Workspace\Investment\Project\Trend Following - Lily\AGENTS.md`: state assumptions, keep changes surgical, prefer simplicity, and verify each change.
-- **Escalation Policy**: Stop and ask the human before broker/data vendor selection, paid services, real-money execution, live credential handling, or any ambiguous change to trading risk controls.
+Only L-0 is active at founding. Later entries remain proposed until their dependencies and preregistrations pass.
 
-## 17. Last Updated / Last Verified
-- **Last Updated**: 2026-06-01
-- **Last Verified**: 2026-06-01
-- **Verified By**: Codex AI agent
-- **Verification Method**: Read project files, mapped file tree with `rg --files`, confirmed no package/build config files were present, read `AGENTS.md`, created `IMPLEMENT_PLAN.md`, and ran `node --check` against `Main/app.js`.
+The family review triggers after three consecutive adequately powered falsifications of distinct edge/mechanism hypotheses. L-0 and engineering failures do not count.
+
+## 5. Capital, Broker, And Universe Decisions
+
+- Capital is separate from Higanbana: USD 1,000–2,000.
+- Research is primary; implementation studies report both current-capital feasibility and minimum capital.
+- Current-capital implementation candidate: 8–12 US-listed fractional ETFs whose underlying exposures are globally diversified across countries and asset classes.
+- Webull Thailand is the preferred ETF operational candidate because of usability and fractional execution.
+- IBKR is the reference broker for micro-futures feasibility and broader API capability.
+- Webull Thailand fractional API support and actual IBKR permissions are unverified until bounded capability probes pass.
+- Full-size futures are outside current-capital scope.
+- Futures feasibility reports minimum capital for 4, 8, and 12 markets using one-contract granularity, margin, volatility, cash buffer, costs, and concentration limits.
+
+The ETF branch is long/cash by default. It must not be represented as equivalent to a symmetric long/short futures CTA.
+
+## 6. Data Standards
+
+Daily bars are the initial frequency. Free or already-accessible data must be evaluated before purchase.
+
+Every dataset plan must define:
+
+- source and true provenance;
+- field and timestamp semantics;
+- instrument identifiers and corporate actions;
+- inception and delisting treatment;
+- survivorship and backfill controls;
+- futures contract selection, roll rule, and adjusted/unadjusted series purpose;
+- missing sessions, holidays, currencies, and FX conversion;
+- raw, normalized, and derived boundaries;
+- schema validation at ingest;
+- cost and re-downloadability.
+
+Hard-to-reproduce data uses raw/container and canonical/content hashes. Free re-downloadable daily data may use documented container hashes until the first hard-to-reproduce artifact arrives.
+
+## 7. Cost Policy
+
+- Paid-data guard is USD 0 through L-0 and cumulative USD 50 through L-1.
+- Lily uses one real funded provider account and records true per-key provenance.
+- No shared Higanbana budget, keys, ledger, or credentials.
+- A purchase must serve a named registry gap, exhaust cached/free alternatives, fund falsification before validation, fit remaining room, and use the smallest recoverable block.
+- If validation sample cost exceeds remaining room or MinTRL is undefined against the benchmark null, validation purchase is forbidden; revise, narrow, or falsify instead.
+
+## 8. Repository Architecture Before Research Code
+
+The bootstrap order must create:
+
+- pinned Python and a dependency manifest;
+- hermetic and state-audit test tiers;
+- CI on every push;
+- environment-variable/untracked-manifest resolution with zero absolute paths in active project artifacts; immutable `Backup_/` history is excluded from the check;
+- `lib/` for hypothesis-independent IO, timestamps, statistics, guardrails, provenance, and reporting;
+- golden-number statistics tests;
+- hypothesis-registry and evidence-tier validators;
+- append-only locked-gate hashes and validator;
+- machine-checkable tracker and done-claim validator;
+- data integrity registry and provider-boundary schemas;
+- `docs/BACKUP_AND_RESTORE.md` plus one restore rehearsal.
+
+Past reports are reproduced by checking out their recorded commit hash. Do not create one copied helper set per experiment.
+
+## 9. Project Memory And Interfaces
+
+- Git-tracked machine-readable files own state.
+- `Note/` is the owner's thinking space and is not agent state.
+- `Dashboard/` is optional visualization only. Its `localStorage` is non-authoritative and disposable.
+- Decision history belongs in `docs/DECISION_RECORD_*.md`, registry decision logs, reports, and git.
+- `PROJECT_BRAIN.md` remains concise and points to those stores.
+
+## 10. Current Verified State
+
+- **Verified date**: 2026-07-15
+- **Git state before refounding**: one commit, `7b25f85`
+- **Existing research code/tests/data/CI**: none
+- **Historical source preserved**: `Note/Hypothesis.md`
+- **Dashboard**: retained under `Dashboard/`, demoted from product/state owner
+- **Founding decisions**: `docs/DECISION_RECORD_001_PROJECT_REFOUNDING.md`
+- **Registry**: seeded at L-0 through L-4; no empirical evidence yet
+- **Strategy/backtest work performed during refounding**: none
+
+## 11. Next Safe Action
+
+Execute bootstrap order B0 from `HANDOFF_FOR_CODEX_BOOTSTRAP.md` and `experiments/bootstrap_tracker.json` in one-session-one-scope increments.
+
+The first implementation session must make the tracker claims machine-checkable and establish the hermetic CI/environment contract. It must not acquire data, write a strategy, run a backtest, or contact a broker.
+
+## 12. Invariants
+
+Never:
+
+- claim edge from E0/E1 evidence;
+- use browser state as project state;
+- spend outside Lily's guard;
+- infer a broker permission or fractional API feature;
+- ignore survivorship, futures rolls, costs, serial correlation, or search history;
+- weaken a locked gate and its validator in place;
+- begin real-money execution without a separate E3 launch decision.
+
+Always:
+
+- compare the candidate against the matched-horizon baseline;
+- report gross and implementable net results separately;
+- report calendar observations, trade counts, and effective independent bets;
+- record provenance, commit hash, environment, evidence tier, blockers, and scope;
+- finish modifying sessions by pushing and reporting `origin/main` hash.
+
+## 13. Source Lineage
+
+### Lily Sources Kept
+
+- `Note/Hypothesis.md`: economic rationale, asymmetric payoff, architecture prerequisites, and predictions.
+- archived `Backup_/2026-07-15/IMPLEMENT_PLAN.md`: baseline, candidate, sizing, target-volatility, cost, and honest-unknown design inputs.
+
+### Higanbana Sources Adapted
+
+- `docs/FABLE5_UPGRADE_PROPOSAL.md`: evidence tiers, registry, dual MinTRL, data tree, kill/resurrection, and acceptance boundary.
+- `docs/HIGANBANA_TECHNICAL_DUE_DILIGENCE.md`: self-verification, `lib/`, statistical anchors, locked gates, and control-plane limits.
+- `AGENTS.md`: session closure, trailer, test tiers, and locked-gate rules.
+- `experiments/dd_remediation_tracker.json`: evidence-backed required-artifact completion.
+
+Lily excludes all 0DTE-specific logic and replaces per-trade assumptions with persistent-position trend inference.

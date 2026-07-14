@@ -1,0 +1,313 @@
+{
+  "schema_version": "lily_hypothesis_registry_v1",
+  "updated": "2026-07-15",
+  "evidence_tiers": {
+    "E0": "Infrastructure, synthetic evidence, fixtures, or operational dry run; no edge claim.",
+    "E1": "Real-data diagnostic evidence that is under-sampled, underpowered, or gate-blocked.",
+    "E2": "Validation-grade evidence passing preregistered statistics, regimes, robustness, costs, and adversarial review.",
+    "E3": "E2 plus operational validation, account feasibility, and a separate launch checklist."
+  },
+  "family_stop_rule": {
+    "threshold": 3,
+    "unit": "consecutive_distinct_edge_or_mechanism_hypotheses",
+    "requires_adequate_falsification_sample": true,
+    "requires_mechanism_autopsy": true,
+    "excluded": [
+      "L-0 feasibility",
+      "engineering failures",
+      "broker permission failures",
+      "data pipeline failures"
+    ],
+    "outcome": "mandatory_family_review"
+  },
+  "inference_policy": {
+    "raw_trade_counts_assumed_independent": false,
+    "required": [
+      "autocorrelation-adjusted Sharpe variance",
+      "calendar observation counts",
+      "trade counts",
+      "independent-bet-equivalent counts",
+      "reported lag conventions",
+      "PSR for Sharpe inference",
+      "DSR or an explicit blocker when search occurred"
+    ]
+  },
+  "hypotheses": [
+    {
+      "id": "L-0",
+      "family": "sizing_feasibility",
+      "counts_toward_family_stop": false,
+      "status": "active",
+      "statement": "At least one globally diversified US-listed fractional-ETF trend implementation is honestly sizeable at USD 1,000 and USD 2,000 after broker constraints and costs, and the same study can identify minimum viable capital for 4-, 8-, and 12-market micro-futures variants.",
+      "economic_rationale": "A statistical edge has no operational value when share or contract granularity, margin, cash buffers, costs, or concentration prevent risk-targeted breadth.",
+      "testable_predictions": [
+        "Fractional ETFs permit materially finer risk allocation than futures at current capital.",
+        "Eight to twelve global economic sleeves are feasible at current capital only when fractional execution and minimum-trade rules permit risk-balanced allocation.",
+        "Minimum viable micro-futures capital rises with breadth, cash buffer, and volatility stress."
+      ],
+      "validation_criteria": [
+        "Preregister target risk, concentration, cash buffer, minimum trade, annualized cost, and broker-capability thresholds before measurement.",
+        "Classify USD 1,000 and USD 2,000 separately without a strategy return backtest.",
+        "Report micro-futures minimum capital for 4, 8, and 12 markets using one-contract granularity and stressed margin."
+      ],
+      "falsification_criteria": [
+        "Kill the current-capital claim if no broker-realistic ETF configuration meets all locked breadth, cash-buffer, concentration, minimum-trade, and annualized-cost thresholds at either USD 1,000 or USD 2,000.",
+        "A single broker or API capability failure is a scope constraint unless every preregistered implementation path fails."
+      ],
+      "required_data": [
+        "ETF price, volatility, liquidity, inception, currency, and fractional eligibility data.",
+        "Webull Thailand fees, fractional rules, API capability, and sandbox/account eligibility.",
+        "IBKR account-reported permissions, fees, and API capability.",
+        "Micro and full-size futures multipliers, tick values, initial/maintenance margins, and stressed margin ranges."
+      ],
+      "mintrl_falsify": {
+        "status": "not_applicable_deterministic_feasibility",
+        "replacement": "locked scenario and stress grid"
+      },
+      "mintrl_validate": {
+        "status": "not_applicable_deterministic_feasibility",
+        "replacement": "locked scenario and stress grid"
+      },
+      "known_kill_zones": [
+        "integer contract granularity",
+        "margin expansion",
+        "fractional API unavailable",
+        "cost floor",
+        "insufficient breadth",
+        "cash-buffer breach"
+      ],
+      "dependencies": [
+        "B0 governance bootstrap",
+        "B1 data layer"
+      ],
+      "evidence": [],
+      "decision_log": [
+        {
+          "date": "2026-07-15",
+          "decision": "activated_at_founding",
+          "notes": "Owner capital is USD 1,000-2,000; Webull Thailand is the ETF candidate and IBKR is the micro-futures reference."
+        }
+      ]
+    },
+    {
+      "id": "L-1",
+      "family": "baseline_continuation",
+      "counts_toward_family_stop": true,
+      "status": "proposed",
+      "statement": "A 60-day directional-count baseline has positive convex payoff after implementable costs on the selected global research universe.",
+      "economic_rationale": "Slow information diffusion followed by herding can produce continuation, while the system accepts frequent small losses to retain infrequent large trends.",
+      "testable_predictions": [
+        "Net performance is driven by right-tail trend episodes rather than hit rate.",
+        "Whipsaw and mean-reverting regimes are the primary loss zone.",
+        "The result survives removal of the best market and best trend episode."
+      ],
+      "validation_criteria": [
+        "Positive implementable net return and preregistered convexity/right-tail criteria.",
+        "PSR passes against zero and a matched implementable benchmark; DSR passes or is blocked explicitly if search occurred.",
+        "Actual independent-bet-equivalent count meets MinTRL_validate and required regime coverage or explicit scope restrictions."
+      ],
+      "falsification_criteria": [
+        "After MinTRL_falsify, implementable net return is non-positive and the preregistered right-tail/convexity condition fails across at least two independent trend-regime buckets.",
+        "A written mechanism autopsy identifies why continuation or its system preconditions failed."
+      ],
+      "required_data": [
+        "Survivorship-clean global ETF and/or contract histories with inception/delisting treatment.",
+        "Futures roll-aware histories if the futures research branch is used.",
+        "Implementable spread, commission, slippage, currency, and roll costs."
+      ],
+      "mintrl_falsify": {
+        "status": "must_be_computed_and_funded_before_execution",
+        "observation_unit": "autocorrelation-adjusted portfolio returns and independent-bet equivalents"
+      },
+      "mintrl_validate": {
+        "status": "must_be_computed_after_falsification_design_and_before_validation_funding",
+        "nulls": [
+          "zero",
+          "matched implementable benchmark",
+          "preregistered minimum acceptable Sharpe"
+        ]
+      },
+      "known_kill_zones": [
+        "whipsaw regimes",
+        "mean-reverting regimes",
+        "cost drag",
+        "single-market or single-crisis dependency"
+      ],
+      "dependencies": [
+        "L-0",
+        "B0 governance bootstrap",
+        "B1 data layer",
+        "golden-number statistics tests"
+      ],
+      "evidence": [],
+      "decision_log": [
+        {
+          "date": "2026-07-15",
+          "decision": "seeded_from_owner_hypothesis_prediction_1",
+          "notes": "No empirical evidence exists at founding."
+        }
+      ]
+    },
+    {
+      "id": "L-2",
+      "family": "candidate_signal",
+      "counts_toward_family_stop": true,
+      "status": "proposed",
+      "statement": "A matched-horizon multi-lookback t-stat signal improves a preregistered risk-adjusted utility or turnover/cost efficiency criterion versus the 60-day baseline.",
+      "economic_rationale": "Combining horizons may reduce dependence on one arbitrary lookback while retaining trend exposure.",
+      "testable_predictions": [
+        "Improvement survives matched universe, timing, sizing, and cost assumptions.",
+        "Improvement is not explained solely by greater leverage or a different effective horizon.",
+        "A locked risk-adjusted or turnover/cost component improves outside the search sample."
+      ],
+      "validation_criteria": [
+        "Lock one utility rule before execution and compare paired dates with identical portfolio plumbing.",
+        "Log every trial and require DSR or untouched revalidation.",
+        "Meet MinTRL_validate using autocorrelation-adjusted effective observations."
+      ],
+      "falsification_criteria": [
+        "After MinTRL_falsify, the candidate fails the locked paired utility margin and has no compensating turnover/cost advantage across required regimes.",
+        "A mechanism autopsy explains whether horizon aggregation added noise, lag, or cost."
+      ],
+      "required_data": [
+        "The exact L-1 universe, dates, normalized inputs, and costs.",
+        "A complete candidate search log and untouched evaluation block."
+      ],
+      "mintrl_falsify": {
+        "status": "must_be_computed_before_execution",
+        "observation_unit": "paired autocorrelation-adjusted portfolio-return differences"
+      },
+      "mintrl_validate": {
+        "status": "must_be_computed_before_validation_funding",
+        "nulls": [
+          "no paired improvement",
+          "preregistered minimum useful improvement"
+        ]
+      },
+      "known_kill_zones": [
+        "unmatched effective horizon",
+        "search contamination",
+        "turnover and cost drag",
+        "lag at reversals"
+      ],
+      "dependencies": [
+        "L-1"
+      ],
+      "evidence": [],
+      "decision_log": [
+        {
+          "date": "2026-07-15",
+          "decision": "seeded_from_owner_hypothesis_prediction_2",
+          "notes": "Candidate remains a design input, not a preferred result."
+        }
+      ]
+    },
+    {
+      "id": "L-3",
+      "family": "position_sizing",
+      "counts_toward_family_stop": false,
+      "status": "proposed",
+      "statement": "Inverse-volatility sizing reduces portfolio risk concentration relative to equal notional without unacceptable turnover, leverage, or cost.",
+      "economic_rationale": "Equal notional allows volatile markets to dominate risk; volatility scaling should distribute risk more evenly.",
+      "testable_predictions": [
+        "Maximum asset and sleeve risk contributions fall.",
+        "Concentration reduction survives volatility regimes and estimator perturbations.",
+        "The benefit is not erased by resizing turnover or leverage."
+      ],
+      "validation_criteria": [
+        "Lock ex-ante and realized concentration metrics, estimator windows, leverage/cash limits, turnover, and regimes.",
+        "Meet the paired effective-sample validation gate."
+      ],
+      "falsification_criteria": [
+        "After MinTRL_falsify, inverse-volatility sizing does not reduce locked concentration metrics in most required regimes or its benefit is fully offset by locked cost/leverage limits.",
+        "A mechanism autopsy explains estimator, correlation, or implementation failure."
+      ],
+      "required_data": [
+        "Matched asset returns, volatility estimates, positions, costs, and realized risk contributions."
+      ],
+      "mintrl_falsify": {
+        "status": "must_be_computed_before_execution",
+        "observation_unit": "paired concentration observations with serial-dependence adjustment"
+      },
+      "mintrl_validate": {
+        "status": "must_be_computed_before_validation_claim",
+        "nulls": [
+          "no concentration reduction",
+          "preregistered minimum useful reduction"
+        ]
+      },
+      "known_kill_zones": [
+        "volatility-estimator lag",
+        "correlation spikes",
+        "resizing turnover",
+        "excess leverage in calm regimes"
+      ],
+      "dependencies": [
+        "L-1 portfolio plumbing"
+      ],
+      "evidence": [],
+      "decision_log": [
+        {
+          "date": "2026-07-15",
+          "decision": "seeded_from_owner_hypothesis_prediction_3",
+          "notes": "Sizing architecture hypothesis; excluded from the mechanism family-stop count."
+        }
+      ]
+    },
+    {
+      "id": "L-4",
+      "family": "breadth",
+      "counts_toward_family_stop": false,
+      "status": "proposed",
+      "statement": "Adding economically distinct countries, asset sleeves, and markets reduces dependency on any single-market trend after costs.",
+      "economic_rationale": "Large trends are rare and synchronized markets are not independent bets; genuine breadth should expand the opportunity set.",
+      "testable_predictions": [
+        "Top-market and top-sleeve PnL and risk shares fall as genuine breadth increases.",
+        "Drawdown dependency and trend-state concentration decline.",
+        "Benefits survive removal of the best market and the best trend episode."
+      ],
+      "validation_criteria": [
+        "Compare nested survivorship-clean universes on matched dates and costs.",
+        "Report return correlation, trend-state correlation, concentration, and independent-bet measures.",
+        "Meet MinTRL_validate or record a scope restriction."
+      ],
+      "falsification_criteria": [
+        "After MinTRL_falsify, broader universes fail to reduce locked dependency metrics or the apparent benefit disappears after costs and best-market removal across required regimes.",
+        "A mechanism autopsy explains synchronization, redundant exposure, or cost failure."
+      ],
+      "required_data": [
+        "Point-in-time universe membership, inception/delisting records, country and asset-sleeve labels, costs, and trend-state histories."
+      ],
+      "mintrl_falsify": {
+        "status": "must_be_computed_before_execution",
+        "observation_unit": "nested-universe dependency differences with serial and cross-sectional dependence adjustment"
+      },
+      "mintrl_validate": {
+        "status": "must_be_computed_before_validation_claim",
+        "nulls": [
+          "no dependency reduction",
+          "preregistered minimum useful reduction"
+        ]
+      },
+      "known_kill_zones": [
+        "synchronized equity regions",
+        "duplicate economic exposures",
+        "survivorship bias",
+        "backfilled histories",
+        "cost of marginal breadth"
+      ],
+      "dependencies": [
+        "B1 data layer",
+        "L-1 portfolio plumbing"
+      ],
+      "evidence": [],
+      "decision_log": [
+        {
+          "date": "2026-07-15",
+          "decision": "seeded_from_owner_hypothesis_prediction_4",
+          "notes": "Global exposure uses US-listed ETFs for fractional execution but must span countries and asset classes."
+        }
+      ]
+    }
+  ]
+}

@@ -1,7 +1,7 @@
 # Trend Following System Dashboard
 
-Static interactive dashboard for the long-range multi-asset futures trend-following build plan.
+Static optional visualization for the Lily trend-following research program.
 
-Open `index.html` in a browser. The dashboard stores progress, checklists, settings, and journal notes in browser `localStorage`. Use **Export JSON** and **Import JSON** to move the state between browsers or keep dated backups.
+Open `index.html` in a browser. The dashboard can store disposable local preferences in browser `localStorage`, but that state is not authoritative project memory and must not be used to prove progress, decisions, gates, or evidence. Authoritative state lives in versioned machine-readable repository files.
 
-This dashboard is intentionally outside `wiki/` so it does not modify the knowledge base.
+This dashboard is intentionally outside `Note/` and may later render exported repository state. It must never own or overwrite that state.
