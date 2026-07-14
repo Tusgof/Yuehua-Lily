@@ -1,0 +1,5 @@
+{
+  "schema_version": "lily_hermetic_fixture_v1",
+  "fixture_kind": "repository_control_smoke",
+  "uses_external_state": false
+}

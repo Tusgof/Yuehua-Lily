@@ -1,0 +1,9 @@
+{
+  "schema_version": "lily_machine_config_v1",
+  "environment_variables": {
+    "LILY_DATA_ROOT": null,
+    "LILY_WIKI_ROOT": null,
+    "LILY_IBKR_PYTHON": null,
+    "LILY_WEBULL_PYTHON": null
+  }
+}

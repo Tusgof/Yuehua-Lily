@@ -1,0 +1,24 @@
+name: Hermetic CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  hermetic:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Set up pinned Python
+        uses: actions/setup-python@v6
+        with:
+          python-version-file: .python-version
+      - name: Run hermetic tier
+        run: python scripts/run_test_tier.py hermetic
+      - name: Validate bootstrap tracker
+        run: python scripts/validate_bootstrap_tracker.py

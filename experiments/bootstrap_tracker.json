@@ -6,7 +6,7 @@
     {
       "id": "B0.1",
       "title": "Tracker and hermetic contract",
-      "status": "not_started",
+      "status": "done",
       "depends_on": [],
       "required_artifacts": [
         {"path": "scripts/validate_bootstrap_tracker.py", "must": "pass"},
@@ -19,7 +19,11 @@
         {"path": ".", "must": "no_active_absolute_paths_or_credentials_excluding_immutable_backup_history"}
       ],
       "forbidden": ["data acquisition", "strategy code", "backtest", "broker request"],
-      "evidence": []
+      "evidence": [
+        "python scripts/run_test_tier.py hermetic passes with committed fixtures and standard-library tests.",
+        "python scripts/validate_bootstrap_tracker.py verifies every B0.1 required artifact and done claim.",
+        "GitHub Actions is configured to run the hermetic tier and tracker validator on push and pull_request."
+      ]
     },
     {
       "id": "B0.2",

@@ -1,0 +1,10 @@
+[project]
+name = "yuehua-lily"
+version = "0.1.0"
+description = "Governed systematic trend-following research"
+requires-python = ">=3.14,<3.15"
+dependencies = []
+
+[tool.lily]
+python-version = "3.14.3"
+hermetic-test-command = "python scripts/run_test_tier.py hermetic"
