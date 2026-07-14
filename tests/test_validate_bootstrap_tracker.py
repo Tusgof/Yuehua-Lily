@@ -184,6 +184,34 @@ class BootstrapTrackerValidatorTests(unittest.TestCase):
         self.assertFalse(unverified)
         self.assertIn("B0.4:gitattributes_missing:*.jsonl text eol=lf", blockers)
 
+    def test_b05_restore_claim_requires_successful_checks(self) -> None:
+        payload = {
+            "schema_version": "lily_restore_rehearsal_v1",
+            "outcome": "successful_committed_artifact_restore",
+            "producing_git_commit": "a" * 40,
+            "checks": {},
+            "external_state": {
+                "local_data": {"restore_status": "pending_no_data"},
+                "machine_manifest": {"expected_in_clone": False},
+                "local_llm_wiki": {"hash_verification": "pass"},
+            },
+            "temporary_clone_removed": True,
+        }
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            (root / "restore.json").write_text(json.dumps(payload), encoding="utf-8")
+            blockers, checked, unverified = self.validator._validate_done_artifact(
+                "B0.5",
+                "restore.json",
+                "record_successful_committed_artifact_restore",
+                project_root=root,
+                verify_runtime=False,
+                runtime_cache={},
+            )
+        self.assertFalse(checked)
+        self.assertFalse(unverified)
+        self.assertIn("B0.5:restore_check_not_pass:remote_clone", blockers)
+
 
 def _tracker_with_artifact(path: str, must: str) -> dict[str, object]:
     return {

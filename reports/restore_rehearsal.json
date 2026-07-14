@@ -1,0 +1,58 @@
+{
+  "schema_version": "lily_restore_rehearsal_v1",
+  "rehearsed_at": "2026-07-14T20:34:35Z",
+  "producing_git_commit": "12fd1ceffaae4824fccbe93470af39df20ca60a2",
+  "outcome": "successful_committed_artifact_restore",
+  "source": {
+    "remote": "https://github.com/Tusgof/Yuehua-Lily.git",
+    "commit": "12fd1ceffaae4824fccbe93470af39df20ca60a2",
+    "restore_scope": "committed_artifacts_only",
+    "method": "fresh_remote_clone_and_detached_checkout"
+  },
+  "checks": {
+    "remote_clone": {"status": "pass"},
+    "commit_hash_match": {"status": "pass"},
+    "hermetic_tier": {"status": "pass", "test_count": 51},
+    "bootstrap_tracker": {"status": "pass"},
+    "restored_worktree_clean": {"status": "pass"},
+    "machine_manifest_expected_absent": {"status": "pass"},
+    "repository_data_expected_absent": {"status": "pass"},
+    "wiki_relative_source_hashes": {"status": "pass", "source_count": 6}
+  },
+  "external_state": {
+    "machine_manifest": {
+      "path": "config/machine.json",
+      "expected_in_clone": false,
+      "restore_rule": "recreate_from_placeholder_example_and_keep_untracked"
+    },
+    "local_data": {
+      "expected_in_clone": false,
+      "restore_status": "pending_no_data",
+      "reason": "No Lily dataset exists at B0.5; B1 must define the data catalog and backup boundary before acquisition."
+    },
+    "local_llm_wiki": {
+      "expected_in_clone": false,
+      "root_variable": "LILY_WIKI_ROOT",
+      "path_policy": "wiki_relative_paths_only",
+      "hash_verification": "pass",
+      "verified_sources": [
+        {"path": "wiki/concepts/minimum-track-record-length.md", "sha256": "ca65225740673bd363be7461b8022281da08ae32e6ff42f8887f1072eb51ad81"},
+        {"path": "wiki/concepts/probabilistic-sharpe-ratio.md", "sha256": "a644495d207403711a55d815abb0722018bba23d428d3d904dd6c4b5a8cef6a5"},
+        {"path": "wiki/concepts/deflated-sharpe-ratio.md", "sha256": "90663b67e49dcec90bd641e801f9464e593ff8fe9091b2d70e9f4645381af556"},
+        {"path": "wiki/concepts/newey-west-validation.md", "sha256": "355b37f5f64d938d254337663b5df635ce008e47f8197eac041c03790643fcc5"},
+        {"path": "wiki/concepts/sharpe-ratio-inference.md", "sha256": "4a13ed9ba9d8e6539544a1259f933a5cc1137fbdb899f04e91fa49fa6f7e6f5e"},
+        {"path": "wiki/sources/how-to-use-the-sharpe-ratio.md", "sha256": "0dd77f17c74091d736676c342c15034f0e05daa3b68bc0c85620b14b24ecf1fb"}
+      ]
+    },
+    "credentials": {
+      "expected_in_clone": false,
+      "restore_rule": "reissue_or_restore_through_an_approved_secret_store"
+    }
+  },
+  "temporary_clone_removed": true,
+  "limitations": [
+    "External data restoration was not exercised because no Lily data exists.",
+    "Broker permissions and credentials were outside the committed-artifact rehearsal.",
+    "The rehearsal proves restoration of the recorded commit, not future uncommitted machine state."
+  ]
+}

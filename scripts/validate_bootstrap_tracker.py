@@ -219,6 +219,8 @@ def _validate_done_artifact(
         return _validate_governance_tests(target, order_id, artifact_path)
     if must == "require_adversarial_review_for_E2":
         return _validate_evidence_policy(target, order_id, artifact_path)
+    if must == "record_successful_committed_artifact_restore":
+        return _validate_restore_rehearsal(target, order_id, artifact_path)
     if must == "no_active_absolute_paths_or_credentials_excluding_immutable_backup_history":
         blockers = _scan_active_artifacts(project_root)
         return ([f"{order_id}:{item}" for item in blockers], not blockers, False)
@@ -429,6 +431,61 @@ def _validate_evidence_policy(
         "supersedes_gate_id",
     )
     blockers = [f"{order_id}:evidence_policy_missing:{item}" for item in required if item not in text]
+    return blockers, not blockers, False
+
+
+def _validate_restore_rehearsal(
+    target: Path,
+    order_id: str,
+    artifact_path: str,
+) -> tuple[list[str], bool, bool]:
+    if not target.is_file():
+        return [f"{order_id}:missing_artifact:{artifact_path}"], False, False
+    try:
+        payload = json.loads(target.read_text(encoding="utf-8"))
+    except json.JSONDecodeError as exc:
+        return [f"{order_id}:invalid_restore_rehearsal:{exc}"], False, False
+    blockers: list[str] = []
+    if payload.get("schema_version") != "lily_restore_rehearsal_v1":
+        blockers.append(f"{order_id}:restore_rehearsal_schema_invalid")
+    if payload.get("outcome") != "successful_committed_artifact_restore":
+        blockers.append(f"{order_id}:committed_artifact_restore_not_successful")
+    if not re.fullmatch(r"[0-9a-f]{40}", str(payload.get("producing_git_commit", ""))):
+        blockers.append(f"{order_id}:restore_rehearsal_missing_commit")
+    checks = payload.get("checks")
+    required_checks = {
+        "remote_clone",
+        "commit_hash_match",
+        "hermetic_tier",
+        "bootstrap_tracker",
+        "restored_worktree_clean",
+        "machine_manifest_expected_absent",
+        "repository_data_expected_absent",
+        "wiki_relative_source_hashes",
+    }
+    if not isinstance(checks, dict):
+        blockers.append(f"{order_id}:restore_rehearsal_checks_missing")
+    else:
+        for check in sorted(required_checks):
+            if not isinstance(checks.get(check), dict) or checks[check].get("status") != "pass":
+                blockers.append(f"{order_id}:restore_check_not_pass:{check}")
+    external = payload.get("external_state")
+    if not isinstance(external, dict):
+        external = {}
+        blockers.append(f"{order_id}:external_state_missing")
+    local_data = external.get("local_data") if isinstance(external.get("local_data"), dict) else {}
+    machine_manifest = (
+        external.get("machine_manifest") if isinstance(external.get("machine_manifest"), dict) else {}
+    )
+    local_wiki = external.get("local_llm_wiki") if isinstance(external.get("local_llm_wiki"), dict) else {}
+    if local_data.get("restore_status") != "pending_no_data":
+        blockers.append(f"{order_id}:external_data_restore_status_must_be_pending_no_data")
+    if machine_manifest.get("expected_in_clone") is not False:
+        blockers.append(f"{order_id}:machine_manifest_absence_not_recorded")
+    if local_wiki.get("hash_verification") != "pass":
+        blockers.append(f"{order_id}:wiki_hash_verification_not_passed")
+    if payload.get("temporary_clone_removed") is not True:
+        blockers.append(f"{order_id}:temporary_clone_cleanup_not_recorded")
     return blockers, not blockers, False
 
 

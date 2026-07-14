@@ -85,14 +85,18 @@
     {
       "id": "B0.5",
       "title": "Backup and restore",
-      "status": "not_started",
+      "status": "done",
       "depends_on": ["B0.1"],
       "required_artifacts": [
         {"path": "docs/BACKUP_AND_RESTORE.md", "must": "exist"},
         {"path": "reports/restore_rehearsal.json", "must": "record_successful_committed_artifact_restore"}
       ],
       "forbidden": ["claiming untested backup is complete"],
-      "evidence": []
+      "evidence": [
+        "A fresh remote clone was detached at commit 12fd1ceffaae4824fccbe93470af39df20ca60a2; the hash matched, 51 hermetic tests passed, the bootstrap tracker passed, and the restored worktree was clean.",
+        "The rehearsal confirmed that config/machine.json and repository data are absent by design, verified all six wiki-relative methodology hashes, and removed the temporary clone.",
+        "docs/BACKUP_AND_RESTORE.md separates committed artifacts, untracked machine state, the external LLM Wiki, credentials, and future data; external data restore remains explicitly pending because no Lily data exists."
+      ]
     },
     {
       "id": "B1",
