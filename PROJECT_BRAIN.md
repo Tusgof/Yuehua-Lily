@@ -89,7 +89,7 @@ Seed order:
 4. L-3 — inverse-volatility sizing versus equal notional;
 5. L-4 — breadth versus single-market dependency.
 
-Current machine status is authoritative in `experiments/hypothesis_registry.json`: L-0 is scope-restricted after E0 sizing evidence, L-1 is active with a locked preregistration, and L-2 through L-4 remain proposed.
+Current machine status is authoritative in `experiments/hypothesis_registry.json`: L-0 is scope-restricted after E0 sizing evidence; L-1 is scope-restricted after E1 falsification-window evidence and its validation window remains sealed; L-2 through L-4 remain proposed.
 
 The family review triggers after three consecutive adequately powered falsifications of distinct edge/mechanism hypotheses. L-0 and engineering failures do not count.
 
@@ -163,17 +163,17 @@ Past reports are reproduced by checking out their recorded commit hash. Do not c
 ## 10. Current Verified State
 
 - **Verified date**: 2026-07-15
-- **Bootstrap**: B0 through B3.1 complete; B4 not started
+- **Bootstrap**: B0 through B4 complete
 - **Legacy Note status**: retired and deleted by `docs/DECISION_RECORD_002_RESEARCH_LOG_CONTRACT.md` after its research content was promoted
-- **Human research logs**: contract active; L-0 is `research_log/001-lily-l0-sizing-feasibility.md`
+- **Human research logs**: contract active; L-0 is `research_log/001-lily-l0-sizing-feasibility.md` and L-1 is `research_log/002-lily-l1-baseline.md`
 - **Dashboard**: retained under `Dashboard/`, demoted from product/state owner
 - **Founding decisions**: `docs/DECISION_RECORD_001_PROJECT_REFOUNDING.md`
-- **Registry**: L-0 scope-restricted E0; L-1 active and locked; L-2 through L-4 proposed
-- **L-1 strategy/backtest execution**: none
+- **Registry**: L-0 scope-restricted E0; L-1 scope-restricted E1; L-2 through L-4 proposed
+- **L-1 falsification execution**: complete through 2015-12-31; not falsified, not validated; validation sealed
 
 ## 11. Next Safe Action
 
-Execute B4 only after the B3.1 human-readable research-log contract passes. B4 must begin with the locked falsification window and produce both machine reports and the required Thai L-1 research log.
+Keep validation sealed. Resolve L-1 corporate-action provenance, historical expense ratios, matched cash data, and broker eligibility in a new bounded data-quality order. Then verify sealed-window funding capacity without reading validation returns before any unlock request.
 
 ## 12. Invariants
 

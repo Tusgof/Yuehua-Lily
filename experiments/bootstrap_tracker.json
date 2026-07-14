@@ -183,7 +183,7 @@
     {
       "id": "B4",
       "title": "L-1 bounded baseline execution",
-      "status": "not_started",
+      "status": "done",
       "depends_on": ["B3.1"],
       "required_artifacts": [
         {"path": "reports/experiments/l_1_baseline_summary.json", "must": "pass_summary_validator"},
@@ -193,7 +193,13 @@
         {"path": "scripts/audit_research_logs.py", "must": "pass"}
       ],
       "forbidden": ["E2 claim without adversarial review", "paper trading approval", "real-money approval"],
-      "evidence": []
+      "evidence": [
+        "reports/experiments/l_1_baseline_summary.json records E1 falsification-window evidence produced from commit c36d74980cda9094f26e8ed959a0b723328d1c62 with machine digest 25985d2f649fa6a01d41b0ea76bde25624ada38f2ff5acc3ea2b35258e056439; edge_claim remains none.",
+        "The primary_60 result has 17,338.87 joint independent-bet equivalents and funds MinTRL_falsify, but it is not falsified because fewer than two global-state buckets meet the locked coverage rule; it is not validated and the 2016-01-04 through 2026-06-30 window remains sealed_not_accessed.",
+        "reports/experiments/l_1_search_log.jsonl retains every real-return run, including the initial engineering failure and all five locked trials for each completed run; no sensitivity replaced primary_60.",
+        "research_log/002-lily-l1-baseline.md passes the Thai six-section audit and explains gross-versus-net performance, cost drag, payoff failure, concentration, limitations, prohibited conclusions, and the next safe action.",
+        "reports/adversarial/l_1_baseline_review.json honestly records not_started_E1_no_promotion; no independent review, E2 promotion, paper trade, broker action, credential, paid data, or real-money approval occurred."
+      ]
     }
   ]
 }

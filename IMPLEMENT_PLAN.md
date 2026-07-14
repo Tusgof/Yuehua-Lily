@@ -182,7 +182,7 @@ If MinTRL validation cost is unaffordable or undefined against the benchmark nul
 | Founding decisions | Complete | pushed founding pack |
 | P0–P4 | Not started | B0 bootstrap |
 | L-0 | Scope-restricted E0 feasibility complete | Broker capability remains unverified |
-| L-1 | Active; preregistration locked | B4 falsification window |
+| L-1 | Scope-restricted E1; B4 falsification complete, validation sealed | Resolve data blockers and verify validation funding capacity without opening returns |
 | L-2 | Proposed | L-1 evidence |
 | L-3 | Proposed | baseline infrastructure and preregistration |
 | L-4 | Proposed | universe/data integrity and preregistration |

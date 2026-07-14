@@ -103,7 +103,7 @@
       "id": "L-1",
       "family": "baseline_continuation",
       "counts_toward_family_stop": true,
-      "status": "active",
+      "status": "scope_restricted",
       "statement": "A 60-day directional-count baseline has positive convex payoff after implementable costs on the selected global research universe.",
       "economic_rationale": "Slow information diffusion followed by herding can produce continuation, while the system accepts frequent small losses to retain infrequent large trends.",
       "testable_predictions": [
@@ -126,11 +126,13 @@
         "Implementable spread, commission, slippage, currency, and roll costs."
       ],
       "mintrl_falsify": {
-        "status": "must_be_computed_and_funded_before_execution",
-        "observation_unit": "autocorrelation-adjusted portfolio returns and independent-bet equivalents"
+        "status": "funded_in_B4_falsification_window",
+        "observation_unit": "autocorrelation-adjusted portfolio returns and independent-bet equivalents",
+        "required_joint_independent_bet_equivalents": 3850,
+        "actual_joint_independent_bet_equivalents": 17338.86843729944
       },
       "mintrl_validate": {
-        "status": "must_be_computed_after_falsification_design_and_before_validation_funding",
+        "status": "sealed_not_accessed_and_capacity_not_verified",
         "nulls": [
           "zero",
           "matched implementable benchmark",
@@ -149,7 +151,12 @@
         "B1 data layer",
         "golden-number statistics tests"
       ],
-      "evidence": [],
+      "evidence": [
+        {
+          "path": "reports/experiments/l_1_baseline_summary.json",
+          "evidence_tier": "E1"
+        }
+      ],
       "decision_log": [
         {
           "date": "2026-07-15",
@@ -160,6 +167,11 @@
           "date": "2026-07-15",
           "decision": "activated_after_B3_preregistration_lock",
           "notes": "Gate l_1_baseline_v1 locks the 60-day baseline and sequential falsification-before-validation protocol. This is a research specification only; no L-1 market evidence, edge claim, or execution result exists."
+        },
+        {
+          "date": "2026-07-15",
+          "decision": "B4_not_falsified_but_not_validated_scope_restricted",
+          "notes": "E1 falsification-window evidence funds MinTRL_falsify but does not meet the full two-regime falsification rule. Net performance, payoff shape, concentration, data provenance, cash, historical fees, and broker feasibility remain blocked. Validation stays sealed."
         }
       ]
     },

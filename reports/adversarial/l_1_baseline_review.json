@@ -1,0 +1,29 @@
+{
+  "edge_claim": "none",
+  "evidence_tier": "E1",
+  "hypothesis_id": "L-1",
+  "note": "This is an honest status artifact, not an adversarial review.",
+  "producing_git_commit": "c36d74980cda9094f26e8ed959a0b723328d1c62",
+  "promotion_requested": false,
+  "reviewer_is_independent": false,
+  "schema_version": "lily_adversarial_review_status_v1",
+  "status": "not_started_E1_no_promotion",
+  "tier_blockers": [
+    "Yahoo public chart data is not a point-in-time revision archive and provider close is split-normalized.",
+    "The fixed universe contains surviving proxies and does not represent the historical ETF opportunity set.",
+    "Current expense-ratio proxies replace unavailable then-current fee histories.",
+    "Cash return is set to zero because a matched point-in-time public cash series was not acquired.",
+    "Market impact is not modeled.",
+    "Webull Thailand fractional eligibility and OpenAPI capability remain unverified, so the current-capital branch was not run.",
+    "No independent adversarial review has been performed; E2 promotion is forbidden."
+  ],
+  "unresolved_critical_issues": [
+    "Yahoo public chart data is not a point-in-time revision archive and provider close is split-normalized.",
+    "The fixed universe contains surviving proxies and does not represent the historical ETF opportunity set.",
+    "Current expense-ratio proxies replace unavailable then-current fee histories.",
+    "Cash return is set to zero because a matched point-in-time public cash series was not acquired.",
+    "Market impact is not modeled.",
+    "Webull Thailand fractional eligibility and OpenAPI capability remain unverified, so the current-capital branch was not run.",
+    "No independent adversarial review has been performed; E2 promotion is forbidden."
+  ]
+}
