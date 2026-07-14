@@ -13,7 +13,6 @@ from lib.statistics import (
     deflated_sharpe_ratio,
     effective_independent_bets_from_eigenvalues,
     effective_sample_length,
-    newey_west_t_statistic,
     probabilistic_sharpe_ratio,
     raw_kurtosis_population,
     sample_autocorrelation,
@@ -612,7 +611,22 @@ def _breakdown(values: list[float], labels: list[str]) -> dict[str, Any]:
     groups: dict[str, list[float]] = defaultdict(list)
     for value, label in zip(values, labels, strict=True):
         groups[label].append(value)
-    return {key: performance_metrics(rows) for key, rows in sorted(groups.items())}
+    episode_counts: dict[str, int] = defaultdict(int)
+    last_seen: dict[str, int] = {}
+    for index, label in enumerate(labels):
+        if label not in last_seen or index - last_seen[label] > 60:
+            episode_counts[label] += 1
+        last_seen[label] = index
+    output: dict[str, Any] = {}
+    for key, rows in sorted(groups.items()):
+        autocorrelations = [sample_autocorrelation(rows, lag) or 0.0 for lag in range(1, 6)]
+        effective = effective_sample_length(len(rows), autocorrelations) if len(rows) > 6 else 0.0
+        output[key] = performance_metrics(rows) | {
+            "time_effective_observations": effective,
+            "separated_episode_count": episode_counts[key],
+            "adequately_covered": effective >= 252 and episode_counts[key] >= 4,
+        }
+    return output
 
 
 def _exposure_summary(weights: list[dict[str, float]]) -> dict[str, Any]:
@@ -641,10 +655,31 @@ def _quadratic_convexity(x: list[float], y: list[float]) -> dict[str, Any]:
     xty = [sum(row[i] * value for row, value in zip(design, y, strict=True)) for i in range(3)]
     beta = [sum(inverse[i][j] * xty[j] for j in range(3)) for i in range(3)]
     residuals = [value - sum(beta[j] * row[j] for j in range(3)) for row, value in zip(design, y, strict=True)]
-    score = [row[2] * residual for row, residual in zip(design, residuals, strict=True)]
-    approximate_t = newey_west_t_statistic(score, 5)
-    return {"coefficient": beta[2], "newey_west_t": approximate_t, "lags": 5,
-            "note": "HAC diagnostic uses the quadratic normal-equation score; E1 only."}
+    score_rows = [[row[column] * residual for column in range(3)] for row, residual in zip(design, residuals, strict=True)]
+    meat = [[sum(row[i] * row[j] for row in score_rows) for j in range(3)] for i in range(3)]
+    for lag in range(1, 6):
+        weight = 1.0 - lag / 6.0
+        for i in range(3):
+            for j in range(3):
+                covariance = sum(
+                    score_rows[index][i] * score_rows[index - lag][j]
+                    + score_rows[index][j] * score_rows[index - lag][i]
+                    for index in range(lag, len(score_rows))
+                )
+                meat[i][j] += weight * covariance
+    sandwich = _matrix_multiply(_matrix_multiply(inverse, meat), inverse)
+    standard_error = math.sqrt(max(sandwich[2][2], 0.0))
+    t_statistic = beta[2] / standard_error if standard_error > 0.0 else None
+    return {"coefficient": beta[2], "newey_west_standard_error": standard_error,
+            "newey_west_t": t_statistic, "lags": 5,
+            "note": "HAC sandwich covariance with Bartlett weights; E1 diagnostic."}
+
+
+def _matrix_multiply(left: list[list[float]], right: list[list[float]]) -> list[list[float]]:
+    return [
+        [sum(left[row][index] * right[index][column] for index in range(len(right))) for column in range(len(right[0]))]
+        for row in range(len(left))
+    ]
 
 
 def _inverse_3x3(matrix: list[list[float]]) -> list[list[float]]:
