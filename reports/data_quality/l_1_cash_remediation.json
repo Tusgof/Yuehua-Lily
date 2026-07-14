@@ -1,0 +1,3002 @@
+{
+  "comparison": {
+    "annual_net_geometric_return_change": 0.0008204397869229219,
+    "annual_net_sharpe_change": 0.011342888008234242,
+    "cash_yield_return_units": 0.007543491381047703,
+    "primary_selection_unchanged": true
+  },
+  "contract_sha256": "1fe4957f667bdf367d230048ac279fbdf9b4b2b109540dcdf5a54900e1c7cdb9",
+  "data": {
+    "cash_dataset_sha256": "5812720b3a86a49f001d340ec6b60ba083b06a7c51018dc130ad191b33ca6933",
+    "cash_source": "U.S. Treasury 13 WEEKS COUPON EQUIVALENT",
+    "cash_source_coverage": {
+      "end": "2015-12-31",
+      "start": "2006-01-03"
+    },
+    "market_dataset_sha256": "6608c0ef88f4b7edaef7523738d7a172215aa4f97c8c403adeba884d6582a4dd",
+    "maximum_session_accessed": "2015-12-31",
+    "opened_session_count": 2244,
+    "opened_sessions_with_nonzero_cash_return": 2231,
+    "untouched_validation_status": "sealed_not_accessed"
+  },
+  "decision": "cash_gap_resolved_result_remains_scope_restricted",
+  "edge_claim": "none",
+  "environment": {
+    "platform": "windows",
+    "python_executable": "python.exe",
+    "python_implementation": "cpython",
+    "python_version": "3.14.3"
+  },
+  "evidence_tier": "E1",
+  "guardrails": {
+    "account_queried": false,
+    "credentials_used": false,
+    "orders_sent": false,
+    "paid_data_used": false,
+    "validation_data_opened": false
+  },
+  "hypothesis_id": "L-1",
+  "order_id": "B4.1",
+  "original_B4_primary": {
+    "annual_net_geometric_return": -0.029756040515421023,
+    "annual_net_sharpe": -0.3681760726658574,
+    "cash_yield_return_units": 0.0,
+    "producing_git_commit": "c36d74980cda9094f26e8ed959a0b723328d1c62",
+    "report_digest_sha256": "25985d2f649fa6a01d41b0ea76bde25624ada38f2ff5acc3ea2b35258e056439"
+  },
+  "produced_at": "2026-07-14T23:26:36Z",
+  "producing_git_commit": "83f74e8137ff9b5adaf3f70b528e7592073ced20",
+  "remediated_primary": {
+    "DSR": {
+      "correlation_effective_rank": 1.1896923370495245,
+      "effective_trials_used": 5.0,
+      "locked_trials": 5,
+      "probability": 0.007172912100519301,
+      "trial_daily_sharpe_standard_deviation": 0.020765360070671538
+    },
+    "MinTRL_falsify_funded": true,
+    "MinTRL_falsify_required": 3850,
+    "PSR_vs_annual_Sharpe_0_25": 0.023784274996805656,
+    "active_vs_matched_benchmark": {
+      "annual_arithmetic_return": -0.0538251325889221,
+      "annual_geometric_return": -0.05630688094328662,
+      "annual_sharpe": -0.5931156928519882,
+      "annual_volatility": 0.0907498035165867,
+      "cumulative_return": -0.40313767906405384,
+      "maximum_drawdown": -0.47542969543021063,
+      "observations": 2244
+    },
+    "asset_and_region_matrix": {
+      "asset": {
+        "DBC": {
+          "annual_arithmetic_return": 0.014743955078126873,
+          "annual_geometric_return": 0.014543496559798141,
+          "annual_sharpe": 0.597072892161778,
+          "annual_volatility": 0.024693727133959335,
+          "cumulative_return": 0.13720519463089897,
+          "maximum_drawdown": -0.05525556483466709,
+          "observations": 2244
+        },
+        "EWJ": {
+          "annual_arithmetic_return": -0.013327565210715351,
+          "annual_geometric_return": -0.013437702396451368,
+          "annual_sharpe": -0.665286478055312,
+          "annual_volatility": 0.020032821424047186,
+          "cumulative_return": -0.11349701898271436,
+          "maximum_drawdown": -0.12805496299259844,
+          "observations": 2244
+        },
+        "GLD": {
+          "annual_arithmetic_return": 0.0024977704761670115,
+          "annual_geometric_return": 0.0022563482848978467,
+          "annual_sharpe": 0.11311530945708977,
+          "annual_volatility": 0.022081630578171557,
+          "cumulative_return": 0.02027235946928929,
+          "maximum_drawdown": -0.07505840354900162,
+          "observations": 2244
+        },
+        "IEF": {
+          "annual_arithmetic_return": -0.006673933974408804,
+          "annual_geometric_return": -0.006747489863615286,
+          "annual_sharpe": -0.48081156915336604,
+          "annual_volatility": 0.01388056029134357,
+          "cumulative_return": -0.058507049042710424,
+          "maximum_drawdown": -0.07880401088360767,
+          "observations": 2244
+        },
+        "TIP": {
+          "annual_arithmetic_return": -0.010543093192748784,
+          "annual_geometric_return": -0.010558909344698608,
+          "annual_sharpe": -0.8802292807233764,
+          "annual_volatility": 0.011977666982498497,
+          "cumulative_return": -0.09019455074492921,
+          "maximum_drawdown": -0.10456852983701592,
+          "observations": 2244
+        },
+        "VGK": {
+          "annual_arithmetic_return": -0.0037132568858047965,
+          "annual_geometric_return": -0.0038985614314384076,
+          "annual_sharpe": -0.1890861220921599,
+          "annual_volatility": 0.01963791337364764,
+          "cumulative_return": -0.03418561230685002,
+          "maximum_drawdown": -0.07743756632668297,
+          "observations": 2244
+        },
+        "VTI": {
+          "annual_arithmetic_return": -0.004299704539535232,
+          "annual_geometric_return": -0.0045045988758156685,
+          "annual_sharpe": -0.20739217497222948,
+          "annual_volatility": 0.020732240934890515,
+          "cumulative_return": -0.03940557918544263,
+          "maximum_drawdown": -0.08187378625732833,
+          "observations": 2244
+        },
+        "VWO": {
+          "annual_arithmetic_return": -0.006114040635422363,
+          "annual_geometric_return": -0.006285494984731188,
+          "annual_sharpe": -0.3127222308027213,
+          "annual_volatility": 0.01955102654431806,
+          "cumulative_return": -0.054600301067860624,
+          "maximum_drawdown": -0.06939444550574048,
+          "observations": 2244
+        }
+      },
+      "country_or_region": {
+        "Emerging_markets": {
+          "annual_arithmetic_return": -0.006114040635422363,
+          "annual_geometric_return": -0.006285494984731188,
+          "annual_sharpe": -0.3127222308027213,
+          "annual_volatility": 0.01955102654431806,
+          "cumulative_return": -0.054600301067860624,
+          "maximum_drawdown": -0.06939444550574048,
+          "observations": 2244
+        },
+        "Europe": {
+          "annual_arithmetic_return": -0.0037132568858047965,
+          "annual_geometric_return": -0.0038985614314384076,
+          "annual_sharpe": -0.1890861220921599,
+          "annual_volatility": 0.01963791337364764,
+          "cumulative_return": -0.03418561230685002,
+          "maximum_drawdown": -0.07743756632668297,
+          "observations": 2244
+        },
+        "Global": {
+          "annual_arithmetic_return": 0.01724172555429388,
+          "annual_geometric_return": 0.0166956157836875,
+          "annual_sharpe": 0.4664859004487971,
+          "annual_volatility": 0.03696087178134634,
+          "cumulative_return": 0.15886728977929065,
+          "maximum_drawdown": -0.07188436148686295,
+          "observations": 2244
+        },
+        "Japan": {
+          "annual_arithmetic_return": -0.013327565210715351,
+          "annual_geometric_return": -0.013437702396451368,
+          "annual_sharpe": -0.665286478055312,
+          "annual_volatility": 0.020032821424047186,
+          "cumulative_return": -0.11349701898271436,
+          "maximum_drawdown": -0.12805496299259844,
+          "observations": 2244
+        },
+        "United_States": {
+          "annual_arithmetic_return": -0.021516731706692816,
+          "annual_geometric_return": -0.021698746233353106,
+          "annual_sharpe": -0.7426161372720632,
+          "annual_volatility": 0.028974231270724456,
+          "cumulative_return": -0.1774527373257464,
+          "maximum_drawdown": -0.2023277517224945,
+          "observations": 2244
+        }
+      },
+      "sleeve": {
+        "Europe_equity": {
+          "annual_arithmetic_return": -0.0037132568858047965,
+          "annual_geometric_return": -0.0038985614314384076,
+          "annual_sharpe": -0.1890861220921599,
+          "annual_volatility": 0.01963791337364764,
+          "cumulative_return": -0.03418561230685002,
+          "maximum_drawdown": -0.07743756632668297,
+          "observations": 2244
+        },
+        "Japan_equity": {
+          "annual_arithmetic_return": -0.013327565210715351,
+          "annual_geometric_return": -0.013437702396451368,
+          "annual_sharpe": -0.665286478055312,
+          "annual_volatility": 0.020032821424047186,
+          "cumulative_return": -0.11349701898271436,
+          "maximum_drawdown": -0.12805496299259844,
+          "observations": 2244
+        },
+        "US_equity": {
+          "annual_arithmetic_return": -0.004299704539535232,
+          "annual_geometric_return": -0.0045045988758156685,
+          "annual_sharpe": -0.20739217497222948,
+          "annual_volatility": 0.020732240934890515,
+          "cumulative_return": -0.03940557918544263,
+          "maximum_drawdown": -0.08187378625732833,
+          "observations": 2244
+        },
+        "US_inflation_linked_bonds": {
+          "annual_arithmetic_return": -0.010543093192748784,
+          "annual_geometric_return": -0.010558909344698608,
+          "annual_sharpe": -0.8802292807233764,
+          "annual_volatility": 0.011977666982498497,
+          "cumulative_return": -0.09019455074492921,
+          "maximum_drawdown": -0.10456852983701592,
+          "observations": 2244
+        },
+        "broad_commodities": {
+          "annual_arithmetic_return": 0.014743955078126873,
+          "annual_geometric_return": 0.014543496559798141,
+          "annual_sharpe": 0.597072892161778,
+          "annual_volatility": 0.024693727133959335,
+          "cumulative_return": 0.13720519463089897,
+          "maximum_drawdown": -0.05525556483466709,
+          "observations": 2244
+        },
+        "emerging_markets_equity": {
+          "annual_arithmetic_return": -0.006114040635422363,
+          "annual_geometric_return": -0.006285494984731188,
+          "annual_sharpe": -0.3127222308027213,
+          "annual_volatility": 0.01955102654431806,
+          "cumulative_return": -0.054600301067860624,
+          "maximum_drawdown": -0.06939444550574048,
+          "observations": 2244
+        },
+        "gold": {
+          "annual_arithmetic_return": 0.0024977704761670115,
+          "annual_geometric_return": 0.0022563482848978467,
+          "annual_sharpe": 0.11311530945708977,
+          "annual_volatility": 0.022081630578171557,
+          "cumulative_return": 0.02027235946928929,
+          "maximum_drawdown": -0.07505840354900162,
+          "observations": 2244
+        },
+        "intermediate_US_Treasuries": {
+          "annual_arithmetic_return": -0.006673933974408804,
+          "annual_geometric_return": -0.006747489863615286,
+          "annual_sharpe": -0.48081156915336604,
+          "annual_volatility": 0.01388056029134357,
+          "cumulative_return": -0.058507049042710424,
+          "maximum_drawdown": -0.07880401088360767,
+          "observations": 2244
+        }
+      }
+    },
+    "autocorrelations_lags_1_to_5": [
+      -0.026733174895542267,
+      -0.02782822226609554,
+      -0.01358210265029199,
+      -0.023330269807602645,
+      0.011636069764373248
+    ],
+    "claim_eligible": true,
+    "concentration_tests": {
+      "asset_concentration_pass": false,
+      "asset_net_contributions": {
+        "DBC": 0.131291409505225,
+        "EWJ": -0.11867879497160813,
+        "GLD": 0.022242051383011007,
+        "IEF": -0.05942979301021173,
+        "TIP": -0.09388373462114392,
+        "VGK": -0.033065668459309375,
+        "VTI": -0.03828784518538516,
+        "VWO": -0.05444407613447533
+      },
+      "episode_count": 361,
+      "largest_positive_asset": "DBC",
+      "largest_positive_asset_share": 0.8551322216386303,
+      "largest_positive_episode": {
+        "contribution": 0.06389671966170297,
+        "end": "2015-06-12",
+        "sign": -1,
+        "start": "2014-09-05",
+        "symbol": "DBC"
+      },
+      "largest_positive_episode_share": 0.09409738102749793,
+      "positive_asset_Herfindahl": 0.7522377896919785
+    },
+    "cost_decomposition_return_units": {
+      "cash_yield": 0.007543491381047703,
+      "commission": 0.14476136365922734,
+      "expense_ratio": 0.020317273219738387,
+      "sell_surcharge": 0.006827631115314282,
+      "short_borrow": 0.06067405295818192,
+      "spread_slippage": 0.3382274851851105
+    },
+    "covariance_negative_eigenvalue_clipped_mass": 0.0,
+    "cross_sectional_effective_dimensions": 6.488870476807191,
+    "executed_asset_trades": 3224,
+    "exposure": {
+      "average_gross": 0.8568319228002419,
+      "average_net": 0.40208682854149186,
+      "leverage_above_one_observations": 0,
+      "maximum_absolute_asset_weight": 0.26262689644082965,
+      "maximum_gross": 0.9684588899472831,
+      "minimum_cash_fraction": 0.03154111005271687
+    },
+    "gross": {
+      "annual_arithmetic_return": 0.03751867254823093,
+      "annual_geometric_return": 0.03536294317984412,
+      "annual_sharpe": 0.5048147284391442,
+      "annual_volatility": 0.07432166780124727,
+      "cumulative_return": 0.362687151820573,
+      "maximum_drawdown": -0.11912898932690896,
+      "observations": 2244
+    },
+    "holding_overlap": {
+      "mean_active_assets": 7.457664884135473,
+      "mean_same_sign_fraction": 0.9672313865358895
+    },
+    "joint_independent_bet_equivalents": 17324.949637600756,
+    "lookback_sessions": 60,
+    "net": {
+      "annual_arithmetic_return": -0.026582738836202397,
+      "annual_geometric_return": -0.0289356007284981,
+      "annual_sharpe": -0.35683318465762315,
+      "annual_volatility": 0.07449626318165502,
+      "cumulative_return": -0.23007793590429537,
+      "maximum_drawdown": -0.2945454273739767,
+      "observations": 2244
+    },
+    "payoff_tests": {
+      "convex_payoff_gate_pass": false,
+      "explicit_convexity_claim_allowed": false,
+      "population_skewness": -0.3136184374867409,
+      "positive_skew_pass": false,
+      "quadratic_convexity": {
+        "coefficient": -3.6060225364336427,
+        "lags": 5,
+        "newey_west_standard_error": 7.181782390776199,
+        "newey_west_t": -0.5021069060885187,
+        "note": "HAC sandwich covariance with Bartlett weights; E1 diagnostic."
+      },
+      "quadratic_convexity_pass": false,
+      "right_tail_pass": false,
+      "right_tail_ratio": 0.9066271641437585
+    },
+    "regime_matrix": {
+      "calendar_subperiod": {
+        "2007-2009": {
+          "annual_arithmetic_return": -0.007755081025071392,
+          "annual_geometric_return": -0.011676078699124681,
+          "annual_sharpe": -0.08688926897132093,
+          "annual_volatility": 0.08925246025065615,
+          "cumulative_return": -0.033630488001798464,
+          "maximum_drawdown": -0.1743751430906807,
+          "observations": 734
+        },
+        "2010-2012": {
+          "annual_arithmetic_return": -0.02888445330387116,
+          "annual_geometric_return": -0.031111298502576212,
+          "annual_sharpe": -0.39189678923087284,
+          "annual_volatility": 0.07370423564979721,
+          "cumulative_return": -0.09023209450634884,
+          "maximum_drawdown": -0.13505125672337626,
+          "observations": 754
+        },
+        "2013-2015": {
+          "annual_arithmetic_return": -0.04256687656735043,
+          "annual_geometric_return": -0.04326650681333699,
+          "annual_sharpe": -0.7389405205644818,
+          "annual_volatility": 0.05760528132201127,
+          "cumulative_return": -0.12426454309908641,
+          "maximum_drawdown": -0.14007878186476175,
+          "observations": 756
+        }
+      },
+      "fixed_crisis_window": {
+        "COVID": {
+          "status": "sealed_not_accessed"
+        },
+        "GFC": {
+          "metrics": {
+            "annual_arithmetic_return": -0.05095880012925734,
+            "annual_geometric_return": -0.05378098174987078,
+            "annual_sharpe": -0.5487618351178635,
+            "annual_volatility": 0.09286141431156994,
+            "cumulative_return": -0.10466956950176154,
+            "maximum_drawdown": -0.17009270469120985,
+            "observations": 504
+          },
+          "status": "opened_diagnostic"
+        },
+        "inflation_2022": {
+          "status": "sealed_not_accessed"
+        }
+      },
+      "global_state": {
+        "broad_downtrend": {
+          "adequately_covered": false,
+          "annual_arithmetic_return": 0.06002046958015319,
+          "annual_geometric_return": 0.050708920784082956,
+          "annual_sharpe": 0.4133508631691432,
+          "annual_volatility": 0.14520465524126125,
+          "cumulative_return": 0.005511253498989399,
+          "maximum_drawdown": -0.04359824536076351,
+          "observations": 28,
+          "separated_episode_count": 1,
+          "time_effective_observations": 47.592751037032265
+        },
+        "broad_uptrend": {
+          "adequately_covered": true,
+          "annual_arithmetic_return": -0.09205159272354235,
+          "annual_geometric_return": -0.09079955716672461,
+          "annual_sharpe": -1.1663999495636848,
+          "annual_volatility": 0.07891940732505698,
+          "cumulative_return": -0.02499080046141533,
+          "maximum_drawdown": -0.04922634895723932,
+          "observations": 67,
+          "separated_episode_count": 4,
+          "time_effective_observations": 259.4055358533675
+        },
+        "mixed": {
+          "adequately_covered": false,
+          "annual_arithmetic_return": -0.02661685128226712,
+          "annual_geometric_return": -0.028860480290286095,
+          "annual_sharpe": -0.36468630633512744,
+          "annual_volatility": 0.07298560658816632,
+          "cumulative_return": -0.2200886423315197,
+          "maximum_drawdown": -0.2723537960210697,
+          "observations": 2139,
+          "separated_episode_count": 1,
+          "time_effective_observations": 2386.458473169704
+        },
+        "whipsaw": {
+          "adequately_covered": false,
+          "annual_arithmetic_return": 0.17686625085642352,
+          "annual_geometric_return": 0.19055090311931666,
+          "annual_sharpe": 2.5527798338064875,
+          "annual_volatility": 0.0692837856654076,
+          "cumulative_return": 0.006945282930329588,
+          "maximum_drawdown": -0.009377058290849227,
+          "observations": 10,
+          "separated_episode_count": 2,
+          "time_effective_observations": 25.027203499331428
+        }
+      },
+      "volatility_state": {
+        "high": {
+          "adequately_covered": false,
+          "annual_arithmetic_return": -0.09382216324273535,
+          "annual_geometric_return": -0.0927964035876433,
+          "annual_sharpe": -1.1141002363865053,
+          "annual_volatility": 0.084213394969774,
+          "cumulative_return": -0.06611665262856603,
+          "maximum_drawdown": -0.11159434422194503,
+          "observations": 177,
+          "separated_episode_count": 2,
+          "time_effective_observations": 443.4350565411123
+        },
+        "low": {
+          "adequately_covered": true,
+          "annual_arithmetic_return": -0.029598804958482144,
+          "annual_geometric_return": -0.031060758750725004,
+          "annual_sharpe": -0.47374512790140194,
+          "annual_volatility": 0.0624783311009425,
+          "cumulative_return": -0.10802606359385336,
+          "maximum_drawdown": -0.16758342923954606,
+          "observations": 913,
+          "separated_episode_count": 4,
+          "time_effective_observations": 1186.9162330205268
+        },
+        "middle": {
+          "adequately_covered": true,
+          "annual_arithmetic_return": -0.026035972655014346,
+          "annual_geometric_return": -0.02782556542802539,
+          "annual_sharpe": -0.3944235080251137,
+          "annual_volatility": 0.06601019494344285,
+          "cumulative_return": -0.04359109434092212,
+          "maximum_drawdown": -0.05827404760036303,
+          "observations": 398,
+          "separated_episode_count": 6,
+          "time_effective_observations": 978.9353700621157
+        },
+        "warmup_unclassified": {
+          "adequately_covered": false,
+          "annual_arithmetic_return": -0.007485604511486924,
+          "annual_geometric_return": -0.011326744724542315,
+          "annual_sharpe": -0.08476507209648239,
+          "annual_volatility": 0.08831001173415583,
+          "cumulative_return": -0.033596801901830786,
+          "maximum_drawdown": -0.1743751430906807,
+          "observations": 756,
+          "separated_episode_count": 1,
+          "time_effective_observations": 720.8174955630589
+        }
+      }
+    },
+    "removals": {
+      "best_market_removed": {
+        "PSR_vs_zero": 0.01642702827698233,
+        "metrics": {
+          "annual_arithmetic_return": -0.04132669391432927,
+          "annual_geometric_return": -0.04250605882667369,
+          "annual_sharpe": -0.6373365497544379,
+          "annual_volatility": 0.06484281174561889,
+          "cumulative_return": -0.3207637136731628,
+          "maximum_drawdown": -0.3552946072621632,
+          "observations": 2244
+        },
+        "pass": false,
+        "removed": "DBC"
+      },
+      "best_trend_removed": {
+        "PSR_vs_zero": 0.06748244426514076,
+        "metrics": {
+          "annual_arithmetic_return": -0.03375830628484283,
+          "annual_geometric_return": -0.035823395040568196,
+          "annual_sharpe": -0.4579772221187583,
+          "annual_volatility": 0.07371175825877417,
+          "cumulative_return": -0.2773663163725191,
+          "maximum_drawdown": -0.3378742340013976,
+          "observations": 2244
+        },
+        "pass": false,
+        "removed": "DBC:2014-09-05:2015-06-12"
+      },
+      "method": "Original asset contribution is replaced by zero/cash without re-optimizing other weights."
+    },
+    "time_effective_observations": 2669.9484447292266,
+    "trial_id": "primary_60",
+    "turnover_one_way_notional": 135.29099407404414
+  },
+  "report_digest_sha256": "5bba2d3c8364ea52d1a54d33793178cd8f2a348cd93ed2f0e5a46d82b9b4cdda",
+  "run_id": "l1-cash-remediation-20260714T232636Z",
+  "schema_version": "lily_l1_cash_remediation_v1",
+  "tier_blockers": [
+    "Corporate-action provenance is not an independent point-in-time archive.",
+    "Historical expense coverage is not complete for every ETF session.",
+    "Webull Thailand per-symbol fractional eligibility and OpenAPI fractional orders remain unverified.",
+    "No adversarial review or E2 promotion was requested."
+  ],
+  "trials": [
+    {
+      "DSR": {
+        "correlation_effective_rank": 1.1896923370495245,
+        "effective_trials_used": 5.0,
+        "locked_trials": 5,
+        "probability": 0.007172912100519301,
+        "trial_daily_sharpe_standard_deviation": 0.020765360070671538
+      },
+      "MinTRL_falsify_funded": true,
+      "MinTRL_falsify_required": 3850,
+      "PSR_vs_annual_Sharpe_0_25": 0.023784274996805656,
+      "active_vs_matched_benchmark": {
+        "annual_arithmetic_return": -0.0538251325889221,
+        "annual_geometric_return": -0.05630688094328662,
+        "annual_sharpe": -0.5931156928519882,
+        "annual_volatility": 0.0907498035165867,
+        "cumulative_return": -0.40313767906405384,
+        "maximum_drawdown": -0.47542969543021063,
+        "observations": 2244
+      },
+      "asset_and_region_matrix": {
+        "asset": {
+          "DBC": {
+            "annual_arithmetic_return": 0.014743955078126873,
+            "annual_geometric_return": 0.014543496559798141,
+            "annual_sharpe": 0.597072892161778,
+            "annual_volatility": 0.024693727133959335,
+            "cumulative_return": 0.13720519463089897,
+            "maximum_drawdown": -0.05525556483466709,
+            "observations": 2244
+          },
+          "EWJ": {
+            "annual_arithmetic_return": -0.013327565210715351,
+            "annual_geometric_return": -0.013437702396451368,
+            "annual_sharpe": -0.665286478055312,
+            "annual_volatility": 0.020032821424047186,
+            "cumulative_return": -0.11349701898271436,
+            "maximum_drawdown": -0.12805496299259844,
+            "observations": 2244
+          },
+          "GLD": {
+            "annual_arithmetic_return": 0.0024977704761670115,
+            "annual_geometric_return": 0.0022563482848978467,
+            "annual_sharpe": 0.11311530945708977,
+            "annual_volatility": 0.022081630578171557,
+            "cumulative_return": 0.02027235946928929,
+            "maximum_drawdown": -0.07505840354900162,
+            "observations": 2244
+          },
+          "IEF": {
+            "annual_arithmetic_return": -0.006673933974408804,
+            "annual_geometric_return": -0.006747489863615286,
+            "annual_sharpe": -0.48081156915336604,
+            "annual_volatility": 0.01388056029134357,
+            "cumulative_return": -0.058507049042710424,
+            "maximum_drawdown": -0.07880401088360767,
+            "observations": 2244
+          },
+          "TIP": {
+            "annual_arithmetic_return": -0.010543093192748784,
+            "annual_geometric_return": -0.010558909344698608,
+            "annual_sharpe": -0.8802292807233764,
+            "annual_volatility": 0.011977666982498497,
+            "cumulative_return": -0.09019455074492921,
+            "maximum_drawdown": -0.10456852983701592,
+            "observations": 2244
+          },
+          "VGK": {
+            "annual_arithmetic_return": -0.0037132568858047965,
+            "annual_geometric_return": -0.0038985614314384076,
+            "annual_sharpe": -0.1890861220921599,
+            "annual_volatility": 0.01963791337364764,
+            "cumulative_return": -0.03418561230685002,
+            "maximum_drawdown": -0.07743756632668297,
+            "observations": 2244
+          },
+          "VTI": {
+            "annual_arithmetic_return": -0.004299704539535232,
+            "annual_geometric_return": -0.0045045988758156685,
+            "annual_sharpe": -0.20739217497222948,
+            "annual_volatility": 0.020732240934890515,
+            "cumulative_return": -0.03940557918544263,
+            "maximum_drawdown": -0.08187378625732833,
+            "observations": 2244
+          },
+          "VWO": {
+            "annual_arithmetic_return": -0.006114040635422363,
+            "annual_geometric_return": -0.006285494984731188,
+            "annual_sharpe": -0.3127222308027213,
+            "annual_volatility": 0.01955102654431806,
+            "cumulative_return": -0.054600301067860624,
+            "maximum_drawdown": -0.06939444550574048,
+            "observations": 2244
+          }
+        },
+        "country_or_region": {
+          "Emerging_markets": {
+            "annual_arithmetic_return": -0.006114040635422363,
+            "annual_geometric_return": -0.006285494984731188,
+            "annual_sharpe": -0.3127222308027213,
+            "annual_volatility": 0.01955102654431806,
+            "cumulative_return": -0.054600301067860624,
+            "maximum_drawdown": -0.06939444550574048,
+            "observations": 2244
+          },
+          "Europe": {
+            "annual_arithmetic_return": -0.0037132568858047965,
+            "annual_geometric_return": -0.0038985614314384076,
+            "annual_sharpe": -0.1890861220921599,
+            "annual_volatility": 0.01963791337364764,
+            "cumulative_return": -0.03418561230685002,
+            "maximum_drawdown": -0.07743756632668297,
+            "observations": 2244
+          },
+          "Global": {
+            "annual_arithmetic_return": 0.01724172555429388,
+            "annual_geometric_return": 0.0166956157836875,
+            "annual_sharpe": 0.4664859004487971,
+            "annual_volatility": 0.03696087178134634,
+            "cumulative_return": 0.15886728977929065,
+            "maximum_drawdown": -0.07188436148686295,
+            "observations": 2244
+          },
+          "Japan": {
+            "annual_arithmetic_return": -0.013327565210715351,
+            "annual_geometric_return": -0.013437702396451368,
+            "annual_sharpe": -0.665286478055312,
+            "annual_volatility": 0.020032821424047186,
+            "cumulative_return": -0.11349701898271436,
+            "maximum_drawdown": -0.12805496299259844,
+            "observations": 2244
+          },
+          "United_States": {
+            "annual_arithmetic_return": -0.021516731706692816,
+            "annual_geometric_return": -0.021698746233353106,
+            "annual_sharpe": -0.7426161372720632,
+            "annual_volatility": 0.028974231270724456,
+            "cumulative_return": -0.1774527373257464,
+            "maximum_drawdown": -0.2023277517224945,
+            "observations": 2244
+          }
+        },
+        "sleeve": {
+          "Europe_equity": {
+            "annual_arithmetic_return": -0.0037132568858047965,
+            "annual_geometric_return": -0.0038985614314384076,
+            "annual_sharpe": -0.1890861220921599,
+            "annual_volatility": 0.01963791337364764,
+            "cumulative_return": -0.03418561230685002,
+            "maximum_drawdown": -0.07743756632668297,
+            "observations": 2244
+          },
+          "Japan_equity": {
+            "annual_arithmetic_return": -0.013327565210715351,
+            "annual_geometric_return": -0.013437702396451368,
+            "annual_sharpe": -0.665286478055312,
+            "annual_volatility": 0.020032821424047186,
+            "cumulative_return": -0.11349701898271436,
+            "maximum_drawdown": -0.12805496299259844,
+            "observations": 2244
+          },
+          "US_equity": {
+            "annual_arithmetic_return": -0.004299704539535232,
+            "annual_geometric_return": -0.0045045988758156685,
+            "annual_sharpe": -0.20739217497222948,
+            "annual_volatility": 0.020732240934890515,
+            "cumulative_return": -0.03940557918544263,
+            "maximum_drawdown": -0.08187378625732833,
+            "observations": 2244
+          },
+          "US_inflation_linked_bonds": {
+            "annual_arithmetic_return": -0.010543093192748784,
+            "annual_geometric_return": -0.010558909344698608,
+            "annual_sharpe": -0.8802292807233764,
+            "annual_volatility": 0.011977666982498497,
+            "cumulative_return": -0.09019455074492921,
+            "maximum_drawdown": -0.10456852983701592,
+            "observations": 2244
+          },
+          "broad_commodities": {
+            "annual_arithmetic_return": 0.014743955078126873,
+            "annual_geometric_return": 0.014543496559798141,
+            "annual_sharpe": 0.597072892161778,
+            "annual_volatility": 0.024693727133959335,
+            "cumulative_return": 0.13720519463089897,
+            "maximum_drawdown": -0.05525556483466709,
+            "observations": 2244
+          },
+          "emerging_markets_equity": {
+            "annual_arithmetic_return": -0.006114040635422363,
+            "annual_geometric_return": -0.006285494984731188,
+            "annual_sharpe": -0.3127222308027213,
+            "annual_volatility": 0.01955102654431806,
+            "cumulative_return": -0.054600301067860624,
+            "maximum_drawdown": -0.06939444550574048,
+            "observations": 2244
+          },
+          "gold": {
+            "annual_arithmetic_return": 0.0024977704761670115,
+            "annual_geometric_return": 0.0022563482848978467,
+            "annual_sharpe": 0.11311530945708977,
+            "annual_volatility": 0.022081630578171557,
+            "cumulative_return": 0.02027235946928929,
+            "maximum_drawdown": -0.07505840354900162,
+            "observations": 2244
+          },
+          "intermediate_US_Treasuries": {
+            "annual_arithmetic_return": -0.006673933974408804,
+            "annual_geometric_return": -0.006747489863615286,
+            "annual_sharpe": -0.48081156915336604,
+            "annual_volatility": 0.01388056029134357,
+            "cumulative_return": -0.058507049042710424,
+            "maximum_drawdown": -0.07880401088360767,
+            "observations": 2244
+          }
+        }
+      },
+      "autocorrelations_lags_1_to_5": [
+        -0.026733174895542267,
+        -0.02782822226609554,
+        -0.01358210265029199,
+        -0.023330269807602645,
+        0.011636069764373248
+      ],
+      "claim_eligible": true,
+      "concentration_tests": {
+        "asset_concentration_pass": false,
+        "asset_net_contributions": {
+          "DBC": 0.131291409505225,
+          "EWJ": -0.11867879497160813,
+          "GLD": 0.022242051383011007,
+          "IEF": -0.05942979301021173,
+          "TIP": -0.09388373462114392,
+          "VGK": -0.033065668459309375,
+          "VTI": -0.03828784518538516,
+          "VWO": -0.05444407613447533
+        },
+        "episode_count": 361,
+        "largest_positive_asset": "DBC",
+        "largest_positive_asset_share": 0.8551322216386303,
+        "largest_positive_episode": {
+          "contribution": 0.06389671966170297,
+          "end": "2015-06-12",
+          "sign": -1,
+          "start": "2014-09-05",
+          "symbol": "DBC"
+        },
+        "largest_positive_episode_share": 0.09409738102749793,
+        "positive_asset_Herfindahl": 0.7522377896919785
+      },
+      "cost_decomposition_return_units": {
+        "cash_yield": 0.007543491381047703,
+        "commission": 0.14476136365922734,
+        "expense_ratio": 0.020317273219738387,
+        "sell_surcharge": 0.006827631115314282,
+        "short_borrow": 0.06067405295818192,
+        "spread_slippage": 0.3382274851851105
+      },
+      "covariance_negative_eigenvalue_clipped_mass": 0.0,
+      "cross_sectional_effective_dimensions": 6.488870476807191,
+      "executed_asset_trades": 3224,
+      "exposure": {
+        "average_gross": 0.8568319228002419,
+        "average_net": 0.40208682854149186,
+        "leverage_above_one_observations": 0,
+        "maximum_absolute_asset_weight": 0.26262689644082965,
+        "maximum_gross": 0.9684588899472831,
+        "minimum_cash_fraction": 0.03154111005271687
+      },
+      "gross": {
+        "annual_arithmetic_return": 0.03751867254823093,
+        "annual_geometric_return": 0.03536294317984412,
+        "annual_sharpe": 0.5048147284391442,
+        "annual_volatility": 0.07432166780124727,
+        "cumulative_return": 0.362687151820573,
+        "maximum_drawdown": -0.11912898932690896,
+        "observations": 2244
+      },
+      "holding_overlap": {
+        "mean_active_assets": 7.457664884135473,
+        "mean_same_sign_fraction": 0.9672313865358895
+      },
+      "joint_independent_bet_equivalents": 17324.949637600756,
+      "lookback_sessions": 60,
+      "net": {
+        "annual_arithmetic_return": -0.026582738836202397,
+        "annual_geometric_return": -0.0289356007284981,
+        "annual_sharpe": -0.35683318465762315,
+        "annual_volatility": 0.07449626318165502,
+        "cumulative_return": -0.23007793590429537,
+        "maximum_drawdown": -0.2945454273739767,
+        "observations": 2244
+      },
+      "payoff_tests": {
+        "convex_payoff_gate_pass": false,
+        "explicit_convexity_claim_allowed": false,
+        "population_skewness": -0.3136184374867409,
+        "positive_skew_pass": false,
+        "quadratic_convexity": {
+          "coefficient": -3.6060225364336427,
+          "lags": 5,
+          "newey_west_standard_error": 7.181782390776199,
+          "newey_west_t": -0.5021069060885187,
+          "note": "HAC sandwich covariance with Bartlett weights; E1 diagnostic."
+        },
+        "quadratic_convexity_pass": false,
+        "right_tail_pass": false,
+        "right_tail_ratio": 0.9066271641437585
+      },
+      "regime_matrix": {
+        "calendar_subperiod": {
+          "2007-2009": {
+            "annual_arithmetic_return": -0.007755081025071392,
+            "annual_geometric_return": -0.011676078699124681,
+            "annual_sharpe": -0.08688926897132093,
+            "annual_volatility": 0.08925246025065615,
+            "cumulative_return": -0.033630488001798464,
+            "maximum_drawdown": -0.1743751430906807,
+            "observations": 734
+          },
+          "2010-2012": {
+            "annual_arithmetic_return": -0.02888445330387116,
+            "annual_geometric_return": -0.031111298502576212,
+            "annual_sharpe": -0.39189678923087284,
+            "annual_volatility": 0.07370423564979721,
+            "cumulative_return": -0.09023209450634884,
+            "maximum_drawdown": -0.13505125672337626,
+            "observations": 754
+          },
+          "2013-2015": {
+            "annual_arithmetic_return": -0.04256687656735043,
+            "annual_geometric_return": -0.04326650681333699,
+            "annual_sharpe": -0.7389405205644818,
+            "annual_volatility": 0.05760528132201127,
+            "cumulative_return": -0.12426454309908641,
+            "maximum_drawdown": -0.14007878186476175,
+            "observations": 756
+          }
+        },
+        "fixed_crisis_window": {
+          "COVID": {
+            "status": "sealed_not_accessed"
+          },
+          "GFC": {
+            "metrics": {
+              "annual_arithmetic_return": -0.05095880012925734,
+              "annual_geometric_return": -0.05378098174987078,
+              "annual_sharpe": -0.5487618351178635,
+              "annual_volatility": 0.09286141431156994,
+              "cumulative_return": -0.10466956950176154,
+              "maximum_drawdown": -0.17009270469120985,
+              "observations": 504
+            },
+            "status": "opened_diagnostic"
+          },
+          "inflation_2022": {
+            "status": "sealed_not_accessed"
+          }
+        },
+        "global_state": {
+          "broad_downtrend": {
+            "adequately_covered": false,
+            "annual_arithmetic_return": 0.06002046958015319,
+            "annual_geometric_return": 0.050708920784082956,
+            "annual_sharpe": 0.4133508631691432,
+            "annual_volatility": 0.14520465524126125,
+            "cumulative_return": 0.005511253498989399,
+            "maximum_drawdown": -0.04359824536076351,
+            "observations": 28,
+            "separated_episode_count": 1,
+            "time_effective_observations": 47.592751037032265
+          },
+          "broad_uptrend": {
+            "adequately_covered": true,
+            "annual_arithmetic_return": -0.09205159272354235,
+            "annual_geometric_return": -0.09079955716672461,
+            "annual_sharpe": -1.1663999495636848,
+            "annual_volatility": 0.07891940732505698,
+            "cumulative_return": -0.02499080046141533,
+            "maximum_drawdown": -0.04922634895723932,
+            "observations": 67,
+            "separated_episode_count": 4,
+            "time_effective_observations": 259.4055358533675
+          },
+          "mixed": {
+            "adequately_covered": false,
+            "annual_arithmetic_return": -0.02661685128226712,
+            "annual_geometric_return": -0.028860480290286095,
+            "annual_sharpe": -0.36468630633512744,
+            "annual_volatility": 0.07298560658816632,
+            "cumulative_return": -0.2200886423315197,
+            "maximum_drawdown": -0.2723537960210697,
+            "observations": 2139,
+            "separated_episode_count": 1,
+            "time_effective_observations": 2386.458473169704
+          },
+          "whipsaw": {
+            "adequately_covered": false,
+            "annual_arithmetic_return": 0.17686625085642352,
+            "annual_geometric_return": 0.19055090311931666,
+            "annual_sharpe": 2.5527798338064875,
+            "annual_volatility": 0.0692837856654076,
+            "cumulative_return": 0.006945282930329588,
+            "maximum_drawdown": -0.009377058290849227,
+            "observations": 10,
+            "separated_episode_count": 2,
+            "time_effective_observations": 25.027203499331428
+          }
+        },
+        "volatility_state": {
+          "high": {
+            "adequately_covered": false,
+            "annual_arithmetic_return": -0.09382216324273535,
+            "annual_geometric_return": -0.0927964035876433,
+            "annual_sharpe": -1.1141002363865053,
+            "annual_volatility": 0.084213394969774,
+            "cumulative_return": -0.06611665262856603,
+            "maximum_drawdown": -0.11159434422194503,
+            "observations": 177,
+            "separated_episode_count": 2,
+            "time_effective_observations": 443.4350565411123
+          },
+          "low": {
+            "adequately_covered": true,
+            "annual_arithmetic_return": -0.029598804958482144,
+            "annual_geometric_return": -0.031060758750725004,
+            "annual_sharpe": -0.47374512790140194,
+            "annual_volatility": 0.0624783311009425,
+            "cumulative_return": -0.10802606359385336,
+            "maximum_drawdown": -0.16758342923954606,
+            "observations": 913,
+            "separated_episode_count": 4,
+            "time_effective_observations": 1186.9162330205268
+          },
+          "middle": {
+            "adequately_covered": true,
+            "annual_arithmetic_return": -0.026035972655014346,
+            "annual_geometric_return": -0.02782556542802539,
+            "annual_sharpe": -0.3944235080251137,
+            "annual_volatility": 0.06601019494344285,
+            "cumulative_return": -0.04359109434092212,
+            "maximum_drawdown": -0.05827404760036303,
+            "observations": 398,
+            "separated_episode_count": 6,
+            "time_effective_observations": 978.9353700621157
+          },
+          "warmup_unclassified": {
+            "adequately_covered": false,
+            "annual_arithmetic_return": -0.007485604511486924,
+            "annual_geometric_return": -0.011326744724542315,
+            "annual_sharpe": -0.08476507209648239,
+            "annual_volatility": 0.08831001173415583,
+            "cumulative_return": -0.033596801901830786,
+            "maximum_drawdown": -0.1743751430906807,
+            "observations": 756,
+            "separated_episode_count": 1,
+            "time_effective_observations": 720.8174955630589
+          }
+        }
+      },
+      "removals": {
+        "best_market_removed": {
+          "PSR_vs_zero": 0.01642702827698233,
+          "metrics": {
+            "annual_arithmetic_return": -0.04132669391432927,
+            "annual_geometric_return": -0.04250605882667369,
+            "annual_sharpe": -0.6373365497544379,
+            "annual_volatility": 0.06484281174561889,
+            "cumulative_return": -0.3207637136731628,
+            "maximum_drawdown": -0.3552946072621632,
+            "observations": 2244
+          },
+          "pass": false,
+          "removed": "DBC"
+        },
+        "best_trend_removed": {
+          "PSR_vs_zero": 0.06748244426514076,
+          "metrics": {
+            "annual_arithmetic_return": -0.03375830628484283,
+            "annual_geometric_return": -0.035823395040568196,
+            "annual_sharpe": -0.4579772221187583,
+            "annual_volatility": 0.07371175825877417,
+            "cumulative_return": -0.2773663163725191,
+            "maximum_drawdown": -0.3378742340013976,
+            "observations": 2244
+          },
+          "pass": false,
+          "removed": "DBC:2014-09-05:2015-06-12"
+        },
+        "method": "Original asset contribution is replaced by zero/cash without re-optimizing other weights."
+      },
+      "time_effective_observations": 2669.9484447292266,
+      "trial_id": "primary_60",
+      "turnover_one_way_notional": 135.29099407404414
+    },
+    {
+      "MinTRL_falsify_funded": true,
+      "MinTRL_falsify_required": 3850,
+      "PSR_vs_annual_Sharpe_0_25": 0.0013315405752436006,
+      "active_vs_matched_benchmark": {
+        "annual_arithmetic_return": -0.0781613403356725,
+        "annual_geometric_return": -0.07913772999751101,
+        "annual_sharpe": -0.8465316299946117,
+        "annual_volatility": 0.09233126981465538,
+        "cumulative_return": -0.5200874098011452,
+        "maximum_drawdown": -0.5594143398464124,
+        "observations": 2244
+      },
+      "asset_and_region_matrix": {
+        "asset": {
+          "DBC": {
+            "annual_arithmetic_return": 0.003795618746825764,
+            "annual_geometric_return": 0.0035058326578174537,
+            "annual_sharpe": 0.15604428794737057,
+            "annual_volatility": 0.024323983894276997,
+            "cumulative_return": 0.031654690727096924,
+            "maximum_drawdown": -0.0944362659472211,
+            "observations": 2244
+          },
+          "EWJ": {
+            "annual_arithmetic_return": -0.016326554989953092,
+            "annual_geometric_return": -0.016386603685495715,
+            "annual_sharpe": -0.8266196743068775,
+            "annual_volatility": 0.019750987663876916,
+            "cumulative_return": -0.13681615844312245,
+            "maximum_drawdown": -0.14349944117447222,
+            "observations": 2244
+          },
+          "GLD": {
+            "annual_arithmetic_return": -0.0015383369220225652,
+            "annual_geometric_return": -0.0018209542953268043,
+            "annual_sharpe": -0.06455715544234546,
+            "annual_volatility": 0.023829069163315588,
+            "cumulative_return": -0.01609894999374295,
+            "maximum_drawdown": -0.07726169641404879,
+            "observations": 2244
+          },
+          "IEF": {
+            "annual_arithmetic_return": -0.010711919941907582,
+            "annual_geometric_return": -0.010741949128524997,
+            "annual_sharpe": -0.8079658279791676,
+            "annual_volatility": 0.013257887364741096,
+            "cumulative_return": -0.09169219572928067,
+            "maximum_drawdown": -0.10656058480654296,
+            "observations": 2244
+          },
+          "TIP": {
+            "annual_arithmetic_return": -0.014096247829640394,
+            "annual_geometric_return": -0.014079805156702374,
+            "annual_sharpe": -1.0928597687575623,
+            "annual_volatility": 0.012898496433504887,
+            "cumulative_return": -0.11862168528808548,
+            "maximum_drawdown": -0.1330983887268783,
+            "observations": 2244
+          },
+          "VGK": {
+            "annual_arithmetic_return": -0.006605188916522833,
+            "annual_geometric_return": -0.00680470666900157,
+            "annual_sharpe": -0.3130747112880879,
+            "annual_volatility": 0.02109780406519264,
+            "cumulative_return": -0.05898989037705793,
+            "maximum_drawdown": -0.08518133384890025,
+            "observations": 2244
+          },
+          "VTI": {
+            "annual_arithmetic_return": -0.0003624916299450202,
+            "annual_geometric_return": -0.0005822061299322057,
+            "annual_sharpe": -0.01728726233460839,
+            "annual_volatility": 0.02096871227662965,
+            "cumulative_return": -0.005172493097734598,
+            "maximum_drawdown": -0.07746808632294777,
+            "observations": 2244
+          },
+          "VWO": {
+            "annual_arithmetic_return": -0.005885493650528872,
+            "annual_geometric_return": -0.006070051156959355,
+            "annual_sharpe": -0.2921300418811746,
+            "annual_volatility": 0.020146827805278676,
+            "cumulative_return": -0.052773537368282164,
+            "maximum_drawdown": -0.07101158430706178,
+            "observations": 2244
+          }
+        },
+        "country_or_region": {
+          "Emerging_markets": {
+            "annual_arithmetic_return": -0.005885493650528872,
+            "annual_geometric_return": -0.006070051156959355,
+            "annual_sharpe": -0.2921300418811746,
+            "annual_volatility": 0.020146827805278676,
+            "cumulative_return": -0.052773537368282164,
+            "maximum_drawdown": -0.07101158430706178,
+            "observations": 2244
+          },
+          "Europe": {
+            "annual_arithmetic_return": -0.006605188916522833,
+            "annual_geometric_return": -0.00680470666900157,
+            "annual_sharpe": -0.3130747112880879,
+            "annual_volatility": 0.02109780406519264,
+            "cumulative_return": -0.05898989037705793,
+            "maximum_drawdown": -0.08518133384890025,
+            "observations": 2244
+          },
+          "Global": {
+            "annual_arithmetic_return": 0.0022572818248031983,
+            "annual_geometric_return": 0.0015386981099445585,
+            "annual_sharpe": 0.059542225159293215,
+            "annual_volatility": 0.03791060577202643,
+            "cumulative_return": 0.013785363506240156,
+            "maximum_drawdown": -0.11441215289999762,
+            "observations": 2244
+          },
+          "Japan": {
+            "annual_arithmetic_return": -0.016326554989953092,
+            "annual_geometric_return": -0.016386603685495715,
+            "annual_sharpe": -0.8266196743068775,
+            "annual_volatility": 0.019750987663876916,
+            "cumulative_return": -0.13681615844312245,
+            "maximum_drawdown": -0.14349944117447222,
+            "observations": 2244
+          },
+          "United_States": {
+            "annual_arithmetic_return": -0.025170659401492997,
+            "annual_geometric_return": -0.02528903499524282,
+            "annual_sharpe": -0.8465612692787765,
+            "annual_volatility": 0.029732826571356154,
+            "cumulative_return": -0.20394677180261467,
+            "maximum_drawdown": -0.219831500118863,
+            "observations": 2244
+          }
+        },
+        "sleeve": {
+          "Europe_equity": {
+            "annual_arithmetic_return": -0.006605188916522833,
+            "annual_geometric_return": -0.00680470666900157,
+            "annual_sharpe": -0.3130747112880879,
+            "annual_volatility": 0.02109780406519264,
+            "cumulative_return": -0.05898989037705793,
+            "maximum_drawdown": -0.08518133384890025,
+            "observations": 2244
+          },
+          "Japan_equity": {
+            "annual_arithmetic_return": -0.016326554989953092,
+            "annual_geometric_return": -0.016386603685495715,
+            "annual_sharpe": -0.8266196743068775,
+            "annual_volatility": 0.019750987663876916,
+            "cumulative_return": -0.13681615844312245,
+            "maximum_drawdown": -0.14349944117447222,
+            "observations": 2244
+          },
+          "US_equity": {
+            "annual_arithmetic_return": -0.0003624916299450202,
+            "annual_geometric_return": -0.0005822061299322057,
+            "annual_sharpe": -0.01728726233460839,
+            "annual_volatility": 0.02096871227662965,
+            "cumulative_return": -0.005172493097734598,
+            "maximum_drawdown": -0.07746808632294777,
+            "observations": 2244
+          },
+          "US_inflation_linked_bonds": {
+            "annual_arithmetic_return": -0.014096247829640394,
+            "annual_geometric_return": -0.014079805156702374,
+            "annual_sharpe": -1.0928597687575623,
+            "annual_volatility": 0.012898496433504887,
+            "cumulative_return": -0.11862168528808548,
+            "maximum_drawdown": -0.1330983887268783,
+            "observations": 2244
+          },
+          "broad_commodities": {
+            "annual_arithmetic_return": 0.003795618746825764,
+            "annual_geometric_return": 0.0035058326578174537,
+            "annual_sharpe": 0.15604428794737057,
+            "annual_volatility": 0.024323983894276997,
+            "cumulative_return": 0.031654690727096924,
+            "maximum_drawdown": -0.0944362659472211,
+            "observations": 2244
+          },
+          "emerging_markets_equity": {
+            "annual_arithmetic_return": -0.005885493650528872,
+            "annual_geometric_return": -0.006070051156959355,
+            "annual_sharpe": -0.2921300418811746,
+            "annual_volatility": 0.020146827805278676,
+            "cumulative_return": -0.052773537368282164,
+            "maximum_drawdown": -0.07101158430706178,
+            "observations": 2244
+          },
+          "gold": {
+            "annual_arithmetic_return": -0.0015383369220225652,
+            "annual_geometric_return": -0.0018209542953268043,
+            "annual_sharpe": -0.06455715544234546,
+            "annual_volatility": 0.023829069163315588,
+            "cumulative_return": -0.01609894999374295,
+            "maximum_drawdown": -0.07726169641404879,
+            "observations": 2244
+          },
+          "intermediate_US_Treasuries": {
+            "annual_arithmetic_return": -0.010711919941907582,
+            "annual_geometric_return": -0.010741949128524997,
+            "annual_sharpe": -0.8079658279791676,
+            "annual_volatility": 0.013257887364741096,
+            "cumulative_return": -0.09169219572928067,
+            "maximum_drawdown": -0.10656058480654296,
+            "observations": 2244
+          }
+        }
+      },
+      "autocorrelations_lags_1_to_5": [
+        -0.028532784059030904,
+        -0.020984913549174,
+        -0.002209271761707394,
+        -0.022072506239012267,
+        0.022721953228724393
+      ],
+      "claim_eligible": false,
+      "concentration_tests": {
+        "asset_concentration_pass": false,
+        "asset_net_contributions": {
+          "DBC": 0.03379908122173419,
+          "EWJ": -0.14538408491053467,
+          "GLD": -0.013698524019915224,
+          "IEF": -0.095387096625558,
+          "TIP": -0.12552373067346445,
+          "VGK": -0.05881763463760808,
+          "VTI": -0.003227901657129466,
+          "VWO": -0.05240891964994757
+        },
+        "episode_count": 455,
+        "largest_positive_asset": "DBC",
+        "largest_positive_asset_share": 1.0,
+        "largest_positive_episode": {
+          "contribution": 0.04561178260782274,
+          "end": "2012-04-13",
+          "sign": 1,
+          "start": "2011-09-30",
+          "symbol": "VTI"
+        },
+        "largest_positive_episode_share": 0.05730514615604372,
+        "positive_asset_Herfindahl": 1.0
+      },
+      "cost_decomposition_return_units": {
+        "cash_yield": 0.007227715189938912,
+        "commission": 0.18924753863297003,
+        "expense_ratio": 0.020429775434138917,
+        "sell_surcharge": 0.008874910866032018,
+        "short_borrow": 0.06896767007989786,
+        "spread_slippage": 0.4421671463387142
+      },
+      "covariance_negative_eigenvalue_clipped_mass": 0.0,
+      "cross_sectional_effective_dimensions": 6.892826349659114,
+      "executed_asset_trades": 3259,
+      "exposure": {
+        "average_gross": 0.8589351544614008,
+        "average_net": 0.34232720208466483,
+        "leverage_above_one_observations": 0,
+        "maximum_absolute_asset_weight": 0.2754055741146315,
+        "maximum_gross": 0.9691542672275498,
+        "minimum_cash_fraction": 0.030845732772450174
+      },
+      "gross": {
+        "annual_arithmetic_return": 0.031024517953875074,
+        "annual_geometric_return": 0.028785620678815516,
+        "annual_sharpe": 0.42696559130733813,
+        "annual_volatility": 0.07266280605629184,
+        "cumulative_return": 0.2875086955056789,
+        "maximum_drawdown": -0.08464382580339747,
+        "observations": 2244
+      },
+      "holding_overlap": {
+        "mean_active_assets": 7.141711229946524,
+        "mean_same_sign_fraction": 0.955305394560856
+      },
+      "joint_independent_bet_equivalents": 17226.47854718597,
+      "lookback_sessions": 40,
+      "net": {
+        "annual_arithmetic_return": -0.05091894658295279,
+        "annual_geometric_return": -0.052202613578234525,
+        "annual_sharpe": -0.6948510359999943,
+        "annual_volatility": 0.0732803780160921,
+        "cumulative_return": -0.37962093793181295,
+        "maximum_drawdown": -0.4094313164797343,
+        "observations": 2244
+      },
+      "payoff_tests": {
+        "convex_payoff_gate_pass": false,
+        "explicit_convexity_claim_allowed": false,
+        "population_skewness": -0.502650895285253,
+        "positive_skew_pass": false,
+        "quadratic_convexity": {
+          "coefficient": -6.215692120614033,
+          "lags": 5,
+          "newey_west_standard_error": 6.744257022266919,
+          "newey_west_t": -0.9216274083404933,
+          "note": "HAC sandwich covariance with Bartlett weights; E1 diagnostic."
+        },
+        "quadratic_convexity_pass": false,
+        "right_tail_pass": false,
+        "right_tail_ratio": 0.8721042522586481
+      },
+      "regime_matrix": {
+        "calendar_subperiod": {
+          "2007-2009": {
+            "annual_arithmetic_return": -0.02395491147489129,
+            "annual_geometric_return": -0.02739973364742454,
+            "annual_sharpe": -0.2742485511123882,
+            "annual_volatility": 0.08734744952243875,
+            "cumulative_return": -0.07773335961020211,
+            "maximum_drawdown": -0.1580444285071818,
+            "observations": 734
+          },
+          "2010-2012": {
+            "annual_arithmetic_return": -0.04896838339586489,
+            "annual_geometric_return": -0.05034365270954699,
+            "annual_sharpe": -0.6689982792324183,
+            "annual_volatility": 0.07319657600920774,
+            "cumulative_return": -0.14320392209605082,
+            "maximum_drawdown": -0.17680316236574067,
+            "observations": 754
+          },
+          "2013-2015": {
+            "annual_arithmetic_return": -0.07904371696970071,
+            "annual_geometric_return": -0.07748298010138122,
+            "annual_sharpe": -1.4011468482704572,
+            "annual_volatility": 0.056413585105137574,
+            "cumulative_return": -0.21490328145301718,
+            "maximum_drawdown": -0.23983219683682566,
+            "observations": 756
+          }
+        },
+        "fixed_crisis_window": {
+          "COVID": {
+            "status": "sealed_not_accessed"
+          },
+          "GFC": {
+            "metrics": {
+              "annual_arithmetic_return": -0.04393756908576572,
+              "annual_geometric_return": -0.04697221135986507,
+              "annual_sharpe": -0.4816876285733836,
+              "annual_volatility": 0.09121589694112721,
+              "cumulative_return": -0.09173803407969428,
+              "maximum_drawdown": -0.15804442850718248,
+              "observations": 504
+            },
+            "status": "opened_diagnostic"
+          },
+          "inflation_2022": {
+            "status": "sealed_not_accessed"
+          }
+        },
+        "global_state": {
+          "broad_downtrend": {
+            "adequately_covered": false,
+            "annual_arithmetic_return": 0.08052071602344738,
+            "annual_geometric_return": 0.07769313298679736,
+            "annual_sharpe": 0.7554194047797241,
+            "annual_volatility": 0.10659074351806828,
+            "cumulative_return": 0.012849228126114332,
+            "maximum_drawdown": -0.03667365967136604,
+            "observations": 43,
+            "separated_episode_count": 2,
+            "time_effective_observations": 368.39746616966886
+          },
+          "broad_uptrend": {
+            "adequately_covered": true,
+            "annual_arithmetic_return": 0.07664974561214948,
+            "annual_geometric_return": 0.07716392991002596,
+            "annual_sharpe": 1.1288641828157615,
+            "annual_volatility": 0.06789988271304667,
+            "cumulative_return": 0.06578625765380375,
+            "maximum_drawdown": -0.03089882323977,
+            "observations": 216,
+            "separated_episode_count": 9,
+            "time_effective_observations": 544.8178437380756
+          },
+          "mixed": {
+            "adequately_covered": false,
+            "annual_arithmetic_return": -0.06795834356753723,
+            "annual_geometric_return": -0.06820903433737602,
+            "annual_sharpe": -0.9294084343121006,
+            "annual_volatility": 0.07311999876333858,
+            "cumulative_return": -0.42242341444643206,
+            "maximum_drawdown": -0.44420819779815723,
+            "observations": 1958,
+            "separated_episode_count": 1,
+            "time_effective_observations": 2205.060161630816
+          },
+          "whipsaw": {
+            "adequately_covered": false,
+            "annual_arithmetic_return": -0.04512649141261792,
+            "annual_geometric_return": -0.045510264045309334,
+            "annual_sharpe": -0.8382604418718388,
+            "annual_volatility": 0.053833497512837766,
+            "cumulative_return": -0.00497810963580847,
+            "maximum_drawdown": -0.023895110478814763,
+            "observations": 27,
+            "separated_episode_count": 2,
+            "time_effective_observations": 24.446458658478058
+          }
+        },
+        "volatility_state": {
+          "high": {
+            "adequately_covered": false,
+            "annual_arithmetic_return": -0.1455358537222411,
+            "annual_geometric_return": -0.13901339936613677,
+            "annual_sharpe": -1.608455981526248,
+            "annual_volatility": 0.09048171376386911,
+            "cumulative_return": -0.09979233942264643,
+            "maximum_drawdown": -0.14176319668272463,
+            "observations": 177,
+            "separated_episode_count": 2,
+            "time_effective_observations": 302.1127095961438
+          },
+          "low": {
+            "adequately_covered": true,
+            "annual_arithmetic_return": -0.05282472182286318,
+            "annual_geometric_return": -0.05307488011378392,
+            "annual_sharpe": -0.9050061565172467,
+            "annual_volatility": 0.05836946129311388,
+            "cumulative_return": -0.1792872523944664,
+            "maximum_drawdown": -0.2202375285883953,
+            "observations": 913,
+            "separated_episode_count": 4,
+            "time_effective_observations": 1282.6968457557427
+          },
+          "middle": {
+            "adequately_covered": true,
+            "annual_arithmetic_return": -0.051007706111259626,
+            "annual_geometric_return": -0.051882750497520336,
+            "annual_sharpe": -0.7586792371691939,
+            "annual_volatility": 0.06723224204946095,
+            "cumulative_return": -0.08070112947904617,
+            "maximum_drawdown": -0.10483757117309289,
+            "observations": 398,
+            "separated_episode_count": 6,
+            "time_effective_observations": 764.1527962883721
+          },
+          "warmup_unclassified": {
+            "adequately_covered": false,
+            "annual_arithmetic_return": -0.02641829625232008,
+            "annual_geometric_return": -0.0297384068103953,
+            "annual_sharpe": -0.30468954921201913,
+            "annual_volatility": 0.08670561993557853,
+            "cumulative_return": -0.08658840175160099,
+            "maximum_drawdown": -0.1580444285071818,
+            "observations": 756,
+            "separated_episode_count": 1,
+            "time_effective_observations": 670.5105003108092
+          }
+        }
+      },
+      "removals": {
+        "best_market_removed": {
+          "PSR_vs_zero": 0.002469584923228561,
+          "metrics": {
+            "annual_arithmetic_return": -0.05471456532977856,
+            "annual_geometric_return": -0.05516681782601163,
+            "annual_sharpe": -0.8603612857140047,
+            "annual_volatility": 0.06359487140843573,
+            "cumulative_return": -0.39668605469294915,
+            "maximum_drawdown": -0.4123059350003614,
+            "observations": 2244
+          },
+          "pass": false,
+          "removed": "DBC"
+        },
+        "best_trend_removed": {
+          "PSR_vs_zero": 0.0073350048321352114,
+          "metrics": {
+            "annual_arithmetic_return": -0.056041125378483686,
+            "annual_geometric_return": -0.05699296205144411,
+            "annual_sharpe": -0.7728875800518018,
+            "annual_volatility": 0.07250876689560415,
+            "cumulative_return": -0.4069906303679438,
+            "maximum_drawdown": -0.43548584381415945,
+            "observations": 2244
+          },
+          "pass": false,
+          "removed": "VTI:2011-09-30:2012-04-13"
+        },
+        "method": "Original asset contribution is replaced by zero/cash without re-optimizing other weights."
+      },
+      "time_effective_observations": 2499.189399721046,
+      "trial_id": "sensitivity_40",
+      "turnover_one_way_notional": 176.86685853548508
+    },
+    {
+      "MinTRL_falsify_funded": true,
+      "MinTRL_falsify_required": 3850,
+      "PSR_vs_annual_Sharpe_0_25": 0.11074011036374908,
+      "active_vs_matched_benchmark": {
+        "annual_arithmetic_return": -0.03652244246614906,
+        "annual_geometric_return": -0.0395449805254211,
+        "annual_sharpe": -0.41813426140097426,
+        "annual_volatility": 0.0873462087124343,
+        "cumulative_return": -0.30182847938313473,
+        "maximum_drawdown": -0.4150261769892887,
+        "observations": 2244
+      },
+      "asset_and_region_matrix": {
+        "asset": {
+          "DBC": {
+            "annual_arithmetic_return": 0.005641840670565985,
+            "annual_geometric_return": 0.005359700249815802,
+            "annual_sharpe": 0.23177072665758083,
+            "annual_volatility": 0.024342334996003474,
+            "cumulative_return": 0.048750451137129724,
+            "maximum_drawdown": -0.0788010574554262,
+            "observations": 2244
+          },
+          "EWJ": {
+            "annual_arithmetic_return": -0.012233551347747618,
+            "annual_geometric_return": -0.012350140107357577,
+            "annual_sharpe": -0.6227153329839412,
+            "annual_volatility": 0.019645495621774103,
+            "cumulative_return": -0.10475674513080446,
+            "maximum_drawdown": -0.11053105199546154,
+            "observations": 2244
+          },
+          "GLD": {
+            "annual_arithmetic_return": 0.0005210230440402732,
+            "annual_geometric_return": 0.0002916583105325721,
+            "annual_sharpe": 0.02433156316196092,
+            "annual_volatility": 0.021413463679753286,
+            "cumulative_return": 0.0026001436719147453,
+            "maximum_drawdown": -0.0741659524615561,
+            "observations": 2244
+          },
+          "IEF": {
+            "annual_arithmetic_return": -0.00073176126060108,
+            "annual_geometric_return": -0.0008270528749030337,
+            "annual_sharpe": -0.052908579920096975,
+            "annual_volatility": 0.013830672864518244,
+            "cumulative_return": -0.0073406807363909365,
+            "maximum_drawdown": -0.04662648980309658,
+            "observations": 2244
+          },
+          "TIP": {
+            "annual_arithmetic_return": -0.004422853552111632,
+            "annual_geometric_return": -0.004482762795003703,
+            "annual_sharpe": -0.37393576858953254,
+            "annual_volatility": 0.011827842970985152,
+            "cumulative_return": -0.039217934850259706,
+            "maximum_drawdown": -0.061825044932380724,
+            "observations": 2244
+          },
+          "VGK": {
+            "annual_arithmetic_return": 0.0018582156958848268,
+            "annual_geometric_return": 0.0016465705105936923,
+            "annual_sharpe": 0.09003736513767265,
+            "annual_volatility": 0.020638272710929526,
+            "cumulative_return": 0.014758101373506305,
+            "maximum_drawdown": -0.0460606324829268,
+            "observations": 2244
+          },
+          "VTI": {
+            "annual_arithmetic_return": 0.004251299526904096,
+            "annual_geometric_return": 0.004033839958659913,
+            "annual_sharpe": 0.2001877515235302,
+            "annual_volatility": 0.02123656165049836,
+            "cumulative_return": 0.036498421621220745,
+            "maximum_drawdown": -0.04381739711847554,
+            "observations": 2244
+          },
+          "VWO": {
+            "annual_arithmetic_return": -0.004977479416173323,
+            "annual_geometric_return": -0.005130359907456805,
+            "annual_sharpe": -0.2732372894181307,
+            "annual_volatility": 0.018216691531280586,
+            "cumulative_return": -0.04476913583161035,
+            "maximum_drawdown": -0.09249464940390517,
+            "observations": 2244
+          }
+        },
+        "country_or_region": {
+          "Emerging_markets": {
+            "annual_arithmetic_return": -0.004977479416173323,
+            "annual_geometric_return": -0.005130359907456805,
+            "annual_sharpe": -0.2732372894181307,
+            "annual_volatility": 0.018216691531280586,
+            "cumulative_return": -0.04476913583161035,
+            "maximum_drawdown": -0.09249464940390517,
+            "observations": 2244
+          },
+          "Europe": {
+            "annual_arithmetic_return": 0.0018582156958848268,
+            "annual_geometric_return": 0.0016465705105936923,
+            "annual_sharpe": 0.09003736513767265,
+            "annual_volatility": 0.020638272710929526,
+            "cumulative_return": 0.014758101373506305,
+            "maximum_drawdown": -0.0460606324829268,
+            "observations": 2244
+          },
+          "Global": {
+            "annual_arithmetic_return": 0.006162863714606258,
+            "annual_geometric_return": 0.005511092186480271,
+            "annual_sharpe": 0.16883997594654174,
+            "annual_volatility": 0.03650121175424444,
+            "cumulative_return": 0.050157581180529265,
+            "maximum_drawdown": -0.11328029839524456,
+            "observations": 2244
+          },
+          "Japan": {
+            "annual_arithmetic_return": -0.012233551347747618,
+            "annual_geometric_return": -0.012350140107357577,
+            "annual_sharpe": -0.6227153329839412,
+            "annual_volatility": 0.019645495621774103,
+            "cumulative_return": -0.10475674513080446,
+            "maximum_drawdown": -0.11053105199546154,
+            "observations": 2244
+          },
+          "United_States": {
+            "annual_arithmetic_return": -0.0009033152858086172,
+            "annual_geometric_return": -0.0012953854583569457,
+            "annual_sharpe": -0.032224514885032314,
+            "annual_volatility": 0.028031928146362583,
+            "cumulative_return": -0.011476216767888903,
+            "maximum_drawdown": -0.06978831264542362,
+            "observations": 2244
+          }
+        },
+        "sleeve": {
+          "Europe_equity": {
+            "annual_arithmetic_return": 0.0018582156958848268,
+            "annual_geometric_return": 0.0016465705105936923,
+            "annual_sharpe": 0.09003736513767265,
+            "annual_volatility": 0.020638272710929526,
+            "cumulative_return": 0.014758101373506305,
+            "maximum_drawdown": -0.0460606324829268,
+            "observations": 2244
+          },
+          "Japan_equity": {
+            "annual_arithmetic_return": -0.012233551347747618,
+            "annual_geometric_return": -0.012350140107357577,
+            "annual_sharpe": -0.6227153329839412,
+            "annual_volatility": 0.019645495621774103,
+            "cumulative_return": -0.10475674513080446,
+            "maximum_drawdown": -0.11053105199546154,
+            "observations": 2244
+          },
+          "US_equity": {
+            "annual_arithmetic_return": 0.004251299526904096,
+            "annual_geometric_return": 0.004033839958659913,
+            "annual_sharpe": 0.2001877515235302,
+            "annual_volatility": 0.02123656165049836,
+            "cumulative_return": 0.036498421621220745,
+            "maximum_drawdown": -0.04381739711847554,
+            "observations": 2244
+          },
+          "US_inflation_linked_bonds": {
+            "annual_arithmetic_return": -0.004422853552111632,
+            "annual_geometric_return": -0.004482762795003703,
+            "annual_sharpe": -0.37393576858953254,
+            "annual_volatility": 0.011827842970985152,
+            "cumulative_return": -0.039217934850259706,
+            "maximum_drawdown": -0.061825044932380724,
+            "observations": 2244
+          },
+          "broad_commodities": {
+            "annual_arithmetic_return": 0.005641840670565985,
+            "annual_geometric_return": 0.005359700249815802,
+            "annual_sharpe": 0.23177072665758083,
+            "annual_volatility": 0.024342334996003474,
+            "cumulative_return": 0.048750451137129724,
+            "maximum_drawdown": -0.0788010574554262,
+            "observations": 2244
+          },
+          "emerging_markets_equity": {
+            "annual_arithmetic_return": -0.004977479416173323,
+            "annual_geometric_return": -0.005130359907456805,
+            "annual_sharpe": -0.2732372894181307,
+            "annual_volatility": 0.018216691531280586,
+            "cumulative_return": -0.04476913583161035,
+            "maximum_drawdown": -0.09249464940390517,
+            "observations": 2244
+          },
+          "gold": {
+            "annual_arithmetic_return": 0.0005210230440402732,
+            "annual_geometric_return": 0.0002916583105325721,
+            "annual_sharpe": 0.02433156316196092,
+            "annual_volatility": 0.021413463679753286,
+            "cumulative_return": 0.0026001436719147453,
+            "maximum_drawdown": -0.0741659524615561,
+            "observations": 2244
+          },
+          "intermediate_US_Treasuries": {
+            "annual_arithmetic_return": -0.00073176126060108,
+            "annual_geometric_return": -0.0008270528749030337,
+            "annual_sharpe": -0.052908579920096975,
+            "annual_volatility": 0.013830672864518244,
+            "cumulative_return": -0.0073406807363909365,
+            "maximum_drawdown": -0.04662648980309658,
+            "observations": 2244
+          }
+        }
+      },
+      "autocorrelations_lags_1_to_5": [
+        -0.017848715133966464,
+        -0.03974195153816603,
+        -0.015151677922643733,
+        -0.012698325613416984,
+        0.011800969476063938
+      ],
+      "claim_eligible": false,
+      "concentration_tests": {
+        "asset_concentration_pass": false,
+        "asset_net_contributions": {
+          "DBC": 0.05023924787599235,
+          "EWJ": -0.10893686200137166,
+          "GLD": 0.004639586154072909,
+          "IEF": -0.006516159796781046,
+          "TIP": -0.039384457821184535,
+          "VGK": 0.016546968339545838,
+          "VTI": 0.0378568100729079,
+          "VWO": -0.04432326908687673
+        },
+        "episode_count": 287,
+        "largest_positive_asset": "DBC",
+        "largest_positive_asset_share": 0.4597185842571016,
+        "largest_positive_episode": {
+          "contribution": 0.046407037758344497,
+          "end": "2015-07-02",
+          "sign": -1,
+          "start": "2014-09-12",
+          "symbol": "DBC"
+        },
+        "largest_positive_episode_share": 0.07572806010834021,
+        "positive_asset_Herfindahl": 0.35607122322620904
+      },
+      "cost_decomposition_return_units": {
+        "cash_yield": 0.007241512006014562,
+        "commission": 0.12093301816132725,
+        "expense_ratio": 0.020163964234766338,
+        "sell_surcharge": 0.005706761210445456,
+        "short_borrow": 0.05349943862498253,
+        "spread_slippage": 0.28255378075076476
+      },
+      "covariance_negative_eigenvalue_clipped_mass": 0.0,
+      "cross_sectional_effective_dimensions": 6.3808024551936535,
+      "executed_asset_trades": 3236,
+      "exposure": {
+        "average_gross": 0.8579527373454878,
+        "average_net": 0.45698975823429944,
+        "leverage_above_one_observations": 0,
+        "maximum_absolute_asset_weight": 0.26535897197547215,
+        "maximum_gross": 0.970517756818286,
+        "minimum_cash_fraction": 0.029482243181713996
+      },
+      "gross": {
+        "annual_arithmetic_return": 0.04494453001720171,
+        "annual_geometric_return": 0.043223355630769955,
+        "annual_sharpe": 0.6206300515335197,
+        "annual_volatility": 0.07241758581645849,
+        "cumulative_return": 0.4576239447345476,
+        "maximum_drawdown": -0.09339929293332638,
+        "observations": 2244
+      },
+      "holding_overlap": {
+        "mean_active_assets": 7.610516934046346,
+        "mean_same_sign_fraction": 0.9745318769505127
+      },
+      "joint_independent_bet_equivalents": 16789.212063907184,
+      "lookback_sessions": 80,
+      "net": {
+        "annual_arithmetic_return": -0.009280048713429351,
+        "annual_geometric_return": -0.01185463822423849,
+        "annual_sharpe": -0.12769220573829113,
+        "annual_volatility": 0.07267513831227163,
+        "cumulative_return": -0.10074930561950479,
+        "maximum_drawdown": -0.21784623350389432,
+        "observations": 2244
+      },
+      "payoff_tests": {
+        "convex_payoff_gate_pass": false,
+        "explicit_convexity_claim_allowed": false,
+        "population_skewness": -0.4987818816733027,
+        "positive_skew_pass": false,
+        "quadratic_convexity": {
+          "coefficient": -5.557195073259922,
+          "lags": 5,
+          "newey_west_standard_error": 7.628558413972719,
+          "newey_west_t": -0.7284725070835376,
+          "note": "HAC sandwich covariance with Bartlett weights; E1 diagnostic."
+        },
+        "quadratic_convexity_pass": false,
+        "right_tail_pass": false,
+        "right_tail_ratio": 0.9285415625959174
+      },
+      "regime_matrix": {
+        "calendar_subperiod": {
+          "2007-2009": {
+            "annual_arithmetic_return": 0.019813803877735396,
+            "annual_geometric_return": 0.0159472182848015,
+            "annual_sharpe": 0.22198464656367217,
+            "annual_volatility": 0.08925754183658001,
+            "cumulative_return": 0.047161278598420564,
+            "maximum_drawdown": -0.12414924531767169,
+            "observations": 734
+          },
+          "2010-2012": {
+            "annual_arithmetic_return": -0.024053075083046726,
+            "annual_geometric_return": -0.026085414418854036,
+            "annual_sharpe": -0.3490422341128512,
+            "annual_volatility": 0.06891164659251511,
+            "cumulative_return": -0.07603884271352934,
+            "maximum_drawdown": -0.14500790667339292,
+            "observations": 754
+          },
+          "2013-2015": {
+            "annual_arithmetic_return": -0.022793310511343933,
+            "annual_geometric_return": -0.024101843386814203,
+            "annual_sharpe": -0.402857974521743,
+            "annual_volatility": 0.05657902276454438,
+            "cumulative_return": -0.07057683432973338,
+            "maximum_drawdown": -0.11900479024026267,
+            "observations": 756
+          }
+        },
+        "fixed_crisis_window": {
+          "COVID": {
+            "status": "sealed_not_accessed"
+          },
+          "GFC": {
+            "metrics": {
+              "annual_arithmetic_return": -0.005344596686592889,
+              "annual_geometric_return": -0.009664739726044647,
+              "annual_sharpe": -0.057249834573947625,
+              "annual_volatility": 0.0933556703939373,
+              "cumulative_return": -0.019236072258117076,
+              "maximum_drawdown": -0.12414924531767157,
+              "observations": 504
+            },
+            "status": "opened_diagnostic"
+          },
+          "inflation_2022": {
+            "status": "sealed_not_accessed"
+          }
+        },
+        "global_state": {
+          "broad_downtrend": {
+            "adequately_covered": false,
+            "annual_arithmetic_return": -1.3595380981155916,
+            "annual_geometric_return": -0.7448142328687508,
+            "annual_sharpe": -19.145667625101897,
+            "annual_volatility": 0.0710102214630061,
+            "cumulative_return": -0.021445489745994695,
+            "maximum_drawdown": -0.021445489745994695,
+            "observations": 4,
+            "separated_episode_count": 1,
+            "time_effective_observations": 0.0
+          },
+          "broad_uptrend": {
+            "adequately_covered": false,
+            "annual_arithmetic_return": -0.25487531753384884,
+            "annual_geometric_return": -0.226993239685914,
+            "annual_sharpe": -3.639810743510709,
+            "annual_volatility": 0.07002433244317911,
+            "cumulative_return": -0.025218961608595714,
+            "maximum_drawdown": -0.04087078945449285,
+            "observations": 25,
+            "separated_episode_count": 3,
+            "time_effective_observations": 16.678967844876134
+          },
+          "mixed": {
+            "adequately_covered": false,
+            "annual_arithmetic_return": -0.0058269734815335995,
+            "annual_geometric_return": -0.008422487069909335,
+            "annual_sharpe": -0.08039314050943541,
+            "annual_volatility": 0.07248097840946656,
+            "cumulative_return": -0.0714923797469037,
+            "maximum_drawdown": -0.21784623350389565,
+            "observations": 2210,
+            "separated_episode_count": 1,
+            "time_effective_observations": 2473.726622665052
+          },
+          "whipsaw": {
+            "adequately_covered": false,
+            "annual_arithmetic_return": 0.7726434824124754,
+            "annual_geometric_return": 1.1518003812615594,
+            "annual_sharpe": 7.580151182655433,
+            "annual_volatility": 0.10192982485367892,
+            "cumulative_return": 0.015320637753106103,
+            "maximum_drawdown": -0.005198435209505692,
+            "observations": 5,
+            "separated_episode_count": 1,
+            "time_effective_observations": 0.0
+          }
+        },
+        "volatility_state": {
+          "high": {
+            "adequately_covered": false,
+            "annual_arithmetic_return": -0.033766842716346675,
+            "annual_geometric_return": -0.03606407040458104,
+            "annual_sharpe": -0.4389312861546658,
+            "annual_volatility": 0.0769296784746583,
+            "cumulative_return": -0.025468823468812962,
+            "maximum_drawdown": -0.07925428095965703,
+            "observations": 177,
+            "separated_episode_count": 2,
+            "time_effective_observations": 193.2778661318423
+          },
+          "low": {
+            "adequately_covered": true,
+            "annual_arithmetic_return": -0.013414455322429393,
+            "annual_geometric_return": -0.015059553989387076,
+            "annual_sharpe": -0.22622623689294374,
+            "annual_volatility": 0.059296638209022014,
+            "cumulative_return": -0.053492142867718084,
+            "maximum_drawdown": -0.13178676498908792,
+            "observations": 913,
+            "separated_episode_count": 4,
+            "time_effective_observations": 1227.2236685575533
+          },
+          "middle": {
+            "adequately_covered": true,
+            "annual_arithmetic_return": -0.04412782320973871,
+            "annual_geometric_return": -0.04515282043345725,
+            "annual_sharpe": -0.6864669245591749,
+            "annual_volatility": 0.06428251912949202,
+            "cumulative_return": -0.07037401557826506,
+            "maximum_drawdown": -0.08100885763039378,
+            "observations": 398,
+            "separated_episode_count": 6,
+            "time_effective_observations": 898.6316507266116
+          },
+          "warmup_unclassified": {
+            "adequately_covered": false,
+            "annual_arithmetic_return": 0.019791763485068704,
+            "annual_geometric_return": 0.0159777310970437,
+            "annual_sharpe": 0.22319098921322975,
+            "annual_volatility": 0.08867635541576578,
+            "cumulative_return": 0.04870313588543396,
+            "maximum_drawdown": -0.12414924531767169,
+            "observations": 756,
+            "separated_episode_count": 1,
+            "time_effective_observations": 803.6838609511758
+          }
+        }
+      },
+      "removals": {
+        "best_market_removed": {
+          "PSR_vs_zero": 0.21262383715741476,
+          "metrics": {
+            "annual_arithmetic_return": -0.014921889383995338,
+            "annual_geometric_return": -0.01675214952809112,
+            "annual_sharpe": -0.23781882678813407,
+            "annual_volatility": 0.06274477754988178,
+            "cumulative_return": -0.13966852406379082,
+            "maximum_drawdown": -0.18876980635049811,
+            "observations": 2244
+          },
+          "pass": false,
+          "removed": "DBC"
+        },
+        "best_trend_removed": {
+          "PSR_vs_zero": 0.25703288567683347,
+          "metrics": {
+            "annual_arithmetic_return": -0.014491534237093708,
+            "annual_geometric_return": -0.01693471509168809,
+            "annual_sharpe": -0.20160622297791456,
+            "annual_volatility": 0.07188039150300048,
+            "cumulative_return": -0.14108995344259945,
+            "maximum_drawdown": -0.252933879068031,
+            "observations": 2244
+          },
+          "pass": false,
+          "removed": "DBC:2014-09-12:2015-07-02"
+        },
+        "method": "Original asset contribution is replaced by zero/cash without re-optimizing other weights."
+      },
+      "time_effective_observations": 2631.2069965810656,
+      "trial_id": "sensitivity_80",
+      "turnover_one_way_notional": 113.02151230030582
+    },
+    {
+      "MinTRL_falsify_funded": true,
+      "MinTRL_falsify_required": 3850,
+      "PSR_vs_annual_Sharpe_0_25": 0.12457811552535929,
+      "active_vs_matched_benchmark": {
+        "annual_arithmetic_return": -0.03656509347038919,
+        "annual_geometric_return": -0.0398696760972862,
+        "annual_sharpe": -0.4031305776810982,
+        "annual_volatility": 0.09070285285904187,
+        "cumulative_return": -0.30392743644248754,
+        "maximum_drawdown": -0.42414226861379745,
+        "observations": 2244
+      },
+      "asset_and_region_matrix": {
+        "asset": {
+          "DBC": {
+            "annual_arithmetic_return": 0.01712623777061192,
+            "annual_geometric_return": 0.01696357039848384,
+            "annual_sharpe": 0.6940057496104839,
+            "annual_volatility": 0.02467737159270533,
+            "cumulative_return": 0.16158985778027968,
+            "maximum_drawdown": -0.04187349905835347,
+            "observations": 2244
+          },
+          "EWJ": {
+            "annual_arithmetic_return": -0.011340409734669283,
+            "annual_geometric_return": -0.011474992027837971,
+            "annual_sharpe": -0.5663883816392099,
+            "annual_volatility": 0.020022320552989626,
+            "cumulative_return": -0.09766809864498283,
+            "maximum_drawdown": -0.11405288109547862,
+            "observations": 2244
+          },
+          "GLD": {
+            "annual_arithmetic_return": 0.004600399275442466,
+            "annual_geometric_return": 0.004366006623883534,
+            "annual_sharpe": 0.20837647793125721,
+            "annual_volatility": 0.02207734443500924,
+            "cumulative_return": 0.039555922470631666,
+            "maximum_drawdown": -0.07228829881780685,
+            "observations": 2244
+          },
+          "IEF": {
+            "annual_arithmetic_return": -0.0033556540423155365,
+            "annual_geometric_return": -0.00344493681991187,
+            "annual_sharpe": -0.24317558978756365,
+            "annual_volatility": 0.013799304631056969,
+            "cumulative_return": -0.030261957130284678,
+            "maximum_drawdown": -0.06369673536840148,
+            "observations": 2244
+          },
+          "TIP": {
+            "annual_arithmetic_return": -0.006874182241557724,
+            "annual_geometric_return": -0.0069207807419440215,
+            "annual_sharpe": -0.5786572894364826,
+            "annual_volatility": 0.01187953969827642,
+            "cumulative_return": -0.05996874134298347,
+            "maximum_drawdown": -0.07726667557201139,
+            "observations": 2244
+          },
+          "VGK": {
+            "annual_arithmetic_return": -0.0019306612826338401,
+            "annual_geometric_return": -0.002120750335297017,
+            "annual_sharpe": -0.0984558797621354,
+            "annual_volatility": 0.01960940562715222,
+            "cumulative_return": -0.018727254572507346,
+            "maximum_drawdown": -0.06883770153903801,
+            "observations": 2244
+          },
+          "VTI": {
+            "annual_arithmetic_return": -0.002244391817648125,
+            "annual_geometric_return": -0.0024560837561918847,
+            "annual_sharpe": -0.10833833728172124,
+            "annual_volatility": 0.020716506030656955,
+            "cumulative_return": -0.02165972834746266,
+            "maximum_drawdown": -0.07833676838907844,
+            "observations": 2244
+          },
+          "VWO": {
+            "annual_arithmetic_return": -0.004419823953583812,
+            "annual_geometric_return": -0.00460049561677589,
+            "annual_sharpe": -0.2260453134748543,
+            "annual_volatility": 0.019552822775401105,
+            "cumulative_return": -0.040229265054620655,
+            "maximum_drawdown": -0.05843957603351513,
+            "observations": 2244
+          }
+        },
+        "country_or_region": {
+          "Emerging_markets": {
+            "annual_arithmetic_return": -0.004419823953583812,
+            "annual_geometric_return": -0.00460049561677589,
+            "annual_sharpe": -0.2260453134748543,
+            "annual_volatility": 0.019552822775401105,
+            "cumulative_return": -0.040229265054620655,
+            "maximum_drawdown": -0.05843957603351513,
+            "observations": 2244
+          },
+          "Europe": {
+            "annual_arithmetic_return": -0.0019306612826338401,
+            "annual_geometric_return": -0.002120750335297017,
+            "annual_sharpe": -0.0984558797621354,
+            "annual_volatility": 0.01960940562715222,
+            "cumulative_return": -0.018727254572507346,
+            "maximum_drawdown": -0.06883770153903801,
+            "observations": 2244
+          },
+          "Global": {
+            "annual_arithmetic_return": 0.021726637046054386,
+            "annual_geometric_return": 0.02126583251711489,
+            "annual_sharpe": 0.5880461018333946,
+            "annual_volatility": 0.036947166180195154,
+            "cumulative_return": 0.20608761927745145,
+            "maximum_drawdown": -0.0638368596722576,
+            "observations": 2244
+          },
+          "Japan": {
+            "annual_arithmetic_return": -0.011340409734669283,
+            "annual_geometric_return": -0.011474992027837971,
+            "annual_sharpe": -0.5663883816392099,
+            "annual_volatility": 0.020022320552989626,
+            "cumulative_return": -0.09766809864498283,
+            "maximum_drawdown": -0.11405288109547862,
+            "observations": 2244
+          },
+          "United_States": {
+            "annual_arithmetic_return": -0.012474228101521385,
+            "annual_geometric_return": -0.012806946416299536,
+            "annual_sharpe": -0.43302090149514894,
+            "annual_volatility": 0.028807450306555543,
+            "cumulative_return": -0.10843717599520475,
+            "maximum_drawdown": -0.1413635776129486,
+            "observations": 2244
+          }
+        },
+        "sleeve": {
+          "Europe_equity": {
+            "annual_arithmetic_return": -0.0019306612826338401,
+            "annual_geometric_return": -0.002120750335297017,
+            "annual_sharpe": -0.0984558797621354,
+            "annual_volatility": 0.01960940562715222,
+            "cumulative_return": -0.018727254572507346,
+            "maximum_drawdown": -0.06883770153903801,
+            "observations": 2244
+          },
+          "Japan_equity": {
+            "annual_arithmetic_return": -0.011340409734669283,
+            "annual_geometric_return": -0.011474992027837971,
+            "annual_sharpe": -0.5663883816392099,
+            "annual_volatility": 0.020022320552989626,
+            "cumulative_return": -0.09766809864498283,
+            "maximum_drawdown": -0.11405288109547862,
+            "observations": 2244
+          },
+          "US_equity": {
+            "annual_arithmetic_return": -0.002244391817648125,
+            "annual_geometric_return": -0.0024560837561918847,
+            "annual_sharpe": -0.10833833728172124,
+            "annual_volatility": 0.020716506030656955,
+            "cumulative_return": -0.02165972834746266,
+            "maximum_drawdown": -0.07833676838907844,
+            "observations": 2244
+          },
+          "US_inflation_linked_bonds": {
+            "annual_arithmetic_return": -0.006874182241557724,
+            "annual_geometric_return": -0.0069207807419440215,
+            "annual_sharpe": -0.5786572894364826,
+            "annual_volatility": 0.01187953969827642,
+            "cumulative_return": -0.05996874134298347,
+            "maximum_drawdown": -0.07726667557201139,
+            "observations": 2244
+          },
+          "broad_commodities": {
+            "annual_arithmetic_return": 0.01712623777061192,
+            "annual_geometric_return": 0.01696357039848384,
+            "annual_sharpe": 0.6940057496104839,
+            "annual_volatility": 0.02467737159270533,
+            "cumulative_return": 0.16158985778027968,
+            "maximum_drawdown": -0.04187349905835347,
+            "observations": 2244
+          },
+          "emerging_markets_equity": {
+            "annual_arithmetic_return": -0.004419823953583812,
+            "annual_geometric_return": -0.00460049561677589,
+            "annual_sharpe": -0.2260453134748543,
+            "annual_volatility": 0.019552822775401105,
+            "cumulative_return": -0.040229265054620655,
+            "maximum_drawdown": -0.05843957603351513,
+            "observations": 2244
+          },
+          "gold": {
+            "annual_arithmetic_return": 0.004600399275442466,
+            "annual_geometric_return": 0.004366006623883534,
+            "annual_sharpe": 0.20837647793125721,
+            "annual_volatility": 0.02207734443500924,
+            "cumulative_return": 0.039555922470631666,
+            "maximum_drawdown": -0.07228829881780685,
+            "observations": 2244
+          },
+          "intermediate_US_Treasuries": {
+            "annual_arithmetic_return": -0.0033556540423155365,
+            "annual_geometric_return": -0.00344493681991187,
+            "annual_sharpe": -0.24317558978756365,
+            "annual_volatility": 0.013799304631056969,
+            "cumulative_return": -0.030261957130284678,
+            "maximum_drawdown": -0.06369673536840148,
+            "observations": 2244
+          }
+        }
+      },
+      "autocorrelations_lags_1_to_5": [
+        -0.02705055907339028,
+        -0.027696117304530057,
+        -0.01342922767716801,
+        -0.024278464856150116,
+        0.008729295325821125
+      ],
+      "claim_eligible": false,
+      "concentration_tests": {
+        "asset_concentration_pass": false,
+        "asset_net_contributions": {
+          "DBC": 0.1525050696716395,
+          "EWJ": -0.1009836485896741,
+          "GLD": 0.040965460214654345,
+          "IEF": -0.029881300281571682,
+          "TIP": -0.06121295615101402,
+          "VGK": -0.017192079040596577,
+          "VTI": -0.01998577475715235,
+          "VWO": -0.039357479967627285
+        },
+        "episode_count": 361,
+        "largest_positive_asset": "DBC",
+        "largest_positive_asset_share": 0.7882599471933505,
+        "largest_positive_episode": {
+          "contribution": 0.0653132705509539,
+          "end": "2015-06-12",
+          "sign": -1,
+          "start": "2014-09-05",
+          "symbol": "DBC"
+        },
+        "largest_positive_episode_share": 0.08840487172565975,
+        "positive_asset_Herfindahl": 0.6661875943118265
+      },
+      "cost_decomposition_return_units": {
+        "cash_yield": 0.007543491381047703,
+        "commission": 0.14476136365922734,
+        "expense_ratio": 0.020317273219738387,
+        "sell_surcharge": 0.006827631115314282,
+        "short_borrow": 0.06067405295818192,
+        "spread_slippage": 0.16911374259255524
+      },
+      "covariance_negative_eigenvalue_clipped_mass": 0.0,
+      "cross_sectional_effective_dimensions": 6.4886836406243145,
+      "executed_asset_trades": 3224,
+      "exposure": {
+        "average_gross": 0.8568319228002419,
+        "average_net": 0.40208682854149186,
+        "leverage_above_one_observations": 0,
+        "maximum_absolute_asset_weight": 0.26262689644082965,
+        "maximum_gross": 0.9684588899472831,
+        "minimum_cash_fraction": 0.03154111005271687
+      },
+      "gross": {
+        "annual_arithmetic_return": 0.03751867254823093,
+        "annual_geometric_return": 0.03536294317984412,
+        "annual_sharpe": 0.5048147284391442,
+        "annual_volatility": 0.07432166780124727,
+        "cumulative_return": 0.362687151820573,
+        "maximum_drawdown": -0.11912898932690896,
+        "observations": 2244
+      },
+      "holding_overlap": {
+        "mean_active_assets": 7.457664884135473,
+        "mean_same_sign_fraction": 0.9672313865358895
+      },
+      "joint_independent_bet_equivalents": 17485.871956691062,
+      "lookback_sessions": 60,
+      "net": {
+        "annual_arithmetic_return": -0.007591355978214891,
+        "annual_geometric_return": -0.010303861012416649,
+        "annual_sharpe": -0.10212444658410723,
+        "annual_volatility": 0.07433436588528129,
+        "cumulative_return": -0.08810407135553744,
+        "maximum_drawdown": -0.17826219785902353,
+        "observations": 2244
+      },
+      "payoff_tests": {
+        "convex_payoff_gate_pass": false,
+        "explicit_convexity_claim_allowed": false,
+        "population_skewness": -0.3111638337001094,
+        "positive_skew_pass": false,
+        "quadratic_convexity": {
+          "coefficient": -3.654798246531282,
+          "lags": 5,
+          "newey_west_standard_error": 7.168006472599916,
+          "newey_west_t": -0.5098765271072148,
+          "note": "HAC sandwich covariance with Bartlett weights; E1 diagnostic."
+        },
+        "quadratic_convexity_pass": false,
+        "right_tail_pass": false,
+        "right_tail_ratio": 0.914662577995191
+      },
+      "regime_matrix": {
+        "calendar_subperiod": {
+          "2007-2009": {
+            "annual_arithmetic_return": 0.008791199981803513,
+            "annual_geometric_return": 0.004815954056143212,
+            "annual_sharpe": 0.09852642531349047,
+            "annual_volatility": 0.08922682370573941,
+            "cumulative_return": 0.01409212295566964,
+            "maximum_drawdown": -0.1508168680193832,
+            "observations": 734
+          },
+          "2010-2012": {
+            "annual_arithmetic_return": -0.010871018946131157,
+            "annual_geometric_return": -0.013487801198969307,
+            "annual_sharpe": -0.14778747588380173,
+            "annual_volatility": 0.07355845873352979,
+            "cumulative_return": -0.03981661725040142,
+            "maximum_drawdown": -0.11044984799276125,
+            "observations": 754
+          },
+          "2013-2015": {
+            "annual_arithmetic_return": -0.02022618428091945,
+            "annual_geometric_return": -0.021626771246599397,
+            "annual_sharpe": -0.35352082968834486,
+            "annual_volatility": 0.0572135573984434,
+            "cumulative_return": -0.06348727724977965,
+            "maximum_drawdown": -0.09120788822908155,
+            "observations": 756
+          }
+        },
+        "fixed_crisis_window": {
+          "COVID": {
+            "status": "sealed_not_accessed"
+          },
+          "GFC": {
+            "metrics": {
+              "annual_arithmetic_return": -0.03385956909095476,
+              "annual_geometric_return": -0.03746163395987567,
+              "annual_sharpe": -0.3644979008823118,
+              "annual_volatility": 0.09289372863051756,
+              "cumulative_return": -0.0735198939008076,
+              "maximum_drawdown": -0.14894976773824498,
+              "observations": 504
+            },
+            "status": "opened_diagnostic"
+          },
+          "inflation_2022": {
+            "status": "sealed_not_accessed"
+          }
+        },
+        "global_state": {
+          "broad_downtrend": {
+            "adequately_covered": false,
+            "annual_arithmetic_return": 0.0659631722594088,
+            "annual_geometric_return": 0.05702098099274089,
+            "annual_sharpe": 0.45529286970404736,
+            "annual_volatility": 0.1448807496200998,
+            "cumulative_return": 0.006180639174621971,
+            "maximum_drawdown": -0.0435576543412175,
+            "observations": 28,
+            "separated_episode_count": 1,
+            "time_effective_observations": 47.338609849552874
+          },
+          "broad_uptrend": {
+            "adequately_covered": true,
+            "annual_arithmetic_return": -0.08071878741631877,
+            "annual_geometric_return": -0.08042879348506515,
+            "annual_sharpe": -1.0236139752280538,
+            "annual_volatility": 0.07885666801133231,
+            "cumulative_return": -0.022046217073991237,
+            "maximum_drawdown": -0.04707827683936383,
+            "observations": 67,
+            "separated_episode_count": 4,
+            "time_effective_observations": 279.6094300805537
+          },
+          "mixed": {
+            "adequately_covered": false,
+            "annual_arithmetic_return": -0.007256129292440117,
+            "annual_geometric_return": -0.0098620325977965,
+            "annual_sharpe": -0.09963716377634282,
+            "annual_volatility": 0.07282553032850343,
+            "cumulative_return": -0.0806840156792904,
+            "maximum_drawdown": -0.16019786836354033,
+            "observations": 2139,
+            "separated_episode_count": 1,
+            "time_effective_observations": 2407.462686681844
+          },
+          "whipsaw": {
+            "adequately_covered": false,
+            "annual_arithmetic_return": 0.2047047675045106,
+            "annual_geometric_return": 0.22419805482841904,
+            "annual_sharpe": 2.9873241086478926,
+            "annual_volatility": 0.06852445869931503,
+            "cumulative_return": 0.008059525971199522,
+            "maximum_drawdown": -0.008756971938141178,
+            "observations": 10,
+            "separated_episode_count": 2,
+            "time_effective_observations": 27.405743831238766
+          }
+        },
+        "volatility_state": {
+          "high": {
+            "adequately_covered": false,
+            "annual_arithmetic_return": -0.0699334526584201,
+            "annual_geometric_return": -0.07084323906273093,
+            "annual_sharpe": -0.8320094909363387,
+            "annual_volatility": 0.08405367176727445,
+            "cumulative_return": -0.05030026820427058,
+            "maximum_drawdown": -0.0975638384744788,
+            "observations": 177,
+            "separated_episode_count": 2,
+            "time_effective_observations": 454.1305086904057
+          },
+          "low": {
+            "adequately_covered": true,
+            "annual_arithmetic_return": -0.009328873732178023,
+            "annual_geometric_return": -0.011195296204774219,
+            "annual_sharpe": -0.1502045503304754,
+            "annual_volatility": 0.06210779707840359,
+            "cumulative_return": -0.03996879466505587,
+            "maximum_drawdown": -0.11943104353095357,
+            "observations": 913,
+            "separated_episode_count": 4,
+            "time_effective_observations": 1203.382265922046
+          },
+          "middle": {
+            "adequately_covered": true,
+            "annual_arithmetic_return": -0.007370295563499858,
+            "annual_geometric_return": -0.009501974544279257,
+            "annual_sharpe": -0.11179325390782983,
+            "annual_volatility": 0.06592790983234502,
+            "cumulative_return": -0.0149657237112103,
+            "maximum_drawdown": -0.05384678711506219,
+            "observations": 398,
+            "separated_episode_count": 6,
+            "time_effective_observations": 975.7544600846383
+          },
+          "warmup_unclassified": {
+            "adequately_covered": false,
+            "annual_arithmetic_return": 0.0089865842026159,
+            "annual_geometric_return": 0.005095718247432712,
+            "annual_sharpe": 0.10177996970088368,
+            "annual_volatility": 0.08829423145856838,
+            "cumulative_return": 0.015365186092844763,
+            "maximum_drawdown": -0.1508168680193832,
+            "observations": 756,
+            "separated_episode_count": 1,
+            "time_effective_observations": 727.9298942256328
+          }
+        }
+      },
+      "removals": {
+        "best_market_removed": {
+          "PSR_vs_zero": 0.10004979247673933,
+          "metrics": {
+            "annual_arithmetic_return": -0.024717593748826813,
+            "annual_geometric_return": -0.026457153577781112,
+            "annual_sharpe": -0.38218110284273926,
+            "annual_volatility": 0.06467508091052232,
+            "cumulative_return": -0.21240188079159206,
+            "maximum_drawdown": -0.2618156789406554,
+            "observations": 2244
+          },
+          "pass": false,
+          "removed": "DBC"
+        },
+        "best_trend_removed": {
+          "PSR_vs_zero": 0.253311985574041,
+          "metrics": {
+            "annual_arithmetic_return": -0.014926001334204367,
+            "annual_geometric_return": -0.01747970800218357,
+            "annual_sharpe": -0.20293810898282855,
+            "annual_volatility": 0.07354952408405127,
+            "cumulative_return": -0.1453207979581317,
+            "maximum_drawdown": -0.22982197095068346,
+            "observations": 2244
+          },
+          "pass": false,
+          "removed": "DBC:2014-09-05:2015-06-12"
+        },
+        "method": "Original asset contribution is replaced by zero/cash without re-optimizing other weights."
+      },
+      "time_effective_observations": 2694.8257805659705,
+      "trial_id": "sensitivity_low_cost",
+      "turnover_one_way_notional": 135.29099407404414
+    },
+    {
+      "MinTRL_falsify_funded": true,
+      "MinTRL_falsify_required": 3850,
+      "PSR_vs_annual_Sharpe_0_25": 5.0977383690636856e-05,
+      "active_vs_matched_benchmark": {
+        "annual_arithmetic_return": -0.09515887452717414,
+        "annual_geometric_return": -0.0945579352028012,
+        "annual_sharpe": -1.0447721136860078,
+        "annual_volatility": 0.09108098625589166,
+        "cumulative_return": -0.5870908464199651,
+        "maximum_drawdown": -0.6054073265637261,
+        "observations": 2244
+      },
+      "asset_and_region_matrix": {
+        "asset": {
+          "DBC": {
+            "annual_arithmetic_return": 0.008508203620691096,
+            "annual_geometric_return": 0.008235739941811815,
+            "annual_sharpe": 0.3438394145779873,
+            "annual_volatility": 0.024744701334294895,
+            "cumulative_return": 0.07577029420904435,
+            "maximum_drawdown": -0.08650429543341553,
+            "observations": 2244
+          },
+          "EWJ": {
+            "annual_arithmetic_return": -0.017946066813757596,
+            "annual_geometric_return": -0.017984745859909945,
+            "annual_sharpe": -0.8939810693421654,
+            "annual_volatility": 0.02007432531760788,
+            "cumulative_return": -0.14922494064874425,
+            "maximum_drawdown": -0.1602191283310307,
+            "observations": 2244
+          },
+          "GLD": {
+            "annual_arithmetic_return": -0.0025364244130559412,
+            "annual_geometric_return": -0.0027772267729716527,
+            "annual_sharpe": -0.11470261215509625,
+            "annual_volatility": 0.022113048390094994,
+            "cumulative_return": -0.02446081252730592,
+            "maximum_drawdown": -0.08163904020040547,
+            "observations": 2244
+          },
+          "IEF": {
+            "annual_arithmetic_return": -0.014150623664496431,
+            "annual_geometric_return": -0.014150103764892452,
+            "annual_sharpe": -0.9998872163995346,
+            "annual_volatility": 0.014152219802800368,
+            "cumulative_return": -0.11918114297998894,
+            "maximum_drawdown": -0.12607320142307266,
+            "observations": 2244
+          },
+          "TIP": {
+            "annual_arithmetic_return": -0.019349453316313422,
+            "annual_geometric_return": -0.01923872464783094,
+            "annual_sharpe": -1.5695467932660985,
+            "annual_volatility": 0.01232805125615197,
+            "cumulative_return": -0.15885032452869063,
+            "maximum_drawdown": -0.1668298444475419,
+            "observations": 2244
+          },
+          "VGK": {
+            "annual_arithmetic_return": -0.007944385125496462,
+            "annual_geometric_return": -0.00810582412587002,
+            "annual_sharpe": -0.40304156763061416,
+            "annual_volatility": 0.01971108134627309,
+            "cumulative_return": -0.06991059715543257,
+            "maximum_drawdown": -0.09724992859911863,
+            "observations": 2244
+          },
+          "VTI": {
+            "annual_arithmetic_return": -0.008729748171932233,
+            "annual_geometric_return": -0.008906206757736679,
+            "annual_sharpe": -0.41993889410421825,
+            "annual_volatility": 0.02078813916618481,
+            "cumulative_return": -0.07657244341698755,
+            "maximum_drawdown": -0.09032458304687219,
+            "observations": 2244
+          },
+          "VWO": {
+            "annual_arithmetic_return": -0.010077800417141678,
+            "annual_geometric_return": -0.010216926230052326,
+            "annual_sharpe": -0.5151280887117993,
+            "annual_volatility": 0.01956367870046385,
+            "cumulative_return": -0.08739054492497089,
+            "maximum_drawdown": -0.09887637180517117,
+            "observations": 2244
+          }
+        },
+        "country_or_region": {
+          "Emerging_markets": {
+            "annual_arithmetic_return": -0.010077800417141678,
+            "annual_geometric_return": -0.010216926230052326,
+            "annual_sharpe": -0.5151280887117993,
+            "annual_volatility": 0.01956367870046385,
+            "cumulative_return": -0.08739054492497089,
+            "maximum_drawdown": -0.09887637180517117,
+            "observations": 2244
+          },
+          "Europe": {
+            "annual_arithmetic_return": -0.007944385125496462,
+            "annual_geometric_return": -0.00810582412587002,
+            "annual_sharpe": -0.40304156763061416,
+            "annual_volatility": 0.01971108134627309,
+            "cumulative_return": -0.06991059715543257,
+            "maximum_drawdown": -0.09724992859911863,
+            "observations": 2244
+          },
+          "Global": {
+            "annual_arithmetic_return": 0.005971779207635155,
+            "annual_geometric_return": 0.005299680377246263,
+            "annual_sharpe": 0.16126351269310885,
+            "annual_volatility": 0.0370311864593927,
+            "cumulative_return": 0.04819305289316467,
+            "maximum_drawdown": -0.10678709300932732,
+            "observations": 2244
+          },
+          "Japan": {
+            "annual_arithmetic_return": -0.017946066813757596,
+            "annual_geometric_return": -0.017984745859909945,
+            "annual_sharpe": -0.8939810693421654,
+            "annual_volatility": 0.02007432531760788,
+            "cumulative_return": -0.14922494064874425,
+            "maximum_drawdown": -0.1602191283310307,
+            "observations": 2244
+          },
+          "United_States": {
+            "annual_arithmetic_return": -0.04222982515274209,
+            "annual_geometric_return": -0.0417729297885564,
+            "annual_sharpe": -1.4287322086157412,
+            "annual_volatility": 0.029557551021865316,
+            "cumulative_return": -0.3161185375658433,
+            "maximum_drawdown": -0.32656812801301904,
+            "observations": 2244
+          }
+        },
+        "sleeve": {
+          "Europe_equity": {
+            "annual_arithmetic_return": -0.007944385125496462,
+            "annual_geometric_return": -0.00810582412587002,
+            "annual_sharpe": -0.40304156763061416,
+            "annual_volatility": 0.01971108134627309,
+            "cumulative_return": -0.06991059715543257,
+            "maximum_drawdown": -0.09724992859911863,
+            "observations": 2244
+          },
+          "Japan_equity": {
+            "annual_arithmetic_return": -0.017946066813757596,
+            "annual_geometric_return": -0.017984745859909945,
+            "annual_sharpe": -0.8939810693421654,
+            "annual_volatility": 0.02007432531760788,
+            "cumulative_return": -0.14922494064874425,
+            "maximum_drawdown": -0.1602191283310307,
+            "observations": 2244
+          },
+          "US_equity": {
+            "annual_arithmetic_return": -0.008729748171932233,
+            "annual_geometric_return": -0.008906206757736679,
+            "annual_sharpe": -0.41993889410421825,
+            "annual_volatility": 0.02078813916618481,
+            "cumulative_return": -0.07657244341698755,
+            "maximum_drawdown": -0.09032458304687219,
+            "observations": 2244
+          },
+          "US_inflation_linked_bonds": {
+            "annual_arithmetic_return": -0.019349453316313422,
+            "annual_geometric_return": -0.01923872464783094,
+            "annual_sharpe": -1.5695467932660985,
+            "annual_volatility": 0.01232805125615197,
+            "cumulative_return": -0.15885032452869063,
+            "maximum_drawdown": -0.1668298444475419,
+            "observations": 2244
+          },
+          "broad_commodities": {
+            "annual_arithmetic_return": 0.008508203620691096,
+            "annual_geometric_return": 0.008235739941811815,
+            "annual_sharpe": 0.3438394145779873,
+            "annual_volatility": 0.024744701334294895,
+            "cumulative_return": 0.07577029420904435,
+            "maximum_drawdown": -0.08650429543341553,
+            "observations": 2244
+          },
+          "emerging_markets_equity": {
+            "annual_arithmetic_return": -0.010077800417141678,
+            "annual_geometric_return": -0.010216926230052326,
+            "annual_sharpe": -0.5151280887117993,
+            "annual_volatility": 0.01956367870046385,
+            "cumulative_return": -0.08739054492497089,
+            "maximum_drawdown": -0.09887637180517117,
+            "observations": 2244
+          },
+          "gold": {
+            "annual_arithmetic_return": -0.0025364244130559412,
+            "annual_geometric_return": -0.0027772267729716527,
+            "annual_sharpe": -0.11470261215509625,
+            "annual_volatility": 0.022113048390094994,
+            "cumulative_return": -0.02446081252730592,
+            "maximum_drawdown": -0.08163904020040547,
+            "observations": 2244
+          },
+          "intermediate_US_Treasuries": {
+            "annual_arithmetic_return": -0.014150623664496431,
+            "annual_geometric_return": -0.014150103764892452,
+            "annual_sharpe": -0.9998872163995346,
+            "annual_volatility": 0.014152219802800368,
+            "cumulative_return": -0.11918114297998894,
+            "maximum_drawdown": -0.12607320142307266,
+            "observations": 2244
+          }
+        }
+      },
+      "autocorrelations_lags_1_to_5": [
+        -0.027107894996343335,
+        -0.02911148484491066,
+        -0.015019141322188073,
+        -0.021208015307955488,
+        0.023012337654908205
+      ],
+      "claim_eligible": false,
+      "concentration_tests": {
+        "asset_concentration_pass": false,
+        "asset_net_contributions": {
+          "DBC": 0.07576352747948738,
+          "EWJ": -0.15980545210346053,
+          "GLD": -0.022586255487688618,
+          "IEF": -0.12600793453623013,
+          "TIP": -0.17230227476907667,
+          "VGK": -0.07074285802227802,
+          "VTI": -0.07773632895958703,
+          "VWO": -0.08974041323835685
+        },
+        "episode_count": 361,
+        "largest_positive_asset": "DBC",
+        "largest_positive_asset_share": 1.0,
+        "largest_positive_episode": {
+          "contribution": 0.056943009801972914,
+          "end": "2015-06-12",
+          "sign": -1,
+          "start": "2014-09-05",
+          "symbol": "DBC"
+        },
+        "largest_positive_episode_share": 0.10179795377398099,
+        "positive_asset_Herfindahl": 1.0
+      },
+      "cost_decomposition_return_units": {
+        "cash_yield": 0.007543491381047703,
+        "commission": 0.14476136365922734,
+        "expense_ratio": 0.020317273219738387,
+        "sell_surcharge": 0.006827631115314282,
+        "short_borrow": 0.12134810591636384,
+        "spread_slippage": 0.676454970370221
+      },
+      "covariance_negative_eigenvalue_clipped_mass": 0.0,
+      "cross_sectional_effective_dimensions": 6.481626486910936,
+      "executed_asset_trades": 3224,
+      "exposure": {
+        "average_gross": 0.8568319228002419,
+        "average_net": 0.40208682854149186,
+        "leverage_above_one_observations": 0,
+        "maximum_absolute_asset_weight": 0.26262689644082965,
+        "maximum_gross": 0.9684588899472831,
+        "minimum_cash_fraction": 0.03154111005271687
+      },
+      "gross": {
+        "annual_arithmetic_return": 0.03751867254823093,
+        "annual_geometric_return": 0.03536294317984412,
+        "annual_sharpe": 0.5048147284391442,
+        "annual_volatility": 0.07432166780124727,
+        "cumulative_return": 0.362687151820573,
+        "maximum_drawdown": -0.11912898932690896,
+        "observations": 2244
+      },
+      "holding_overlap": {
+        "mean_active_assets": 7.457664884135473,
+        "mean_same_sign_fraction": 0.9672313865358895
+      },
+      "joint_independent_bet_equivalents": 16888.54780185172,
+      "lookback_sessions": 60,
+      "net": {
+        "annual_arithmetic_return": -0.07137916825336363,
+        "annual_geometric_return": -0.07153030428782026,
+        "annual_sharpe": -0.9498499609193972,
+        "annual_volatility": 0.07514783512153111,
+        "cumulative_return": -0.4836081966204162,
+        "maximum_drawdown": -0.5077417525098039,
+        "observations": 2244
+      },
+      "payoff_tests": {
+        "convex_payoff_gate_pass": false,
+        "explicit_convexity_claim_allowed": false,
+        "population_skewness": -0.320989749145727,
+        "positive_skew_pass": false,
+        "quadratic_convexity": {
+          "coefficient": -3.5239969789430625,
+          "lags": 5,
+          "newey_west_standard_error": 7.211875314381729,
+          "newey_west_t": -0.48863809000075226,
+          "note": "HAC sandwich covariance with Bartlett weights; E1 diagnostic."
+        },
+        "quadratic_convexity_pass": false,
+        "right_tail_pass": false,
+        "right_tail_ratio": 0.8448423435695049
+      },
+      "regime_matrix": {
+        "calendar_subperiod": {
+          "2007-2009": {
+            "annual_arithmetic_return": -0.04653069526079388,
+            "annual_geometric_return": -0.049294906270982985,
+            "annual_sharpe": -0.5196929314065516,
+            "annual_volatility": 0.08953497815500072,
+            "cumulative_return": -0.1369139502162311,
+            "maximum_drawdown": -0.22947387293095922,
+            "observations": 734
+          },
+          "2010-2012": {
+            "annual_arithmetic_return": -0.06971656637537162,
+            "annual_geometric_return": -0.06992531306345828,
+            "annual_sharpe": -0.9383468086634635,
+            "annual_volatility": 0.07429722756202749,
+            "cumulative_return": -0.19498618646542165,
+            "maximum_drawdown": -0.21195031123141972,
+            "observations": 754
+          },
+          "2013-2015": {
+            "annual_arithmetic_return": -0.09716274099483475,
+            "annual_geometric_return": -0.09418264601218085,
+            "annual_sharpe": -1.649770661320475,
+            "annual_volatility": 0.05889469565246468,
+            "cumulative_return": -0.2567722606009567,
+            "maximum_drawdown": -0.2620011503230669,
+            "observations": 756
+          }
+        },
+        "fixed_crisis_window": {
+          "COVID": {
+            "status": "sealed_not_accessed"
+          },
+          "GFC": {
+            "metrics": {
+              "annual_arithmetic_return": -0.0921313846719036,
+              "annual_geometric_return": -0.09197538161765773,
+              "annual_sharpe": -0.9902502480570253,
+              "annual_volatility": 0.0930384868397408,
+              "cumulative_return": -0.17549129241160177,
+              "maximum_drawdown": -0.22297949113664173,
+              "observations": 504
+            },
+            "status": "opened_diagnostic"
+          },
+          "inflation_2022": {
+            "status": "sealed_not_accessed"
+          }
+        },
+        "global_state": {
+          "broad_downtrend": {
+            "adequately_covered": false,
+            "annual_arithmetic_return": 0.04006636211606945,
+            "annual_geometric_return": 0.029853707626291692,
+            "annual_sharpe": 0.2746980445523272,
+            "annual_volatility": 0.14585601503412673,
+            "cumulative_return": 0.003273876434599421,
+            "maximum_drawdown": -0.04387815415654073,
+            "observations": 28,
+            "separated_episode_count": 1,
+            "time_effective_observations": 48.19116545821764
+          },
+          "broad_uptrend": {
+            "adequately_covered": false,
+            "annual_arithmetic_return": -0.11513885663267764,
+            "annual_geometric_return": -0.11157559110853488,
+            "annual_sharpe": -1.454580037839974,
+            "annual_volatility": 0.07915608191877625,
+            "cumulative_return": -0.030964756260204007,
+            "maximum_drawdown": -0.053564078700762074,
+            "observations": 67,
+            "separated_episode_count": 4,
+            "time_effective_observations": 225.57026433065207
+          },
+          "mixed": {
+            "adequately_covered": false,
+            "annual_arithmetic_return": -0.0723570116474823,
+            "annual_geometric_return": -0.07233457857479209,
+            "annual_sharpe": -0.9824426827909443,
+            "annual_volatility": 0.0736501099910775,
+            "cumulative_return": -0.47129327874206906,
+            "maximum_drawdown": -0.4872272127051709,
+            "observations": 2139,
+            "separated_episode_count": 1,
+            "time_effective_observations": 2332.0230401358517
+          },
+          "whipsaw": {
+            "adequately_covered": false,
+            "annual_arithmetic_return": 0.11892396085561549,
+            "annual_geometric_return": 0.1234063803317822,
+            "annual_sharpe": 1.6678340379049867,
+            "annual_volatility": 0.07130443326663319,
+            "cumulative_return": 0.00462835570445197,
+            "maximum_drawdown": -0.010624406940252462,
+            "observations": 10,
+            "separated_episode_count": 2,
+            "time_effective_observations": 21.41414605834733
+          }
+        },
+        "volatility_state": {
+          "high": {
+            "adequately_covered": false,
+            "annual_arithmetic_return": -0.1513010014265282,
+            "annual_geometric_return": -0.1435523544071159,
+            "annual_sharpe": -1.780334954900565,
+            "annual_volatility": 0.0849845704652688,
+            "cumulative_return": -0.10312826432437561,
+            "maximum_drawdown": -0.14399352992452708,
+            "observations": 177,
+            "separated_episode_count": 2,
+            "time_effective_observations": 414.44049803642343
+          },
+          "low": {
+            "adequately_covered": true,
+            "annual_arithmetic_return": -0.07624067999641142,
+            "annual_geometric_return": -0.07529339821452741,
+            "annual_sharpe": -1.1981274412171814,
+            "annual_volatility": 0.06363319741592621,
+            "cumulative_return": -0.24693614877505166,
+            "maximum_drawdown": -0.2790982534727193,
+            "observations": 913,
+            "separated_episode_count": 4,
+            "time_effective_observations": 1146.68390416353
+          },
+          "middle": {
+            "adequately_covered": true,
+            "annual_arithmetic_return": -0.07271710550810741,
+            "annual_geometric_return": -0.07220386067178919,
+            "annual_sharpe": -1.0935722551926501,
+            "annual_volatility": 0.06649501682474301,
+            "cumulative_return": -0.11162626205794679,
+            "maximum_drawdown": -0.11368027014446325,
+            "observations": 398,
+            "separated_episode_count": 6,
+            "time_effective_observations": 976.9180212386185
+          },
+          "warmup_unclassified": {
+            "adequately_covered": false,
+            "annual_arithmetic_return": -0.04609183528981761,
+            "annual_geometric_return": -0.04879564500515543,
+            "annual_sharpe": -0.5203909469550418,
+            "annual_volatility": 0.08857155482722039,
+            "cumulative_return": -0.13936007326235855,
+            "maximum_drawdown": -0.22947387293095922,
+            "observations": 756,
+            "separated_episode_count": 1,
+            "time_effective_observations": 704.5704586773686
+          }
+        }
+      },
+      "removals": {
+        "best_market_removed": {
+          "PSR_vs_zero": 2.4635083253872472e-05,
+          "metrics": {
+            "annual_arithmetic_return": -0.07988737187405472,
+            "annual_geometric_return": -0.07877199653812739,
+            "annual_sharpe": -1.2201458933726248,
+            "annual_volatility": 0.06547362271017997,
+            "cumulative_return": -0.5183874592478609,
+            "maximum_drawdown": -0.5296655826627643,
+            "observations": 2244
+          },
+          "pass": false,
+          "removed": "DBC"
+        },
+        "best_trend_removed": {
+          "PSR_vs_zero": 0.00035842589593909635,
+          "metrics": {
+            "annual_arithmetic_return": -0.07777383780331781,
+            "annual_geometric_return": -0.07739641586776391,
+            "annual_sharpe": -1.04582858287273,
+            "annual_volatility": 0.07436576039037397,
+            "cumulative_return": -0.5119457168441108,
+            "maximum_drawdown": -0.5347549195512646,
+            "observations": 2244
+          },
+          "pass": false,
+          "removed": "DBC:2014-09-05:2015-06-12"
+        },
+        "method": "Original asset contribution is replaced by zero/cash without re-optimizing other weights."
+      },
+      "time_effective_observations": 2605.6033676048182,
+      "trial_id": "sensitivity_severe_cost",
+      "turnover_one_way_notional": 135.29099407404414
+    }
+  ]
+}

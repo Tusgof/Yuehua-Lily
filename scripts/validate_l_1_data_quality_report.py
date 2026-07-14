@@ -59,7 +59,7 @@ def validate_report(
         if corporate.get("failed_symbols") != ["VGK", "VWO"] or len(corporate.get("rows", [])) != 8:
             blockers.append("corporate_action_result_mismatch")
         fees = workstreams["historical_expense_ratios"]
-        if fees.get("official_record_count") != 60 or fees.get("decision_bound", {}).get("can_turn_primary_positive") is not False:
+        if fees.get("official_record_count") != 57 or fees.get("decision_bound", {}).get("can_turn_primary_positive") is not False:
             blockers.append("fee_decision_bound_mismatch")
         cash_result = workstreams["cash_series"]
         if cash_result.get("outcome") != "resolved_E1" or cash_result.get("remediated_net_geometric_return", 1.0) >= 0.0:

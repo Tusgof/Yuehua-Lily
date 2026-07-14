@@ -48,7 +48,8 @@ def fetch_bytes(url: str, *, timeout_seconds: int = 60) -> bytes:
 def html_text(payload: bytes) -> str:
     parser = _TextExtractor()
     parser.feed(payload.decode("utf-8", errors="ignore"))
-    return re.sub(r"\s+", " ", html.unescape(" ".join(parser.parts))).strip()
+    text = re.sub(r"\s+", " ", html.unescape(" ".join(parser.parts))).strip()
+    return re.sub(r"(?<=\d)\.\s+(?=\d)", ".", text)
 
 
 def acquire_treasury_cash(data_root: Path, *, acquired_at: str) -> dict[str, Any]:
@@ -185,11 +186,11 @@ RIC_FUNDS = {
     },
     "VGK": {
         "cik": "857489",
-        "names": ["Vanguard European Stock ETF", "Vanguard European ETF", "Vanguard European Stock Index Fund"],
+        "names": ["Vanguard FTSE Europe ETF", "Vanguard MSCI Europe ETF", "Vanguard European ETF", "European Stock ETF Shares"],
     },
     "VWO": {
         "cik": "857489",
-        "names": ["Vanguard Emerging Markets Stock ETF", "Vanguard Emerging Markets ETF", "Vanguard Emerging Markets Stock Index Fund"],
+        "names": ["Vanguard FTSE Emerging Markets ETF", "Vanguard MSCI Emerging Markets ETF", "Vanguard Emerging Markets ETF", "Emerging Markets ETF Shares"],
     },
     "EWJ": {
         "cik": "930667",
@@ -293,17 +294,69 @@ def _find_ric_fee_record(
 
 
 def _extract_ric_fee(text: str, names: list[str]) -> float | None:
-    for name in names:
-        for match in re.finditer(re.escape(name), text, flags=re.IGNORECASE):
-            section = text[match.start() : match.start() + 30_000]
-            fee = re.search(
-                r"Total Annual Fund Operating Expenses.{0,800}?([0-9]+(?:\.[0-9]+)?)%",
-                section,
-                flags=re.IGNORECASE,
-            )
-            if fee:
-                return float(fee.group(1))
-    return None
+    name_positions = sorted(
+        (match.start(), name)
+        for name in names
+        for match in re.finditer(re.escape(name), text, flags=re.IGNORECASE)
+    )
+    candidates: list[tuple[int, float]] = []
+    for fee in re.finditer(
+        r"Total Annual Fund Operating Expenses.{0,800}?([0-9]+(?:\.[0-9]+)?)%",
+        text,
+        flags=re.IGNORECASE,
+    ):
+        preceding = [position for position, _ in name_positions if position < fee.start()]
+        if not preceding:
+            continue
+        nearest = preceding[-1]
+        distance = fee.start() - nearest
+        section_prefix = text[nearest : fee.start()].lower()
+        if distance <= 15_000 and "fees and expenses" in section_prefix:
+            candidates.append((distance, float(fee.group(1))))
+    return min(candidates, default=(0, None), key=lambda item: item[0])[1]
+
+
+def reextract_cached_fee_history(data_root: Path) -> dict[str, Any]:
+    normalized_path = data_root / "normalized" / "official_fee_history_v1.json"
+    payload = load_json(normalized_path)
+    by_hash = {row["source_sha256"]: row for row in payload["records"]}
+    corrected: list[dict[str, Any]] = []
+    corrected_sources: list[dict[str, Any]] = []
+    for source in payload["source_hashes"]:
+        symbol = source["symbol"]
+        matches = list((data_root / "raw" / "sec_fee_history_v1" / symbol).glob(f"{source['year']}-*"))
+        selected = [path for path in matches if hashlib.sha256(path.read_bytes()).hexdigest() == source["sha256"]]
+        if len(selected) != 1:
+            raise ValueError(f"cached SEC container mismatch for {symbol} {source['year']}")
+        original = dict(by_hash[source["sha256"]])
+        original["symbol"] = symbol
+        if symbol in RIC_FUNDS:
+            fee_percent = _extract_ric_fee(html_text(selected[0].read_bytes()), RIC_FUNDS[symbol]["names"])
+            if fee_percent is None:
+                replacements: list[dict[str, Any]] = []
+                replacement = _find_ric_fee_record(
+                    symbol,
+                    RIC_FUNDS[symbol],
+                    int(source["year"]),
+                    data_root / "raw" / "sec_fee_history_v1",
+                    replacements,
+                )
+                if replacement is None or len(replacements) != 1:
+                    continue
+                corrected.append(replacement)
+                corrected_sources.extend(replacements)
+                continue
+            original["annual_fee_fraction"] = fee_percent / 100.0
+        corrected.append(original)
+        corrected_sources.append(source)
+    payload["records"] = sorted(corrected, key=lambda row: (row["symbol"], row["filing_date"]))
+    payload["source_hashes"] = corrected_sources
+    write_json(normalized_path, payload)
+    return {
+        "record_count": len(corrected),
+        "normalized_sha256": hashlib.sha256(normalized_path.read_bytes()).hexdigest(),
+        "coverage": fee_coverage(payload),
+    }
 
 
 def _acquire_trust_fee_records(raw_dir: Path, source_hashes: list[dict[str, Any]]) -> list[dict[str, Any]]:

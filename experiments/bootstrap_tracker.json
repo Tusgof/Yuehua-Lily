@@ -204,7 +204,7 @@
     {
       "id": "B4.1",
       "title": "L-1 data-quality remediation",
-      "status": "in_progress",
+      "status": "done",
       "depends_on": ["B4"],
       "required_artifacts": [
         {"path": "experiments/l_1_data_quality_remediation.json", "must": "locked_and_valid"},
@@ -214,7 +214,13 @@
         {"path": "research_log/003-lily-l1-data-quality-remediation.md", "must": "pass_research_log_audit"}
       ],
       "forbidden": ["validation data access", "credential or account access", "unregistered search", "E2 or edge claim", "paper or real order"],
-      "evidence": []
+      "evidence": [
+        "experiments/l_1_data_quality_remediation.json remains locked under gate l_1_data_quality_remediation_v1 with contract SHA-256 1fe4957f667bdf367d230048ac279fbdf9b4b2b109540dcdf5a54900e1c7cdb9; validation data from 2016-01-04 onward remained sealed_not_accessed.",
+        "reports/data_quality/l_1_data_quality_remediation.json records E1 digest 16cd526af634876135fc35b3b93a272442b9237f1d08f73b448db31e074966bf: corporate-action daily tolerance passes for six of eight symbols, 57 official fee records decision-bound the fee gap, and edge_claim remains none.",
+        "reports/data_quality/l_1_cash_remediation.json records cash digest 5bba2d3c8364ea52d1a54d33793178cd8f2a348cd93ed2f0e5a46d82b9b4cdda; lagged Treasury cash improves primary net CAGR by only 0.0820 percentage points per year and the result remains negative.",
+        "reports/feasibility/webull_th_capability.json verifies only general manual fractional capability from public material; candidate-ticker green-diamond status requires account observation and fractional OpenAPI is not documented.",
+        "research_log/003-lily-l1-data-quality-remediation.md passes the Thai six-section audit; no credential, account query, order preview, paper or real order, paid data, external message, E2 promotion, or deployment approval occurred."
+      ]
     }
   ]
 }

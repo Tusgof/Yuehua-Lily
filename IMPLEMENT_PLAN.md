@@ -131,6 +131,12 @@ Only after B3's hashes and validators pass may a separate session run the bounde
 
 The completed run must also write the audited Thai narrative `research_log/002-lily-l1-baseline.md`. It must state the scoped question, hypothesis, method, results, discussion and limitations, conclusion, and next research direction in language that can be understood without opening JSON first.
 
+### B4.1 — L-1 Data-Quality Remediation
+
+Without opening validation, reconcile corporate actions, acquire dated official fee evidence, replace zero cash with a lagged Treasury series, and classify Webull Thailand capability from public evidence. The completed order must retain E1, state every unresolved point-in-time or broker restriction, and write `research_log/003-lily-l1-data-quality-remediation.md`.
+
+Exit: cash is resolved at E1; fee uncertainty is either reconstructed or decision-bounded; corporate-action and broker gaps are either resolved or explicitly scope-restricted; no E2, edge, or deployment claim is allowed.
+
 ## 6. Acceptance Gate
 
 E2 requires all of the following:
@@ -169,7 +175,7 @@ If MinTRL validation cost is unaffordable or undefined against the benchmark nul
 
 ## 9. Broker And Credential Rule
 
-- Webull Thailand: preferred current-capital ETF candidate; fractional API capability remains unverified.
+- Webull Thailand: preferred current-capital ETF candidate; public material verifies general manual fractional trading, while candidate-ticker eligibility and fractional API capability remain unverified.
 - IBKR: micro-futures/reference API candidate; actual permissions remain unverified.
 - No shared Higanbana credentials or cost state.
 - No tracked credentials, account identifiers, or absolute local paths.
@@ -180,9 +186,9 @@ If MinTRL validation cost is unaffordable or undefined against the benchmark nul
 | Program/track | Status | Next gate |
 |:--|:--|:--|
 | Founding decisions | Complete | pushed founding pack |
-| P0–P4 | Not started | B0 bootstrap |
+| P0–P4 | Active after bootstrap | Maintain governance, reproducibility, statistics, data, and restore controls |
 | L-0 | Scope-restricted E0 feasibility complete | Broker capability remains unverified |
-| L-1 | Scope-restricted E1; B4 falsification complete, validation sealed | Resolve data blockers and verify validation funding capacity without opening returns |
+| L-1 | Scope-restricted E1; B4.1 remediation complete, validation sealed | Verify validation funding capacity without opening returns; retain point-in-time and broker restrictions |
 | L-2 | Proposed | L-1 evidence |
 | L-3 | Proposed | baseline infrastructure and preregistration |
 | L-4 | Proposed | universe/data integrity and preregistration |

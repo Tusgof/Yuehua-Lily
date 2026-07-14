@@ -155,6 +155,10 @@
         {
           "path": "reports/experiments/l_1_baseline_summary.json",
           "evidence_tier": "E1"
+        },
+        {
+          "path": "reports/data_quality/l_1_data_quality_remediation.json",
+          "evidence_tier": "E1"
         }
       ],
       "decision_log": [
@@ -172,6 +176,11 @@
           "date": "2026-07-15",
           "decision": "B4_not_falsified_but_not_validated_scope_restricted",
           "notes": "E1 falsification-window evidence funds MinTRL_falsify but does not meet the full two-regime falsification rule. Net performance, payoff shape, concentration, data provenance, cash, historical fees, and broker feasibility remain blocked. Validation stays sealed."
+        },
+        {
+          "date": "2026-07-15",
+          "decision": "B4_1_public_data_remediation_complete_scope_restricted",
+          "notes": "E1 remediation resolves the zero-cash assumption and decision-bounds historical fee uncertainty without turning primary net CAGR positive. Six of eight corporate-action reconciliations pass the locked daily tolerance; point-in-time revision provenance remains unavailable. Webull Thailand public material verifies manual fractional trading generally but not candidate-ticker eligibility or fractional OpenAPI. Validation remains sealed and no edge or deployment claim is made."
         }
       ]
     },

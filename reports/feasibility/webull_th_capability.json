@@ -1,0 +1,84 @@
+{
+  "candidate_tickers": [
+    "VTI",
+    "VGK",
+    "EWJ",
+    "IPAC",
+    "VWO",
+    "IEF",
+    "SCHP",
+    "GLDM",
+    "PDBC",
+    "VNQI"
+  ],
+  "classifications": {
+    "candidate_ticker_green_diamond": "requires_account_observation",
+    "manual_four_decimal_precision": "verified_public",
+    "manual_market_order_regular_hours_only": "verified_public",
+    "manual_mobile_fractional_general": "verified_public",
+    "openapi_fractional_or_notional": "not_documented",
+    "openapi_quantity_order": "verified_public",
+    "openapi_us_stock_etf_general": "verified_public"
+  },
+  "decision": "scope_restricted",
+  "edge_claim": "none",
+  "evidence_tier": "E1",
+  "facts": {
+    "manual_four_decimal_precision": true,
+    "manual_green_diamond_required": true,
+    "manual_market_order_only": true,
+    "manual_mobile_fractional_documented": true,
+    "openapi_fractional_or_notional_documented": false,
+    "openapi_quantity_order_documented": true,
+    "openapi_us_stock_etf_documented": true
+  },
+  "guardrails": {
+    "account_queried": false,
+    "credentials_used": false,
+    "order_previewed": false,
+    "orders_sent": false
+  },
+  "hypothesis_id": "L-1",
+  "order_id": "B4.1",
+  "produced_at": "2026-07-14T23:45:14Z",
+  "producing_git_commit": "4c8b0caee522d4acbf70aa1abe86d5023f79cde0",
+  "report_digest_sha256": "ee7c020c3dc550c9dcd76d63b7686114568912f00c2baf9529ab1468729b6443",
+  "schema_version": "lily_webull_th_capability_report_v1",
+  "sources": [
+    {
+      "bytes": 192562,
+      "sha256": "d220ce5a97f740af00188cbeb4359240d938f6b2492faea96485b7711949c053",
+      "source_id": "manual_fractional",
+      "url": "https://www.webull.co.th/help/faq/355-ฉันสามารถซื้อขายแบบเศษหุ้นได้หรือไม่"
+    },
+    {
+      "bytes": 165509,
+      "sha256": "7c81c7526ce69545a20b997b8cb33cf3ebe73f600df36d05a3115858cecc26b3",
+      "source_id": "openapi_landing",
+      "url": "https://www.webull.co.th/open-api"
+    },
+    {
+      "bytes": 87787,
+      "sha256": "e586c3aa18570385d8154b2929d5c17880c7191732b68f1803bf7767448034c7",
+      "source_id": "openapi_stock",
+      "url": "https://developer.webull.co.th/apis/docs/trade-api/stock"
+    },
+    {
+      "bytes": 27426,
+      "sha256": "b372a6a483ee87206f13ced15404923b6f9db96e94e8bf8a7b89f9d2e5be51ab",
+      "source_id": "openapi_overview",
+      "url": "https://developer.webull.co.th/apis/docs/trade-api/overview"
+    },
+    {
+      "bytes": 181064,
+      "sha256": "c763b6f2afd8be5e8d4a5801be8fbc08e8c6de3c0fa06ed2809c64d30f987cab",
+      "source_id": "pricing",
+      "url": "https://www.webull.co.th/pricing"
+    }
+  ],
+  "tier_blockers": [
+    "Public pages do not expose green-diamond eligibility by ticker.",
+    "OpenAPI documentation uses QTY/number-of-shares orders and does not explicitly document fractional or notional orders.",
+    "No account/app capability observation or broker confirmation was authorized."
+  ]
+}

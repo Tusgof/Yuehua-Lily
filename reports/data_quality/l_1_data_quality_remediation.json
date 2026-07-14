@@ -1,0 +1,325 @@
+{
+  "cash_remediation_digest": "5bba2d3c8364ea52d1a54d33793178cd8f2a348cd93ed2f0e5a46d82b9b4cdda",
+  "contract_sha256": "1fe4957f667bdf367d230048ac279fbdf9b4b2b109540dcdf5a54900e1c7cdb9",
+  "decision": "scope_restricted_public_remediation_complete",
+  "edge_claim": "none",
+  "environment": {
+    "platform": "windows",
+    "python_executable": "python.exe",
+    "python_implementation": "cpython",
+    "python_version": "3.14.3"
+  },
+  "evidence_tier": "E1",
+  "exact_next_safe_action": "Keep validation sealed. In the owner's Webull Thailand mobile app, record the green-diamond status for the ten current-capital candidates without placing or previewing an order, and request written broker confirmation of fractional OpenAPI support before any implementation study. Independent point-in-time corporate-action data remains an E2 prerequisite, not a reason to open validation now.",
+  "guardrails": {
+    "account_queried": false,
+    "credentials_used": false,
+    "external_message_sent": false,
+    "maximum_market_or_cash_date_accessed": "2015-12-31",
+    "orders_sent": false,
+    "paid_data_used": false,
+    "validation_data_opened": false
+  },
+  "hypothesis_id": "L-1",
+  "order_id": "B4.1",
+  "produced_at": "2026-07-14T23:45:14Z",
+  "producing_git_commit": "4c8b0caee522d4acbf70aa1abe86d5023f79cde0",
+  "report_digest_sha256": "16cd526af634876135fc35b3b93a272442b9237f1d08f73b448db31e074966bf",
+  "schema_version": "lily_l1_data_quality_remediation_report_v1",
+  "source_datasets": {
+    "official_fees": {
+      "sha256": "158e175d9eef50e412b42a7a8daf580e635b04a27f20bb3815883866016eadb0",
+      "storage_reference": "${LILY_DATA_ROOT}/normalized/official_fee_history_v1.json"
+    },
+    "treasury": {
+      "sha256": "5812720b3a86a49f001d340ec6b60ba083b06a7c51018dc130ad191b33ca6933",
+      "storage_reference": "${LILY_DATA_ROOT}/normalized/treasury_13week_cash_v1.json"
+    },
+    "webull_public": {
+      "sha256": "72d7b48fb537240126d521124f57492cb4bbd3c0a44ef758a8e35f3f30a613f3",
+      "storage_reference": "${LILY_DATA_ROOT}/normalized/webull_th_public_capability_v1.json"
+    }
+  },
+  "tier_blockers": [
+    "Corporate-action point-in-time revision provenance is unavailable and VGK/VWO exceed the locked daily reconciliation tolerance.",
+    "Six of eight historical fee series have at least one uncovered interval under the locked 18-month rule; DBC lacks a pre-2007 filing even though operations began in 2006.",
+    "Webull Thailand green-diamond eligibility for the candidate tickers requires an account/app observation.",
+    "Webull Thailand OpenAPI documentation does not explicitly support fractional quantity or notional orders.",
+    "No adversarial review or E2 promotion was attempted."
+  ],
+  "workstreams": {
+    "cash_series": {
+      "annual_net_geometric_return_change": 0.0008204397869229219,
+      "cash_report_path": "reports/data_quality/l_1_cash_remediation.json",
+      "decision": "The zero-cash blocker is removed for the opened window; the remediated result remains negative and E1.",
+      "original_net_geometric_return": -0.029756040515421023,
+      "outcome": "resolved_E1",
+      "remediated_net_geometric_return": -0.0289356007284981,
+      "source": "U.S. Treasury 13 WEEKS COUPON EQUIVALENT",
+      "source_coverage": {
+        "end": "2015-12-31",
+        "start": "2006-01-03"
+      },
+      "source_observations": 2504
+    },
+    "corporate_actions": {
+      "decision": "Arithmetic is reconciled within the cumulative tolerance for all symbols, but VGK and VWO fail the stricter daily tolerance and no point-in-time revision archive exists.",
+      "failed_symbols": [
+        "VGK",
+        "VWO"
+      ],
+      "locked_tolerance_status": "blocked",
+      "outcome": "partially_resolved_within_provider",
+      "passed_symbols": [
+        "VTI",
+        "EWJ",
+        "IEF",
+        "TIP",
+        "GLD",
+        "DBC"
+      ],
+      "rows": [
+        {
+          "dividend_event_count": 40,
+          "maximum_absolute_cumulative_relative_divergence": 0.00012092827164411624,
+          "maximum_absolute_daily_return_divergence": 0.0001094180742833295,
+          "maximum_session_date": "2015-12-31",
+          "normalized_record_count": 2495,
+          "pass": true,
+          "raw_container_sha256": "91a035f77a3a569b492196857d512645fd9f2b18c88f45c5988353c853182d83",
+          "split_event_count": 1,
+          "symbol": "VTI"
+        },
+        {
+          "dividend_event_count": 20,
+          "maximum_absolute_cumulative_relative_divergence": 0.0013758135628965107,
+          "maximum_absolute_daily_return_divergence": 0.0012186325932417308,
+          "maximum_session_date": "2015-12-31",
+          "normalized_record_count": 2495,
+          "pass": false,
+          "raw_container_sha256": "717ded164684d80e2c1e18270b878e74709acef023c5639bae5c21146192c7e9",
+          "split_event_count": 0,
+          "symbol": "VGK"
+        },
+        {
+          "dividend_event_count": 18,
+          "maximum_absolute_cumulative_relative_divergence": 0.000782558485430962,
+          "maximum_absolute_daily_return_divergence": 0.0003045785251383215,
+          "maximum_session_date": "2015-12-31",
+          "normalized_record_count": 2495,
+          "pass": true,
+          "raw_container_sha256": "cb4205ca67a379650f294fc8332d4514612ebcf9fc5c32d8f7b380833a708644",
+          "split_event_count": 0,
+          "symbol": "EWJ"
+        },
+        {
+          "dividend_event_count": 20,
+          "maximum_absolute_cumulative_relative_divergence": 0.0013655375776869816,
+          "maximum_absolute_daily_return_divergence": 0.0006036176332351317,
+          "maximum_session_date": "2015-12-31",
+          "normalized_record_count": 2495,
+          "pass": false,
+          "raw_container_sha256": "5e4601f472ce590075eec437ed3a433fb884f815c6e8c98f4f2d70d19f3792ee",
+          "split_event_count": 1,
+          "symbol": "VWO"
+        },
+        {
+          "dividend_event_count": 119,
+          "maximum_absolute_cumulative_relative_divergence": 0.00018926388454731935,
+          "maximum_absolute_daily_return_divergence": 4.8444769518263264e-05,
+          "maximum_session_date": "2015-12-31",
+          "normalized_record_count": 2495,
+          "pass": true,
+          "raw_container_sha256": "dd87922ce6d184b4f3716d1d924691ee52d4d5f3c356fe31a4fcff75486e92bb",
+          "split_event_count": 0,
+          "symbol": "IEF"
+        },
+        {
+          "dividend_event_count": 86,
+          "maximum_absolute_cumulative_relative_divergence": 0.00032158268031834414,
+          "maximum_absolute_daily_return_divergence": 0.0001051222460901613,
+          "maximum_session_date": "2015-12-31",
+          "normalized_record_count": 2495,
+          "pass": true,
+          "raw_container_sha256": "f2016b0fe17d02a89e453c7f65d246cd19c13fe1fb58dab008ebd8fbdd6feb4c",
+          "split_event_count": 0,
+          "symbol": "TIP"
+        },
+        {
+          "dividend_event_count": 0,
+          "maximum_absolute_cumulative_relative_divergence": 4.884981308350689e-15,
+          "maximum_absolute_daily_return_divergence": 3.3306690738754696e-16,
+          "maximum_session_date": "2015-12-31",
+          "normalized_record_count": 2495,
+          "pass": true,
+          "raw_container_sha256": "36adf8c2489b5e33f10bf34994e25672e12e1bcccb5f2d07ce970cd139e0f71e",
+          "split_event_count": 0,
+          "symbol": "GLD"
+        },
+        {
+          "dividend_event_count": 3,
+          "maximum_absolute_cumulative_relative_divergence": 0.0010012194783688422,
+          "maximum_absolute_daily_return_divergence": 0.0004394915730410176,
+          "maximum_session_date": "2015-12-31",
+          "normalized_record_count": 2494,
+          "pass": true,
+          "raw_container_sha256": "5c2659eff3b3a79329dea0c052acbf8969e3712d98cdad79c87ec584fefb135b",
+          "split_event_count": 0,
+          "symbol": "DBC"
+        }
+      ]
+    },
+    "historical_expense_ratios": {
+      "coverage": {
+        "rows": [
+          {
+            "first_filing_date": "2006-08-18",
+            "full_resolution": false,
+            "gaps_over_18_months": [
+              {
+                "from": "2007-04-27",
+                "months": 36.238193018480494,
+                "to": "2010-05-04"
+              }
+            ],
+            "last_filing_date": "2015-04-28",
+            "observed_fee_range": [
+              0.0005,
+              0.0008
+            ],
+            "record_count": 8,
+            "symbol": "VTI"
+          },
+          {
+            "first_filing_date": "2006-09-07",
+            "full_resolution": false,
+            "gaps_over_18_months": [
+              {
+                "from": "2006-09-07",
+                "months": 41.790554414784395,
+                "to": "2010-03-02"
+              }
+            ],
+            "last_filing_date": "2015-02-26",
+            "observed_fee_range": [
+              0.0012,
+              0.0018
+            ],
+            "record_count": 7,
+            "symbol": "VGK"
+          },
+          {
+            "first_filing_date": "2006-03-08",
+            "full_resolution": false,
+            "gaps_over_18_months": [
+              {
+                "from": "2006-03-08",
+                "months": 57.921971252566735,
+                "to": "2011-01-04"
+              },
+              {
+                "from": "2012-01-03",
+                "months": 23.88501026694045,
+                "to": "2013-12-30"
+              }
+            ],
+            "last_filing_date": "2015-12-31",
+            "observed_fee_range": [
+              0.0048,
+              0.0059
+            ],
+            "record_count": 6,
+            "symbol": "EWJ"
+          },
+          {
+            "first_filing_date": "2006-09-07",
+            "full_resolution": false,
+            "gaps_over_18_months": [
+              {
+                "from": "2006-09-07",
+                "months": 41.790554414784395,
+                "to": "2010-03-02"
+              }
+            ],
+            "last_filing_date": "2015-02-26",
+            "observed_fee_range": [
+              0.0015,
+              0.0027
+            ],
+            "record_count": 7,
+            "symbol": "VWO"
+          },
+          {
+            "first_filing_date": "2011-07-01",
+            "full_resolution": false,
+            "gaps_over_18_months": [],
+            "last_filing_date": "2015-07-01",
+            "observed_fee_range": [
+              0.0015,
+              0.0015
+            ],
+            "record_count": 5,
+            "symbol": "IEF"
+          },
+          {
+            "first_filing_date": "2011-08-04",
+            "full_resolution": false,
+            "gaps_over_18_months": [],
+            "last_filing_date": "2015-03-02",
+            "observed_fee_range": [
+              0.002,
+              0.0025
+            ],
+            "record_count": 5,
+            "symbol": "TIP"
+          },
+          {
+            "first_filing_date": "2006-11-30",
+            "full_resolution": true,
+            "gaps_over_18_months": [],
+            "last_filing_date": "2015-11-24",
+            "observed_fee_range": [
+              0.004,
+              0.004
+            ],
+            "record_count": 10,
+            "symbol": "GLD"
+          },
+          {
+            "first_filing_date": "2007-03-27",
+            "full_resolution": false,
+            "gaps_over_18_months": [],
+            "last_filing_date": "2015-03-02",
+            "observed_fee_range": [
+              0.0075,
+              0.0085
+            ],
+            "record_count": 9,
+            "symbol": "DBC"
+          }
+        ],
+        "status": "partially_resolved"
+      },
+      "decision": "Official dated fees replace unsupported current-only assumptions as evidence, but gaps over 18 months remain. Even a full credit of all booked ETF expense drag leaves the cash-remediated primary CAGR negative.",
+      "decision_bound": {
+        "annualized_full_expense_credit": 0.002261338983095662,
+        "booked_expense_return_units": 0.020317600185543773,
+        "can_turn_primary_positive": false,
+        "cash_remediated_net_geometric_return": -0.0289356007284981,
+        "interpretation": "decision_bounded_not_exact_path_reconstruction",
+        "method": "Optimistic additive bound: return 100% of all B4 booked ETF expense drag, annualized over the opened observations, on top of the cash-remediated CAGR.",
+        "optimistic_net_geometric_return_after_full_credit": -0.02667426174540244
+      },
+      "official_record_count": 57,
+      "outcome": "partially_resolved_decision_bounded"
+    },
+    "webull_thailand": {
+      "candidate_ticker_green_diamond": "requires_account_observation",
+      "decision": "Manual fractional trading exists generally in Thailand, but exact candidate eligibility and fractional OpenAPI orders cannot be inferred from public documentation.",
+      "manual_fractional_general": "verified_public",
+      "openapi_fractional": "not_documented",
+      "outcome": "public_capability_partially_resolved_account_scope_restricted",
+      "report_path": "reports/feasibility/webull_th_capability.json"
+    }
+  }
+}

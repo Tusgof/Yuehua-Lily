@@ -419,6 +419,32 @@ class BootstrapTrackerValidatorTests(unittest.TestCase):
         self.assertTrue(checked)
         self.assertFalse(unverified)
 
+    def test_B41_data_quality_markdown_requires_machine_digest(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            report_dir = root / "reports" / "data_quality"
+            report_dir.mkdir(parents=True)
+            (report_dir / "l_1_data_quality_remediation.json").write_text(
+                json.dumps({"producing_git_commit": "a" * 40, "report_digest_sha256": "b" * 64}),
+                encoding="utf-8",
+            )
+            markdown = report_dir / "l_1_data_quality_remediation.md"
+            markdown.write_text("E1 requires_account_observation not_documented\n", encoding="utf-8")
+            blockers, checked, unverified = self.validator._validate_done_artifact(
+                "B4.1",
+                "reports/data_quality/l_1_data_quality_remediation.md",
+                "match_data_quality_machine_report",
+                project_root=root,
+                verify_runtime=False,
+                runtime_cache={},
+            )
+        self.assertFalse(checked)
+        self.assertFalse(unverified)
+        self.assertIn(
+            f"B4.1:l1_data_quality_markdown_missing_machine_value:{'b' * 64}",
+            blockers,
+        )
+
 
 def _tracker_with_artifact(path: str, must: str) -> dict[str, object]:
     return {

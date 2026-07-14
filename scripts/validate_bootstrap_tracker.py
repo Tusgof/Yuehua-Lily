@@ -282,6 +282,22 @@ def _validate_done_artifact(
             verify_runtime=verify_runtime,
             runtime_cache=runtime_cache,
         )
+    if must == "pass_data_quality_remediation_validator":
+        return _validate_l1_data_quality_runtime(
+            target,
+            order_id,
+            artifact_path,
+            project_root=project_root,
+            verify_runtime=verify_runtime,
+            runtime_cache=runtime_cache,
+        )
+    if must == "match_data_quality_machine_report":
+        return _validate_l1_data_quality_markdown(
+            target,
+            order_id,
+            artifact_path,
+            project_root=project_root,
+        )
     if must == "pass_summary_validator":
         return _validate_l1_summary_runtime(
             target,
@@ -311,6 +327,62 @@ def _validate_done_artifact(
         blockers = _scan_active_artifacts(project_root)
         return ([f"{order_id}:{item}" for item in blockers], not blockers, False)
     return [f"{order_id}:unsupported_done_rule:{must}"], False, False
+
+
+def _validate_l1_data_quality_runtime(
+    target: Path,
+    order_id: str,
+    artifact_path: str,
+    *,
+    project_root: Path,
+    verify_runtime: bool,
+    runtime_cache: dict[str, bool],
+) -> tuple[list[str], bool, bool]:
+    if not target.is_file():
+        return [f"{order_id}:missing_artifact:{artifact_path}"], False, False
+    if not verify_runtime:
+        return [], False, True
+    if "l1_data_quality" not in runtime_cache:
+        completed = subprocess.run(
+            [sys.executable, "scripts/validate_l_1_data_quality_report.py"],
+            cwd=project_root,
+            text=True,
+            capture_output=True,
+            check=False,
+        )
+        runtime_cache["l1_data_quality"] = completed.returncode == 0
+    passed = runtime_cache["l1_data_quality"]
+    return ([] if passed else [f"{order_id}:l1_data_quality_validator_failed"], passed, False)
+
+
+def _validate_l1_data_quality_markdown(
+    target: Path,
+    order_id: str,
+    artifact_path: str,
+    *,
+    project_root: Path,
+) -> tuple[list[str], bool, bool]:
+    if not target.is_file():
+        return [f"{order_id}:missing_artifact:{artifact_path}"], False, False
+    try:
+        payload = json.loads(
+            (project_root / "reports" / "data_quality" / "l_1_data_quality_remediation.json").read_text(
+                encoding="utf-8"
+            )
+        )
+        markdown = target.read_text(encoding="utf-8")
+    except (FileNotFoundError, json.JSONDecodeError) as exc:
+        return [f"{order_id}:l1_data_quality_report_pair_unreadable:{exc.__class__.__name__}"], False, False
+    required = (
+        str(payload.get("producing_git_commit", "")),
+        str(payload.get("report_digest_sha256", "")),
+        "E1",
+        "requires_account_observation",
+        "not_documented",
+    )
+    missing = [value for value in required if not value or value not in markdown]
+    blockers = [f"{order_id}:l1_data_quality_markdown_missing_machine_value:{value}" for value in missing]
+    return blockers, not blockers, False
 
 
 def _validate_l1_summary_runtime(

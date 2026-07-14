@@ -12,7 +12,13 @@ if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
 from lib.environment import require_configured_path
-from lib.remediation import acquire_sec_fee_history, acquire_treasury_cash, fetch_bytes, html_text
+from lib.remediation import (
+    acquire_sec_fee_history,
+    acquire_treasury_cash,
+    fetch_bytes,
+    html_text,
+    reextract_cached_fee_history,
+)
 from lib.io import write_json
 from lib.provenance import payload_sha256
 
@@ -29,8 +35,12 @@ WEBULL_SOURCES = [
 def main() -> int:
     parser = argparse.ArgumentParser(description="Acquire the locked B4.1 public remediation sources.")
     parser.add_argument("--data-root", type=Path)
+    parser.add_argument("--reextract-fees-only", action="store_true")
     args = parser.parse_args()
     data_root = args.data_root.resolve() if args.data_root else require_configured_path("LILY_DATA_ROOT")
+    if args.reextract_fees_only:
+        print(json.dumps(reextract_cached_fee_history(data_root), ensure_ascii=False, indent=2, sort_keys=True))
+        return 0
     acquired_at = datetime.now(UTC).replace(microsecond=0).isoformat().replace("+00:00", "Z")
     treasury = acquire_treasury_cash(data_root, acquired_at=acquired_at)
     fees = acquire_sec_fee_history(data_root, acquired_at=acquired_at)

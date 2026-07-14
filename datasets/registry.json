@@ -100,6 +100,179 @@
         "The dataset cannot prove what values a user would have received from the provider at historical decision time.",
         "Implementable PnL claims remain blocked."
       ]
+    },
+    {
+      "dataset_id": "l1.treasury.13week.raw.v1",
+      "hypothesis_ids": ["L-1"],
+      "layer": "raw",
+      "status": "available",
+      "storage_reference": "${LILY_DATA_ROOT}/raw/treasury_13week_v1",
+      "provider": "U.S. Department of the Treasury",
+      "provider_schema_version": "daily_treasury_bill_rates_csv_observed_2026-07-15",
+      "license": "U.S. government public data",
+      "timezone": "America/New_York",
+      "coverage": {"start": "2006-01-03", "end": "2015-12-31", "field": "13 WEEKS COUPON EQUIVALENT"},
+      "point_in_time_status": "limited",
+      "survivorship_status": "not_applicable",
+      "hash_policy": "redownloadable_free_daily",
+      "hashes": {
+        "container_sha256": "4617525ad0ad4e72fe319bb632954b187ff8dcfcf656d04291922ed6dfd41b8e",
+        "request_specification_sha256": "fb9c8d54f14adec5ffb10fae73c517d692942003c14deb797efe9443e0b57b0a"
+      },
+      "parent_dataset_ids": [],
+      "acquisition": {
+        "network_used": true,
+        "paid_amount_usd": 0,
+        "acquired_at": "2026-07-14T23:14:55Z",
+        "key_provenance_label": "public_no_key",
+        "request_specification": "Official annual CSV containers for 2006 through 2015; 13-week coupon-equivalent field only"
+      },
+      "limitations": ["The public download is not an ALFRED-style vintage archive; B4.1 applies each observation only from the next NYSE session."]
+    },
+    {
+      "dataset_id": "l1.treasury.13week.normalized.v1",
+      "hypothesis_ids": ["L-1"],
+      "layer": "normalized",
+      "status": "available",
+      "storage_reference": "${LILY_DATA_ROOT}/normalized/treasury_13week_cash_v1.json",
+      "provider": "Lily normalization of U.S. Treasury daily bill rates",
+      "provider_schema_version": "lily_treasury_13week_cash_v1",
+      "license": "U.S. government public data",
+      "timezone": "America/New_York",
+      "coverage": {"start": "2006-01-03", "end": "2015-12-31", "observations": 2504},
+      "point_in_time_status": "limited",
+      "survivorship_status": "not_applicable",
+      "hash_policy": "hard_to_reproduce",
+      "hashes": {
+        "source_container_sha256": "4617525ad0ad4e72fe319bb632954b187ff8dcfcf656d04291922ed6dfd41b8e",
+        "normalized_output_sha256": "5812720b3a86a49f001d340ec6b60ba083b06a7c51018dc130ad191b33ca6933",
+        "specification_sha256": "fb9c8d54f14adec5ffb10fae73c517d692942003c14deb797efe9443e0b57b0a"
+      },
+      "parent_dataset_ids": ["l1.treasury.13week.raw.v1"],
+      "acquisition": {
+        "network_used": true,
+        "paid_amount_usd": 0,
+        "acquired_at": "2026-07-14T23:14:55Z",
+        "key_provenance_label": "public_no_key",
+        "request_specification": "Parse official yield observations; lag to next NYSE session; annual yield compounded over calendar days divided by 365"
+      },
+      "limitations": ["Yield carry across non-publication days is explicit; this is a cash proxy rather than a tradable T-bill total-return index."]
+    },
+    {
+      "dataset_id": "l1.official_fees.raw.v1",
+      "hypothesis_ids": ["L-1"],
+      "layer": "raw",
+      "status": "scope_restricted",
+      "storage_reference": "${LILY_DATA_ROOT}/raw/sec_fee_history_v1",
+      "provider": "U.S. SEC EDGAR",
+      "provider_schema_version": "EDGAR_497_497K_10K_observed_2026-07-15",
+      "license": "Public regulatory filings",
+      "timezone": "America/New_York",
+      "coverage": {"start": "2006-03-08", "end": "2015-12-31", "selected_filings": 57},
+      "point_in_time_status": "verified",
+      "survivorship_status": "limited",
+      "hash_policy": "hard_to_reproduce",
+      "hashes": {
+        "source_container_sha256": "448a468fa1166e1edb7589a34084c0f6e6b520727b1d2016c90f6cf01ee5296b",
+        "normalized_output_sha256": "158e175d9eef50e412b42a7a8daf580e635b04a27f20bb3815883866016eadb0",
+        "specification_sha256": "7d2797870a5b61b04b6ed6726ba376022ed07ec012491786f0abb11fc5d60ec5"
+      },
+      "parent_dataset_ids": [],
+      "acquisition": {
+        "network_used": true,
+        "paid_amount_usd": 0,
+        "acquired_at": "2026-07-14T23:14:55Z",
+        "key_provenance_label": "public_no_key",
+        "request_specification": "SEC full-text search and filing archives for dated total operating expenses, ordinary-expense caps, and management fees through 2015"
+      },
+      "limitations": ["The selected filings do not cover every ETF at intervals of 18 months or less; historical name changes and multi-fund prospectuses are explicit extraction risks."]
+    },
+    {
+      "dataset_id": "l1.official_fees.normalized.v1",
+      "hypothesis_ids": ["L-1"],
+      "layer": "normalized",
+      "status": "scope_restricted",
+      "storage_reference": "${LILY_DATA_ROOT}/normalized/official_fee_history_v1.json",
+      "provider": "Lily extraction from SEC EDGAR filings",
+      "provider_schema_version": "lily_official_fee_history_v1",
+      "license": "Derived from public regulatory filings",
+      "timezone": "America/New_York",
+      "coverage": {"start": "2006-03-08", "end": "2015-12-31", "records": 57},
+      "point_in_time_status": "verified",
+      "survivorship_status": "limited",
+      "hash_policy": "hard_to_reproduce",
+      "hashes": {
+        "source_container_sha256": "448a468fa1166e1edb7589a34084c0f6e6b520727b1d2016c90f6cf01ee5296b",
+        "normalized_output_sha256": "158e175d9eef50e412b42a7a8daf580e635b04a27f20bb3815883866016eadb0",
+        "specification_sha256": "7d2797870a5b61b04b6ed6726ba376022ed07ec012491786f0abb11fc5d60ec5"
+      },
+      "parent_dataset_ids": ["l1.official_fees.raw.v1"],
+      "acquisition": {
+        "network_used": true,
+        "paid_amount_usd": 0,
+        "acquired_at": "2026-07-14T23:14:55Z",
+        "key_provenance_label": "public_no_key",
+        "request_specification": "Extract symbol, filing date, annual fee fraction, fee kind, form, URL, and SHA-256 without performance-driven selection"
+      },
+      "limitations": ["Only GLD satisfies the locked full-resolution rule; other series remain decision-bounded rather than exact then-current daily fee paths."]
+    },
+    {
+      "dataset_id": "l1.webull_th_public.raw.v1",
+      "hypothesis_ids": ["L-1"],
+      "layer": "raw",
+      "status": "scope_restricted",
+      "storage_reference": "${LILY_DATA_ROOT}/raw/webull_th_public_v1",
+      "provider": "Webull Securities Thailand and Webull Thailand Developer",
+      "provider_schema_version": "public_HTML_observed_2026-07-15",
+      "license": "Public broker documentation; Webull terms apply",
+      "timezone": "Asia/Bangkok",
+      "coverage": {"observed_date": "2026-07-15", "source_pages": 5},
+      "point_in_time_status": "limited",
+      "survivorship_status": "not_applicable",
+      "hash_policy": "hard_to_reproduce",
+      "hashes": {
+        "source_container_sha256": "292b4d9f6f74adb12780939444e76930c02fb40766df1b293ea273e56501214f",
+        "normalized_output_sha256": "72d7b48fb537240126d521124f57492cb4bbd3c0a44ef758a8e35f3f30a613f3",
+        "specification_sha256": "b0bf7694d3c19df9bd55341b192051ea2f17dd22257109a267baba007f3de41c"
+      },
+      "parent_dataset_ids": [],
+      "acquisition": {
+        "network_used": true,
+        "paid_amount_usd": 0,
+        "acquired_at": "2026-07-14T23:14:55Z",
+        "key_provenance_label": "public_no_key",
+        "request_specification": "Thailand fractional FAQ, OpenAPI landing, stock-order docs, feature matrix, and pricing page; no account access"
+      },
+      "limitations": ["Public pages do not expose green-diamond eligibility by ticker and do not explicitly document fractional OpenAPI orders."]
+    },
+    {
+      "dataset_id": "l1.webull_th_public.normalized.v1",
+      "hypothesis_ids": ["L-1"],
+      "layer": "normalized",
+      "status": "scope_restricted",
+      "storage_reference": "${LILY_DATA_ROOT}/normalized/webull_th_public_capability_v1.json",
+      "provider": "Lily classification of Webull Thailand public documentation",
+      "provider_schema_version": "lily_webull_th_public_capability_v1",
+      "license": "Derived from public broker documentation; Webull terms apply",
+      "timezone": "Asia/Bangkok",
+      "coverage": {"observed_date": "2026-07-15", "source_pages": 5},
+      "point_in_time_status": "limited",
+      "survivorship_status": "not_applicable",
+      "hash_policy": "hard_to_reproduce",
+      "hashes": {
+        "source_container_sha256": "292b4d9f6f74adb12780939444e76930c02fb40766df1b293ea273e56501214f",
+        "normalized_output_sha256": "72d7b48fb537240126d521124f57492cb4bbd3c0a44ef758a8e35f3f30a613f3",
+        "specification_sha256": "b0bf7694d3c19df9bd55341b192051ea2f17dd22257109a267baba007f3de41c"
+      },
+      "parent_dataset_ids": ["l1.webull_th_public.raw.v1"],
+      "acquisition": {
+        "network_used": true,
+        "paid_amount_usd": 0,
+        "acquired_at": "2026-07-14T23:14:55Z",
+        "key_provenance_label": "public_no_key",
+        "request_specification": "Classify only explicit public statements; never infer Thailand fractional API or per-ticker eligibility"
+      },
+      "limitations": ["Manual fractional capability is verified generally; exact ticker and OpenAPI fractional capability remain account/broker-confirmation gaps."]
     }
   ]
 }
