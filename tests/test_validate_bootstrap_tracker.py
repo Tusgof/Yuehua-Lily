@@ -212,6 +212,42 @@ class BootstrapTrackerValidatorTests(unittest.TestCase):
         self.assertFalse(unverified)
         self.assertIn("B0.5:restore_check_not_pass:remote_clone", blockers)
 
+    def test_B1_policy_claim_requires_ETF_and_futures_controls(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            (root / "policy.md").write_text("inception and delisting", encoding="utf-8")
+            blockers, checked, unverified = self.validator._validate_done_artifact(
+                "B1",
+                "policy.md",
+                "cover_etf_and_futures_traps",
+                project_root=root,
+                verify_runtime=False,
+                runtime_cache={},
+            )
+        self.assertFalse(checked)
+        self.assertFalse(unverified)
+        self.assertIn("B1:data_integrity_policy_missing:continuous futures", blockers)
+
+    def test_B1_fixture_claim_requires_roll_fixture(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            data = root / "fixtures" / "data"
+            data.mkdir(parents=True)
+            blockers, checked, unverified = self.validator._validate_done_artifact(
+                "B1",
+                "fixtures",
+                "contain_synthetic_data_fixtures",
+                project_root=root,
+                verify_runtime=False,
+                runtime_cache={},
+            )
+        self.assertFalse(checked)
+        self.assertFalse(unverified)
+        self.assertIn(
+            "B1:synthetic_data_fixture_missing:provider_continuous_futures.json",
+            blockers,
+        )
+
 
 def _tracker_with_artifact(path: str, must: str) -> dict[str, object]:
     return {

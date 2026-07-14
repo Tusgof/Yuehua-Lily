@@ -1,0 +1,45 @@
+{
+  "schema_version": "lily_provider_futures_contracts_v1",
+  "boundary_kind": "futures_contracts",
+  "provider": "synthetic",
+  "acquired_at": "2026-07-15T00:00:00Z",
+  "fixture_only": true,
+  "network_used": false,
+  "paid_data_used": false,
+  "records": [
+    {
+      "contract_id": "SYN-MICRO-202403",
+      "root_symbol": "SYN-MICRO",
+      "provider_symbol": "SYNH24",
+      "exchange": "SYNTHETIC",
+      "currency": "USD",
+      "contract_multiplier": 5.0,
+      "tick_size": 0.25,
+      "tick_value": 1.25,
+      "first_trade_date": "2023-03-20",
+      "last_trade_date": "2024-03-15",
+      "first_notice_date": null,
+      "expiry_date": "2024-03-15",
+      "delivery_type": "cash",
+      "active": false,
+      "provider_revision": "synthetic-v1"
+    },
+    {
+      "contract_id": "SYN-MICRO-202406",
+      "root_symbol": "SYN-MICRO",
+      "provider_symbol": "SYNM24",
+      "exchange": "SYNTHETIC",
+      "currency": "USD",
+      "contract_multiplier": 5.0,
+      "tick_size": 0.25,
+      "tick_value": 1.25,
+      "first_trade_date": "2023-06-19",
+      "last_trade_date": "2024-06-21",
+      "first_notice_date": null,
+      "expiry_date": "2024-06-21",
+      "delivery_type": "cash",
+      "active": false,
+      "provider_revision": "synthetic-v1"
+    }
+  ]
+}

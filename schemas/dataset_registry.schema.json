@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/Tusgof/Yuehua-Lily/schemas/dataset_registry.schema.json",
+  "title": "Lily dataset registry",
+  "type": "object",
+  "required": ["schema_version", "updated", "storage_root_variable", "bootstrap_network_used", "bootstrap_paid_data_spend_usd", "boundaries", "hash_policies", "datasets"],
+  "properties": {
+    "schema_version": {"const": "lily_dataset_registry_v1"},
+    "updated": {"type": "string", "format": "date"},
+    "storage_root_variable": {"const": "LILY_DATA_ROOT"},
+    "bootstrap_network_used": {"const": false},
+    "bootstrap_paid_data_spend_usd": {"const": 0},
+    "boundaries": {
+      "type": "object",
+      "required": ["raw", "normalized", "derived"]
+    },
+    "hash_policies": {
+      "type": "object",
+      "required": ["hard_to_reproduce", "redownloadable_free_daily", "derived"]
+    },
+    "datasets": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["dataset_id", "hypothesis_ids", "layer", "status", "storage_reference", "provider", "provider_schema_version", "license", "timezone", "coverage", "point_in_time_status", "survivorship_status", "hash_policy", "hashes", "parent_dataset_ids", "acquisition", "limitations"],
+        "properties": {
+          "dataset_id": {"type": "string", "pattern": "^[a-z0-9][a-z0-9._-]+$"},
+          "hypothesis_ids": {"type": "array", "items": {"type": "string"}},
+          "layer": {"enum": ["raw", "normalized", "derived"]},
+          "status": {"enum": ["planned", "available", "scope_restricted", "retired"]},
+          "storage_reference": {"type": "string"},
+          "provider": {"type": "string"},
+          "provider_schema_version": {"type": "string"},
+          "license": {"type": "string"},
+          "timezone": {"type": "string"},
+          "coverage": {"type": "object"},
+          "point_in_time_status": {"enum": ["verified", "limited", "not_applicable"]},
+          "survivorship_status": {"enum": ["verified", "limited", "not_applicable"]},
+          "hash_policy": {"enum": ["hard_to_reproduce", "redownloadable_free_daily", "derived"]},
+          "hashes": {"type": "object"},
+          "parent_dataset_ids": {"type": "array", "items": {"type": "string"}},
+          "acquisition": {
+            "type": "object",
+            "required": ["network_used", "paid_amount_usd", "acquired_at", "key_provenance_label", "request_specification"],
+            "properties": {
+              "network_used": {"type": "boolean"},
+              "paid_amount_usd": {"type": "number", "minimum": 0},
+              "acquired_at": {"type": ["string", "null"], "format": "date-time"},
+              "key_provenance_label": {"type": "string"},
+              "request_specification": {"type": "string"}
+            }
+          },
+          "limitations": {"type": "array", "items": {"type": "string"}}
+        }
+      }
+    }
+  }
+}

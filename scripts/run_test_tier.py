@@ -11,6 +11,8 @@ TESTS_ROOT = PROJECT_ROOT / "tests"
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
+from lib.environment import configured_path
+
 
 def _root_test_suite() -> unittest.TestSuite:
     loader = unittest.TestLoader()
@@ -51,6 +53,13 @@ def run_tier(tier: str, *, verbosity: int = 1) -> bool:
     if tier == "hermetic":
         return _run_suite("hermetic", _root_test_suite(), verbosity)
     if tier == "state-audit":
+        data_root = configured_path("LILY_DATA_ROOT")
+        if data_root is None:
+            print("SKIP state-audit: missing LILY_DATA_ROOT")
+            return True
+        if not data_root.exists():
+            print("SKIP state-audit: LILY_DATA_ROOT does not exist")
+            return True
         suite = _state_audit_suite()
         if suite is None:
             print("SKIP state-audit: tests/state_audit is not present")

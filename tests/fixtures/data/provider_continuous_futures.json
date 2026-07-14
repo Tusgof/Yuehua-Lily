@@ -1,0 +1,44 @@
+{
+  "schema_version": "lily_provider_continuous_futures_v1",
+  "boundary_kind": "continuous_futures",
+  "provider": "synthetic",
+  "acquired_at": "2026-07-15T00:00:00Z",
+  "fixture_only": true,
+  "network_used": false,
+  "paid_data_used": false,
+  "series_id": "SYN-MICRO-CONTINUOUS-RATIO-V1",
+  "root_symbol": "SYN-MICRO",
+  "roll_rule": "earlier_of_volume_crossover_or_five_sessions_before_last_trade",
+  "adjustment_method": "ratio_back_adjusted",
+  "signal_use_only": true,
+  "pnl_source": "individual_contracts_and_roll_trades",
+  "records": [
+    {
+      "session_date": "2024-03-07",
+      "active_contract_id": "SYN-MICRO-202403",
+      "raw_close": 5000.0,
+      "adjusted_close": 4960.0,
+      "adjustment_factor": 0.992,
+      "roll_event": false,
+      "available_at": "2024-03-07T22:05:00Z"
+    },
+    {
+      "session_date": "2024-03-08",
+      "active_contract_id": "SYN-MICRO-202406",
+      "raw_close": 5045.0,
+      "adjusted_close": 5005.0,
+      "adjustment_factor": 0.9920713578,
+      "roll_event": true,
+      "available_at": "2024-03-08T22:05:00Z"
+    },
+    {
+      "session_date": "2024-03-11",
+      "active_contract_id": "SYN-MICRO-202406",
+      "raw_close": 5060.0,
+      "adjusted_close": 5020.0,
+      "adjustment_factor": 0.9920948617,
+      "roll_event": false,
+      "available_at": "2024-03-11T22:05:00Z"
+    }
+  ]
+}

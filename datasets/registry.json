@@ -1,0 +1,30 @@
+{
+  "schema_version": "lily_dataset_registry_v1",
+  "updated": "2026-07-15",
+  "storage_root_variable": "LILY_DATA_ROOT",
+  "bootstrap_network_used": false,
+  "bootstrap_paid_data_spend_usd": 0,
+  "boundaries": {
+    "raw": {
+      "mutability": "immutable",
+      "content": "provider-native containers and request metadata",
+      "parent_layer": null
+    },
+    "normalized": {
+      "mutability": "new_version_only",
+      "content": "canonical records retaining source identifiers, revisions, and availability timestamps",
+      "parent_layer": "raw"
+    },
+    "derived": {
+      "mutability": "rebuildable_new_version_only",
+      "content": "research tables, point-in-time memberships, continuous series, and later features",
+      "parent_layer": "normalized"
+    }
+  },
+  "hash_policies": {
+    "hard_to_reproduce": ["source_container_sha256", "normalized_output_sha256", "specification_sha256"],
+    "redownloadable_free_daily": ["container_sha256", "request_specification_sha256"],
+    "derived": ["artifact_sha256", "parent_dataset_ids", "producing_git_commit"]
+  },
+  "datasets": []
+}

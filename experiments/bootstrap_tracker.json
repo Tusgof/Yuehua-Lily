@@ -101,17 +101,24 @@
     {
       "id": "B1",
       "title": "Data layer design and fixtures",
-      "status": "not_started",
+      "status": "done",
       "depends_on": ["B0.1", "B0.2", "B0.3", "B0.4", "B0.5"],
       "required_artifacts": [
         {"path": "docs/DATA_ACQUISITION_DECISION_TREE.md", "must": "exist"},
         {"path": "docs/DATA_INTEGRITY_AND_SURVIVORSHIP_POLICY.md", "must": "cover_etf_and_futures_traps"},
+        {"path": "datasets/registry.json", "must": "exist"},
         {"path": "schemas", "must": "contain_provider_boundary_schemas"},
         {"path": "tests/fixtures", "must": "contain_synthetic_data_fixtures"},
+        {"path": "scripts/validate_data_layer.py", "must": "pass"},
         {"path": "scripts/run_test_tier.py", "must": "pass_all_available_tiers"}
       ],
       "forbidden": ["paid data", "strategy code", "real backtest", "silent survivorship compromise"],
-      "evidence": []
+      "evidence": [
+        "docs/DATA_ACQUISITION_DECISION_TREE.md and docs/DATA_INTEGRITY_AND_SURVIVORSHIP_POLICY.md define named-gap acquisition, raw/normalized/derived boundaries, dual/container hashes, provider drift, ETF survivorship/currency/corporate actions, and individual-contract versus continuous-futures roll controls.",
+        "datasets/registry.json records zero network acquisition and zero paid spend while defining versioned layer and hash policies; no real dataset is claimed.",
+        "Five provider-boundary schemas and five committed synthetic fixtures cover daily bars, active and delisted instruments, point-in-time membership, expired futures contracts, and an explicit continuous-series roll.",
+        "scripts/validate_data_layer.py passes with zero network and paid-data use; 60 hermetic tests pass and the state-audit tier skips loudly with missing LILY_DATA_ROOT when local state is absent."
+      ]
     },
     {
       "id": "B2",

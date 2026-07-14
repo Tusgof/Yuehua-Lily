@@ -1,0 +1,43 @@
+{
+  "schema_version": "lily_provider_instrument_master_v1",
+  "boundary_kind": "instrument_master",
+  "provider": "synthetic",
+  "acquired_at": "2026-07-15T00:00:00Z",
+  "fixture_only": true,
+  "network_used": false,
+  "paid_data_used": false,
+  "records": [
+    {
+      "instrument_id": "ETF-GLOBAL-ACTIVE",
+      "provider_symbol": "SYNGA",
+      "instrument_type": "ETF",
+      "name": "Synthetic Global Equity ETF",
+      "exchange": "SYNTHETIC",
+      "trading_currency": "USD",
+      "domicile": "US",
+      "exposure_region": "GLOBAL_EX_US",
+      "inception_date": "2012-01-03",
+      "first_available_date": "2012-01-03",
+      "delisting_date": null,
+      "active": true,
+      "distribution_treatment": "total_return_adjusted",
+      "provider_revision": "synthetic-v1"
+    },
+    {
+      "instrument_id": "ETF-REGION-DELISTED",
+      "provider_symbol": "SYNRD",
+      "instrument_type": "ETF",
+      "name": "Synthetic Closed Regional ETF",
+      "exchange": "SYNTHETIC",
+      "trading_currency": "USD",
+      "domicile": "US",
+      "exposure_region": "EMERGING_ASIA",
+      "inception_date": "2010-05-10",
+      "first_available_date": "2010-05-10",
+      "delisting_date": "2019-07-01",
+      "active": false,
+      "distribution_treatment": "total_return_adjusted",
+      "provider_revision": "synthetic-v1"
+    }
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/Tusgof/Yuehua-Lily/schemas/provider_universe_membership.schema.json",
+  "title": "Provider boundary: point-in-time universe membership",
+  "type": "object",
+  "required": ["schema_version", "boundary_kind", "provider", "acquired_at", "fixture_only", "network_used", "paid_data_used", "records"],
+  "properties": {
+    "schema_version": {"const": "lily_provider_universe_membership_v1"},
+    "boundary_kind": {"const": "universe_membership"},
+    "provider": {"type": "string"},
+    "acquired_at": {"type": "string", "format": "date-time"},
+    "fixture_only": {"type": "boolean"},
+    "network_used": {"type": "boolean"},
+    "paid_data_used": {"type": "boolean"},
+    "records": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["universe_id", "instrument_id", "effective_from", "effective_to", "membership_reason", "known_at", "provider_revision"],
+        "properties": {
+          "universe_id": {"type": "string"},
+          "instrument_id": {"type": "string"},
+          "effective_from": {"type": "string", "format": "date"},
+          "effective_to": {"type": ["string", "null"], "format": "date"},
+          "membership_reason": {"type": "string"},
+          "known_at": {"type": "string", "format": "date-time"},
+          "provider_revision": {"type": "string"}
+        }
+      }
+    }
+  }
+}

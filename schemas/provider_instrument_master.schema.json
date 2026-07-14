@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/Tusgof/Yuehua-Lily/schemas/provider_instrument_master.schema.json",
+  "title": "Provider boundary: instrument master",
+  "type": "object",
+  "required": ["schema_version", "boundary_kind", "provider", "acquired_at", "fixture_only", "network_used", "paid_data_used", "records"],
+  "properties": {
+    "schema_version": {"const": "lily_provider_instrument_master_v1"},
+    "boundary_kind": {"const": "instrument_master"},
+    "provider": {"type": "string"},
+    "acquired_at": {"type": "string", "format": "date-time"},
+    "fixture_only": {"type": "boolean"},
+    "network_used": {"type": "boolean"},
+    "paid_data_used": {"type": "boolean"},
+    "records": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["instrument_id", "provider_symbol", "instrument_type", "name", "exchange", "trading_currency", "domicile", "exposure_region", "inception_date", "first_available_date", "delisting_date", "active", "distribution_treatment", "provider_revision"],
+        "properties": {
+          "instrument_id": {"type": "string"},
+          "provider_symbol": {"type": "string"},
+          "instrument_type": {"enum": ["ETF", "FUTURE_CONTRACT"]},
+          "name": {"type": "string"},
+          "exchange": {"type": "string"},
+          "trading_currency": {"type": "string"},
+          "domicile": {"type": "string"},
+          "exposure_region": {"type": "string"},
+          "inception_date": {"type": "string", "format": "date"},
+          "first_available_date": {"type": "string", "format": "date"},
+          "delisting_date": {"type": ["string", "null"], "format": "date"},
+          "active": {"type": "boolean"},
+          "distribution_treatment": {"enum": ["not_adjusted", "split_adjusted", "total_return_adjusted", "not_applicable"]},
+          "provider_revision": {"type": "string"}
+        }
+      }
+    }
+  }
+}

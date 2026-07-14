@@ -1,0 +1,41 @@
+{
+  "schema_version": "lily_provider_daily_bars_v1",
+  "boundary_kind": "daily_bars",
+  "provider": "synthetic",
+  "acquired_at": "2026-07-15T00:00:00Z",
+  "fixture_only": true,
+  "network_used": false,
+  "paid_data_used": false,
+  "records": [
+    {
+      "instrument_id": "ETF-GLOBAL-ACTIVE",
+      "session_date": "2024-03-14",
+      "available_at": "2024-03-14T21:05:00Z",
+      "open": 100.0,
+      "high": 102.0,
+      "low": 99.5,
+      "close": 101.5,
+      "adjusted_close": 100.8,
+      "volume": 1200000,
+      "currency": "USD",
+      "adjustment_basis": "split_and_cash_distribution",
+      "provider_revision": "synthetic-v1",
+      "is_backfilled": false
+    },
+    {
+      "instrument_id": "ETF-REGION-DELISTED",
+      "session_date": "2019-06-28",
+      "available_at": "2019-06-28T21:05:00Z",
+      "open": 24.8,
+      "high": 25.1,
+      "low": 24.5,
+      "close": 24.7,
+      "adjusted_close": 23.9,
+      "volume": 180000,
+      "currency": "USD",
+      "adjustment_basis": "split_and_cash_distribution",
+      "provider_revision": "synthetic-v1",
+      "is_backfilled": false
+    }
+  ]
+}

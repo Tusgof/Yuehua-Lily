@@ -17,5 +17,7 @@ secrets/
 *.key
 
 data/
+!tests/fixtures/data/
+!tests/fixtures/data/*.json
 build/
 dist/

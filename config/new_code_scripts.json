@@ -7,6 +7,7 @@
   ],
   "scripts": [
     "scripts/audit_new_script_lib_usage.py",
+    "scripts/validate_data_layer.py",
     "scripts/validate_evidence_tiers.py",
     "scripts/validate_hypothesis_registry.py",
     "scripts/validate_locked_gates.py"

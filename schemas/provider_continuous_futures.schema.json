@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/Tusgof/Yuehua-Lily/schemas/provider_continuous_futures.schema.json",
+  "title": "Provider boundary: continuous futures provenance",
+  "type": "object",
+  "required": ["schema_version", "boundary_kind", "provider", "acquired_at", "fixture_only", "network_used", "paid_data_used", "series_id", "root_symbol", "roll_rule", "adjustment_method", "signal_use_only", "pnl_source", "records"],
+  "properties": {
+    "schema_version": {"const": "lily_provider_continuous_futures_v1"},
+    "boundary_kind": {"const": "continuous_futures"},
+    "provider": {"type": "string"},
+    "acquired_at": {"type": "string", "format": "date-time"},
+    "fixture_only": {"type": "boolean"},
+    "network_used": {"type": "boolean"},
+    "paid_data_used": {"type": "boolean"},
+    "series_id": {"type": "string"},
+    "root_symbol": {"type": "string"},
+    "roll_rule": {"type": "string"},
+    "adjustment_method": {"enum": ["none", "additive_back_adjusted", "ratio_back_adjusted", "panama"]},
+    "signal_use_only": {"const": true},
+    "pnl_source": {"const": "individual_contracts_and_roll_trades"},
+    "records": {
+      "type": "array",
+      "minItems": 2,
+      "items": {
+        "type": "object",
+        "required": ["session_date", "active_contract_id", "raw_close", "adjusted_close", "adjustment_factor", "roll_event", "available_at"],
+        "properties": {
+          "session_date": {"type": "string", "format": "date"},
+          "active_contract_id": {"type": "string"},
+          "raw_close": {"type": "number"},
+          "adjusted_close": {"type": "number"},
+          "adjustment_factor": {"type": "number"},
+          "roll_event": {"type": "boolean"},
+          "available_at": {"type": "string", "format": "date-time"}
+        }
+      }
+    }
+  }
+}

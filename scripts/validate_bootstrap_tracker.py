@@ -197,6 +197,13 @@ def _validate_done_artifact(
             return [], False, True
         passed = _run_hermetic_once(project_root, runtime_cache)
         return ([] if passed else [f"{order_id}:hermetic_tier_failed"], passed, False)
+    if must == "pass_all_available_tiers":
+        if not target.is_file():
+            return [f"{order_id}:missing_artifact:{artifact_path}"], False, False
+        if not verify_runtime:
+            return [], False, True
+        passed = _run_all_tiers_once(project_root, runtime_cache)
+        return ([] if passed else [f"{order_id}:all_test_tiers_failed"], passed, False)
     if must == "run_hermetic_on_push":
         return _validate_ci(target, order_id, artifact_path)
     if must == "pin_supported_python":
@@ -221,6 +228,12 @@ def _validate_done_artifact(
         return _validate_evidence_policy(target, order_id, artifact_path)
     if must == "record_successful_committed_artifact_restore":
         return _validate_restore_rehearsal(target, order_id, artifact_path)
+    if must == "cover_etf_and_futures_traps":
+        return _validate_data_integrity_policy(target, order_id, artifact_path)
+    if must == "contain_provider_boundary_schemas":
+        return _validate_provider_boundary_schemas(target, order_id, artifact_path)
+    if must == "contain_synthetic_data_fixtures":
+        return _validate_synthetic_data_fixtures(target, order_id, artifact_path)
     if must == "no_active_absolute_paths_or_credentials_excluding_immutable_backup_history":
         blockers = _scan_active_artifacts(project_root)
         return ([f"{order_id}:{item}" for item in blockers], not blockers, False)
@@ -238,6 +251,19 @@ def _run_hermetic_once(project_root: Path, cache: dict[str, bool]) -> bool:
         )
         cache["hermetic"] = completed.returncode == 0
     return cache["hermetic"]
+
+
+def _run_all_tiers_once(project_root: Path, cache: dict[str, bool]) -> bool:
+    if "all" not in cache:
+        completed = subprocess.run(
+            [sys.executable, "scripts/run_test_tier.py", "all", "--verbosity", "0"],
+            cwd=project_root,
+            text=True,
+            capture_output=True,
+            check=False,
+        )
+        cache["all"] = completed.returncode == 0
+    return cache["all"]
 
 
 def _validate_ci(target: Path, order_id: str, artifact_path: str) -> tuple[list[str], bool, bool]:
@@ -486,6 +512,73 @@ def _validate_restore_rehearsal(
         blockers.append(f"{order_id}:wiki_hash_verification_not_passed")
     if payload.get("temporary_clone_removed") is not True:
         blockers.append(f"{order_id}:temporary_clone_cleanup_not_recorded")
+    return blockers, not blockers, False
+
+
+def _validate_data_integrity_policy(
+    target: Path,
+    order_id: str,
+    artifact_path: str,
+) -> tuple[list[str], bool, bool]:
+    if not target.is_file():
+        return [f"{order_id}:missing_artifact:{artifact_path}"], False, False
+    text = target.read_text(encoding="utf-8").lower()
+    required = (
+        "inception",
+        "delisting",
+        "backfill",
+        "corporate action",
+        "point-in-time universe membership",
+        "currency",
+        "individual contracts",
+        "continuous futures",
+        "first-notice",
+        "roll selection and timing",
+        "adjusted price differences cannot be booked as pnl",
+        "dual integrity",
+        "scope_restricted",
+    )
+    blockers = [f"{order_id}:data_integrity_policy_missing:{item}" for item in required if item not in text]
+    return blockers, not blockers, False
+
+
+def _validate_provider_boundary_schemas(
+    target: Path,
+    order_id: str,
+    artifact_path: str,
+) -> tuple[list[str], bool, bool]:
+    if not target.is_dir():
+        return [f"{order_id}:missing_artifact:{artifact_path}"], False, False
+    required = {
+        "dataset_registry.schema.json",
+        "provider_continuous_futures.schema.json",
+        "provider_daily_bars.schema.json",
+        "provider_futures_contracts.schema.json",
+        "provider_instrument_master.schema.json",
+        "provider_universe_membership.schema.json",
+    }
+    missing = sorted(name for name in required if not (target / name).is_file())
+    blockers = [f"{order_id}:provider_boundary_schema_missing:{name}" for name in missing]
+    return blockers, not blockers, False
+
+
+def _validate_synthetic_data_fixtures(
+    target: Path,
+    order_id: str,
+    artifact_path: str,
+) -> tuple[list[str], bool, bool]:
+    data_root = target / "data"
+    required = {
+        "provider_continuous_futures.json",
+        "provider_daily_bars.json",
+        "provider_futures_contracts.json",
+        "provider_instrument_master.json",
+        "provider_universe_membership.json",
+    }
+    if not data_root.is_dir():
+        return [f"{order_id}:synthetic_data_fixture_directory_missing"], False, False
+    missing = sorted(name for name in required if not (data_root / name).is_file())
+    blockers = [f"{order_id}:synthetic_data_fixture_missing:{name}" for name in missing]
     return blockers, not blockers, False
 
 

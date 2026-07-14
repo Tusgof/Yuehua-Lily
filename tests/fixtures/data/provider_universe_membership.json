@@ -1,0 +1,29 @@
+{
+  "schema_version": "lily_provider_universe_membership_v1",
+  "boundary_kind": "universe_membership",
+  "provider": "synthetic",
+  "acquired_at": "2026-07-15T00:00:00Z",
+  "fixture_only": true,
+  "network_used": false,
+  "paid_data_used": false,
+  "records": [
+    {
+      "universe_id": "GLOBAL-ETF-RESEARCH",
+      "instrument_id": "ETF-REGION-DELISTED",
+      "effective_from": "2010-05-10",
+      "effective_to": "2019-07-01",
+      "membership_reason": "eligible_during_lifetime",
+      "known_at": "2010-05-09T21:00:00Z",
+      "provider_revision": "synthetic-v1"
+    },
+    {
+      "universe_id": "GLOBAL-ETF-RESEARCH",
+      "instrument_id": "ETF-GLOBAL-ACTIVE",
+      "effective_from": "2012-01-03",
+      "effective_to": null,
+      "membership_reason": "eligible_from_inception",
+      "known_at": "2012-01-02T21:00:00Z",
+      "provider_revision": "synthetic-v1"
+    }
+  ]
+}
