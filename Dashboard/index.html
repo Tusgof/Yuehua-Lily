@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="th">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>แดชบอร์ดระบบ Trend Following</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="masthead">
+        <img class="hero-mark" src="./assets/yuehua-logo.png" alt="" aria-hidden="true" />
+        <div>
+          <p class="eyebrow">Lily / แผนระยะยาว</p>
+          <h1>ระบบ Trend Following <span class="nowrap">0-100</span></h1>
+          <p class="lede">Multi-asset futures, multi-lookback t-stat, inverse volatility, risk weight, covariance-aware construction, target volatility และ staged live rollout.</p>
+        </div>
+        <div class="system-stamp">
+          <img src="./assets/yuehua-logo.png" alt="" />
+          <span>MONITOR</span>
+          <strong>รายสัปดาห์</strong>
+        </div>
+      </header>
+
+      <nav class="jump-bar" aria-label="ส่วนต่างๆ ของ Dashboard">
+        <a href="#roadmap">แผนงาน</a>
+        <a href="#architecture">Architecture</a>
+        <a href="#risk">Risk Engine</a>
+        <a href="#validation">Validation</a>
+        <a href="#weekly">Weekly Ops</a>
+        <a href="#data">ข้อมูล</a>
+      </nav>
+
+      <main>
+        <section class="status-strip" aria-label="สรุประบบ">
+          <div>
+            <span class="label">ความคืบหน้ารวม</span>
+            <output id="overallProgress">0%</output>
+          </div>
+          <div>
+            <span class="label">สถานะปัจจุบัน</span>
+            <output id="modeOutput">Research</output>
+          </div>
+          <div>
+            <span class="label">ด่านถัดไป</span>
+            <output id="nextGate">Trading plan</output>
+          </div>
+          <div>
+            <span class="label">Risk Target</span>
+            <output id="riskTargetOutput">10%</output>
+          </div>
+        </section>
+
+        <section id="roadmap" class="section-block roadmap-block">
+          <div class="section-title">
+            <p class="eyebrow">ลำดับการสร้างระบบ</p>
+            <h2>แผนงาน 0-100</h2>
+          </div>
+          <div id="roadmapList" class="roadmap-list"></div>
+        </section>
+
+        <section id="architecture" class="section-block architecture-block">
+          <div class="section-title">
+            <p class="eyebrow">แกนคิดของระบบ</p>
+            <h2>Signal -> Risk -> Portfolio -> Execution</h2>
+          </div>
+          <div class="architecture-layout">
+            <div class="flow-map" id="flowMap" aria-label="แผนภาพ Architecture แบบโต้ตอบ"></div>
+            <aside class="detail-panel" aria-live="polite">
+              <p class="eyebrow">Layer ที่เลือก</p>
+              <h3 id="layerTitle">Signal Layer</h3>
+              <p id="layerBody">เลือก layer เพื่อดูบทบาทในการทำงานของระบบ</p>
+              <ul id="layerChecks"></ul>
+            </aside>
+          </div>
+        </section>
+
+        <section id="risk" class="section-block risk-block">
+          <div class="section-title">
+            <p class="eyebrow">Portfolio Construction</p>
+            <h2>Risk Engine</h2>
+          </div>
+          <div class="risk-layout">
+            <div class="formula-board">
+              <span>ตำแหน่งก่อนปรับพอร์ต</span>
+              <strong>signal x risk weight / volatility</strong>
+              <span>จากนั้นปรับด้วย correlation-aware scaling + portfolio target volatility</span>
+            </div>
+            <div class="controls-panel">
+              <label>
+                Target volatility
+                <input id="riskTargetInput" type="number" value="10" min="1" max="40" step="0.5" />
+              </label>
+              <label>
+                จำนวน Universe
+                <input id="universeInput" type="number" value="52" min="1" max="200" step="1" />
+              </label>
+              <label>
+                รอบ Rebalance
+                <select id="rebalanceInput">
+                  <option value="Weekly">รายสัปดาห์ (Weekly)</option>
+                  <option value="Daily with trade floor">รายวัน + trade floor</option>
+                  <option value="Monthly">รายเดือน (Monthly)</option>
+                </select>
+              </label>
+              <label>
+                สถานะ Deployment
+                <select id="modeInput">
+                  <option value="Research">Research</option>
+                  <option value="Backtest">Backtest</option>
+                  <option value="Paper">Paper Trading</option>
+                  <option value="Limited live">Limited Live</option>
+                  <option value="Production monitor">Production Monitor</option>
+                </select>
+              </label>
+            </div>
+          </div>
+        </section>
+
+        <section id="validation" class="section-block validation-block">
+          <div class="section-title">
+            <p class="eyebrow">ด่านผ่านก่อนใช้งานจริง</p>
+            <h2>Validation Board</h2>
+          </div>
+          <div id="gateGrid" class="gate-grid"></div>
+        </section>
+
+        <section id="weekly" class="section-block weekly-block">
+          <div class="section-title">
+            <p class="eyebrow">จังหวะการดูแลระบบ</p>
+            <h2>Weekly Monitor</h2>
+          </div>
+          <div class="weekly-layout">
+            <div id="weeklyChecklist" class="checklist"></div>
+            <div class="journal">
+              <label for="journalInput">บันทึก Journal</label>
+              <textarea id="journalInput" rows="5" placeholder="บันทึก weekly review, deviation, action หรือ decision"></textarea>
+              <button id="addNoteButton" type="button">เพิ่มบันทึก</button>
+              <div id="journalList" class="journal-list"></div>
+            </div>
+          </div>
+        </section>
+
+        <section id="data" class="section-block data-block">
+          <div class="section-title">
+            <p class="eyebrow">สถานะที่ย้ายได้</p>
+            <h2>อัปเดตข้อมูล</h2>
+          </div>
+          <div class="data-actions">
+            <button id="exportButton" type="button">Export JSON</button>
+            <label class="file-button">
+              Import JSON
+              <input id="importInput" type="file" accept="application/json" />
+            </label>
+            <button id="resetButton" type="button">Reset ข้อมูลในเครื่อง</button>
+          </div>
+          <textarea id="exportArea" rows="9" spellcheck="false" aria-label="ข้อมูล Dashboard ที่ export"></textarea>
+        </section>
+      </main>
+    </div>
+
+    <script src="./app.js"></script>
+  </body>
+</html>
