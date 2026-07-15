@@ -1,0 +1,154 @@
+{
+  "schema_version": "lily_l1_alpha_vantage_corporate_actions_acquisition_v1",
+  "order_id": "B4.3",
+  "execution_order_id": "B4.4",
+  "hypothesis_id": "L-1",
+  "created_at": "2026-07-15T00:00:00Z",
+  "status": "locked_before_acquisition",
+  "evidence_ceiling": "E1",
+  "edge_claim": "none",
+  "validation_unlock_authorized": false,
+  "owner_authorization": "User explicitly requested B4.3 design and lock on 2026-07-15, with no Lily ETF request and no validation-return access.",
+  "purpose": "Lock a zero-cost, resumable Alpha Vantage corporate-actions acquisition for B4.4 that can independently reconcile current provider snapshots without opening L-1 validation returns or overstating point-in-time provenance.",
+  "design_only_attestation": {
+    "alpha_vantage_requests_in_B4_3": 0,
+    "lily_etf_requests_in_B4_3": 0,
+    "validation_prices_or_returns_opened_in_B4_3": false,
+    "credentials_read_or_recorded_in_B4_3": false,
+    "paid_spend_usd_in_B4_3": 0
+  },
+  "named_gap": {
+    "prior_order": "B4.1",
+    "prior_report": "reports/data_quality/l_1_data_quality_remediation.json",
+    "current_status": "Yahoo within-container corporate-action arithmetic passed the locked daily tolerance for six of eight symbols; VGK and VWO failed it, and no point-in-time provider revision archive exists.",
+    "question": "Can a second free provider corroborate the eight ETFs' dividend and split event snapshots without reading validation returns?",
+    "decision_scope": "Independent current-snapshot event reconciliation only; no price adjustment, return, signal, position, regime, PnL, edge, E2, or validation-unlock decision."
+  },
+  "source": {
+    "provider": "Alpha Vantage",
+    "service_tier": "free",
+    "base_url": "https://www.alphavantage.co/query",
+    "documentation_urls": [
+      "https://www.alphavantage.co/documentation/#dividends",
+      "https://www.alphavantage.co/documentation/#splits",
+      "https://www.alphavantage.co/support/"
+    ],
+    "key_environment_name": "ALPHAVANTAGE_API_FREE",
+    "key_provenance_label": "owner_supplied_free_key_lily_only",
+    "credential_value_may_be_persisted": false,
+    "credential_value_may_appear_in_logs_or_request_metadata": false,
+    "documented_free_daily_request_limit": 25,
+    "documented_date_filter_available": false,
+    "point_in_time_revision_archive_documented": false
+  },
+  "request_universe": {
+    "symbols": ["VTI", "VGK", "EWJ", "VWO", "IEF", "TIP", "GLD", "DBC"],
+    "endpoints": {
+      "DIVIDENDS": {
+        "required_nonempty_row_fields": ["ex_dividend_date", "declaration_date", "record_date", "payment_date", "amount"],
+        "canonical_event_date": "ex_dividend_date"
+      },
+      "SPLITS": {
+        "required_nonempty_row_fields": ["effective_date", "split_factor"],
+        "canonical_event_date": "effective_date"
+      }
+    },
+    "allowed_query_parameter_names": ["function", "symbol", "apikey"],
+    "successful_payload_target": 16,
+    "selection_rule": "Every symbol-endpoint pair is requested exactly once successfully; no performance-driven omission, substitution, or extra symbol is allowed."
+  },
+  "request_guardrails": {
+    "network_authorized_only_in_execution_order": "B4.4",
+    "concurrency": 1,
+    "minimum_seconds_between_attempts": 15,
+    "daily_total_attempt_cap": 25,
+    "maximum_attempts_per_symbol_endpoint_per_day": 3,
+    "retryable_categories": ["rate_limit", "http_429", "http_5xx", "timeout"],
+    "non_retryable_categories": ["invalid_key", "premium_required", "schema_drift", "unexpected_service_message"],
+    "resume_rule": "Write each successful immutable response and its sanitized metadata atomically; on restart, verify its hash and skip only that completed symbol-endpoint pair.",
+    "success_rule": "HTTP success alone is insufficient. A successful payload must contain a data array, contain no Information, Note, or Error Message service field, and satisfy the endpoint schema for every nonempty row.",
+    "empty_array_rule": "A clean empty data array may be retained as provider-reported no events, but it cannot prove completeness and must remain an explicit limitation unless independently corroborated.",
+    "quota_stop_rule": "Stop without improvisation when 25 daily attempts are reached; resume on a later UTC day from hash-verified completed pairs.",
+    "spend_rule": "Actual and cumulative paid spend must remain USD 0; no premium upgrade, purchase, or paid fallback is authorized."
+  },
+  "validation_return_seal": {
+    "untouched_validation_start": "2016-01-04",
+    "untouched_validation_end": "2026-06-30",
+    "validation_status_required": "sealed_not_accessed",
+    "corporate_action_response_scope": "Alpha Vantage may return full corporate-action history because no date filter is documented; corporate-action events are isolated metadata and may not be joined to validation prices or returns in B4.4.",
+    "forbidden_inputs": [
+      "validation prices",
+      "validation adjusted prices",
+      "validation returns",
+      "validation signals",
+      "validation positions",
+      "validation regimes",
+      "validation benchmarks",
+      "validation PnL"
+    ],
+    "maximum_existing_market_or_return_date_allowed": "2015-12-31",
+    "comparison_rule": "Any comparison with existing Yahoo evidence is limited to corporate-action events through 2015-12-31; B4.4 may not load a source whose market or return coverage crosses that date.",
+    "output_exposure_rule": "Console, tracked reports, and research logs may expose only authentication category, service-message category, row count, field inventory, minimum and maximum event dates, coverage flags, hashes, and decision classifications; individual event amounts or rows remain outside tracked outputs."
+  },
+  "storage_and_integrity": {
+    "raw_dataset_id": "l1.alpha_vantage.corporate_actions.raw.v1",
+    "normalized_dataset_id": "l1.alpha_vantage.corporate_actions.normalized.v1",
+    "raw_storage_reference": "${LILY_DATA_ROOT}/raw/alpha_vantage_corporate_actions_v1",
+    "normalized_storage_reference": "${LILY_DATA_ROOT}/normalized/alpha_vantage_corporate_actions_v1.json",
+    "raw_mutability": "immutable_new_version_only",
+    "hash_policy": {
+      "per_response": "source_container_sha256",
+      "aggregate_raw": "aggregate_container_sha256",
+      "normalized": "normalized_output_sha256",
+      "specification": "request_and_normalization_specification_sha256"
+    },
+    "sanitized_request_metadata": ["provider", "function", "symbol", "retrieved_at_utc", "http_status", "attempt_number", "key_provenance_label"],
+    "forbidden_request_metadata": ["apikey", "credential_value", "authorization_header", "absolute_local_path"],
+    "registry_rule": "B4.4 must append new versioned raw and normalized entries to datasets/registry.json before any later research report consumes the data; no existing dataset entry is overwritten.",
+    "provider_revision_rule": "Each retrieval is a current provider snapshot. A later re-download creates a new dataset version and never silently replaces the B4.4 containers."
+  },
+  "normalization": {
+    "canonical_fields": ["provider", "symbol", "event_type", "event_date", "amount", "split_factor", "declared_date", "record_date", "payment_date", "retrieved_at_utc", "source_container_sha256"],
+    "decimal_rule": "Parse amount and split_factor with decimal arithmetic; no binary-float coercion at the provider boundary.",
+    "date_rule": "Accept ISO YYYY-MM-DD only; preserve null auxiliary dividend dates and reject malformed canonical event dates.",
+    "ordering_rule": "Sort deterministically by symbol, event_type, event_date, then source hash; preserve duplicate provider rows and classify them rather than silently deduplicating.",
+    "schema_drift_rule": "Unknown fields are retained only in immutable raw responses. Missing required fields in a nonempty row, type changes, or non-array data block normalization and require a new reviewed gate."
+  },
+  "reconciliation_and_decision": {
+    "comparison_window_end": "2015-12-31",
+    "comparison_keys": {
+      "DIVIDENDS": ["symbol", "ex_dividend_date", "amount"],
+      "SPLITS": ["symbol", "effective_date", "split_factor"]
+    },
+    "amount_comparison_rule": "Compare decimal values exactly after removing only insignificant trailing zeros; do not introduce a result-fitted tolerance.",
+    "allowed_outcomes": [
+      "accept_for_independent_current_snapshot_reconciliation",
+      "scope_restricted_no_point_in_time_revision_archive",
+      "reject_provider_or_schema"
+    ],
+    "acceptance_rule": "All 16 payloads satisfy schema and provenance checks, every pre-2016 event discrepancy is enumerated without reading returns, and no unexplained missing or conflicting event remains for the declared current-snapshot reconciliation scope.",
+    "mandatory_scope_restriction": "Because Alpha Vantage does not document a point-in-time revision archive, successful reconciliation cannot by itself establish what was known historically, remove the point-in-time blocker, unlock validation, or support E2.",
+    "mismatch_rule": "Do not choose the provider value that improves performance. Record both source values and hashes outside tracked row-level reports, classify the mismatch, and stop before any price or return recomputation.",
+    "next_decision_rule": "B4.4 must end by either retaining the corporate-action blocker, formally narrowing the claim to current-snapshot reconciliation, or proposing a separately approved point-in-time source search."
+  },
+  "required_B4_4_outputs": [
+    "immutable raw provider containers under LILY_DATA_ROOT",
+    "sanitized request manifest and per-response hashes",
+    "normalized corporate-action dataset and hash",
+    "new raw and normalized datasets/registry.json entries",
+    "reports/data_quality/l_1_alpha_vantage_corporate_actions.json",
+    "reports/data_quality/l_1_alpha_vantage_corporate_actions.md",
+    "research_log/005-lily-l1-alpha-vantage-corporate-actions.md",
+    "machine-verifiable validation-return-seal and zero-spend attestations",
+    "exact next safe action"
+  ],
+  "hard_stops": [
+    "B4.3 would make any Alpha Vantage request or read the credential value.",
+    "B4.4 would request a symbol or endpoint outside the locked 8 x 2 matrix.",
+    "Any validation price, adjusted price, return, signal, position, regime, benchmark, or PnL value would be requested, loaded, printed, or computed.",
+    "A response, log, exception, request manifest, or tracked artifact would expose the API key or an absolute local path.",
+    "Paid spend, premium upgrade, external message, broker action, order preview, paper order, or real order would be required.",
+    "A service message, empty response, schema drift, duplicate, or mismatch would be silently coerced into a pass.",
+    "The result would be described as point-in-time verified, validation-unlocked, E2, edge evidence, or deployment-ready."
+  ]
+}

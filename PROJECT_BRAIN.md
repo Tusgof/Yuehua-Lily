@@ -163,7 +163,7 @@ Past reports are reproduced by checking out their recorded commit hash. Do not c
 ## 10. Current Verified State
 
 - **Verified date**: 2026-07-15
-- **Bootstrap**: B0 through B4.2 complete
+- **Bootstrap**: B0 through B4.3 complete
 - **Legacy Note status**: retired and deleted by `docs/DECISION_RECORD_002_RESEARCH_LOG_CONTRACT.md` after its research content was promoted
 - **Human research logs**: contract active; L-0 is log 001; L-1 baseline, remediation, and validation-capacity audits are logs 002 through 004 under `research_log/`
 - **Dashboard**: retained under `Dashboard/`, demoted from product/state owner
@@ -172,11 +172,12 @@ Past reports are reproduced by checking out their recorded commit hash. Do not c
 - **L-1 falsification execution**: complete through 2015-12-31; not falsified, not validated; validation sealed
 - **L-1 data-quality remediation**: cash resolved at E1; historical fees decision-bounded; corporate actions pass the locked daily tolerance for 6/8 symbols; Webull candidate-ticker and fractional OpenAPI capability remain restricted
 - **L-1 validation capacity**: 2,637 calendar-only sessions project to 20,376 joint independent-bet equivalents versus the binding 8,673 under locked actual dependence; planning sensitivity projects 7,604; validation remains sealed
+- **Alpha Vantage corporate actions**: B4.3 locked the exact zero-cost 8-symbol x 2-endpoint acquisition, credential redaction, immutable hashes, validation-return seal, and current-snapshot claim limit; no Lily ETF request or credential read occurred
 - **Databento**: `DATABENTO_API_02` passes metadata access with USD 0 spend, but relevant US-equity coverage begins in 2018 or later and no dedicated corporate-actions history was exposed; owner-reported USD 50 credit has unverified real-payment provenance
 
 ## 11. Next Safe Action
 
-Keep validation sealed. Resolve or formally source-restrict point-in-time corporate actions without reading validation returns. Confirm that the Databento credit satisfies the real-payment rule before any paid request. Separately, complete the Webull Thailand capability probe without previewing or placing an order. Only then consider a new owner-approved validation unlock gate.
+Keep validation returns sealed. Execute B4.4 only under `l_1_alpha_vantage_corporate_actions_acquisition_v1`: acquire the locked 16 free corporate-action payloads, preserve sanitized hashes, and reconcile events without loading validation prices or returns. A clean result remains a current-snapshot reconciliation and cannot by itself remove the point-in-time blocker or unlock validation. Databento paid use remains blocked unless its real-payment provenance is confirmed; it is not required for B4.4. Separately, complete the Webull Thailand capability probe without previewing or placing an order.
 
 ## 12. Invariants
 

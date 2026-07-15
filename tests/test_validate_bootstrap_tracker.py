@@ -349,6 +349,41 @@ class BootstrapTrackerValidatorTests(unittest.TestCase):
         self.assertTrue(manifest_checked)
         self.assertFalse(manifest_unverified)
 
+    def test_B43_locked_rule_uses_alpha_vantage_gate_and_hashes(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            experiments = root / "experiments"
+            scripts = root / "scripts"
+            experiments.mkdir()
+            scripts.mkdir()
+            artifact = experiments / "l_1_alpha_vantage_corporate_actions_acquisition.json"
+            validator = scripts / "validate_l_1_alpha_vantage_corporate_actions_acquisition.py"
+            artifact.write_text(
+                json.dumps({"status": "locked_before_acquisition", "edge_claim": "none"}),
+                encoding="utf-8",
+            )
+            validator.write_text("print('pass')\n", encoding="utf-8")
+            entry = {
+                "gate_id": "l_1_alpha_vantage_corporate_actions_acquisition_v1",
+                "artifact_path": "experiments/l_1_alpha_vantage_corporate_actions_acquisition.json",
+                "artifact_sha256": hashlib.sha256(artifact.read_bytes()).hexdigest(),
+                "validator_path": "scripts/validate_l_1_alpha_vantage_corporate_actions_acquisition.py",
+                "validator_sha256": hashlib.sha256(validator.read_bytes()).hexdigest(),
+            }
+            manifest = experiments / "locked_gates.jsonl"
+            manifest.write_text(json.dumps(entry) + "\n", encoding="utf-8")
+            blockers, checked, unverified = self.validator._validate_done_artifact(
+                "B4.3",
+                "experiments/l_1_alpha_vantage_corporate_actions_acquisition.json",
+                "locked_and_valid",
+                project_root=root,
+                verify_runtime=False,
+                runtime_cache={},
+            )
+        self.assertEqual([], blockers)
+        self.assertTrue(checked)
+        self.assertFalse(unverified)
+
     def test_B31_format_requires_scoped_question_contract(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)

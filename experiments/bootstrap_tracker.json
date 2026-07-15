@@ -242,6 +242,43 @@
         "experiments/inputs/b4_2_databento_metadata_probe.json and reports/data_quality/databento_l_1_capability.json record authenticated metadata-only access through DATABENTO_API_02, zero market-data downloads, and USD 0 paid spend. ARCX.PILLAR begins 2018-05-01, DBEQ.BASIC begins 2023-03-28, and no dedicated corporate-actions history was exposed.",
         "datasets/cost_ledger.json records the owner-reported USD 50 credit as real-payment provenance unverified and blocks paid use until confirmed. research_log/004-lily-l1-validation-capacity.md passes the Thai six-section audit; no unlock, E2 promotion, broker action, paper trade, or real-money action occurred."
       ]
+    },
+    {
+      "id": "B4.3",
+      "title": "L-1 Alpha Vantage corporate-actions acquisition gate design",
+      "status": "done",
+      "depends_on": ["B4.2"],
+      "required_artifacts": [
+        {"path": "experiments/l_1_alpha_vantage_corporate_actions_acquisition.json", "must": "locked_and_valid"},
+        {"path": "scripts/validate_l_1_alpha_vantage_corporate_actions_acquisition.py", "must": "pass"},
+        {"path": "tests/test_validate_l_1_alpha_vantage_corporate_actions_acquisition.py", "must": "pass_in_hermetic_tier"}
+      ],
+      "forbidden": ["Alpha Vantage request", "Lily ETF data access", "credential read or storage", "validation price or return access", "paid spend", "validation unlock", "E2 or edge claim", "broker or order action"],
+      "evidence": [
+        "experiments/l_1_alpha_vantage_corporate_actions_acquisition.json is locked under append-only gate l_1_alpha_vantage_corporate_actions_acquisition_v1 with contract SHA-256 562e06914be4e651c73017009f51c26cab83cb4ff6bb26d1c28c2be32c441c96 and validator SHA-256 d89add978843fe37b98461cfc4baeeef660bcacf63098eb350c4fc996ddefadf.",
+        "The contract fixes VTI, VGK, EWJ, VWO, IEF, TIP, GLD, and DBC across DIVIDENDS and SPLITS only: 16 successful payloads, serial attempts at least 15 seconds apart, a hard 25-attempt daily cap, resumable immutable containers, full credential redaction, and USD 0 spend.",
+        "The 2016-01-04 through 2026-06-30 validation-return window remains sealed_not_accessed. B4.4 may isolate corporate-action metadata returned by the provider but may not request, load, print, join, or compute validation prices, returns, signals, positions, regimes, benchmarks, or PnL.",
+        "Alpha Vantage is locked as an independent current-snapshot reconciliation source, not a point-in-time revision archive. Even a clean B4.4 result cannot by itself remove the point-in-time blocker, unlock validation, support E2, or establish edge.",
+        "B4.3 made zero Alpha Vantage requests, zero Lily ETF requests, read or recorded no credential value, opened no validation returns, incurred USD 0 spend, and created no acquisition runner."
+      ]
+    },
+    {
+      "id": "B4.4",
+      "title": "L-1 locked Alpha Vantage corporate-actions acquisition",
+      "status": "not_started",
+      "depends_on": ["B4.3"],
+      "required_artifacts": [
+        {"path": "scripts/acquire_l_1_alpha_vantage_corporate_actions.py", "must": "exist"},
+        {"path": "scripts/validate_l_1_alpha_vantage_corporate_actions_report.py", "must": "pass"},
+        {"path": "reports/data_quality/l_1_alpha_vantage_corporate_actions.json", "must": "pass_alpha_vantage_corporate_actions_report_validator"},
+        {"path": "reports/data_quality/l_1_alpha_vantage_corporate_actions.md", "must": "match_alpha_vantage_corporate_actions_machine_report"},
+        {"path": "datasets/registry.json", "must": "contain_alpha_vantage_corporate_action_datasets"},
+        {"path": "datasets/cost_ledger.json", "must": "record_zero_spend_alpha_vantage_acquisition"},
+        {"path": "research_log/005-lily-l1-alpha-vantage-corporate-actions.md", "must": "pass_research_log_audit"},
+        {"path": "tests/test_validate_l_1_alpha_vantage_corporate_actions_report.py", "must": "pass_in_hermetic_tier"}
+      ],
+      "forbidden": ["unlocked request matrix", "credential value storage or logging", "validation price or return access", "paid spend", "silent schema coercion", "point-in-time overstatement", "validation unlock", "E2 or edge claim", "broker or order action"],
+      "evidence": []
     }
   ]
 }
