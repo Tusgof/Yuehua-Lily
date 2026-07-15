@@ -143,6 +143,18 @@ Before any validation unlock, count the sealed window using calendar rules only 
 
 Exit: classify every validation null as statistically funded or underfunded, report the founding planning assumptions as a non-binding sensitivity, and retain all data-integrity and owner-approval blockers. Provider credentials may be used only for an explicitly authorized zero-spend metadata probe with true key provenance and no credential value stored.
 
+### B4.3–B4.4 — Alpha Vantage Corporate-Action Audit
+
+B4.3 locks the exact free 8-symbol by 2-endpoint acquisition, credential redaction, hashes, validation-return seal, and current-snapshot claim limit. B4.4 executes only that matrix and compares pre-2016 corporate-action events without loading validation prices or returns.
+
+Exit: B4.4 completes 16/16 payloads at USD 0 and remains E1 scope-restricted because only 11/16 symbol-endpoint pairs reconcile exactly and Alpha Vantage has no point-in-time revision archive.
+
+### B4.5 — Owner Scope Decision
+
+The owner accepts the unresolved corporate-action history as an E1 limitation and pauses further free or paid provider search. This does not unlock validation, authorize paper trading, or promote L-1.
+
+A later prospective comparison is allowed only through a separate hash-locked `E0` operational dry-run preregistration with `edge_claim: none`. It must lock the comparison streams, event/cash/unit/weight/order fields, materiality thresholds, insufficient-event rule, and stop conditions before the first observation. Complete the Webull Thailand read-only capability probe first; broker preview and order actions remain forbidden.
+
 ## 6. Acceptance Gate
 
 E2 requires all of the following:
@@ -195,7 +207,7 @@ If MinTRL validation cost is unaffordable or undefined against the benchmark nul
 | Founding decisions | Complete | pushed founding pack |
 | P0–P4 | Active after bootstrap | Maintain governance, reproducibility, statistics, data, and restore controls |
 | L-0 | Scope-restricted E0 feasibility complete | Broker capability remains unverified |
-| L-1 | Scope-restricted E1; B4.2 capacity funded under locked actual dependence, validation sealed | Resolve point-in-time corporate actions and require a separate owner-approved unlock gate |
+| L-1 | Scope-restricted E1; B4.5 accepts the corporate-action limitation and keeps validation sealed | Webull Thailand read-only capability probe, then a separate E0 shadow-accounting preregistration if approved |
 | L-2 | Proposed | L-1 evidence |
 | L-3 | Proposed | baseline infrastructure and preregistration |
 | L-4 | Proposed | universe/data integrity and preregistration |

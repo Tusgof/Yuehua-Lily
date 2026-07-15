@@ -1,0 +1,114 @@
+{
+  "schema_version": "lily_l1_corporate_action_scope_decision_v1",
+  "order_id": "B4.5",
+  "hypothesis_id": "L-1",
+  "decided_at": "2026-07-15T00:00:00Z",
+  "status": "accepted_owner_decision",
+  "evidence_tier": "E1",
+  "edge_claim": "none",
+  "owner_authorization": "The owner accepted the corporate-action scope restriction on 2026-07-15, requested that further source search pause, and directed prospective discrepancy testing through a future E0 paper-trade dry run without opening validation returns.",
+  "decision": {
+    "l1_status": "scope_restricted_E1",
+    "corporate_action_historical_status": "accepted_current_snapshot_limitation",
+    "point_in_time_source_search_status": "paused_by_owner",
+    "validation_window_status": "sealed_not_accessed",
+    "validation_unlock_authorized": false,
+    "e2_promotion_authorized": false,
+    "paper_trade_authorized_by_this_decision": false,
+    "real_money_authorized": false
+  },
+  "basis": {
+    "b4_4_report_path": "reports/data_quality/l_1_alpha_vantage_corporate_actions.json",
+    "b4_4_report_file_sha256": "8301c355cf19b74f4af225a5cacf1fde6b9f5702b3aee3aca8cca356ab2b58e3",
+    "b4_4_report_digest_sha256": "838f8d674e32e9d53b5eb8af25dd5ed04cfa63124724ebb175608d9a3bfec854",
+    "observed_scope": "Sixteen locked Alpha Vantage payloads produced 772 current-snapshot corporate-action rows. Eleven of sixteen pre-2016 symbol-endpoint pairs reconciled exactly with Yahoo; five dividend pairs did not.",
+    "reason_for_acceptance": "The owner prefers to preserve the unresolved historical difference as an explicit E1 limitation rather than spend more time or money on point-in-time data before operational feasibility is known.",
+    "historical_claim_limit": "A future prospective dry run cannot prove that historical discrepancies were immaterial, correct past adjusted returns, or convert E1 evidence into E2."
+  },
+  "paused_source_program": {
+    "new_corporate_action_provider_search": false,
+    "paid_corporate_action_data_purchase": false,
+    "provider_value_selection": "forbidden_if_selected_by_return_or_performance_impact",
+    "existing_artifacts_retained": true,
+    "reopen_triggers": [
+      "A free or already-owned source with genuine point-in-time revision provenance becomes available.",
+      "The future E0 shadow-accounting dry run finds a preregistered material operational discrepancy.",
+      "The broker or paper environment cannot provide an auditable event, cash, and unit ledger.",
+      "The owner explicitly changes the E1-only scope or requests an E2 validation path."
+    ]
+  },
+  "prospective_shadow_accounting": {
+    "status": "planned_not_started",
+    "required_evidence_tier": "E0",
+    "edge_claim": "none",
+    "purpose": "Observe whether corporate-action source differences create operationally material cash, unit, target-weight, or rebalance-order differences prospectively.",
+    "paper_trade_role": "operational_dry_run_only",
+    "separate_preregistration_required": true,
+    "broker_capability_probe_required_first": true,
+    "broker_ledger_role": "operational_reference_not_research_ground_truth",
+    "comparison_streams_to_lock_later": [
+      "broker_or_paper_account_event_cash_and_unit_ledger",
+      "Alpha_Vantage_current_snapshot_stream",
+      "one_predeclared_strategy_accounting_stream"
+    ],
+    "minimum_fields_to_record": [
+      "symbol",
+      "event_type",
+      "provider_or_broker_event_identifier_when_available",
+      "effective_or_ex_date",
+      "record_and_payment_dates_when_available",
+      "cash_delta",
+      "unit_delta",
+      "target_weight_delta",
+      "rebalance_order_delta",
+      "source_timestamp",
+      "source_container_hash"
+    ],
+    "materiality_dimensions_to_preregister": [
+      "cash_balance_difference",
+      "unit_balance_difference",
+      "target_weight_difference",
+      "order_notional_difference",
+      "event_detection_or_posting_delay"
+    ],
+    "materiality_threshold_status": "must_be_locked_before_first_observation",
+    "insufficient_event_rule": "If the dry run observes too few relevant events, report insufficient operational evidence and extend or stop; do not infer that historical differences were small.",
+    "prohibited_interpretations": [
+      "strategy edge",
+      "historical return correctness",
+      "historical discrepancy immateriality",
+      "E2 validation",
+      "deployment readiness"
+    ]
+  },
+  "validation_return_seal": {
+    "untouched_start": "2016-01-04",
+    "untouched_end": "2026-06-30",
+    "status": "sealed_not_accessed",
+    "prices_opened": false,
+    "adjusted_prices_opened": false,
+    "returns_opened": false,
+    "signals_opened": false,
+    "positions_opened": false,
+    "regimes_opened": false,
+    "benchmarks_opened": false,
+    "pnl_opened": false
+  },
+  "next_safe_action": "Complete the Webull Thailand read-only capability probe without previewing or placing an order. Only after broker capability is known may a separate owner-approved and hash-locked E0 shadow-accounting dry-run preregistration be designed.",
+  "source_lineage": [
+    {
+      "path": "reports/data_quality/l_1_alpha_vantage_corporate_actions.json",
+      "sha256": "8301c355cf19b74f4af225a5cacf1fde6b9f5702b3aee3aca8cca356ab2b58e3",
+      "use": "B4.4 result and unresolved current-snapshot limitation."
+    },
+    {
+      "path": "docs/EVIDENCE_TIER_POLICY.md",
+      "use": "An E0 paper dry run tests operations only and carries no edge claim."
+    },
+    {
+      "path": "wiki/concepts/strategy-research-workflow.md",
+      "sha256": "25d5ebb09648fc12c7e531d6fd4d951a937c7c4ded329ca1302b3e920194522d",
+      "use": "Research decisions must distinguish revise, paper trade, and deploy, with written stop conditions."
+    }
+  ]
+}

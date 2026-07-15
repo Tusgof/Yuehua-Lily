@@ -132,7 +132,7 @@
         "actual_joint_independent_bet_equivalents": 17338.86843729944
       },
       "mintrl_validate": {
-        "status": "sealed_not_accessed_capacity_funded_unlock_blocked",
+        "status": "sealed_not_accessed_owner_accepted_E1_scope_no_unlock",
         "binding_required_joint_independent_bet_equivalents": 8673,
         "projected_joint_independent_bet_equivalents_under_locked_actual_recalculation": 20376.00120910337,
         "planning_sensitivity_joint_independent_bet_equivalents": 7603.642849820606,
@@ -206,6 +206,11 @@
           "date": "2026-07-15",
           "decision": "B4_4_alpha_vantage_current_snapshot_scope_restricted",
           "notes": "The locked free acquisition completed 16/16 corporate-action payloads and 772 rows with zero paid spend. Eleven of sixteen pre-2016 symbol-endpoint pairs reconcile exactly; five dividend pairs do not. Alpha Vantage exposes a current snapshot rather than a point-in-time revision archive. Validation returns remain sealed, and no E2, edge, or deployment claim is permitted."
+        },
+        {
+          "date": "2026-07-15",
+          "decision": "B4_5_owner_accepts_E1_scope_and_pauses_source_search",
+          "notes": "The owner accepts the unresolved historical corporate-action difference as an explicit E1 limitation and pauses new or paid source search. Validation remains sealed. Any future comparison requires a separate E0 operational dry-run preregistration with edge_claim none, materiality thresholds locked before observation, and no historical-correctness or E2 interpretation."
         }
       ]
     },

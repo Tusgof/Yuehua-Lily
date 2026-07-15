@@ -163,7 +163,7 @@ Past reports are reproduced by checking out their recorded commit hash. Do not c
 ## 10. Current Verified State
 
 - **Verified date**: 2026-07-15
-- **Bootstrap**: B0 through B4.4 complete
+- **Bootstrap**: B0 through B4.5 complete
 - **Legacy Note status**: retired and deleted by `docs/DECISION_RECORD_002_RESEARCH_LOG_CONTRACT.md` after its research content was promoted
 - **Human research logs**: contract active; L-0 is log 001; L-1 baseline, remediation, validation-capacity, and Alpha Vantage corporate-action audits are logs 002 through 005 under `research_log/`
 - **Dashboard**: retained under `Dashboard/`, demoted from product/state owner
@@ -173,11 +173,12 @@ Past reports are reproduced by checking out their recorded commit hash. Do not c
 - **L-1 data-quality remediation**: cash resolved at E1; historical fees decision-bounded; corporate actions pass the locked daily tolerance for 6/8 symbols; Webull candidate-ticker and fractional OpenAPI capability remain restricted
 - **L-1 validation capacity**: 2,637 calendar-only sessions project to 20,376 joint independent-bet equivalents versus the binding 8,673 under locked actual dependence; planning sensitivity projects 7,604; validation remains sealed
 - **Alpha Vantage corporate actions**: B4.4 completed 16/16 free payloads in 16 attempts and stored 772 rows; 11/16 pre-2016 symbol-endpoint pairs reconcile exactly while five dividend pairs do not; the source is a current snapshot without point-in-time revisions, so the result remains E1 scope-restricted and validation stays sealed
+- **Owner scope decision**: B4.5 accepts the unresolved corporate-action history as an E1 limitation and pauses additional source search; a future comparison is allowed only through a separately locked E0 shadow-accounting dry run that tests operations, not edge or historical correctness
 - **Databento**: `DATABENTO_API_02` passes metadata access with USD 0 spend, but relevant US-equity coverage begins in 2018 or later and no dedicated corporate-actions history was exposed; owner-reported USD 50 credit has unverified real-payment provenance
 
 ## 11. Next Safe Action
 
-Keep validation returns sealed. Create a separate owner-approved source-decision gate before either searching for a genuine point-in-time corporate-action archive or formally accepting that L-1 remains E1-only; never resolve the five mismatched dividend pairs by selecting the provider values that improve performance. Databento paid use remains blocked unless its real-payment provenance is confirmed. Separately, complete the Webull Thailand read-only capability probe without previewing or placing an order.
+Keep validation returns sealed and leave L-1 at E1. Complete the Webull Thailand read-only capability probe without previewing or placing an order. Only after broker capability is known may a separate owner-approved and hash-locked E0 shadow-accounting dry-run preregistration define streams, fields, materiality thresholds, insufficient-event handling, and stop conditions before the first prospective observation.
 
 ## 12. Invariants
 

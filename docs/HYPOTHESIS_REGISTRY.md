@@ -31,7 +31,7 @@
 
 ## L-1 — Baseline Continuation
 
-- **Status**: scope-restricted E1 after B4.4; validation capacity is funded under the locked actual-dependence rule, but Alpha Vantage reconciles only 11/16 pre-2016 symbol-endpoint pairs and provides no point-in-time revision archive; provenance and an explicit unlock gate remain blocked, so validation stays sealed
+- **Status**: scope-restricted E1 after B4.5; the owner accepts the unresolved corporate-action history as an E1 limitation and pauses further source search; validation stays sealed, and any prospective comparison must be a separately locked E0 operational dry run with no edge or historical-correctness claim
 - **Statement**: A 60-day directional-count baseline has positive convex payoff after implementable costs on the selected global research universe.
 - **Rationale**: Slow information diffusion and herding can sustain price continuation; trend systems accept frequent small losses to retain infrequent large winners.
 - **Predictions**:
@@ -80,7 +80,7 @@
 
 ## Seed Status
 
-L-0 has E0 sizing evidence and remains scope-restricted. L-1 has E1 falsification-window, data-remediation, capacity, and independent corporate-action evidence: `MinTRL_falsify` is funded, but the full two-regime falsification rule is not met. The sealed validation calendar projects 20,376 joint independent-bet equivalents against the binding 8,673 under the locked actual-dependence rule, while the original planning sensitivity projects only 7,604. Treasury cash is resolved and fee uncertainty cannot reverse the negative primary result even under a full-credit bound. B4.4 acquires the locked Alpha Vantage matrix at zero cost, but only 11/16 pre-2016 symbol-endpoint pairs reconcile exactly and the provider has no point-in-time revision archive. Point-in-time corporate actions and Webull candidate-ticker/account capability remain restricted. The validation window is sealed. L-2 through L-4 remain proposed and may not be promoted by prose edits alone.
+L-0 has E0 sizing evidence and remains scope-restricted. L-1 has E1 falsification-window, data-remediation, capacity, and independent corporate-action evidence: `MinTRL_falsify` is funded, but the full two-regime falsification rule is not met. The sealed validation calendar projects 20,376 joint independent-bet equivalents against the binding 8,673 under the locked actual-dependence rule, while the original planning sensitivity projects only 7,604. Treasury cash is resolved and fee uncertainty cannot reverse the negative primary result even under a full-credit bound. B4.4 acquires the locked Alpha Vantage matrix at zero cost, but only 11/16 pre-2016 symbol-endpoint pairs reconcile exactly and the provider has no point-in-time revision archive. B4.5 accepts that limitation at E1 and pauses further source search; it does not authorize validation or paper trading. Point-in-time corporate actions and Webull account capability remain restricted. The validation window is sealed. L-2 through L-4 remain proposed and may not be promoted by prose edits alone.
 
 ## Source Adaptation
 

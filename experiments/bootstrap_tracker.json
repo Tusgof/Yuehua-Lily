@@ -285,6 +285,26 @@
         "The 2016-01-04 through 2026-06-30 validation-return window remains sealed_not_accessed. Post-2015 provider rows are isolated corporate-action metadata; no validation price, adjusted price, return, signal, position, regime, benchmark, or PnL was requested, loaded, joined, printed, or computed.",
         "research_log/005-lily-l1-alpha-vantage-corporate-actions.md passes the Thai six-section audit. The result remains scope_restricted_no_point_in_time_revision_archive and cannot unlock validation, support E2, establish edge, or authorize deployment."
       ]
+    },
+    {
+      "id": "B4.5",
+      "title": "L-1 owner acceptance of corporate-action scope restriction",
+      "status": "done",
+      "depends_on": ["B4.4"],
+      "required_artifacts": [
+        {"path": "experiments/l_1_corporate_action_scope_decision.json", "must": "pass_corporate_action_scope_decision_validator"},
+        {"path": "docs/DECISION_RECORD_003_L1_CORPORATE_ACTION_SCOPE.md", "must": "match_corporate_action_scope_decision"},
+        {"path": "scripts/validate_l_1_corporate_action_scope_decision.py", "must": "pass"},
+        {"path": "tests/test_validate_l_1_corporate_action_scope_decision.py", "must": "pass_in_hermetic_tier"}
+      ],
+      "forbidden": ["validation price or return access", "validation unlock", "E2 or edge claim", "immediate paper-trade authorization", "materiality threshold chosen after observation", "new provider search", "paid corporate-action purchase", "broker preview or order", "real money"],
+      "evidence": [
+        "The owner explicitly accepted the unresolved corporate-action history as an E1 scope restriction, paused new and paid point-in-time source searches, and retained the B4.4 containers, hashes, mismatches, and claim limits without selecting provider values by performance impact.",
+        "experiments/l_1_corporate_action_scope_decision.json records L-1 as scope_restricted_E1, validation as sealed_not_accessed, and validation unlock, E2 promotion, immediate paper trade, and real money as unauthorized.",
+        "The prospective comparison is planned_not_started and limited to a separately preregistered E0 operational dry run with edge_claim none. The future gate must lock streams, fields, materiality thresholds, insufficient-event handling, and stop conditions before the first observation.",
+        "A future dry run may measure prospective cash, unit, target-weight, order-notional, and posting-delay differences, but it cannot prove historical return correctness, historical discrepancy immateriality, strategy edge, E2 validation, or deployment readiness.",
+        "B4.5 opened no validation price, adjusted price, return, signal, position, regime, benchmark, or PnL; performed no broker access, preview, order, paper trade, paid purchase, or real-money action."
+      ]
     }
   ]
 }
