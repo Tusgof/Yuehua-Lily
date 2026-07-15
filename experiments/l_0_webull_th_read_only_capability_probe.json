@@ -1,0 +1,119 @@
+{
+  "schema_version": "lily_l0_webull_th_read_only_capability_probe_v1",
+  "order_id": "B4.6",
+  "hypothesis_id": "L-0",
+  "created_at": "2026-07-15T00:00:00Z",
+  "status": "locked_before_probe",
+  "evidence_ceiling": "E0",
+  "edge_claim": "none",
+  "owner_authorization": "The owner authorized the Webull Thailand read-only capability probe on 2026-07-15 and configured App Key and App Secret as user environment variables.",
+  "question": "บัญชี Webull Thailand และ ETF 10 ตัวรองรับข้อมูลที่จำเป็นต่อ fractional implementation หรือไม่",
+  "decision_scope": "Authenticate the owner's Thailand production application, verify read-only account endpoint availability, and observe the official fractionable field for the locked ten-ETF candidate set. This is operational capability evidence only.",
+  "environment": {
+    "region": "th",
+    "api_endpoint": "api.webull.co.th",
+    "sdk_package": "webull-openapi-python-sdk",
+    "sdk_version_required": "2.0.13",
+    "sdk_source_commit": "10889b59ae98a70ba03c5d6c6113709b8c05afb0",
+    "python_runtime": "3.11",
+    "credential_environment_names": ["WEBULL_APP_KEY", "WEBULL_APP_SECRET"],
+    "credential_values_may_be_persisted_or_logged": false,
+    "token_storage_reference": "${LOCALAPPDATA}/Yuehua-Lily/webull-token",
+    "selected_account_source": "first account returned by the authenticated account-list endpoint",
+    "selected_account_may_be_persisted_or_logged": false
+  },
+  "allowed_requests": {
+    "authentication_paths": [
+      "/openapi/auth/token/create",
+      "/openapi/auth/token/check",
+      "/openapi/auth/token/refresh"
+    ],
+    "read_only_paths": [
+      "/openapi/account/list",
+      "/openapi/assets/balance",
+      "/openapi/assets/positions",
+      "/openapi/instrument/stock/list"
+    ],
+    "forbidden_path_fragments": ["preview", "place", "replace", "cancel", "/orders", "/order/"],
+    "maximum_read_only_requests": 4,
+    "automatic_retry": false,
+    "request_timeout_seconds": 15,
+    "spend_usd": 0
+  },
+  "candidate_universe": {
+    "symbols": ["VTI", "VGK", "EWJ", "IPAC", "VWO", "IEF", "SCHP", "GLDM", "PDBC", "VNQI"],
+    "instrument_category": "US_STOCK",
+    "instrument_query_count": 1,
+    "required_public_fields": ["symbol", "instrument_type", "status", "fractionable"],
+    "selection_rule": "Query the exact ten symbols in one request. No substitution, omission, or expansion after observing results."
+  },
+  "account_privacy": {
+    "allowed_tracked_outputs": [
+      "authentication_succeeded",
+      "account_list_endpoint_succeeded",
+      "balance_endpoint_succeeded",
+      "positions_endpoint_succeeded",
+      "response_field_names",
+      "response_container_sha256",
+      "candidate instrument fields listed in candidate_universe.required_public_fields",
+      "decision classifications"
+    ],
+    "forbidden_tracked_outputs": [
+      "App Key",
+      "App Secret",
+      "access token",
+      "account_id",
+      "account_number",
+      "cash or balance values",
+      "buying power values",
+      "position symbols or quantities",
+      "raw account responses",
+      "absolute local paths"
+    ],
+    "raw_account_retention": "hash_in_memory_then_discard",
+    "sdk_logging": "disabled_before_client_construction"
+  },
+  "success_and_classification": {
+    "authentication_success": "The production account-list request returns HTTP 200 and at least one account without exposing an identifier.",
+    "account_read_success": "Balance and positions each return HTTP 200 for the in-memory account identifier; only field inventories and hashes are retained.",
+    "instrument_success": "The instrument endpoint returns each locked symbol exactly once with status and fractionable fields.",
+    "allowed_outcomes": [
+      "verified_read_only_and_fractional_candidate_set",
+      "scope_restricted_account_or_candidate_capability",
+      "blocked_authentication_or_schema"
+    ],
+    "current_capital_rule": "A fractionable=true response is API capability evidence, not proof of minimum order, execution quality, funding FX cost, strategy edge, or deployment readiness.",
+    "paper_trade_rule": "This probe does not authorize preview, paper trading, order submission, or the E0 shadow-accounting dry run."
+  },
+  "source_snapshots": [
+    {"url": "https://developer.webull.co.th/apis/docs/sdk.md", "sha256": "6bcb4c51e2ebb8add115c4cacec6ba3ce93b03d4eba4de87c4ac193ff40e019c"},
+    {"url": "https://developer.webull.co.th/apis/docs/authentication/token.md", "sha256": "9d444fd3ed265563f3beea58be4236ace6659aad691a8aa475a9ce14b007154e"},
+    {"url": "https://developer.webull.co.th/apis/docs/reference/trade-api/instrument-list.md", "sha256": "a749c887ff7c23ef66683f0ebd0494ee3813cc883beaf0b3b5e841d1b34a6318"},
+    {"url": "https://developer.webull.co.th/apis/docs/reference/trade-api/account-list.md", "sha256": "d2917153c1e8c6ecd6e0f266884ae4fa967cba1084c4752cd116299e2b942149"},
+    {"url": "https://developer.webull.co.th/apis/docs/reference/trade-api/account-balance.md", "sha256": "533e4a2a6c898ceab6a7e69fc3970de3cf10cd7bf405f7dd7a49d1888642cdb4"},
+    {"url": "https://developer.webull.co.th/apis/docs/reference/trade-api/account-position.md", "sha256": "42f9ccebaeba3169bc447b1ac92c9b2fb8101533353f300d7d4dac3bca1caf58"},
+    {"url": "https://developer.webull.co.th/apis/docs/reference/trade-api/common-order-preview.md", "sha256": "436a1f2c5c97ebf131d2543bc93f1e68466530ebc6681b822d720c7435ab8c68"},
+    {"url": "https://developer.webull.co.th/apis/docs/reference/trade-api/common-order-place.md", "sha256": "e648eb217aa987e084c2824025a3589a5203e91c0c1a2de734514c2e7777e1fc"}
+  ],
+  "validation_return_seal": {
+    "untouched_start": "2016-01-04",
+    "untouched_end": "2026-06-30",
+    "status_required": "sealed_not_accessed",
+    "forbidden_inputs": ["prices", "adjusted prices", "returns", "signals", "positions", "regimes", "benchmarks", "PnL"]
+  },
+  "required_outputs": [
+    "reports/feasibility/l_0_webull_th_read_only_capability.json",
+    "reports/feasibility/l_0_webull_th_read_only_capability.md",
+    "research_log/006-lily-l0-webull-th-read-only-capability.md",
+    "machine-verifiable no-order and validation-seal attestations",
+    "exact next safe action"
+  ],
+  "hard_stops": [
+    "Either credential environment variable is absent.",
+    "The first API call requires an endpoint outside the authentication and read-only allowlists.",
+    "Any preview, place, replace, cancel, order, subscription, or streaming endpoint would be invoked.",
+    "Any credential, token, account identifier, balance value, buying power, holding, quantity, or absolute path would enter logs or tracked artifacts.",
+    "The SDK cannot run under the locked Python and package version without changing Lily's pinned research runtime.",
+    "The result would be used to open validation returns, claim edge, promote E2, start paper trading, or authorize real money."
+  ]
+}
