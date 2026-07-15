@@ -268,6 +268,13 @@ def run_probe() -> dict[str, Any]:
             "Fractionable metadata does not prove minimum order, fill quality, slippage, funding FX cost, or deployment readiness.",
             "This result does not authorize order preview, paper trading, the prospective shadow-accounting dry run, or real money.",
         ],
+        "tier_blockers": [
+            "minimum_order_unverified",
+            "funding_fx_cost_unverified",
+            "execution_quality_unverified",
+            "realized_cost_unverified",
+            "instrument_type_not_returned",
+        ],
         "next_safe_action": "Design and obtain owner approval for a separately hash-locked E0 prospective shadow-accounting dry-run preregistration. Do not call preview or order endpoints.",
     }
     report["report_digest_sha256"] = payload_sha256(report)
