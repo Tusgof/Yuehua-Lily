@@ -6,6 +6,7 @@
     "scripts/validate_bootstrap_tracker.py"
   ],
   "scripts": [
+    "scripts/acquire_l_1_alpha_vantage_corporate_actions.py",
     "scripts/acquire_l_1_yahoo_daily.py",
     "scripts/acquire_l_1_remediation_sources.py",
     "scripts/run_l_1_baseline.py",
@@ -17,6 +18,7 @@
     "scripts/validate_l_1_data_quality_report.py",
     "scripts/validate_l_1_validation_capacity.py",
     "scripts/validate_l_1_alpha_vantage_corporate_actions_acquisition.py",
+    "scripts/validate_l_1_alpha_vantage_corporate_actions_report.py",
     "scripts/audit_research_logs.py",
     "scripts/audit_new_script_lib_usage.py",
     "scripts/validate_data_layer.py",

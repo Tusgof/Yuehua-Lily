@@ -1,0 +1,101 @@
+{
+  "schema_version": "lily_l1_alpha_vantage_corporate_actions_report_v1",
+  "order_id": "B4.4",
+  "hypothesis_id": "L-1",
+  "produced_at": "2026-07-15T02:03:00Z",
+  "producing_git_commit": "e6355a746d05433b76427ed4878f3e2fb46b8e43",
+  "contract_sha256": "562e06914be4e651c73017009f51c26cab83cb4ff6bb26d1c28c2be32c441c96",
+  "evidence_tier": "E1",
+  "edge_claim": "none",
+  "decision": "scope_restricted_no_point_in_time_revision_archive",
+  "acquisition": {
+    "provider": "Alpha Vantage",
+    "service_tier": "free",
+    "acquired_at": "2026-07-15T01:57:43Z",
+    "successful_payload_count": 16,
+    "network_attempt_count": 16,
+    "report_regeneration_resumed_payload_count": 16,
+    "actual_paid_amount_usd": 0,
+    "key_environment_name": "ALPHAVANTAGE_API_FREE",
+    "key_provenance_label": "owner_supplied_free_key_lily_only",
+    "credential_value_recorded": false,
+    "total_provider_rows": 772,
+    "empty_payload_count": 6,
+    "duplicate_canonical_record_count": 0
+  },
+  "datasets": {
+    "raw_dataset_id": "l1.alpha_vantage.corporate_actions.raw.v1",
+    "normalized_dataset_id": "l1.alpha_vantage.corporate_actions.normalized.v1",
+    "raw_storage_reference": "${LILY_DATA_ROOT}/raw/alpha_vantage_corporate_actions_v1",
+    "normalized_storage_reference": "${LILY_DATA_ROOT}/normalized/alpha_vantage_corporate_actions_v1.json",
+    "hashes": {
+      "aggregate_container_sha256": "678dac822656743df65f6d97567bf97b56e7c2a3ee0257ca51e7fd0bc702534a",
+      "request_manifest_sha256": "b3b7b875d22f9a4ef9b5f00ac7661516aabd71cc923da2657c706cccf86d5f61",
+      "normalized_output_sha256": "49dd9607bdc7d9fca6586e64289eb749dc7d8104421a5f4b07ae73190edf8408",
+      "request_and_normalization_specification_sha256": "8c490898eb8ff62f0076d43ae5d4b5cb1773b1ee7542edc27bbfbcbebbf7cf0e",
+      "private_reconciliation_sha256": "c9997d5b5dd5c3ed4f9aec060102e0602a6e1fa625331639c1eeb83df33c86cc"
+    }
+  },
+  "coverage": {
+    "pair_count": 16,
+    "symbols": ["VTI", "VGK", "EWJ", "VWO", "IEF", "TIP", "GLD", "DBC"],
+    "rows": [
+      {"symbol": "DBC", "dividends": {"row_count": 9, "earliest": "2006-12-18", "latest": "2025-12-22", "sha256": "2e03735cfb0f5a2a25c316c36046c54f36fe5b3a713db55e2668cc41e3f09d91"}, "splits": {"row_count": 0, "earliest": null, "latest": null, "sha256": "31c43e24794c0887580d2031efb541ba865afa30bc3cb2f0c007a0ae6a89c795"}},
+      {"symbol": "EWJ", "dividends": {"row_count": 45, "earliest": "1999-08-25", "latest": "2026-06-15", "sha256": "cdae0c4ecd2cf765e88630e23fbdda1d89dc92b3c058fdfa03255b9901c43c1c"}, "splits": {"row_count": 1, "earliest": "2016-11-07", "latest": "2016-11-07", "sha256": "10a4a15680f292a5ae8b75c29d1eacf168e1718a31cd9982fd8546dd837f4c32"}},
+      {"symbol": "GLD", "dividends": {"row_count": 0, "earliest": null, "latest": null, "sha256": "df181903e9b16338c5eaca9b4332fdf01dbb5c4ee2b4923eb048d6603c831e44"}, "splits": {"row_count": 0, "earliest": null, "latest": null, "sha256": "df181903e9b16338c5eaca9b4332fdf01dbb5c4ee2b4923eb048d6603c831e44"}},
+      {"symbol": "IEF", "dividends": {"row_count": 288, "earliest": "2002-09-03", "latest": "2026-07-01", "sha256": "7be5004aec5352c9a2c32e257a5f161132df497ae72cfd8c1cd381a4cbf48a96"}, "splits": {"row_count": 0, "earliest": null, "latest": null, "sha256": "f7c49bf4ed5b55922b86c8f64ba4a7ac80cfb1a44fcbc62d441e715387460ee9"}},
+      {"symbol": "TIP", "dividends": {"row_count": 200, "earliest": "2003-12-31", "latest": "2026-07-01", "sha256": "009e8ca1a3878acde1a0983639b23366cda5689401ce5d32188b986f1a2332ca"}, "splits": {"row_count": 0, "earliest": null, "latest": null, "sha256": "babcb494116fdc8a54ea215f802df96dc5725852fc82f36d68984664318dfa03"}},
+      {"symbol": "VGK", "dividends": {"row_count": 63, "earliest": "2005-12-27", "latest": "2026-06-18", "sha256": "ee68b0db6a7bd15ca8100e9aa1b2ebc7266f1524c4d1cb56ab2d0398019b2bfb"}, "splits": {"row_count": 0, "earliest": null, "latest": null, "sha256": "60d733e8da57fd0bd4ad9bdaaaf572e302757d16ec898dd5470ab17e0c6dcc8b"}},
+      {"symbol": "VTI", "dividends": {"row_count": 102, "earliest": "2001-06-25", "latest": "2026-06-26", "sha256": "c1fe5f71b4e164d63a5f8701f878fe73d746637da237ebe900dfb1f4ac4b0e76"}, "splits": {"row_count": 1, "earliest": "2008-06-18", "latest": "2008-06-18", "sha256": "5e2edbac3970a2ef191fb60374f77b938648982c51354e873f6a0e38590b1def"}},
+      {"symbol": "VWO", "dividends": {"row_count": 62, "earliest": "2005-12-27", "latest": "2026-06-18", "sha256": "55c95220502441937a8b6c06b1ab55801e63d5f2543a6b3e50ae1ca6ae2db9e8"}, "splits": {"row_count": 1, "earliest": "2008-06-18", "latest": "2008-06-18", "sha256": "75d0beaf7a48a0ec5d08c4282534595eefc86fa4203d21fa917d2eaf6d1f0de2"}}
+    ]
+  },
+  "reconciliation": {
+    "comparison_start": "2006-02-03",
+    "comparison_end": "2015-12-31",
+    "pair_count": 16,
+    "exact_pair_count": 11,
+    "mismatched_pair_count": 5,
+    "matched_event_count": 80,
+    "alpha_only_event_count": 227,
+    "yahoo_only_event_count": 228,
+    "all_pairs_exact": false,
+    "rows": [
+      {"symbol": "DBC", "dividends": {"alpha": 3, "yahoo": 3, "matched": 3, "alpha_only": 0, "yahoo_only": 0, "exact": true}, "splits": {"alpha": 0, "yahoo": 0, "matched": 0, "alpha_only": 0, "yahoo_only": 0, "exact": true}},
+      {"symbol": "EWJ", "dividends": {"alpha": 18, "yahoo": 18, "matched": 0, "alpha_only": 18, "yahoo_only": 18, "exact": false}, "splits": {"alpha": 0, "yahoo": 0, "matched": 0, "alpha_only": 0, "yahoo_only": 0, "exact": true}},
+      {"symbol": "GLD", "dividends": {"alpha": 0, "yahoo": 0, "matched": 0, "alpha_only": 0, "yahoo_only": 0, "exact": true}, "splits": {"alpha": 0, "yahoo": 0, "matched": 0, "alpha_only": 0, "yahoo_only": 0, "exact": true}},
+      {"symbol": "IEF", "dividends": {"alpha": 119, "yahoo": 119, "matched": 2, "alpha_only": 117, "yahoo_only": 117, "exact": false}, "splits": {"alpha": 0, "yahoo": 0, "matched": 0, "alpha_only": 0, "yahoo_only": 0, "exact": true}},
+      {"symbol": "TIP", "dividends": {"alpha": 85, "yahoo": 86, "matched": 4, "alpha_only": 81, "yahoo_only": 82, "exact": false}, "splits": {"alpha": 0, "yahoo": 0, "matched": 0, "alpha_only": 0, "yahoo_only": 0, "exact": true}},
+      {"symbol": "VGK", "dividends": {"alpha": 20, "yahoo": 20, "matched": 20, "alpha_only": 0, "yahoo_only": 0, "exact": true}, "splits": {"alpha": 0, "yahoo": 0, "matched": 0, "alpha_only": 0, "yahoo_only": 0, "exact": true}},
+      {"symbol": "VTI", "dividends": {"alpha": 40, "yahoo": 40, "matched": 31, "alpha_only": 9, "yahoo_only": 9, "exact": false}, "splits": {"alpha": 1, "yahoo": 1, "matched": 1, "alpha_only": 0, "yahoo_only": 0, "exact": true}},
+      {"symbol": "VWO", "dividends": {"alpha": 20, "yahoo": 20, "matched": 18, "alpha_only": 2, "yahoo_only": 2, "exact": false}, "splits": {"alpha": 1, "yahoo": 1, "matched": 1, "alpha_only": 0, "yahoo_only": 0, "exact": true}}
+    ]
+  },
+  "guardrails": {
+    "validation_window_status": "sealed_not_accessed",
+    "maximum_existing_market_or_return_date_accessed": "2015-12-31",
+    "provider_corporate_action_events_after_2015_isolated": true,
+    "validation_prices_opened": false,
+    "validation_adjusted_prices_opened": false,
+    "validation_returns_opened": false,
+    "validation_signals_opened": false,
+    "validation_positions_opened": false,
+    "validation_regimes_opened": false,
+    "validation_benchmarks_opened": false,
+    "validation_pnl_opened": false,
+    "credential_value_recorded": false,
+    "absolute_local_path_recorded": false,
+    "paid_data_used": false,
+    "orders_or_broker_actions": false,
+    "validation_unlock": false
+  },
+  "tier_blockers": [
+    "Alpha Vantage exposes a current corporate-action snapshot, not a point-in-time revision archive.",
+    "Five of sixteen symbol-endpoint reconciliation pairs are not exact under the locked date-and-decimal comparison.",
+    "Six clean empty arrays are provider-reported no events and do not independently prove completeness.",
+    "No validation price or return was opened, so the economic impact of event discrepancies was intentionally not measured.",
+    "The eight-ETF proxy universe remains a fixed surviving universe and does not support survivorship-clean breadth claims."
+  ],
+  "exact_next_safe_action": "Keep validation sealed. Open a separate owner-approved source-decision gate to locate a point-in-time corporate-action archive or formally accept an E1-only scope restriction; do not resolve the mismatches by choosing the provider values that improve performance. Complete the Webull Thailand read-only capability probe separately.",
+  "report_digest_sha256": "838f8d674e32e9d53b5eb8af25dd5ed04cfa63124724ebb175608d9a3bfec854"
+}

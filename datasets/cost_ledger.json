@@ -18,6 +18,22 @@
       "credit_real_payment_status": "unverified",
       "paid_download_eligibility": "blocked_until_real_payment_provenance_confirmed_and_named_gap_preregistered",
       "observed_at": "2026-07-15T00:15:02Z"
+    },
+    {
+      "order_id": "B4.4",
+      "hypothesis_id": "L-1",
+      "provider": "Alpha Vantage",
+      "key_environment_name": "ALPHAVANTAGE_API_FREE",
+      "key_provenance": "owner_supplied_free_key_lily_only",
+      "action": "locked_corporate_actions_acquisition_8_symbols_x_2_endpoints",
+      "estimated_cost_usd": 0,
+      "actual_paid_amount_usd": 0,
+      "successful_payload_count": 16,
+      "network_attempt_count": 16,
+      "market_price_or_return_data_downloaded": false,
+      "validation_returns_opened": false,
+      "paid_download_eligibility": "not_applicable_free_endpoint",
+      "observed_at": "2026-07-15T01:57:43Z"
     }
   ]
 }

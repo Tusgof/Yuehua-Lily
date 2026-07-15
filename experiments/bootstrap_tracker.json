@@ -265,7 +265,7 @@
     {
       "id": "B4.4",
       "title": "L-1 locked Alpha Vantage corporate-actions acquisition",
-      "status": "not_started",
+      "status": "done",
       "depends_on": ["B4.3"],
       "required_artifacts": [
         {"path": "scripts/acquire_l_1_alpha_vantage_corporate_actions.py", "must": "exist"},
@@ -278,7 +278,13 @@
         {"path": "tests/test_validate_l_1_alpha_vantage_corporate_actions_report.py", "must": "pass_in_hermetic_tier"}
       ],
       "forbidden": ["unlocked request matrix", "credential value storage or logging", "validation price or return access", "paid spend", "silent schema coercion", "point-in-time overstatement", "validation unlock", "E2 or edge claim", "broker or order action"],
-      "evidence": []
+      "evidence": [
+        "The locked 8-symbol x 2-endpoint matrix completed 16 successful Alpha Vantage payloads in 16 network attempts with the 15-second serial throttle, zero retries, zero paid spend, no key persistence, and no request outside DIVIDENDS or SPLITS.",
+        "The immutable raw aggregate SHA-256 is 678dac822656743df65f6d97567bf97b56e7c2a3ee0257ca51e7fd0bc702534a; the normalized 772-row dataset SHA-256 is 49dd9607bdc7d9fca6586e64289eb749dc7d8104421a5f4b07ae73190edf8408; datasets/registry.json records both versions as scope_restricted.",
+        "reports/data_quality/l_1_alpha_vantage_corporate_actions.json records E1 digest 838f8d674e32e9d53b5eb8af25dd5ed04cfa63124724ebb175608d9a3bfec854: 11 of 16 pre-2016 symbol-endpoint pairs reconcile exactly, while five dividend pairs do not; no result-fitted tolerance or provider selection was applied.",
+        "The 2016-01-04 through 2026-06-30 validation-return window remains sealed_not_accessed. Post-2015 provider rows are isolated corporate-action metadata; no validation price, adjusted price, return, signal, position, regime, benchmark, or PnL was requested, loaded, joined, printed, or computed.",
+        "research_log/005-lily-l1-alpha-vantage-corporate-actions.md passes the Thai six-section audit. The result remains scope_restricted_no_point_in_time_revision_archive and cannot unlock validation, support E2, establish edge, or authorize deployment."
+      ]
     }
   ]
 }

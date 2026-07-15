@@ -163,21 +163,21 @@ Past reports are reproduced by checking out their recorded commit hash. Do not c
 ## 10. Current Verified State
 
 - **Verified date**: 2026-07-15
-- **Bootstrap**: B0 through B4.3 complete
+- **Bootstrap**: B0 through B4.4 complete
 - **Legacy Note status**: retired and deleted by `docs/DECISION_RECORD_002_RESEARCH_LOG_CONTRACT.md` after its research content was promoted
-- **Human research logs**: contract active; L-0 is log 001; L-1 baseline, remediation, and validation-capacity audits are logs 002 through 004 under `research_log/`
+- **Human research logs**: contract active; L-0 is log 001; L-1 baseline, remediation, validation-capacity, and Alpha Vantage corporate-action audits are logs 002 through 005 under `research_log/`
 - **Dashboard**: retained under `Dashboard/`, demoted from product/state owner
 - **Founding decisions**: `docs/DECISION_RECORD_001_PROJECT_REFOUNDING.md`
 - **Registry**: L-0 scope-restricted E0; L-1 scope-restricted E1; L-2 through L-4 proposed
 - **L-1 falsification execution**: complete through 2015-12-31; not falsified, not validated; validation sealed
 - **L-1 data-quality remediation**: cash resolved at E1; historical fees decision-bounded; corporate actions pass the locked daily tolerance for 6/8 symbols; Webull candidate-ticker and fractional OpenAPI capability remain restricted
 - **L-1 validation capacity**: 2,637 calendar-only sessions project to 20,376 joint independent-bet equivalents versus the binding 8,673 under locked actual dependence; planning sensitivity projects 7,604; validation remains sealed
-- **Alpha Vantage corporate actions**: B4.3 locked the exact zero-cost 8-symbol x 2-endpoint acquisition, credential redaction, immutable hashes, validation-return seal, and current-snapshot claim limit; no Lily ETF request or credential read occurred
+- **Alpha Vantage corporate actions**: B4.4 completed 16/16 free payloads in 16 attempts and stored 772 rows; 11/16 pre-2016 symbol-endpoint pairs reconcile exactly while five dividend pairs do not; the source is a current snapshot without point-in-time revisions, so the result remains E1 scope-restricted and validation stays sealed
 - **Databento**: `DATABENTO_API_02` passes metadata access with USD 0 spend, but relevant US-equity coverage begins in 2018 or later and no dedicated corporate-actions history was exposed; owner-reported USD 50 credit has unverified real-payment provenance
 
 ## 11. Next Safe Action
 
-Keep validation returns sealed. Execute B4.4 only under `l_1_alpha_vantage_corporate_actions_acquisition_v1`: acquire the locked 16 free corporate-action payloads, preserve sanitized hashes, and reconcile events without loading validation prices or returns. A clean result remains a current-snapshot reconciliation and cannot by itself remove the point-in-time blocker or unlock validation. Databento paid use remains blocked unless its real-payment provenance is confirmed; it is not required for B4.4. Separately, complete the Webull Thailand capability probe without previewing or placing an order.
+Keep validation returns sealed. Create a separate owner-approved source-decision gate before either searching for a genuine point-in-time corporate-action archive or formally accepting that L-1 remains E1-only; never resolve the five mismatched dividend pairs by selecting the provider values that improve performance. Databento paid use remains blocked unless its real-payment provenance is confirmed. Separately, complete the Webull Thailand read-only capability probe without previewing or placing an order.
 
 ## 12. Invariants
 

@@ -170,6 +170,10 @@
         {
           "path": "reports/data_quality/databento_l_1_capability.json",
           "evidence_tier": "E1"
+        },
+        {
+          "path": "reports/data_quality/l_1_alpha_vantage_corporate_actions.json",
+          "evidence_tier": "E1"
         }
       ],
       "decision_log": [
@@ -197,6 +201,11 @@
           "date": "2026-07-15",
           "decision": "B4_2_validation_capacity_funded_unlock_blocked",
           "notes": "The calendar-only sealed window has 2,637 NYSE sessions and projects to 20,376.00 joint independent-bet equivalents under the locked pre-2016 actual-dependence recalculation, above the 8,673 binding MinTRL. The founding planning sensitivity projects only 7,603.64. No validation market observations were accessed; corporate-action provenance and a separate owner-approved unlock gate remain blockers. Databento metadata is authenticated but begins in 2018 or later for relevant US-equity datasets and exposes no dedicated corporate-actions history."
+        },
+        {
+          "date": "2026-07-15",
+          "decision": "B4_4_alpha_vantage_current_snapshot_scope_restricted",
+          "notes": "The locked free acquisition completed 16/16 corporate-action payloads and 772 rows with zero paid spend. Eleven of sixteen pre-2016 symbol-endpoint pairs reconcile exactly; five dividend pairs do not. Alpha Vantage exposes a current snapshot rather than a point-in-time revision archive. Validation returns remain sealed, and no E2, edge, or deployment claim is permitted."
         }
       ]
     },

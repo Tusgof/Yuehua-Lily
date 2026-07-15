@@ -328,6 +328,26 @@ def _validate_done_artifact(
         )
     if must == "record_zero_spend_metadata_probe":
         return _validate_zero_spend_metadata_probe(target, order_id, artifact_path)
+    if must == "pass_alpha_vantage_corporate_actions_report_validator":
+        return _validate_alpha_vantage_report_runtime(
+            target,
+            order_id,
+            artifact_path,
+            project_root=project_root,
+            verify_runtime=verify_runtime,
+            runtime_cache=runtime_cache,
+        )
+    if must == "match_alpha_vantage_corporate_actions_machine_report":
+        return _validate_alpha_vantage_markdown(
+            target,
+            order_id,
+            artifact_path,
+            project_root=project_root,
+        )
+    if must == "contain_alpha_vantage_corporate_action_datasets":
+        return _validate_alpha_vantage_registry(target, order_id, artifact_path)
+    if must == "record_zero_spend_alpha_vantage_acquisition":
+        return _validate_alpha_vantage_cost_ledger(target, order_id, artifact_path)
     if must == "pass_summary_validator":
         return _validate_l1_summary_runtime(
             target,
@@ -409,6 +429,114 @@ def _validate_l1_validation_capacity_runtime(
         runtime_cache["l1_validation_capacity"] = completed.returncode == 0
     passed = runtime_cache["l1_validation_capacity"]
     return ([] if passed else [f"{order_id}:l1_validation_capacity_validator_failed"], passed, False)
+
+
+def _validate_alpha_vantage_report_runtime(
+    target: Path,
+    order_id: str,
+    artifact_path: str,
+    *,
+    project_root: Path,
+    verify_runtime: bool,
+    runtime_cache: dict[str, bool],
+) -> tuple[list[str], bool, bool]:
+    if not target.is_file():
+        return [f"{order_id}:missing_artifact:{artifact_path}"], False, False
+    if not verify_runtime:
+        return [], False, True
+    if "alpha_vantage_corporate_actions" not in runtime_cache:
+        completed = subprocess.run(
+            [sys.executable, "scripts/validate_l_1_alpha_vantage_corporate_actions_report.py"],
+            cwd=project_root,
+            text=True,
+            capture_output=True,
+            check=False,
+        )
+        runtime_cache["alpha_vantage_corporate_actions"] = completed.returncode == 0
+    passed = runtime_cache["alpha_vantage_corporate_actions"]
+    return ([] if passed else [f"{order_id}:alpha_vantage_report_validator_failed"], passed, False)
+
+
+def _validate_alpha_vantage_markdown(
+    target: Path,
+    order_id: str,
+    artifact_path: str,
+    *,
+    project_root: Path,
+) -> tuple[list[str], bool, bool]:
+    if not target.is_file():
+        return [f"{order_id}:missing_artifact:{artifact_path}"], False, False
+    try:
+        report = json.loads(
+            (project_root / "reports" / "data_quality" / "l_1_alpha_vantage_corporate_actions.json")
+            .read_text(encoding="utf-8")
+        )
+        markdown = target.read_text(encoding="utf-8")
+    except (FileNotFoundError, json.JSONDecodeError) as exc:
+        return [f"{order_id}:alpha_vantage_report_pair_unreadable:{exc.__class__.__name__}"], False, False
+    required = (
+        str(report.get("producing_git_commit", "")),
+        str(report.get("report_digest_sha256", "")),
+        "E1",
+        "scope_restricted_no_point_in_time_revision_archive",
+        "sealed_not_accessed",
+        "USD 0",
+    )
+    missing = [value for value in required if not value or value not in markdown]
+    blockers = [f"{order_id}:alpha_vantage_markdown_missing_machine_value:{value}" for value in missing]
+    return blockers, not blockers, False
+
+
+def _validate_alpha_vantage_registry(
+    target: Path,
+    order_id: str,
+    artifact_path: str,
+) -> tuple[list[str], bool, bool]:
+    if not target.is_file():
+        return [f"{order_id}:missing_artifact:{artifact_path}"], False, False
+    try:
+        payload = json.loads(target.read_text(encoding="utf-8"))
+    except json.JSONDecodeError:
+        return [f"{order_id}:dataset_registry_invalid_json"], False, False
+    rows = {row.get("dataset_id"): row for row in payload.get("datasets", []) if isinstance(row, dict)}
+    raw = rows.get("l1.alpha_vantage.corporate_actions.raw.v1", {})
+    normalized = rows.get("l1.alpha_vantage.corporate_actions.normalized.v1", {})
+    blockers: list[str] = []
+    if raw.get("status") != "scope_restricted" or normalized.get("status") != "scope_restricted":
+        blockers.append(f"{order_id}:alpha_vantage_registry_status_mismatch")
+    if normalized.get("parent_dataset_ids") != ["l1.alpha_vantage.corporate_actions.raw.v1"]:
+        blockers.append(f"{order_id}:alpha_vantage_registry_parent_mismatch")
+    if raw.get("acquisition", {}).get("paid_amount_usd") != 0 or normalized.get("acquisition", {}).get("paid_amount_usd") != 0:
+        blockers.append(f"{order_id}:alpha_vantage_registry_paid_spend_mismatch")
+    return blockers, not blockers, False
+
+
+def _validate_alpha_vantage_cost_ledger(
+    target: Path,
+    order_id: str,
+    artifact_path: str,
+) -> tuple[list[str], bool, bool]:
+    if not target.is_file():
+        return [f"{order_id}:missing_artifact:{artifact_path}"], False, False
+    try:
+        payload = json.loads(target.read_text(encoding="utf-8"))
+    except json.JSONDecodeError:
+        return [f"{order_id}:cost_ledger_invalid_json"], False, False
+    blockers: list[str] = []
+    if payload.get("actual_cumulative_paid_spend_usd") != 0:
+        blockers.append(f"{order_id}:cost_ledger_nonzero_spend")
+    rows = [row for row in payload.get("entries", []) if isinstance(row, dict) and row.get("order_id") == "B4.4"]
+    if len(rows) != 1:
+        blockers.append(f"{order_id}:cost_ledger_B4_4_entry_mismatch")
+    else:
+        row = rows[0]
+        if row.get("key_environment_name") != "ALPHAVANTAGE_API_FREE":
+            blockers.append(f"{order_id}:cost_ledger_alpha_key_provenance_mismatch")
+        if row.get("actual_paid_amount_usd") != 0 or row.get("network_attempt_count") != 16:
+            blockers.append(f"{order_id}:cost_ledger_alpha_acquisition_mismatch")
+        if row.get("market_price_or_return_data_downloaded") is not False or row.get("validation_returns_opened") is not False:
+            blockers.append(f"{order_id}:cost_ledger_alpha_boundary_mismatch")
+    return blockers, not blockers, False
 
 
 def _validate_l1_validation_capacity_markdown(

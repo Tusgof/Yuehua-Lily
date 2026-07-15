@@ -15,7 +15,7 @@ class ResearchLogAuditTests(unittest.TestCase):
     def test_current_research_logs_pass(self) -> None:
         result = audit_research_logs()
         self.assertEqual("pass", result["status"], result["blockers"])
-        self.assertEqual(4, len(result["logs"]))
+        self.assertEqual(5, len(result["logs"]))
 
     def test_existing_summary_requires_configured_log(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:

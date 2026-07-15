@@ -273,6 +273,72 @@
         "request_specification": "Classify only explicit public statements; never infer Thailand fractional API or per-ticker eligibility"
       },
       "limitations": ["Manual fractional capability is verified generally; exact ticker and OpenAPI fractional capability remain account/broker-confirmation gaps."]
+    },
+    {
+      "dataset_id": "l1.alpha_vantage.corporate_actions.raw.v1",
+      "hypothesis_ids": ["L-1"],
+      "layer": "raw",
+      "status": "scope_restricted",
+      "storage_reference": "${LILY_DATA_ROOT}/raw/alpha_vantage_corporate_actions_v1",
+      "provider": "Alpha Vantage",
+      "provider_schema_version": "DIVIDENDS_SPLITS_observed_2026-07-15",
+      "license": "Alpha Vantage terms apply; no redistribution right asserted",
+      "timezone": "date_only_provider_fields",
+      "coverage": {"symbols": ["VTI", "VGK", "EWJ", "VWO", "IEF", "TIP", "GLD", "DBC"], "endpoints": ["DIVIDENDS", "SPLITS"], "start": "1999-08-25", "end": "2026-07-01", "provider_rows": 772, "successful_payloads": 16},
+      "point_in_time_status": "limited",
+      "survivorship_status": "limited",
+      "hash_policy": "hard_to_reproduce",
+      "hashes": {
+        "source_container_sha256": "678dac822656743df65f6d97567bf97b56e7c2a3ee0257ca51e7fd0bc702534a",
+        "normalized_output_sha256": "b3b7b875d22f9a4ef9b5f00ac7661516aabd71cc923da2657c706cccf86d5f61",
+        "specification_sha256": "8c490898eb8ff62f0076d43ae5d4b5cb1773b1ee7542edc27bbfbcbebbf7cf0e"
+      },
+      "parent_dataset_ids": [],
+      "acquisition": {
+        "network_used": true,
+        "paid_amount_usd": 0,
+        "acquired_at": "2026-07-15T01:57:43Z",
+        "key_provenance_label": "owner_supplied_free_key_lily_only",
+        "request_specification": "Locked VTI, VGK, EWJ, VWO, IEF, TIP, GLD, and DBC matrix across DIVIDENDS and SPLITS; serial 15-second minimum interval; sanitized metadata; no price or return endpoint"
+      },
+      "limitations": [
+        "The provider exposes a current snapshot rather than a point-in-time revision archive.",
+        "Six clean empty arrays do not independently prove event completeness.",
+        "The fixed eight-ETF proxy set remains survivorship-limited."
+      ]
+    },
+    {
+      "dataset_id": "l1.alpha_vantage.corporate_actions.normalized.v1",
+      "hypothesis_ids": ["L-1"],
+      "layer": "normalized",
+      "status": "scope_restricted",
+      "storage_reference": "${LILY_DATA_ROOT}/normalized/alpha_vantage_corporate_actions_v1.json",
+      "provider": "Lily normalization of Alpha Vantage corporate actions",
+      "provider_schema_version": "lily_alpha_vantage_corporate_actions_normalized_v1",
+      "license": "Derived locally from Alpha Vantage responses; Alpha Vantage terms apply",
+      "timezone": "date_only_provider_fields",
+      "coverage": {"symbols": ["VTI", "VGK", "EWJ", "VWO", "IEF", "TIP", "GLD", "DBC"], "event_types": ["DIVIDENDS", "SPLITS"], "start": "1999-08-25", "end": "2026-07-01", "records": 772},
+      "point_in_time_status": "limited",
+      "survivorship_status": "limited",
+      "hash_policy": "hard_to_reproduce",
+      "hashes": {
+        "source_container_sha256": "678dac822656743df65f6d97567bf97b56e7c2a3ee0257ca51e7fd0bc702534a",
+        "normalized_output_sha256": "49dd9607bdc7d9fca6586e64289eb749dc7d8104421a5f4b07ae73190edf8408",
+        "specification_sha256": "8c490898eb8ff62f0076d43ae5d4b5cb1773b1ee7542edc27bbfbcbebbf7cf0e"
+      },
+      "parent_dataset_ids": ["l1.alpha_vantage.corporate_actions.raw.v1"],
+      "acquisition": {
+        "network_used": true,
+        "paid_amount_usd": 0,
+        "acquired_at": "2026-07-15T01:57:43Z",
+        "key_provenance_label": "owner_supplied_free_key_lily_only",
+        "request_specification": "Decimal-preserving normalization with deterministic ordering, duplicate retention, source hashes, and isolated full-history event metadata; no validation price or return join"
+      },
+      "limitations": [
+        "Five of sixteen pre-2016 symbol-endpoint comparisons do not exactly match Yahoo.",
+        "The dataset cannot establish what either provider exposed at a historical decision timestamp.",
+        "No price adjustment, return, signal, position, regime, benchmark, or PnL inference is authorized from B4.4."
+      ]
     }
   ]
 }
