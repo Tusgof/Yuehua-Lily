@@ -1,0 +1,73 @@
+{
+  "schema_version": "lily_databento_metadata_probe_v1",
+  "observed_at": "2026-07-15T00:15:02Z",
+  "provider": "Databento Historical API",
+  "sdk_version": "0.80.0",
+  "key_environment_name": "DATABENTO_API_02",
+  "key_provenance": "owner_provided_existing_single_account_user_environment",
+  "credential_value_recorded": false,
+  "authentication": "valid_metadata_access",
+  "account_credit_usd": {
+    "amount": 50,
+    "provenance": "owner_reported_not_api_verified",
+    "real_payment_status": "unverified",
+    "spend_authorized": false
+  },
+  "requests": [
+    "metadata.list_datasets",
+    "metadata.list_schemas",
+    "metadata.get_dataset_range",
+    "metadata.list_fields",
+    "metadata.get_cost",
+    "metadata.get_record_count",
+    "metadata.list_unit_prices"
+  ],
+  "validation_market_data_requested": false,
+  "market_data_downloaded": false,
+  "actual_paid_amount_usd": 0,
+  "relevant_datasets": [
+    {
+      "dataset": "ARCX.PILLAR",
+      "coverage_start": "2018-05-01",
+      "coverage_end_observed": "2026-07-14",
+      "schemas": ["mbo", "mbp-1", "mbp-10", "tbbo", "trades", "bbo-1s", "bbo-1m", "ohlcv-1s", "ohlcv-1m", "ohlcv-1h", "ohlcv-1d", "definition", "imbalance", "statistics", "status"],
+      "eight_symbol_daily_estimate": {
+        "symbols": ["VTI", "VGK", "EWJ", "VWO", "IEF", "TIP", "GLD", "DBC"],
+        "start": "2018-05-01",
+        "end_exclusive": "2026-07-01",
+        "schema": "ohlcv-1d",
+        "record_count": 16408,
+        "estimated_cost_usd": 0.025672316551
+      }
+    },
+    {
+      "dataset": "DBEQ.BASIC",
+      "coverage_start": "2023-03-28",
+      "coverage_end_observed": "2026-07-14",
+      "schemas": ["mbo", "mbp-1", "mbp-10", "tbbo", "trades", "ohlcv-1s", "ohlcv-1m", "ohlcv-1h", "ohlcv-1d", "definition", "status"],
+      "eight_symbol_daily_estimate": {
+        "symbols": ["VTI", "VGK", "EWJ", "VWO", "IEF", "TIP", "GLD", "DBC"],
+        "start": "2023-03-28",
+        "end_exclusive": "2026-07-01",
+        "schema": "ohlcv-1d",
+        "record_count": 19802,
+        "estimated_cost_usd": 0.082620382309
+      }
+    }
+  ],
+  "field_audit": {
+    "definition_has_corporate_action_event": false,
+    "statistics_has_corporate_action_event": false,
+    "dedicated_corporate_actions_schema_listed": false
+  },
+  "decision": "not_fit_for_full_validation_or_point_in_time_corporate_actions",
+  "reasons": [
+    "The sealed validation window starts on 2016-01-04, before the earliest relevant equity dataset coverage observed on 2018-05-01.",
+    "The listed schemas and field inventories do not provide dated dividend, split, or capital-return events as a dedicated corporate-actions history.",
+    "Metadata cost estimates are small, but no paid request is eligible until the owner confirms that the account credit satisfies Lily's real-payment rule."
+  ],
+  "official_sources": [
+    "https://databento.com/docs/api-reference-historical/metadata/list-datasets",
+    "https://databento.com/docs/schemas-and-data-formats"
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "schema_version": "lily_data_cost_ledger_v1",
+  "updated": "2026-07-15",
+  "l1_cumulative_guard_usd": 50,
+  "actual_cumulative_paid_spend_usd": 0,
+  "entries": [
+    {
+      "order_id": "B4.2",
+      "hypothesis_id": "L-1",
+      "provider": "Databento",
+      "key_environment_name": "DATABENTO_API_02",
+      "key_provenance": "owner_provided_existing_single_account_user_environment",
+      "action": "authenticated_metadata_capability_and_cost_estimate_only",
+      "estimated_cost_usd": 0,
+      "actual_paid_amount_usd": 0,
+      "market_data_downloaded": false,
+      "owner_reported_credit_usd": 50,
+      "credit_real_payment_status": "unverified",
+      "paid_download_eligibility": "blocked_until_real_payment_provenance_confirmed_and_named_gap_preregistered",
+      "observed_at": "2026-07-15T00:15:02Z"
+    }
+  ]
+}
