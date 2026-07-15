@@ -30,6 +30,12 @@
       "summary_path": "reports/data_quality/l_1_alpha_vantage_corporate_actions.json",
       "research_log_path": "research_log/005-lily-l1-alpha-vantage-corporate-actions.md",
       "required_when_summary_exists": true
+    },
+    {
+      "experiment_id": "L0-WEBULL-TH-READ-ONLY-CAPABILITY",
+      "summary_path": "reports/feasibility/l_0_webull_th_read_only_capability.json",
+      "research_log_path": "research_log/006-lily-l0-webull-th-read-only-capability.md",
+      "required_when_summary_exists": true
     }
   ]
 }

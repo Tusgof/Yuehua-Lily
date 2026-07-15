@@ -155,6 +155,12 @@ The owner accepts the unresolved corporate-action history as an E1 limitation an
 
 A later prospective comparison is allowed only through a separate hash-locked `E0` operational dry-run preregistration with `edge_claim: none`. It must lock the comparison streams, event/cash/unit/weight/order fields, materiality thresholds, insufficient-event rule, and stop conditions before the first observation. Complete the Webull Thailand read-only capability probe first; broker preview and order actions remain forbidden.
 
+### B4.6 — Webull Thailand Read-only Capability Probe
+
+B4.6 locks and executes a production read-only probe against the owner's Webull Thailand application. Authentication, account list, balance, positions, and one exact ten-symbol instrument query are allowed; private account values, preview, order, paper trade, validation access, and real money are forbidden.
+
+Exit: all four read-only endpoints succeed, and VTI, VGK, EWJ, IPAC, VWO, IEF, SCHP, GLDM, PDBC, and VNQI return `status=OC` and `fractionable=true`. This is E0 operational evidence only. Minimum order, funding FX, execution quality, and realized costs remain outside the claim.
+
 ## 6. Acceptance Gate
 
 E2 requires all of the following:
@@ -193,7 +199,7 @@ If MinTRL validation cost is unaffordable or undefined against the benchmark nul
 
 ## 9. Broker And Credential Rule
 
-- Webull Thailand: preferred current-capital ETF candidate; public material verifies general manual fractional trading, while candidate-ticker eligibility and fractional API capability remain unverified.
+- Webull Thailand: preferred current-capital ETF candidate; B4.6 verifies production read-only access plus `status=OC` and `fractionable=true` for all ten current candidates, while minimum order, funding FX, execution quality, and realized costs remain unverified.
 - IBKR: micro-futures/reference API candidate; actual permissions remain unverified.
 - Databento: metadata access through `DATABENTO_API_02` is verified with zero spend; relevant equity coverage begins in 2018 or later and does not expose the required corporate-actions history. The owner-reported USD 50 credit is ineligible for paid use until real-payment provenance is confirmed.
 - No shared Higanbana credentials or cost state.
@@ -206,8 +212,8 @@ If MinTRL validation cost is unaffordable or undefined against the benchmark nul
 |:--|:--|:--|
 | Founding decisions | Complete | pushed founding pack |
 | P0–P4 | Active after bootstrap | Maintain governance, reproducibility, statistics, data, and restore controls |
-| L-0 | Scope-restricted E0 feasibility complete | Broker capability remains unverified |
-| L-1 | Scope-restricted E1; B4.5 accepts the corporate-action limitation and keeps validation sealed | Webull Thailand read-only capability probe, then a separate E0 shadow-accounting preregistration if approved |
+| L-0 | Scope-restricted E0; B4.6 verifies production read-only and fractional metadata for ten ETF candidates | Minimum order, funding FX, execution quality, and realized-cost evidence |
+| L-1 | Scope-restricted E1; B4.5 accepts the corporate-action limitation and B4.6 resolves the Webull read-only prerequisite | Separate E0 shadow-accounting preregistration if approved; validation remains sealed |
 | L-2 | Proposed | L-1 evidence |
 | L-3 | Proposed | baseline infrastructure and preregistration |
 | L-4 | Proposed | universe/data integrity and preregistration |

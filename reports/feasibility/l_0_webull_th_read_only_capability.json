@@ -1,0 +1,160 @@
+{
+  "account_capability": {
+    "account_list_endpoint_succeeded": true,
+    "account_list_field_inventory": [
+      "account_class",
+      "account_id",
+      "account_label",
+      "account_number",
+      "account_type",
+      "user_id"
+    ],
+    "account_list_response_sha256": "3419a9c6eab808f527f1b306a665cd7a7e6fe80d06f9e0ae2ae156f9bfd8f298",
+    "authentication_succeeded": true,
+    "balance_endpoint_succeeded": true,
+    "balance_field_inventory": [
+      "account_currency_assets",
+      "buying_power",
+      "cash_balance",
+      "currency",
+      "market_value",
+      "total_asset_currency",
+      "total_cash_balance",
+      "total_market_value",
+      "total_unrealized_profit_loss",
+      "unrealized_profit_loss"
+    ],
+    "balance_response_sha256": "8e51baea9d2790b04b80f42a7f12f6917a52816783a1d4f320ca27dd9ddc71b6",
+    "positions_endpoint_succeeded": true,
+    "positions_field_inventory": [
+      "cost_price",
+      "currency",
+      "instrument_type",
+      "last_price",
+      "position_id",
+      "quantity",
+      "symbol",
+      "unrealized_profit_loss"
+    ],
+    "positions_response_sha256": "943aa389427a74a31a591d7612288d8026e2305e3b928360c49ee074f5afdb41",
+    "private_values_persisted": false
+  },
+  "claim_limits": [
+    "This E0 probe verifies operational read-only and instrument metadata capability only; it does not establish strategy edge or E2 evidence.",
+    "Fractionable metadata does not prove minimum order, fill quality, slippage, funding FX cost, or deployment readiness.",
+    "This result does not authorize order preview, paper trading, the prospective shadow-accounting dry run, or real money."
+  ],
+  "decision": "verified_read_only_and_fractional_candidate_set",
+  "edge_claim": "none",
+  "evidence_tier": "E0",
+  "hypothesis_id": "L-0",
+  "instrument_capability": {
+    "all_fractionable": true,
+    "all_tradable": true,
+    "response_sha256": "76f3fa405d63ac8ff37853611e69ac556cd9faacdbee725f468b80b374cd0e32",
+    "symbols": [
+      {
+        "fractionable": true,
+        "instrument_type": null,
+        "status": "OC",
+        "symbol": "VTI"
+      },
+      {
+        "fractionable": true,
+        "instrument_type": null,
+        "status": "OC",
+        "symbol": "VGK"
+      },
+      {
+        "fractionable": true,
+        "instrument_type": null,
+        "status": "OC",
+        "symbol": "EWJ"
+      },
+      {
+        "fractionable": true,
+        "instrument_type": null,
+        "status": "OC",
+        "symbol": "IPAC"
+      },
+      {
+        "fractionable": true,
+        "instrument_type": null,
+        "status": "OC",
+        "symbol": "VWO"
+      },
+      {
+        "fractionable": true,
+        "instrument_type": null,
+        "status": "OC",
+        "symbol": "IEF"
+      },
+      {
+        "fractionable": true,
+        "instrument_type": null,
+        "status": "OC",
+        "symbol": "SCHP"
+      },
+      {
+        "fractionable": true,
+        "instrument_type": null,
+        "status": "OC",
+        "symbol": "GLDM"
+      },
+      {
+        "fractionable": true,
+        "instrument_type": null,
+        "status": "OC",
+        "symbol": "PDBC"
+      },
+      {
+        "fractionable": true,
+        "instrument_type": null,
+        "status": "OC",
+        "symbol": "VNQI"
+      }
+    ]
+  },
+  "next_safe_action": "Design and obtain owner approval for a separately hash-locked E0 prospective shadow-accounting dry-run preregistration. Do not call preview or order endpoints.",
+  "order_id": "B4.6",
+  "produced_at": "2026-07-15T05:29:38.817277Z",
+  "producing_git_commit": "4d109be190ff28339c5d142958623f0b7e06299e",
+  "report_digest_sha256": "12ca642bf56406d53cc05dffba695cdc588e707afc827dd64db906e6f919e068",
+  "request_attestation": {
+    "order_endpoint_calls": 0,
+    "orders_sent": 0,
+    "paid_spend_usd": 0,
+    "preview_calls": 0,
+    "read_only_paths": [
+      "/openapi/account/list",
+      "/openapi/assets/balance",
+      "/openapi/assets/positions",
+      "/openapi/instrument/stock/list"
+    ],
+    "read_only_request_count": 4
+  },
+  "runtime": {
+    "environment": "production",
+    "python": "3.11.9",
+    "region": "th",
+    "webull_sdk": "2.0.13"
+  },
+  "schema_version": "lily_l0_webull_th_read_only_capability_report_v1",
+  "tier_blockers": [
+    "minimum_order_unverified",
+    "funding_fx_cost_unverified",
+    "execution_quality_unverified",
+    "realized_cost_unverified",
+    "instrument_type_not_returned"
+  ],
+  "validation_return_seal": {
+    "benchmarks_opened": false,
+    "pnl_opened": false,
+    "positions_opened": false,
+    "prices_opened": false,
+    "regimes_opened": false,
+    "returns_opened": false,
+    "signals_opened": false,
+    "status": "sealed_not_accessed"
+  }
+}

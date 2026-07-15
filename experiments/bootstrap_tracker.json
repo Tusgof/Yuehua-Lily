@@ -305,6 +305,28 @@
         "A future dry run may measure prospective cash, unit, target-weight, order-notional, and posting-delay differences, but it cannot prove historical return correctness, historical discrepancy immateriality, strategy edge, E2 validation, or deployment readiness.",
         "B4.5 opened no validation price, adjusted price, return, signal, position, regime, benchmark, or PnL; performed no broker access, preview, order, paper trade, paid purchase, or real-money action."
       ]
+    },
+    {
+      "id": "B4.6",
+      "title": "Webull Thailand production read-only capability probe",
+      "status": "done",
+      "depends_on": ["B4.5"],
+      "required_artifacts": [
+        {"path": "experiments/l_0_webull_th_read_only_capability_probe.json", "must": "locked_and_valid"},
+        {"path": "scripts/run_l_0_webull_th_read_only_capability_probe.py", "must": "exist"},
+        {"path": "reports/feasibility/l_0_webull_th_read_only_capability.json", "must": "pass_webull_th_read_only_capability_report_validator"},
+        {"path": "reports/feasibility/l_0_webull_th_read_only_capability.md", "must": "match_webull_th_read_only_capability_report"},
+        {"path": "research_log/006-lily-l0-webull-th-read-only-capability.md", "must": "pass_research_log_audit"},
+        {"path": "tests/test_validate_l_0_webull_th_read_only_capability_report.py", "must": "pass_in_hermetic_tier"}
+      ],
+      "forbidden": ["credential or account identifier disclosure", "balance or position value persistence", "order preview", "order endpoint", "paper trade", "validation return access", "E2 or edge claim", "real money"],
+      "evidence": [
+        "The locked B4.6 gate was committed and pushed before the first production API call. It permits only authentication plus account list, balance, positions, and one exact ten-symbol instrument query.",
+        "Webull Thailand production authentication, account list, balance, and positions returned successfully. Only field inventories and in-memory response hashes were retained; no Account ID, balance, buying power, holding, or quantity was persisted.",
+        "VTI, VGK, EWJ, IPAC, VWO, IEF, SCHP, GLDM, PDBC, and VNQI all returned status OC and fractionable true from the locked instrument query.",
+        "The request attestation records four read-only calls, zero preview calls, zero order endpoint calls, zero orders, and USD 0 spend.",
+        "The result is E0 operational capability evidence only. Validation returns remain sealed, and the probe does not authorize paper trading, shadow accounting, E2, edge, deployment, or real money."
+      ]
     }
   ]
 }

@@ -15,7 +15,7 @@ class NewScriptLibUsageAuditTests(unittest.TestCase):
     def test_current_registry_passes(self) -> None:
         result = audit_new_script_lib_usage()
         self.assertEqual("pass", result["status"], result["blockers"])
-        self.assertEqual(26, result["registered_script_count"])
+        self.assertEqual(27, result["registered_script_count"])
         self.assertEqual(2, result["grandfathered_script_count"])
 
     def test_unregistered_script_is_blocked(self) -> None:

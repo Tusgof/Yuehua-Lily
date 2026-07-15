@@ -84,6 +84,10 @@
         {
           "path": "reports/feasibility/l_0_sizing_feasibility.json",
           "evidence_tier": "E0"
+        },
+        {
+          "path": "reports/feasibility/l_0_webull_th_read_only_capability.json",
+          "evidence_tier": "E0"
         }
       ],
       "decision_log": [
@@ -96,6 +100,11 @@
           "date": "2026-07-15",
           "decision": "scope_restricted_after_locked_E0_feasibility_study",
           "notes": "Eight- and ten-sleeve ETF economic sizing passes at USD 1,000 and USD 2,000, while twelve sleeves breach the locked 25% weight cap. No broker path is fully verified because exact fractional eligibility, Thailand OpenAPI capability, funding FX, or account permissions remain unknown. Micro-futures minimum capital is USD 40,600, 54,200, and 95,400 for 4, 8, and 12 markets; no edge or deployment claim is made."
+        },
+        {
+          "date": "2026-07-15",
+          "decision": "B4_6_webull_th_read_only_and_fractional_metadata_verified",
+          "notes": "The owner's Webull Thailand production application passed authentication, account-list, balance, and positions read-only calls. All ten locked ETF candidates returned status OC and fractionable true. L-0 remains scope-restricted because minimum order, funding FX, execution quality, and realized costs were not tested; no preview, order, paper trade, edge, E2, validation unlock, or real-money action is authorized."
         }
       ]
     },

@@ -17,7 +17,7 @@
 
 ## L-0 — Capital And Broker Sizing Feasibility
 
-- **Status**: scope-restricted after the locked E0 feasibility study; economic ETF sizing passes at 8–10 sleeves but no broker path is fully verified
+- **Status**: scope-restricted E0 after B4.6; economic ETF sizing passes at 8–10 sleeves, Webull Thailand production read-only access works, and all ten current candidates return `status=OC` with `fractionable=true`; minimum order, funding FX, execution quality, and realized costs remain unverified
 - **Statement**: At least one globally diversified US-listed fractional-ETF trend implementation can be sized honestly at USD 1,000 and USD 2,000 after broker constraints and costs, while the study can identify minimum viable capital for 4-, 8-, and 12-market micro-futures variants.
 - **Rationale**: A statistical edge is operationally irrelevant if contract/share granularity, margin, cash buffers, or costs prevent risk-targeted breadth.
 - **Predictions**:
@@ -80,7 +80,7 @@
 
 ## Seed Status
 
-L-0 has E0 sizing evidence and remains scope-restricted. L-1 has E1 falsification-window, data-remediation, capacity, and independent corporate-action evidence: `MinTRL_falsify` is funded, but the full two-regime falsification rule is not met. The sealed validation calendar projects 20,376 joint independent-bet equivalents against the binding 8,673 under the locked actual-dependence rule, while the original planning sensitivity projects only 7,604. Treasury cash is resolved and fee uncertainty cannot reverse the negative primary result even under a full-credit bound. B4.4 acquires the locked Alpha Vantage matrix at zero cost, but only 11/16 pre-2016 symbol-endpoint pairs reconcile exactly and the provider has no point-in-time revision archive. B4.5 accepts that limitation at E1 and pauses further source search; it does not authorize validation or paper trading. Point-in-time corporate actions and Webull account capability remain restricted. The validation window is sealed. L-2 through L-4 remain proposed and may not be promoted by prose edits alone.
+L-0 has E0 sizing and production Webull capability evidence and remains scope-restricted. B4.6 verifies read-only account endpoints plus `status=OC` and `fractionable=true` for all ten ETF candidates, but minimum order, funding FX, execution quality, and realized costs remain unknown. L-1 has E1 falsification-window, data-remediation, capacity, and independent corporate-action evidence: `MinTRL_falsify` is funded, but the full two-regime falsification rule is not met. The sealed validation calendar projects 20,376 joint independent-bet equivalents against the binding 8,673 under the locked actual-dependence rule, while the original planning sensitivity projects only 7,604. Treasury cash is resolved and fee uncertainty cannot reverse the negative primary result even under a full-credit bound. B4.4 acquires the locked Alpha Vantage matrix at zero cost, but only 11/16 pre-2016 symbol-endpoint pairs reconcile exactly and the provider has no point-in-time revision archive. B4.5 accepts that limitation at E1 and pauses further source search; it does not authorize validation or paper trading. The validation window is sealed. L-2 through L-4 remain proposed and may not be promoted by prose edits alone.
 
 ## Source Adaptation
 

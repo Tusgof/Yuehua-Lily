@@ -236,6 +236,18 @@ def _validate_done_artifact(
     if must == "contain_synthetic_data_fixtures":
         return _validate_synthetic_data_fixtures(target, order_id, artifact_path)
     if must == "locked_and_valid":
+        if artifact_path == "experiments/l_0_webull_th_read_only_capability_probe.json":
+            return _validate_locked_preregistration_gate(
+                target,
+                order_id,
+                artifact_path,
+                gate_id="l_0_webull_th_read_only_capability_probe_v1",
+                label="l0_webull_th_read_only_capability",
+                expected_status="locked_before_probe",
+                edge_claim_field="edge_claim",
+                project_root=project_root,
+                verify_runtime=verify_runtime,
+            )
         if artifact_path == "experiments/l_1_alpha_vantage_corporate_actions_acquisition.json":
             return _validate_locked_preregistration_gate(
                 target,
@@ -359,6 +371,17 @@ def _validate_done_artifact(
         )
     if must == "match_corporate_action_scope_decision":
         return _validate_corporate_action_scope_decision_markdown(target, order_id, artifact_path)
+    if must == "pass_webull_th_read_only_capability_report_validator":
+        return _validate_webull_th_read_only_capability_report_runtime(
+            target,
+            order_id,
+            artifact_path,
+            project_root=project_root,
+            verify_runtime=verify_runtime,
+            runtime_cache=runtime_cache,
+        )
+    if must == "match_webull_th_read_only_capability_report":
+        return _validate_webull_th_read_only_capability_markdown(target, order_id, artifact_path)
     if must == "pass_summary_validator":
         return _validate_l1_summary_runtime(
             target,
@@ -595,6 +618,53 @@ def _validate_corporate_action_scope_decision_markdown(
     )
     missing = [value for value in required if value not in text]
     blockers = [f"{order_id}:corporate_action_scope_decision_markdown_missing:{value}" for value in missing]
+    return blockers, not blockers, False
+
+
+def _validate_webull_th_read_only_capability_report_runtime(
+    target: Path,
+    order_id: str,
+    artifact_path: str,
+    *,
+    project_root: Path,
+    verify_runtime: bool,
+    runtime_cache: dict[str, bool],
+) -> tuple[list[str], bool, bool]:
+    if not target.is_file():
+        return [f"{order_id}:missing_artifact:{artifact_path}"], False, False
+    if not verify_runtime:
+        return [], False, True
+    if "webull_th_read_only_capability_report" not in runtime_cache:
+        completed = subprocess.run(
+            [sys.executable, "scripts/validate_l_0_webull_th_read_only_capability_report.py"],
+            cwd=project_root,
+            text=True,
+            capture_output=True,
+            check=False,
+        )
+        runtime_cache["webull_th_read_only_capability_report"] = completed.returncode == 0
+    passed = runtime_cache["webull_th_read_only_capability_report"]
+    return ([] if passed else [f"{order_id}:webull_th_read_only_capability_report_validator_failed"], passed, False)
+
+
+def _validate_webull_th_read_only_capability_markdown(
+    target: Path,
+    order_id: str,
+    artifact_path: str,
+) -> tuple[list[str], bool, bool]:
+    if not target.is_file():
+        return [f"{order_id}:missing_artifact:{artifact_path}"], False, False
+    text = target.read_text(encoding="utf-8")
+    required = (
+        "verified_read_only_and_fractional_candidate_set",
+        "validation returns: `sealed_not_accessed`",
+        "| VTI | OC | true |",
+        "| VNQI | OC | true |",
+        "ไม่มีการเรียก preview/place/replace/cancel order",
+        "E0 prospective shadow accounting dry run",
+    )
+    missing = [value for value in required if value not in text]
+    blockers = [f"{order_id}:webull_th_read_only_capability_markdown_missing:{value}" for value in missing]
     return blockers, not blockers, False
 
 

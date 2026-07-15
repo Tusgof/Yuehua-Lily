@@ -100,7 +100,7 @@ The family review triggers after three consecutive adequately powered falsificat
 - Current-capital implementation candidate: 8–12 US-listed fractional ETFs whose underlying exposures are globally diversified across countries and asset classes.
 - Webull Thailand is the preferred ETF operational candidate because of usability and fractional execution.
 - IBKR is the reference broker for micro-futures feasibility and broader API capability.
-- Webull Thailand fractional API support and actual IBKR permissions are unverified until bounded capability probes pass.
+- Webull Thailand production read-only and fractional metadata support for the current ten-ETF set passed B4.6; minimum order, funding FX, execution quality, and actual IBKR permissions remain unverified.
 - Full-size futures are outside current-capital scope.
 - Futures feasibility reports minimum capital for 4, 8, and 12 markets using one-contract granularity, margin, volatility, cash buffer, costs, and concentration limits.
 
@@ -163,22 +163,23 @@ Past reports are reproduced by checking out their recorded commit hash. Do not c
 ## 10. Current Verified State
 
 - **Verified date**: 2026-07-15
-- **Bootstrap**: B0 through B4.5 complete
+- **Bootstrap**: B0 through B4.6 complete
 - **Legacy Note status**: retired and deleted by `docs/DECISION_RECORD_002_RESEARCH_LOG_CONTRACT.md` after its research content was promoted
-- **Human research logs**: contract active; L-0 is log 001; L-1 baseline, remediation, validation-capacity, and Alpha Vantage corporate-action audits are logs 002 through 005 under `research_log/`
+- **Human research logs**: contract active; L-0 sizing and Webull capability are logs 001 and 006; L-1 baseline, remediation, validation-capacity, and Alpha Vantage corporate-action audits are logs 002 through 005 under `research_log/`
 - **Dashboard**: retained under `Dashboard/`, demoted from product/state owner
 - **Founding decisions**: `docs/DECISION_RECORD_001_PROJECT_REFOUNDING.md`
 - **Registry**: L-0 scope-restricted E0; L-1 scope-restricted E1; L-2 through L-4 proposed
 - **L-1 falsification execution**: complete through 2015-12-31; not falsified, not validated; validation sealed
-- **L-1 data-quality remediation**: cash resolved at E1; historical fees decision-bounded; corporate actions pass the locked daily tolerance for 6/8 symbols; Webull candidate-ticker and fractional OpenAPI capability remain restricted
+- **L-1 data-quality remediation**: cash resolved at E1; historical fees decision-bounded; corporate actions pass the locked daily tolerance for 6/8 symbols; the later B4.6 probe resolves Webull candidate-ticker and fractional OpenAPI capability for the current ten-ETF set
 - **L-1 validation capacity**: 2,637 calendar-only sessions project to 20,376 joint independent-bet equivalents versus the binding 8,673 under locked actual dependence; planning sensitivity projects 7,604; validation remains sealed
 - **Alpha Vantage corporate actions**: B4.4 completed 16/16 free payloads in 16 attempts and stored 772 rows; 11/16 pre-2016 symbol-endpoint pairs reconcile exactly while five dividend pairs do not; the source is a current snapshot without point-in-time revisions, so the result remains E1 scope-restricted and validation stays sealed
 - **Owner scope decision**: B4.5 accepts the unresolved corporate-action history as an E1 limitation and pauses additional source search; a future comparison is allowed only through a separately locked E0 shadow-accounting dry run that tests operations, not edge or historical correctness
+- **Webull Thailand capability**: B4.6 production read-only authentication, account list, balance, and positions succeeded; all ten current ETF candidates returned `status=OC` and `fractionable=true`; no private account values, preview, order, paper trade, paid spend, or validation data were exposed
 - **Databento**: `DATABENTO_API_02` passes metadata access with USD 0 spend, but relevant US-equity coverage begins in 2018 or later and no dedicated corporate-actions history was exposed; owner-reported USD 50 credit has unverified real-payment provenance
 
 ## 11. Next Safe Action
 
-Keep validation returns sealed and leave L-1 at E1. Complete the Webull Thailand read-only capability probe without previewing or placing an order. Only after broker capability is known may a separate owner-approved and hash-locked E0 shadow-accounting dry-run preregistration define streams, fields, materiality thresholds, insufficient-event handling, and stop conditions before the first prospective observation.
+Keep validation returns sealed and leave L-1 at E1. Design a separate owner-approved and hash-locked E0 shadow-accounting dry-run preregistration that defines streams, fields, materiality thresholds, insufficient-event handling, and stop conditions before the first prospective observation. B4.6 does not itself authorize that dry run, preview, or any order action.
 
 ## 12. Invariants
 
