@@ -18,6 +18,12 @@
       "summary_path": "reports/data_quality/l_1_data_quality_remediation.json",
       "research_log_path": "research_log/003-lily-l1-data-quality-remediation.md",
       "required_when_summary_exists": true
+    },
+    {
+      "experiment_id": "L1-VALIDATION-CAPACITY",
+      "summary_path": "reports/diagnostics/l_1_validation_capacity.json",
+      "research_log_path": "research_log/004-lily-l1-validation-capacity.md",
+      "required_when_summary_exists": true
     }
   ]
 }

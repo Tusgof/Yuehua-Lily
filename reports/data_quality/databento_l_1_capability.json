@@ -1,0 +1,119 @@
+{
+  "account_credit_usd": {
+    "amount": 50,
+    "provenance": "owner_reported_not_api_verified",
+    "real_payment_status": "unverified",
+    "spend_authorized": false
+  },
+  "authentication": "valid_metadata_access",
+  "decision": "not_fit_for_full_l1_validation_or_corporate_actions",
+  "edge_claim": "none",
+  "evidence_tier": "E1",
+  "field_audit": {
+    "dedicated_corporate_actions_schema_listed": false,
+    "definition_has_corporate_action_event": false,
+    "statistics_has_corporate_action_event": false
+  },
+  "guardrails": {
+    "account_balance_api_verified": false,
+    "actual_paid_amount_usd": 0,
+    "credential_value_recorded": false,
+    "market_data_downloaded": false,
+    "validation_market_data_requested": false
+  },
+  "hypothesis_id": "L-1",
+  "key_environment_name": "DATABENTO_API_02",
+  "key_provenance": "owner_provided_existing_single_account_user_environment",
+  "official_sources": [
+    "https://databento.com/docs/api-reference-historical/metadata/list-datasets",
+    "https://databento.com/docs/schemas-and-data-formats"
+  ],
+  "order_id": "B4.2",
+  "produced_at": "2026-07-15T00:30:43Z",
+  "producing_git_commit": "b4d7ee8b542b612f6bfb8b9003c8d1e79f919a51",
+  "relevant_datasets": [
+    {
+      "coverage_end_observed": "2026-07-14",
+      "coverage_start": "2018-05-01",
+      "dataset": "ARCX.PILLAR",
+      "eight_symbol_daily_estimate": {
+        "end_exclusive": "2026-07-01",
+        "estimated_cost_usd": 0.025672316551,
+        "record_count": 16408,
+        "schema": "ohlcv-1d",
+        "start": "2018-05-01",
+        "symbols": [
+          "VTI",
+          "VGK",
+          "EWJ",
+          "VWO",
+          "IEF",
+          "TIP",
+          "GLD",
+          "DBC"
+        ]
+      },
+      "schemas": [
+        "mbo",
+        "mbp-1",
+        "mbp-10",
+        "tbbo",
+        "trades",
+        "bbo-1s",
+        "bbo-1m",
+        "ohlcv-1s",
+        "ohlcv-1m",
+        "ohlcv-1h",
+        "ohlcv-1d",
+        "definition",
+        "imbalance",
+        "statistics",
+        "status"
+      ]
+    },
+    {
+      "coverage_end_observed": "2026-07-14",
+      "coverage_start": "2023-03-28",
+      "dataset": "DBEQ.BASIC",
+      "eight_symbol_daily_estimate": {
+        "end_exclusive": "2026-07-01",
+        "estimated_cost_usd": 0.082620382309,
+        "record_count": 19802,
+        "schema": "ohlcv-1d",
+        "start": "2023-03-28",
+        "symbols": [
+          "VTI",
+          "VGK",
+          "EWJ",
+          "VWO",
+          "IEF",
+          "TIP",
+          "GLD",
+          "DBC"
+        ]
+      },
+      "schemas": [
+        "mbo",
+        "mbp-1",
+        "mbp-10",
+        "tbbo",
+        "trades",
+        "ohlcv-1s",
+        "ohlcv-1m",
+        "ohlcv-1h",
+        "ohlcv-1d",
+        "definition",
+        "status"
+      ]
+    }
+  ],
+  "report_digest_sha256": "fd9ad802e85b43ac2414a228f9979a5a64ac7ffcd9efbe8cfa0a1ca5612a6700",
+  "schema_version": "lily_databento_l1_capability_report_v1",
+  "source_probe_path": "experiments/inputs/b4_2_databento_metadata_probe.json",
+  "source_probe_sha256": "e8ea943b8a035e7e139c166eb54dcb02f046777300c2924e266aefbad545c944",
+  "tier_blockers": [
+    "The sealed validation window starts on 2016-01-04, before the earliest relevant equity dataset coverage observed on 2018-05-01.",
+    "The listed schemas and field inventories do not provide dated dividend, split, or capital-return events as a dedicated corporate-actions history.",
+    "Metadata cost estimates are small, but no paid request is eligible until the owner confirms that the account credit satisfies Lily's real-payment rule."
+  ]
+}

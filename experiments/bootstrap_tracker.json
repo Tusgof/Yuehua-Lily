@@ -221,6 +221,27 @@
         "reports/feasibility/webull_th_capability.json verifies only general manual fractional capability from public material; candidate-ticker green-diamond status requires account observation and fractional OpenAPI is not documented.",
         "research_log/003-lily-l1-data-quality-remediation.md passes the Thai six-section audit; no credential, account query, order preview, paper or real order, paid data, external message, E2 promotion, or deployment approval occurred."
       ]
+    },
+    {
+      "id": "B4.2",
+      "title": "L-1 validation funding-capacity audit",
+      "status": "done",
+      "depends_on": ["B4.1"],
+      "required_artifacts": [
+        {"path": "reports/diagnostics/l_1_validation_capacity.json", "must": "pass_validation_capacity_validator"},
+        {"path": "reports/diagnostics/l_1_validation_capacity.md", "must": "match_validation_capacity_machine_report"},
+        {"path": "reports/data_quality/databento_l_1_capability.json", "must": "exist"},
+        {"path": "datasets/cost_ledger.json", "must": "record_zero_spend_metadata_probe"},
+        {"path": "research_log/004-lily-l1-validation-capacity.md", "must": "pass_research_log_audit"}
+      ],
+      "forbidden": ["validation price or return access", "validation signal or PnL computation", "paid data download", "credential value storage", "validation unlock", "E2 or edge claim", "broker or order action"],
+      "evidence": [
+        "reports/diagnostics/l_1_validation_capacity.json records E1 digest 1675714fffb45ab644c78bf2cc3a89ce4038966c27cdb835d1a2d3e1ffb64264: 2,637 calendar-only NYSE sessions project to 20,376.00 joint independent-bet equivalents under the locked B4 actual-dependence recalculation, above the binding MinTRL_validate of 8,673.",
+        "The non-binding founding planning sensitivity projects only 7,603.64 joint independent-bet equivalents and does not fund the binding null; the report therefore states that statistical capacity depends materially on inherited pre-2016 dependence estimates.",
+        "The untouched 2016-01-04 through 2026-06-30 window remains sealed_not_accessed: no validation price, return, signal, position, regime, benchmark, or PnL value was requested, loaded, or computed.",
+        "experiments/inputs/b4_2_databento_metadata_probe.json and reports/data_quality/databento_l_1_capability.json record authenticated metadata-only access through DATABENTO_API_02, zero market-data downloads, and USD 0 paid spend. ARCX.PILLAR begins 2018-05-01, DBEQ.BASIC begins 2023-03-28, and no dedicated corporate-actions history was exposed.",
+        "datasets/cost_ledger.json records the owner-reported USD 50 credit as real-payment provenance unverified and blocks paid use until confirmed. research_log/004-lily-l1-validation-capacity.md passes the Thai six-section audit; no unlock, E2 promotion, broker action, paper trade, or real-money action occurred."
+      ]
     }
   ]
 }

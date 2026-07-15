@@ -132,7 +132,10 @@
         "actual_joint_independent_bet_equivalents": 17338.86843729944
       },
       "mintrl_validate": {
-        "status": "sealed_not_accessed_and_capacity_not_verified",
+        "status": "sealed_not_accessed_capacity_funded_unlock_blocked",
+        "binding_required_joint_independent_bet_equivalents": 8673,
+        "projected_joint_independent_bet_equivalents_under_locked_actual_recalculation": 20376.00120910337,
+        "planning_sensitivity_joint_independent_bet_equivalents": 7603.642849820606,
         "nulls": [
           "zero",
           "matched implementable benchmark",
@@ -159,6 +162,14 @@
         {
           "path": "reports/data_quality/l_1_data_quality_remediation.json",
           "evidence_tier": "E1"
+        },
+        {
+          "path": "reports/diagnostics/l_1_validation_capacity.json",
+          "evidence_tier": "E1"
+        },
+        {
+          "path": "reports/data_quality/databento_l_1_capability.json",
+          "evidence_tier": "E1"
         }
       ],
       "decision_log": [
@@ -181,6 +192,11 @@
           "date": "2026-07-15",
           "decision": "B4_1_public_data_remediation_complete_scope_restricted",
           "notes": "E1 remediation resolves the zero-cash assumption and decision-bounds historical fee uncertainty without turning primary net CAGR positive. Six of eight corporate-action reconciliations pass the locked daily tolerance; point-in-time revision provenance remains unavailable. Webull Thailand public material verifies manual fractional trading generally but not candidate-ticker eligibility or fractional OpenAPI. Validation remains sealed and no edge or deployment claim is made."
+        },
+        {
+          "date": "2026-07-15",
+          "decision": "B4_2_validation_capacity_funded_unlock_blocked",
+          "notes": "The calendar-only sealed window has 2,637 NYSE sessions and projects to 20,376.00 joint independent-bet equivalents under the locked pre-2016 actual-dependence recalculation, above the 8,673 binding MinTRL. The founding planning sensitivity projects only 7,603.64. No validation market observations were accessed; corporate-action provenance and a separate owner-approved unlock gate remain blockers. Databento metadata is authenticated but begins in 2018 or later for relevant US-equity datasets and exposes no dedicated corporate-actions history."
         }
       ]
     },

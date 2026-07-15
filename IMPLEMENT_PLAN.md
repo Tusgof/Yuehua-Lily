@@ -137,6 +137,12 @@ Without opening validation, reconcile corporate actions, acquire dated official 
 
 Exit: cash is resolved at E1; fee uncertainty is either reconstructed or decision-bounded; corporate-action and broker gaps are either resolved or explicitly scope-restricted; no E2, edge, or deployment claim is allowed.
 
+### B4.2 — L-1 Validation Funding Capacity
+
+Before any validation unlock, count the sealed window using calendar rules only and project effective observations with the dependence fields from the prior opened stage exactly as locked in B3. Do not request or load validation prices, returns, signals, regimes, positions, benchmarks, or PnL.
+
+Exit: classify every validation null as statistically funded or underfunded, report the founding planning assumptions as a non-binding sensitivity, and retain all data-integrity and owner-approval blockers. Provider credentials may be used only for an explicitly authorized zero-spend metadata probe with true key provenance and no credential value stored.
+
 ## 6. Acceptance Gate
 
 E2 requires all of the following:
@@ -177,6 +183,7 @@ If MinTRL validation cost is unaffordable or undefined against the benchmark nul
 
 - Webull Thailand: preferred current-capital ETF candidate; public material verifies general manual fractional trading, while candidate-ticker eligibility and fractional API capability remain unverified.
 - IBKR: micro-futures/reference API candidate; actual permissions remain unverified.
+- Databento: metadata access through `DATABENTO_API_02` is verified with zero spend; relevant equity coverage begins in 2018 or later and does not expose the required corporate-actions history. The owner-reported USD 50 credit is ineligible for paid use until real-payment provenance is confirmed.
 - No shared Higanbana credentials or cost state.
 - No tracked credentials, account identifiers, or absolute local paths.
 - Broker order transmission is outside this plan until E3 and separate owner approval.
@@ -188,7 +195,7 @@ If MinTRL validation cost is unaffordable or undefined against the benchmark nul
 | Founding decisions | Complete | pushed founding pack |
 | P0–P4 | Active after bootstrap | Maintain governance, reproducibility, statistics, data, and restore controls |
 | L-0 | Scope-restricted E0 feasibility complete | Broker capability remains unverified |
-| L-1 | Scope-restricted E1; B4.1 remediation complete, validation sealed | Verify validation funding capacity without opening returns; retain point-in-time and broker restrictions |
+| L-1 | Scope-restricted E1; B4.2 capacity funded under locked actual dependence, validation sealed | Resolve point-in-time corporate actions and require a separate owner-approved unlock gate |
 | L-2 | Proposed | L-1 evidence |
 | L-3 | Proposed | baseline infrastructure and preregistration |
 | L-4 | Proposed | universe/data integrity and preregistration |

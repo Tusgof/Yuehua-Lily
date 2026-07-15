@@ -1,0 +1,159 @@
+{
+  "calendar": {
+    "calendar_observations": 2637,
+    "early_closes_count_as_sessions": true,
+    "first_session": "2016-01-04",
+    "last_session": "2026-06-30",
+    "sessions_by_year": {
+      "2016": 252,
+      "2017": 251,
+      "2018": 251,
+      "2019": 252,
+      "2020": 253,
+      "2021": 252,
+      "2022": 251,
+      "2023": 250,
+      "2024": 252,
+      "2025": 250,
+      "2026": 123
+    },
+    "source_type": "calendar_rules_only_no_market_observations",
+    "sources": [
+      "https://www.nyse.com/markets/hours-calendars",
+      "https://ir.theice.com/press/news-details/2018/New-York-Stock-Exchange-to-Honor-President-George-H-W-Bush/default.aspx",
+      "https://ir.theice.com/press/news-details/2024/The-New-York-Stock-Exchange-Will-Close-Markets-on-January-9-to-Honor-the-Passing-of-Former-President-Jimmy-Carter-on-National-Day-of-Mourning/default.aspx"
+    ],
+    "special_full_day_closures": [
+      "2018-12-05",
+      "2025-01-09"
+    ],
+    "window_end": "2026-06-30",
+    "window_start": "2016-01-04"
+  },
+  "databento_capability": {
+    "actual_paid_amount_usd": 0,
+    "decision": "not_fit_for_full_l1_validation_or_corporate_actions",
+    "report_digest_sha256": "fd9ad802e85b43ac2414a228f9979a5a64ac7ffcd9efbe8cfa0a1ca5612a6700",
+    "report_path": "reports/data_quality/databento_l_1_capability.json"
+  },
+  "decision": "statistical_capacity_funded_unlock_blocked",
+  "edge_claim": "none",
+  "environment": {
+    "platform": "windows",
+    "python_executable": "python.exe",
+    "python_implementation": "cpython",
+    "python_version": "3.14.3"
+  },
+  "evidence_tier": "E1",
+  "exact_next_safe_action": "Keep validation returns sealed. Resolve or formally source-restrict point-in-time corporate actions, confirm the Databento credit is backed by real payment before any paid request, and create a separate owner-approved validation unlock gate only if the remaining data blockers are cleared.",
+  "guardrails": {
+    "actual_paid_amount_usd": 0,
+    "credential_value_recorded": false,
+    "market_data_downloaded": false,
+    "maximum_return_date_accessed": "2015-12-31",
+    "orders_or_broker_actions": false,
+    "paid_data_used": false,
+    "provider_metadata_credential_used": true,
+    "validation_market_data_requested_from_databento": false,
+    "validation_prices_opened": false,
+    "validation_returns_opened": false
+  },
+  "hypothesis_id": "L-1",
+  "locked_actual_recalculation": {
+    "all_nulls_funded": true,
+    "autocorrelations_lags_1_to_5": [
+      -0.026799674220307032,
+      -0.027918713945869356,
+      -0.013734794160537292,
+      -0.02338157731701769,
+      0.011653240926622378
+    ],
+    "binding_capacity_margin": 11703.001209103371,
+    "binding_capacity_ratio": 2.3493602224263084,
+    "binding_required_joint_independent_bet_equivalents": 8673,
+    "cross_sectional_effective_dimensions": 6.488776074557414,
+    "joint_independent_bet_equivalents": 20376.00120910337,
+    "null_plans": [
+      {
+        "capacity_ratio": 5.2842326787093805,
+        "funded_under_locked_actual_recalculation": true,
+        "id": "portfolio_excess_zero",
+        "projected_joint_independent_bet_equivalents": 20376.00120910337,
+        "required_joint_independent_bet_equivalents": 3856
+      },
+      {
+        "capacity_ratio": 2.3493602224263084,
+        "funded_under_locked_actual_recalculation": true,
+        "id": "minimum_acceptable_Sharpe",
+        "projected_joint_independent_bet_equivalents": 20376.00120910337,
+        "required_joint_independent_bet_equivalents": 8673
+      },
+      {
+        "capacity_ratio": 2.3528869756470407,
+        "funded_under_locked_actual_recalculation": true,
+        "id": "active_vs_matched_benchmark",
+        "projected_joint_independent_bet_equivalents": 20376.00120910337,
+        "required_joint_independent_bet_equivalents": 8660
+      }
+    ],
+    "source": "B4 primary opened-stage dependence fields",
+    "time_effective_observations": 3140.1917672884365
+  },
+  "locked_inputs": {
+    "l_1_preregistration_path": "experiments/l_1_baseline_preregistration.json",
+    "l_1_preregistration_sha256": "91527c2f4ec00134767df86849f36b9876b00eb44cd56dc01650d33bf938fe29",
+    "opened_stage_report_digest_sha256": "25985d2f649fa6a01d41b0ea76bde25624ada38f2ff5acc3ea2b35258e056439",
+    "opened_stage_report_path": "reports/experiments/l_1_baseline_summary.json",
+    "opened_stage_report_sha256": "f6c4e14c71a4914371e6078f16351905f38cfb7420526d01238bad770cb6e71c"
+  },
+  "methodology_sources": [
+    {
+      "path": "wiki/concepts/minimum-track-record-length.md",
+      "sha256": "ca65225740673bd363be7461b8022281da08ae32e6ff42f8887f1072eb51ad81"
+    },
+    {
+      "path": "wiki/concepts/sharpe-ratio-inference.md",
+      "sha256": "4a13ed9ba9d8e6539544a1259f933a5cc1137fbdb899f04e91fa49fa6f7e6f5e"
+    },
+    {
+      "path": "wiki/concepts/backtest-validation-protocol.md",
+      "sha256": "c7f843310706d902120651e677429e66cbde9ce96ee526544de5419ee99aefa0"
+    }
+  ],
+  "order_id": "B4.2",
+  "planning_sensitivity": {
+    "autocorrelations_lags_1_to_5": [
+      0.1,
+      0.05,
+      0.025,
+      0.0125,
+      0.00625
+    ],
+    "binding_null_funded": false,
+    "cross_sectional_effective_dimensions": 4.0,
+    "joint_independent_bet_equivalents": 7603.642849820606,
+    "purpose": "Report the founding planning assumptions as a non-binding sensitivity; they may not replace the locked actual-recalculation rule.",
+    "time_effective_observations": 1900.9107124551515
+  },
+  "produced_at": "2026-07-15T00:30:43Z",
+  "producing_git_commit": "b4d7ee8b542b612f6bfb8b9003c8d1e79f919a51",
+  "report_digest_sha256": "1675714fffb45ab644c78bf2cc3a89ce4038966c27cdb835d1a2d3e1ffb64264",
+  "schema_version": "lily_l1_validation_capacity_report_v1",
+  "tier_blockers": [
+    "Capacity is a prospective arithmetic check and contains no validation performance evidence.",
+    "The favorable locked actual-dependence projection funds MinTRL, while the original planning sensitivity does not fund the binding null.",
+    "Corporate-action point-in-time provenance and locked daily reconciliation blockers remain unresolved.",
+    "No validation unlock, adversarial review, E2 promotion, broker action, paper trade, or real-money action occurred."
+  ],
+  "unlock_assessment": {
+    "blocking_conditions": [
+      "Independent point-in-time corporate-action provenance remains unavailable for the full L-1 path.",
+      "VGK and VWO remain outside the locked daily corporate-action reconciliation tolerance.",
+      "Databento metadata does not cover 2016-01-04 through 2018-04-30 and exposes no dedicated corporate-actions history for this purpose.",
+      "A separate owner-approved unlock gate has not been created."
+    ],
+    "statistical_capacity_condition": "funded",
+    "validation_returns_permission": "not_granted",
+    "validation_window_status": "sealed_not_accessed"
+  }
+}

@@ -445,6 +445,58 @@ class BootstrapTrackerValidatorTests(unittest.TestCase):
             blockers,
         )
 
+    def test_B42_validation_capacity_markdown_requires_machine_digest(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            report_dir = root / "reports" / "diagnostics"
+            report_dir.mkdir(parents=True)
+            (report_dir / "l_1_validation_capacity.json").write_text(
+                json.dumps({"producing_git_commit": "a" * 40, "report_digest_sha256": "b" * 64}),
+                encoding="utf-8",
+            )
+            markdown = report_dir / "l_1_validation_capacity.md"
+            markdown.write_text("E1 8,673 Databento\n", encoding="utf-8")
+            blockers, checked, unverified = self.validator._validate_done_artifact(
+                "B4.2",
+                "reports/diagnostics/l_1_validation_capacity.md",
+                "match_validation_capacity_machine_report",
+                project_root=root,
+                verify_runtime=False,
+                runtime_cache={},
+            )
+        self.assertFalse(checked)
+        self.assertFalse(unverified)
+        self.assertIn(
+            f"B4.2:l1_validation_capacity_markdown_missing_machine_value:{'b' * 64}",
+            blockers,
+        )
+
+    def test_B42_cost_ledger_rejects_paid_probe(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            ledger = root / "ledger.json"
+            ledger.write_text(
+                json.dumps(
+                    {
+                        "schema_version": "lily_data_cost_ledger_v1",
+                        "actual_cumulative_paid_spend_usd": 1,
+                        "entries": [],
+                    }
+                ),
+                encoding="utf-8",
+            )
+            blockers, checked, unverified = self.validator._validate_done_artifact(
+                "B4.2",
+                "ledger.json",
+                "record_zero_spend_metadata_probe",
+                project_root=root,
+                verify_runtime=False,
+                runtime_cache={},
+            )
+        self.assertFalse(checked)
+        self.assertFalse(unverified)
+        self.assertIn("B4.2:cost_ledger_nonzero_spend", blockers)
+
 
 def _tracker_with_artifact(path: str, must: str) -> dict[str, object]:
     return {

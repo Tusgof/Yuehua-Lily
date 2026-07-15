@@ -298,6 +298,24 @@ def _validate_done_artifact(
             artifact_path,
             project_root=project_root,
         )
+    if must == "pass_validation_capacity_validator":
+        return _validate_l1_validation_capacity_runtime(
+            target,
+            order_id,
+            artifact_path,
+            project_root=project_root,
+            verify_runtime=verify_runtime,
+            runtime_cache=runtime_cache,
+        )
+    if must == "match_validation_capacity_machine_report":
+        return _validate_l1_validation_capacity_markdown(
+            target,
+            order_id,
+            artifact_path,
+            project_root=project_root,
+        )
+    if must == "record_zero_spend_metadata_probe":
+        return _validate_zero_spend_metadata_probe(target, order_id, artifact_path)
     if must == "pass_summary_validator":
         return _validate_l1_summary_runtime(
             target,
@@ -353,6 +371,93 @@ def _validate_l1_data_quality_runtime(
         runtime_cache["l1_data_quality"] = completed.returncode == 0
     passed = runtime_cache["l1_data_quality"]
     return ([] if passed else [f"{order_id}:l1_data_quality_validator_failed"], passed, False)
+
+
+def _validate_l1_validation_capacity_runtime(
+    target: Path,
+    order_id: str,
+    artifact_path: str,
+    *,
+    project_root: Path,
+    verify_runtime: bool,
+    runtime_cache: dict[str, bool],
+) -> tuple[list[str], bool, bool]:
+    if not target.is_file():
+        return [f"{order_id}:missing_artifact:{artifact_path}"], False, False
+    if not verify_runtime:
+        return [], False, True
+    if "l1_validation_capacity" not in runtime_cache:
+        completed = subprocess.run(
+            [sys.executable, "scripts/validate_l_1_validation_capacity.py"],
+            cwd=project_root,
+            text=True,
+            capture_output=True,
+            check=False,
+        )
+        runtime_cache["l1_validation_capacity"] = completed.returncode == 0
+    passed = runtime_cache["l1_validation_capacity"]
+    return ([] if passed else [f"{order_id}:l1_validation_capacity_validator_failed"], passed, False)
+
+
+def _validate_l1_validation_capacity_markdown(
+    target: Path,
+    order_id: str,
+    artifact_path: str,
+    *,
+    project_root: Path,
+) -> tuple[list[str], bool, bool]:
+    if not target.is_file():
+        return [f"{order_id}:missing_artifact:{artifact_path}"], False, False
+    try:
+        payload = json.loads(
+            (project_root / "reports" / "diagnostics" / "l_1_validation_capacity.json").read_text(
+                encoding="utf-8"
+            )
+        )
+        markdown = target.read_text(encoding="utf-8")
+    except (FileNotFoundError, json.JSONDecodeError) as exc:
+        return [f"{order_id}:l1_validation_capacity_pair_unreadable:{exc.__class__.__name__}"], False, False
+    required = (
+        str(payload.get("producing_git_commit", "")),
+        str(payload.get("report_digest_sha256", "")),
+        "E1",
+        "8,673",
+        "Databento",
+    )
+    missing = [value for value in required if not value or value not in markdown]
+    blockers = [f"{order_id}:l1_validation_capacity_markdown_missing_machine_value:{value}" for value in missing]
+    return blockers, not blockers, False
+
+
+def _validate_zero_spend_metadata_probe(
+    target: Path,
+    order_id: str,
+    artifact_path: str,
+) -> tuple[list[str], bool, bool]:
+    if not target.is_file():
+        return [f"{order_id}:missing_artifact:{artifact_path}"], False, False
+    try:
+        payload = json.loads(target.read_text(encoding="utf-8"))
+    except json.JSONDecodeError:
+        return [f"{order_id}:cost_ledger_invalid_json"], False, False
+    blockers: list[str] = []
+    if payload.get("schema_version") != "lily_data_cost_ledger_v1":
+        blockers.append(f"{order_id}:cost_ledger_schema_mismatch")
+    if payload.get("actual_cumulative_paid_spend_usd") != 0:
+        blockers.append(f"{order_id}:cost_ledger_nonzero_spend")
+    entries = payload.get("entries", [])
+    matching = [row for row in entries if isinstance(row, dict) and row.get("order_id") == "B4.2"]
+    if len(matching) != 1:
+        blockers.append(f"{order_id}:cost_ledger_B4_2_entry_mismatch")
+    else:
+        entry = matching[0]
+        if entry.get("key_environment_name") != "DATABENTO_API_02":
+            blockers.append(f"{order_id}:cost_ledger_key_provenance_mismatch")
+        if entry.get("actual_paid_amount_usd") != 0 or entry.get("market_data_downloaded") is not False:
+            blockers.append(f"{order_id}:cost_ledger_probe_boundary_mismatch")
+        if entry.get("credit_real_payment_status") != "unverified":
+            blockers.append(f"{order_id}:cost_ledger_real_payment_status_mismatch")
+    return blockers, not blockers, False
 
 
 def _validate_l1_data_quality_markdown(

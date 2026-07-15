@@ -89,7 +89,7 @@ Seed order:
 4. L-3 — inverse-volatility sizing versus equal notional;
 5. L-4 — breadth versus single-market dependency.
 
-Current machine status is authoritative in `experiments/hypothesis_registry.json`: L-0 is scope-restricted after E0 sizing evidence; L-1 is scope-restricted after E1 falsification-window and data-quality remediation evidence, while its validation window remains sealed; L-2 through L-4 remain proposed.
+Current machine status is authoritative in `experiments/hypothesis_registry.json`: L-0 is scope-restricted after E0 sizing evidence; L-1 is scope-restricted after E1 falsification-window, data-quality remediation, and validation-capacity evidence, while its validation window remains sealed; L-2 through L-4 remain proposed.
 
 The family review triggers after three consecutive adequately powered falsifications of distinct edge/mechanism hypotheses. L-0 and engineering failures do not count.
 
@@ -163,18 +163,20 @@ Past reports are reproduced by checking out their recorded commit hash. Do not c
 ## 10. Current Verified State
 
 - **Verified date**: 2026-07-15
-- **Bootstrap**: B0 through B4.1 complete
+- **Bootstrap**: B0 through B4.2 complete
 - **Legacy Note status**: retired and deleted by `docs/DECISION_RECORD_002_RESEARCH_LOG_CONTRACT.md` after its research content was promoted
-- **Human research logs**: contract active; L-0 is `research_log/001-lily-l0-sizing-feasibility.md`; L-1 baseline and remediation are `research_log/002-lily-l1-baseline.md` and `research_log/003-lily-l1-data-quality-remediation.md`
+- **Human research logs**: contract active; L-0 is log 001; L-1 baseline, remediation, and validation-capacity audits are logs 002 through 004 under `research_log/`
 - **Dashboard**: retained under `Dashboard/`, demoted from product/state owner
 - **Founding decisions**: `docs/DECISION_RECORD_001_PROJECT_REFOUNDING.md`
 - **Registry**: L-0 scope-restricted E0; L-1 scope-restricted E1; L-2 through L-4 proposed
 - **L-1 falsification execution**: complete through 2015-12-31; not falsified, not validated; validation sealed
 - **L-1 data-quality remediation**: cash resolved at E1; historical fees decision-bounded; corporate actions pass the locked daily tolerance for 6/8 symbols; Webull candidate-ticker and fractional OpenAPI capability remain restricted
+- **L-1 validation capacity**: 2,637 calendar-only sessions project to 20,376 joint independent-bet equivalents versus the binding 8,673 under locked actual dependence; planning sensitivity projects 7,604; validation remains sealed
+- **Databento**: `DATABENTO_API_02` passes metadata access with USD 0 spend, but relevant US-equity coverage begins in 2018 or later and no dedicated corporate-actions history was exposed; owner-reported USD 50 credit has unverified real-payment provenance
 
 ## 11. Next Safe Action
 
-Keep validation sealed. Verify validation-window funding capacity using only the calendar and dependence estimates from the opened window. Separately, the owner may record green-diamond status for the candidate ETFs in the Webull Thailand app without previewing or placing an order, and request written confirmation of fractional OpenAPI support. Independent point-in-time corporate-action data remains an E2 prerequisite.
+Keep validation sealed. Resolve or formally source-restrict point-in-time corporate actions without reading validation returns. Confirm that the Databento credit satisfies the real-payment rule before any paid request. Separately, complete the Webull Thailand capability probe without previewing or placing an order. Only then consider a new owner-approved validation unlock gate.
 
 ## 12. Invariants
 
