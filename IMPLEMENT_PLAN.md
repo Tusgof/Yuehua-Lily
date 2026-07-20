@@ -191,6 +191,12 @@ The owner approves one bounded execution of the exact B4.10 matrix. Gate `l_0_we
 
 Exit: the activation gate was committed and pushed before execution. The one guarded run used the official shared UAT row in process memory, made one token-create and two token-check requests, and stopped when the guard blocked authentication request four. Preview requests, orders, production calls, provider calls, validation access, and paid spend are all zero. Report and Thai research log 007 classify the result as `blocked_before_preview`; no fractional minimum is known and rerun requires a new superseding gate.
 
+### B4.12 — UAT Authentication-budget Remediation (Gate Locked, Execution Pending)
+
+B4.12 preserves every locked B4.10/B4.11 file and creates a new superseding activation artifact, runner, report schema, validator, and tests. It funds a fixed 30-second SDK polling window with one token-create request and at most seven token checks, while retaining the exact eight-value VTI preview grid and a sixteen-request total cap. Automatic retry, token persistence, production, orders, balance, positions, providers, validation access, paper trading, and real money remain forbidden.
+
+Exit requires the v2 gate to be committed and pushed with Hermetic CI passing before one execution. The result must be recorded in a redacted v2 report and Thai research log 008; the evidence ceiling remains E0 regardless of outcome.
+
 ## 6. Acceptance Gate
 
 E2 requires all of the following:

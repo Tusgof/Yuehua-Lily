@@ -42,6 +42,12 @@
       "summary_path": "reports/feasibility/l_0_webull_th_fractional_preview.json",
       "research_log_path": "research_log/007-lily-l0-webull-th-fractional-preview.md",
       "required_when_summary_exists": true
+    },
+    {
+      "experiment_id": "L0-WEBULL-TH-FRACTIONAL-PREVIEW-AUTH-REMEDIATION",
+      "summary_path": "reports/feasibility/l_0_webull_th_fractional_preview_v2.json",
+      "research_log_path": "research_log/008-lily-l0-webull-th-fractional-preview-auth-remediation.md",
+      "required_when_summary_exists": true
     }
   ]
 }

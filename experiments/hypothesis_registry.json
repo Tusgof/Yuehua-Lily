@@ -124,6 +124,11 @@
           "date": "2026-07-20",
           "decision": "B4_11_execution_blocked_before_preview_by_authentication_cap",
           "notes": "The one authorized run used the official shared UAT credential row in process memory only. Token create plus two token checks consumed the locked three-request authentication budget; the guard blocked the fourth authentication attempt. No preview, order, production, provider, or validation request occurred. The result establishes no fractional minimum and L-0 remains scope-restricted E0."
+        },
+        {
+          "date": "2026-07-20",
+          "decision": "B4_12_superseding_authentication_budget_gate_locked_before_execution",
+          "notes": "Gate l_0_webull_th_fractional_preview_activation_v2 preserves the B4.10/B4.11 artifacts and funds one token create plus at most seven token checks over a fixed 30-second SDK polling window. The VTI quantity grid and all production, order, privacy, provider, validation, claim, and zero-spend boundaries remain unchanged. No B4.12 network request has occurred at the gate stage; L-0 remains scope-restricted E0."
         }
       ]
     },
@@ -269,6 +274,11 @@
           "date": "2026-07-20",
           "decision": "B4_11_authentication_cap_block_adds_no_L1_evidence",
           "notes": "The guarded UAT run stopped after three authentication requests and before any preview. It adds no broker-ledger, corporate-action, return, edge, or validation evidence to L-1. Validation remains sealed and L-1 remains scope-restricted E1."
+        },
+        {
+          "date": "2026-07-20",
+          "decision": "B4_12_gate_adds_no_linked_L1_evidence_before_execution",
+          "notes": "The B4.12 superseding gate changes only the bounded L-0 shared-UAT authentication budget and preserves the validation seal. Before execution it adds no broker-ledger, corporate-action, return, edge, or validation evidence to L-1, which remains scope-restricted E1."
         }
       ]
     },

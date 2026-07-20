@@ -91,6 +91,60 @@ class LockedGateValidatorTests(unittest.TestCase):
         self.assertEqual("pass", result["status"], result["blockers"])
         self.assertEqual("superseded", result["checked"][0]["status"])
 
+    def test_reviewed_supersession_may_preserve_predecessor_at_new_paths(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root, manifest, artifact, validator = _gate_paths(Path(tmp))
+            initial = _entry("gate-v1", artifact, validator)
+            replacement_artifact = artifact.with_name("gate_v2.json")
+            replacement_validator = validator.with_name("validate_gate_v2.py")
+            replacement_artifact.write_text('{"gate":"v2"}\n', encoding="utf-8")
+            replacement_validator.write_text("print('validate v2')\n", encoding="utf-8")
+            replacement = _entry("gate-v2", replacement_artifact, replacement_validator)
+            replacement.update(
+                {
+                    "artifact_path": "experiments/gate_v2.json",
+                    "validator_path": "scripts/validate_gate_v2.py",
+                    "supersedes_gate_id": "gate-v1",
+                    "human_approval": "owner approved immutable revision",
+                    "reviewed_by": "independent-review-agent",
+                }
+            )
+            manifest.write_text(
+                "\n".join(json.dumps(item) for item in (initial, replacement)) + "\n",
+                encoding="utf-8",
+            )
+            with patch("scripts.validate_locked_gates.PROJECT_ROOT", root):
+                result = validate_locked_gates(manifest, committed_lines=[])
+        self.assertEqual("pass", result["status"], result["blockers"])
+        self.assertEqual("superseded", result["checked"][0]["status"])
+
+    def test_new_path_supersession_requires_intact_predecessor(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root, manifest, artifact, validator = _gate_paths(Path(tmp))
+            initial = _entry("gate-v1", artifact, validator)
+            replacement_artifact = artifact.with_name("gate_v2.json")
+            replacement_validator = validator.with_name("validate_gate_v2.py")
+            replacement_artifact.write_text('{"gate":"v2"}\n', encoding="utf-8")
+            replacement_validator.write_text("print('validate v2')\n", encoding="utf-8")
+            replacement = _entry("gate-v2", replacement_artifact, replacement_validator)
+            replacement.update(
+                {
+                    "artifact_path": "experiments/gate_v2.json",
+                    "validator_path": "scripts/validate_gate_v2.py",
+                    "supersedes_gate_id": "gate-v1",
+                    "human_approval": "owner approved immutable revision",
+                    "reviewed_by": "independent-review-agent",
+                }
+            )
+            artifact.write_text('{"gate":"tampered"}\n', encoding="utf-8")
+            manifest.write_text(
+                "\n".join(json.dumps(item) for item in (initial, replacement)) + "\n",
+                encoding="utf-8",
+            )
+            with patch("scripts.validate_locked_gates.PROJECT_ROOT", root):
+                result = validate_locked_gates(manifest, committed_lines=[])
+        self.assertIn("gate-v2:immutable_predecessor_artifact_hash_mismatch", result["blockers"])
+
 
 def _gate_paths(root: Path) -> tuple[Path, Path, Path, Path]:
     experiments = root / "experiments"

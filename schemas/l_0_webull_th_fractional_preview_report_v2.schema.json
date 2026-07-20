@@ -1,0 +1,108 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://yuehua.local/schemas/l_0_webull_th_fractional_preview_report_v2.schema.json",
+  "title": "Lily B4.12 Webull Thailand fractional-preview report",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "order_id", "hypothesis_id", "linked_hypothesis_id",
+    "evidence_tier", "edge_claim", "report_mode", "produced_at",
+    "producing_git_commit", "environment", "host", "contract_sha256",
+    "activation_gate_id", "authentication_polling", "rows", "summary",
+    "decision", "blockers", "request_attestation", "validation_return_seal",
+    "claim_limits"
+  ],
+  "properties": {
+    "schema_version": {"const": "lily_l0_webull_th_fractional_preview_report_v2"},
+    "order_id": {"const": "B4.12"},
+    "hypothesis_id": {"const": "L-0"},
+    "linked_hypothesis_id": {"const": "L-1"},
+    "evidence_tier": {"const": "E0"},
+    "edge_claim": {"const": "none"},
+    "report_mode": {"enum": ["synthetic_fixture", "uat_preview"]},
+    "produced_at": {"type": "string", "format": "date-time"},
+    "producing_git_commit": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+    "environment": {"const": "webull_thailand_uat"},
+    "host": {"const": "th-api.uat.webullbroker.com"},
+    "contract_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "activation_gate_id": {"type": ["string", "null"]},
+    "authentication_polling": {
+      "const": {
+        "duration_seconds": 30,
+        "interval_seconds": 5,
+        "maximum_auth_create_requests": 1,
+        "maximum_auth_check_requests": 7
+      }
+    },
+    "rows": {
+      "type": "array",
+      "maxItems": 8,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["quantity", "outcome", "response_class", "documented_error_code", "response_sha256"],
+        "properties": {
+          "quantity": {"enum": ["1", "0.1", "0.01", "0.001", "0.0001", "0.00001", "0.000001", "0.0000001"]},
+          "outcome": {"enum": ["accepted", "rejected"]},
+          "response_class": {"enum": ["success", "business_error"]},
+          "documented_error_code": {"type": ["string", "null"]},
+          "response_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+        }
+      }
+    },
+    "summary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["tested_quantity_count", "accepted_count", "rejected_count", "smallest_accepted_tested_quantity", "largest_rejected_tested_quantity", "exact_broker_minimum_known"],
+      "properties": {
+        "tested_quantity_count": {"type": "integer", "minimum": 0, "maximum": 8},
+        "accepted_count": {"type": "integer", "minimum": 0, "maximum": 8},
+        "rejected_count": {"type": "integer", "minimum": 0, "maximum": 8},
+        "smallest_accepted_tested_quantity": {"type": ["string", "null"]},
+        "largest_rejected_tested_quantity": {"type": ["string", "null"]},
+        "exact_broker_minimum_known": {"const": false}
+      }
+    },
+    "decision": {"enum": ["blocked_before_preview", "blocked_after_partial_preview", "all_tested_quantities_accepted", "mixed_tested_quantity_acceptance", "all_tested_quantities_rejected"]},
+    "blockers": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+    "request_attestation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["authentication_paths", "authentication_request_count", "auth_create_request_count", "auth_check_request_count", "preview_path", "preview_request_count", "synthetic_preview_row_count", "total_broker_request_count", "forbidden_request_count", "production_request_count", "order_mutation_or_query_count", "orders_sent", "raw_response_persisted", "private_material_persisted", "paid_spend_usd"],
+      "properties": {
+        "authentication_paths": {"type": "array", "maxItems": 8, "items": {"enum": ["/openapi/auth/token/create", "/openapi/auth/token/check"]}},
+        "authentication_request_count": {"type": "integer", "minimum": 0, "maximum": 8},
+        "auth_create_request_count": {"type": "integer", "minimum": 0, "maximum": 1},
+        "auth_check_request_count": {"type": "integer", "minimum": 0, "maximum": 7},
+        "preview_path": {"const": "/openapi/trade/order/preview"},
+        "preview_request_count": {"type": "integer", "minimum": 0, "maximum": 8},
+        "synthetic_preview_row_count": {"type": "integer", "minimum": 0, "maximum": 8},
+        "total_broker_request_count": {"type": "integer", "minimum": 0, "maximum": 16},
+        "forbidden_request_count": {"const": 0},
+        "production_request_count": {"const": 0},
+        "order_mutation_or_query_count": {"const": 0},
+        "orders_sent": {"const": 0},
+        "raw_response_persisted": {"const": false},
+        "private_material_persisted": {"const": false},
+        "paid_spend_usd": {"const": 0}
+      }
+    },
+    "validation_return_seal": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "prices_opened", "adjusted_prices_opened", "returns_opened", "signals_opened", "positions_opened", "regimes_opened", "benchmarks_opened", "pnl_opened"],
+      "properties": {
+        "status": {"const": "sealed_not_accessed"},
+        "prices_opened": {"const": false},
+        "adjusted_prices_opened": {"const": false},
+        "returns_opened": {"const": false},
+        "signals_opened": {"const": false},
+        "positions_opened": {"const": false},
+        "regimes_opened": {"const": false},
+        "benchmarks_opened": {"const": false},
+        "pnl_opened": {"const": false}
+      }
+    },
+    "claim_limits": {"type": "array", "minItems": 3, "maxItems": 3, "items": {"type": "string"}}
+  }
+}

@@ -80,9 +80,25 @@ def validate_locked_gates(
                     blockers.append(f"{gate_id}:predecessor_already_superseded:{predecessor_id}")
                 if not isinstance(entry.get("reviewed_by"), str) or not entry["reviewed_by"].strip():
                     blockers.append(f"{gate_id}:supersession_requires_reviewer_identity")
-                for path_field in ("artifact_path", "validator_path"):
-                    if entry.get(path_field) != predecessor.get(path_field):
-                        blockers.append(f"{gate_id}:supersession_changes_{path_field}")
+                paths_changed = any(
+                    entry.get(field) != predecessor.get(field)
+                    for field in ("artifact_path", "validator_path")
+                )
+                if paths_changed:
+                    predecessor_artifact_status = _hash_status(
+                        predecessor.get("artifact_path"), predecessor.get("artifact_sha256")
+                    )
+                    predecessor_validator_status = _hash_status(
+                        predecessor.get("validator_path"), predecessor.get("validator_sha256")
+                    )
+                    if predecessor_artifact_status != "pass":
+                        blockers.append(
+                            f"{gate_id}:immutable_predecessor_artifact_{predecessor_artifact_status}"
+                        )
+                    if predecessor_validator_status != "pass":
+                        blockers.append(
+                            f"{gate_id}:immutable_predecessor_validator_{predecessor_validator_status}"
+                        )
                 hashes_changed = any(
                     entry.get(field) != predecessor.get(field)
                     for field in ("artifact_sha256", "validator_sha256")
