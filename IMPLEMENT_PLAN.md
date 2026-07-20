@@ -185,6 +185,12 @@ B4.10 implements and hash-locks the fail-closed runner, exact Thailand UAT reque
 
 Exit: gate `l_0_webull_th_fractional_preview_probe_v1` is active with machinery status `locked_machinery_ready_execution_not_authorized`. B4.10 makes zero Webull, provider, authentication, preview, order, or validation requests and creates no experiment report or research log. The next possible order is a separately owner-approved B4.11 activation gate; it may not authorize production, balance, positions, order mutation/query, validation access, paper trading, or real money.
 
+### B4.11 — UAT Fractional-preview Activation And Execution (In Progress)
+
+The owner approves one bounded execution of the exact B4.10 matrix. Gate `l_0_webull_th_fractional_preview_activation_v1` must be committed and pushed before the runner may read the three `WEBULL_UAT_*` variables, import the SDK, authenticate, or preview.
+
+Current state: the activation gate is locked, but the UAT variables are absent. No Webull or provider request has occurred. Once the variables are present, run exactly once; validate the redacted report; write Thai research log 007; retain the E0 ceiling and validation seal; then mark B4.11 complete only if all artifacts pass.
+
 ## 6. Acceptance Gate
 
 E2 requires all of the following:
@@ -236,7 +242,7 @@ If MinTRL validation cost is unaffordable or undefined against the benchmark nul
 |:--|:--|:--|
 | Founding decisions | Complete | pushed founding pack |
 | P0–P4 | Active after bootstrap | Maintain governance, reproducibility, statistics, data, and restore controls |
-| L-0 | Scope-restricted E0; B4.6 verifies production read-only and fractional metadata for ten ETF candidates; B4.10 locks fail-closed UAT preview machinery without execution | Separately approve and hash-lock B4.11 before any UAT call; funding FX, execution quality, and realized-cost evidence remain open |
+| L-0 | Scope-restricted E0; B4.6 verifies production read-only and fractional metadata; B4.10 locks machinery; B4.11 activation is owner-approved but awaits UAT variables with zero API calls | Commit/push activation, then execute the exact UAT matrix once; funding FX, execution quality, and realized-cost evidence remain open |
 | L-1 | Scope-restricted E1; B4.9 closes the unavailable Webull-ledger dry run without observation; B4.10 adds no L-1 evidence | Validation remains sealed; no broker-ledger or historical-correctness claim |
 | L-2 | Proposed | L-1 evidence |
 | L-3 | Proposed | baseline infrastructure and preregistration |

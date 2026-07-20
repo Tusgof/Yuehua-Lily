@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import unittest
+from unittest.mock import patch
 
 from scripts.run_l_0_webull_th_fractional_preview_probe import (
     AUTH_PATHS,
@@ -65,8 +66,16 @@ class L0WebullThailandFractionalPreviewRunnerTests(unittest.TestCase):
         self.assertEqual(3, len(attempted))
 
     def test_missing_activation_blocks_before_credentials_or_sdk(self) -> None:
-        with self.assertRaisesRegex(ProbeBlocked, "execution_activation_missing"):
-            run_probe()
+        with (
+            patch(
+                "scripts.run_l_0_webull_th_fractional_preview_probe.load_execution_activation",
+                side_effect=ProbeBlocked("execution_activation_missing"),
+            ),
+            patch("scripts.run_l_0_webull_th_fractional_preview_probe.os.environ.get") as environment_get,
+        ):
+            with self.assertRaisesRegex(ProbeBlocked, "execution_activation_missing"):
+                run_probe()
+        environment_get.assert_not_called()
 
     def test_request_body_follows_exact_grid_and_template(self) -> None:
         for index, quantity in enumerate(QUANTITY_GRID):

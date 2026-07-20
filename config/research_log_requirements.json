@@ -36,6 +36,12 @@
       "summary_path": "reports/feasibility/l_0_webull_th_read_only_capability.json",
       "research_log_path": "research_log/006-lily-l0-webull-th-read-only-capability.md",
       "required_when_summary_exists": true
+    },
+    {
+      "experiment_id": "L0-WEBULL-TH-FRACTIONAL-PREVIEW",
+      "summary_path": "reports/feasibility/l_0_webull_th_fractional_preview.json",
+      "research_log_path": "research_log/007-lily-l0-webull-th-fractional-preview.md",
+      "required_when_summary_exists": true
     }
   ]
 }

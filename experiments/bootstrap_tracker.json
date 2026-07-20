@@ -419,6 +419,26 @@
         "The report schema, validator, and three hash-bound synthetic fixtures cover all-accepted, mixed, and pre-preview-blocked outcomes. Tests recompute summaries and decisions, enforce request caps and the validation seal, and block tampering.",
         "B4.10 made zero broker, provider, authentication, preview, order, or validation requests; sent zero orders; incurred USD 0 spend; and created no research log because no experiment was executed."
       ]
+    },
+    {
+      "id": "B4.11",
+      "title": "Webull Thailand UAT fractional-preview activation and execution",
+      "status": "in_progress",
+      "depends_on": ["B4.10"],
+      "required_artifacts": [
+        {"path": "experiments/l_0_webull_th_fractional_preview_activation.json", "must": "locked_and_valid"},
+        {"path": "scripts/validate_l_0_webull_th_fractional_preview_activation.py", "must": "pass"},
+        {"path": "tests/test_validate_l_0_webull_th_fractional_preview_activation.py", "must": "pass_in_hermetic_tier"},
+        {"path": "reports/feasibility/l_0_webull_th_fractional_preview.json", "must": "pass_fractional_preview_report_validator"},
+        {"path": "research_log/007-lily-l0-webull-th-fractional-preview.md", "must": "pass_research_log_audit"}
+      ],
+      "forbidden": ["production host or account", "balance or position access", "place, replace, cancel, history, open-order, or order-detail endpoint", "automatic retry or AMOUNT mode", "more than three authentication, eight preview, or eleven total requests", "raw response, credential, token, or account identifier persistence", "validation price or return access", "provider call or paid spend", "paper trade, fill, exact all-symbol minimum, execution-quality, E2, edge, deployment, or real-money claim"],
+      "evidence": [
+        "The owner explicitly authorized creation of B4.11 and one bounded Webull Thailand UAT fractional-preview execution on 2026-07-20.",
+        "Gate l_0_webull_th_fractional_preview_activation_v1 locks the B4.10 contract SHA-256 4bfee4a8cd69b069988913121898fd6affd8642380b0ed877f377872bef3c77e and runner SHA-256 edec1e1658c74abb87d116b2680d4a292481bbce3eec6d18984634f2369aa06a.",
+        "The activation allows only the exact VTI QTY matrix on th-api.uat.webullbroker.com after the gate is committed and pushed. Production, orders, balance, positions, retries, AMOUNT mode, providers, validation, and real money remain forbidden.",
+        "Execution is pending because WEBULL_UAT_APP_KEY, WEBULL_UAT_APP_SECRET, and WEBULL_UAT_ACCOUNT_ID were absent before activation; no credential value or API request was accessed."
+      ]
     }
   ]
 }

@@ -27,6 +27,7 @@
     "scripts/run_l_0_webull_th_read_only_capability_probe.py",
     "scripts/validate_l_0_webull_th_read_only_capability_report.py",
     "scripts/validate_l_0_webull_th_fractional_preview_probe.py",
+    "scripts/validate_l_0_webull_th_fractional_preview_activation.py",
     "scripts/run_l_0_webull_th_fractional_preview_probe.py",
     "scripts/validate_l_0_webull_th_fractional_preview_report.py",
     "scripts/audit_research_logs.py",

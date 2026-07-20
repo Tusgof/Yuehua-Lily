@@ -110,6 +110,11 @@
           "date": "2026-07-20",
           "decision": "B4_10_fractional_preview_machinery_locked_not_executed",
           "notes": "Gate l_0_webull_th_fractional_preview_probe_v1 hash-locks the fail-closed runner, exact Thailand UAT VTI quantity grid, request guard, report validator, and three synthetic fixtures. B4.10 made no broker, provider, authentication, preview, order, or validation request. A separate owner-approved B4.11 activation gate is required before credential access or execution; L-0 remains scope-restricted E0."
+        },
+        {
+          "date": "2026-07-20",
+          "decision": "B4_11_activation_locked_execution_pending_uat_variables",
+          "notes": "The owner explicitly approved one bounded Webull Thailand UAT preview execution. Gate l_0_webull_th_fractional_preview_activation_v1 is hash-locked before credential or network access, but all three required WEBULL_UAT variables are absent. No API request occurred; L-0 remains scope-restricted E0."
         }
       ]
     },
@@ -245,6 +250,11 @@
           "date": "2026-07-20",
           "decision": "B4_10_linked_preview_machinery_locked_no_new_evidence",
           "notes": "The L-0 fractional-preview machinery is hash-locked with an E0 ceiling but was not executed. It adds no broker, corporate-action, return, edge, or validation evidence to L-1; the validation window remains sealed and L-1 remains scope-restricted E1."
+        },
+        {
+          "date": "2026-07-20",
+          "decision": "B4_11_activation_locked_no_linked_L1_evidence",
+          "notes": "Owner approval and the activation gate authorize only the bounded L-0 UAT preview. Missing UAT variables prevent execution, and no broker or validation observation occurred. L-1 remains scope-restricted E1 with validation sealed."
         }
       ]
     },
