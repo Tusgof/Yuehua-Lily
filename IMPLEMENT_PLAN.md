@@ -167,9 +167,11 @@ B4.7 locks an `E0` design before any prospective observation. It compares a Webu
 
 Exit: gate `l_1_prospective_shadow_accounting_v1` is hash-bound with at least 180 days and three matched events across two symbols required, a 365-day hard stop, and explicit insufficient-evidence and claim rules. No API call, event observation, activation, preview, paper order, validation access, signal, PnL, E2, edge, or real-money action occurs in B4.7.
 
-### B4.8 — Activation Contract (Not Started)
+### B4.8 — Activation Contract (Complete: Activation Blocked)
 
 Before the dry run begins, separately lock the paper environment and exact endpoints, broker fractional quantum, forward start/stop timestamps, immutable redacted containers, event-ledger implementation, hermetic fixtures, report validator, request/cost limits, and order attestation. If Webull cannot expose an auditable paper ledger, stop; do not substitute production or real money.
+
+Exit: B4.8 locks `activation_blocked_before_observation`. Public Webull Thailand evidence does not establish a dedicated owner-controlled test ledger, account-level corporate-action cash/unit paths, or the minimum fractional-share quantum. Runtime allowlists and request caps remain empty/zero, no activation marker exists, and no broker/provider call or prospective observation occurred. Activation requires written Webull Thailand confirmation and a new owner-approved gate that supersedes B4.8.
 
 ## 6. Acceptance Gate
 
@@ -223,7 +225,7 @@ If MinTRL validation cost is unaffordable or undefined against the benchmark nul
 | Founding decisions | Complete | pushed founding pack |
 | P0–P4 | Active after bootstrap | Maintain governance, reproducibility, statistics, data, and restore controls |
 | L-0 | Scope-restricted E0; B4.6 verifies production read-only and fractional metadata for ten ETF candidates | Minimum order, funding FX, execution quality, and realized-cost evidence |
-| L-1 | Scope-restricted E1; B4.7 locks the E0 shadow-accounting design but does not activate it | B4.8 activation contract; validation remains sealed |
+| L-1 | Scope-restricted E1; B4.8 completes the activation contract but blocks activation before observation | Written Webull Thailand confirmation and a new superseding activation gate; validation remains sealed |
 | L-2 | Proposed | L-1 evidence |
 | L-3 | Proposed | baseline infrastructure and preregistration |
 | L-4 | Proposed | universe/data integrity and preregistration |

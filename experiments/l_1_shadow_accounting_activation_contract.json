@@ -1,0 +1,168 @@
+{
+  "schema_version": "lily_l1_shadow_accounting_activation_contract_v1",
+  "order_id": "B4.8",
+  "hypothesis_id": "L-1",
+  "created_at": "2026-07-20T04:44:38Z",
+  "status": "locked_activation_blocked",
+  "evidence_tier": "E0",
+  "edge_claim": "none",
+  "purpose": "Lock the activation boundary, machine schemas, synthetic report checks, and honest blockers for the B4.7 prospective shadow-accounting dry run before any broker/provider call or event observation.",
+  "owner_authorization": "The owner explicitly requested completion, commit, and push of B4.8 on 2026-07-20.",
+  "decision": {
+    "activation_status": "activation_blocked_before_observation",
+    "dry_run_started": false,
+    "forward_start_marker_committed": false,
+    "paper_or_test_order_authorized": false,
+    "production_account_authorized": false,
+    "provider_acquisition_authorized": false,
+    "validation_unlock_authorized": false,
+    "real_money_authorized": false
+  },
+  "decision_basis": {
+    "capability_inventory_path": "experiments/inputs/b4_8_webull_shadow_accounting_capability_inventory.json",
+    "capability_inventory_sha256": "61ec6cb110adb5246a3e6e31540b1685f2a4a31aea1a7925bbb088a6d3d7156c",
+    "documented_test_environment": "th-api.uat.webullbroker.com",
+    "test_environment_semantics": "Webull Thailand documents shared test accounts, not an owner-controlled paper ledger; shared orders and positions may change at any time.",
+    "thailand_endpoint_gap": "Published Thailand endpoints do not include an account cash-activity, account corporate-action, dividend ledger, split ledger, or corporate-action event subscription.",
+    "fractional_precision_gap": "Thailand documentation supports fractionable instruments and decimal/amount inputs but does not state the minimum fractional share quantum or minimum notional.",
+    "global_endpoint_rule": "Global cash-activity and corporate-action endpoints do not prove Thailand availability or the required account-ledger semantics.",
+    "shared_test_account_rule": "Shared public test credentials and accounts are forbidden because third-party activity prevents an auditable common opening ledger."
+  },
+  "activation_blockers": [
+    "dedicated_owner_controlled_thailand_test_account_not_verified",
+    "auditable_thailand_account_corporate_action_cash_ledger_not_documented",
+    "auditable_thailand_account_corporate_action_unit_ledger_not_documented",
+    "broker_minimum_fractional_share_quantum_not_documented"
+  ],
+  "environment_contract": {
+    "required_environment": "dedicated_owner_controlled_webull_thailand_test_account",
+    "candidate_test_host": "th-api.uat.webullbroker.com",
+    "candidate_region": "th",
+    "shared_test_account_allowed": false,
+    "production_host_allowed": false,
+    "production_account_fallback_allowed": false,
+    "runtime_network_allowlist": [],
+    "runtime_order_path_allowlist": [],
+    "candidate_read_only_paths_for_a_future_separately_locked_probe": [
+      "/openapi/account/list",
+      "/openapi/assets/balance",
+      "/openapi/assets/positions",
+      "/openapi/instrument/stock/list"
+    ],
+    "required_but_undocumented_thailand_paths": [
+      "account_corporate_action_event_ledger",
+      "account_corporate_action_cash_ledger",
+      "account_corporate_action_unit_ledger"
+    ],
+    "rule": "An empty runtime allowlist is fail-closed. A later gate may add exact test-only paths only after Webull Thailand documents or confirms them and the owner separately approves the probe."
+  },
+  "forward_marker_contract": {
+    "activation_timestamp": null,
+    "observation_start_date": null,
+    "observation_stop_date": null,
+    "minimum_calendar_days": 180,
+    "maximum_calendar_days": 365,
+    "start_marker_rule": "A later append-only activation record must commit the exact UTC activation timestamp, start date, stop date, opening redacted ledger hashes, common quote hashes, and broker fractional quantum before inspecting the first eligible event.",
+    "current_null_rule": "All marker values remain null while activation is blocked; setting them in B4.8 is forbidden."
+  },
+  "provider_request_contract": {
+    "webull_request_cap": 0,
+    "alpha_vantage_request_cap": 0,
+    "yahoo_request_cap": 0,
+    "paid_spend_cap_usd": 0,
+    "provider_calls_authorized": false,
+    "future_rule": "After every broker blocker is cleared, a superseding gate must lock the exact ten-symbol provider matrix, polling cadence, immutable containers, free-tier throttles, and cost attestation before the first provider call."
+  },
+  "machine_contracts": {
+    "event_schema": {
+      "path": "schemas/l_1_shadow_accounting_event.schema.json",
+      "sha256": "6b91b968e7b3f56e01c825ddb4d7a7c75095b3e958eb70b707379888f1311ac6"
+    },
+    "report_schema": {
+      "path": "schemas/l_1_shadow_accounting_report.schema.json",
+      "sha256": "df78ea1a3c4c345b55b13978f02d2611a9a75ff2d8d39f7cf36841fbfd525032"
+    },
+    "report_validator": {
+      "path": "scripts/validate_l_1_shadow_accounting_report.py",
+      "sha256": "5694524275119242acd40e69f74606006ae4317be733fcef42086aedb3ab4de1"
+    },
+    "synthetic_fixtures": [
+      {
+        "path": "tests/fixtures/shadow_accounting/report_no_material.json",
+        "sha256": "979e1d18e7b14f54b2945cc6811bb7635bf97144afd54084e1c458e4109e1d58",
+        "expected_decision": "no_material_operational_discrepancy_observed_within_preregistered_scope"
+      },
+      {
+        "path": "tests/fixtures/shadow_accounting/report_material_breach.json",
+        "sha256": "da1029e7f5683636756db71f3c3fd91fc63be933e0790448cbd4e5848bf79959",
+        "expected_decision": "material_operational_discrepancy_observed"
+      },
+      {
+        "path": "tests/fixtures/shadow_accounting/report_activation_blocked.json",
+        "sha256": "77d02eeec175d6e0e375bf5e5f93be135f4d169639cc0622d3bc7ba741d37852",
+        "expected_decision": "activation_blocked_before_observation"
+      }
+    ],
+    "validator_scope": "Recompute account-scaled materiality per event and stream pair, enforce strict-greater thresholds, prevent cross-event netting, recompute evidence minimums and decisions, require zero production/order calls, and retain the validation seal."
+  },
+  "future_activation_requirements": [
+    "Webull Thailand provides a dedicated owner-controlled test account or written confirmation of equivalent isolated test-ledger semantics.",
+    "Webull Thailand documents or confirms exact test-only paths and response fields for corporate-action event, cash, unit, and posting timestamps.",
+    "Webull Thailand documents the exact minimum fractional share quantum or a separately locked test-only probe establishes it before event observation.",
+    "A new append-only gate supersedes B4.8 with non-empty exact network allowlists, request budgets, immutable-container rules, and a committed forward marker.",
+    "The dry-run implementation and redaction checks pass hermetically at the superseding gate hashes.",
+    "The owner explicitly authorizes that bounded test-only activation after reviewing the cleared blockers."
+  ],
+  "hard_stops": [
+    "Any use of shared public Webull test credentials or accounts.",
+    "Any production Webull account, host, position, preview, or order action.",
+    "Any broker or provider path outside the empty B4.8 runtime allowlist.",
+    "Any attempt to infer Thailand capability from a global endpoint or undocumented SDK method.",
+    "Any activation marker set before all blockers are cleared under a superseding gate.",
+    "Any validation price, return, signal, position, regime, benchmark, or PnL access.",
+    "Any edge, E2, historical-correctness, deployment, or real-money claim.",
+    "Any paid action."
+  ],
+  "validation_return_seal": {
+    "untouched_start": "2016-01-04",
+    "untouched_end": "2026-06-30",
+    "status": "sealed_not_accessed",
+    "prices_opened": false,
+    "adjusted_prices_opened": false,
+    "returns_opened": false,
+    "signals_opened": false,
+    "positions_opened": false,
+    "regimes_opened": false,
+    "benchmarks_opened": false,
+    "pnl_opened": false
+  },
+  "claim_limits": [
+    "B4.8 proves only that the activation boundary, schemas, fixtures, and validator are machine-checkable.",
+    "B4.8 does not prove that a Webull Thailand paper ledger exists or is suitable for the dry run.",
+    "Synthetic fixtures do not provide broker, provider, operational, historical-return, or strategy evidence.",
+    "No edge, E2, validation, execution-quality, deployment, or real-money conclusion is permitted."
+  ],
+  "next_safe_action": "Obtain written Webull Thailand confirmation of a dedicated test account, exact account-level corporate-action event/cash/unit ledger paths and fields, and fractional share quantum. Then design a new superseding gate before any API probe or activation.",
+  "source_lineage": [
+    {
+      "path": "experiments/l_1_prospective_shadow_accounting_preregistration.json",
+      "sha256": "ee17ecc385c0fadd808d7c5e5a5af0ab426c133994ff54ef4071e9a242c45d88",
+      "use": "B4.7 streams, materiality, evidence minimum, no-netting, activation prerequisites, and claim limits."
+    },
+    {
+      "path": "scripts/validate_l_1_prospective_shadow_accounting_preregistration.py",
+      "sha256": "e42631efac2d6a64bb74df98ba35653a7f5b15558e69415954843fc4fbbd3a4a",
+      "use": "B4.7 locked-gate validator."
+    },
+    {
+      "path": "experiments/inputs/b4_8_webull_shadow_accounting_capability_inventory.json",
+      "sha256": "61ec6cb110adb5246a3e6e31540b1685f2a4a31aea1a7925bbb088a6d3d7156c",
+      "use": "Public Webull Thailand capability inventory and activation blockers."
+    },
+    {
+      "path": "wiki/concepts/strategy-research-workflow.md",
+      "sha256": "25d5ebb09648fc12c7e531d6fd4d951a937c7c4ded329ca1302b3e920194522d",
+      "use": "Separate paper-trade decisions from deployment and write stop conditions before execution."
+    }
+  ]
+}

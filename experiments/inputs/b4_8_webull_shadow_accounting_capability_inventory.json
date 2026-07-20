@@ -1,0 +1,121 @@
+{
+  "schema_version": "lily_b4_8_webull_shadow_accounting_capability_inventory_v1",
+  "order_id": "B4.8",
+  "hypothesis_id": "L-1",
+  "observed_at": "2026-07-20T04:44:38Z",
+  "method": "Public-document and source-code inspection only; no Webull, Alpha Vantage, Yahoo, account, market-data, preview, or order API request was made.",
+  "request_attestation": {
+    "broker_api_calls": 0,
+    "provider_api_calls": 0,
+    "account_calls": 0,
+    "preview_calls": 0,
+    "order_endpoint_calls": 0,
+    "orders_sent": 0,
+    "prospective_events_observed": 0,
+    "paid_spend_usd": 0
+  },
+  "thailand_documented_capability": {
+    "production_host": "api.webull.co.th",
+    "test_trading_host": "th-api.uat.webullbroker.com",
+    "test_environment_exists": true,
+    "test_environment_called_paper_account": false,
+    "shared_test_accounts_available": true,
+    "shared_test_account_warning": "Official documentation states that shared orders and positions may change at any time and directs users needing a dedicated test account to support.",
+    "dedicated_test_account_verified_for_owner": false,
+    "listed_read_endpoints": [
+      "/openapi/account/list",
+      "/openapi/assets/balance",
+      "/openapi/assets/positions",
+      "/openapi/trade/order/history",
+      "/openapi/trade/order/open",
+      "/openapi/trade/order/detail",
+      "/openapi/instrument/stock/list"
+    ],
+    "cash_activity_endpoint_listed": false,
+    "account_corporate_action_endpoint_listed": false,
+    "dividend_or_split_account_ledger_listed": false,
+    "corporate_action_event_subscription_listed": false,
+    "fractionable_boolean_documented": true,
+    "decimal_position_quantity_documented": true,
+    "decimal_or_amount_order_input_documented": true,
+    "minimum_fractional_share_quantum_documented": false,
+    "minimum_fractional_notional_documented": false
+  },
+  "global_documentation_contrast": {
+    "thailand_availability_inferred": false,
+    "cash_activity_path": "/openapi/trade/activities/cash",
+    "cash_activity_dividend_subtype_documented": false,
+    "cash_activity_capital_distribution_subtype_documented": false,
+    "corporate_action_path": "/openapi/instrument/corp-action/list",
+    "corporate_action_scope": "Instrument-level split and reverse-split data, not an account cash or unit ledger.",
+    "rule": "Global endpoints are gap-finding evidence only and may not be treated as Webull Thailand capability."
+  },
+  "thai_lab_cross_check": {
+    "repository": "nutdnuy/webull-openapi-thai-lab",
+    "commit": "304f5aa1b2389a981f997ebe8481740db2bb00eb",
+    "uat_first_guidance": true,
+    "account_balance_position_and_order_query_examples": true,
+    "account_cash_activity_example": false,
+    "account_corporate_action_ledger_example": false,
+    "fractional_quantum_example": false,
+    "use": "Secondary implementation cross-check only; official Thailand documentation controls capability claims."
+  },
+  "activation_blockers": [
+    "dedicated_owner_controlled_thailand_test_account_not_verified",
+    "auditable_thailand_account_corporate_action_cash_ledger_not_documented",
+    "auditable_thailand_account_corporate_action_unit_ledger_not_documented",
+    "broker_minimum_fractional_share_quantum_not_documented"
+  ],
+  "decision": "activation_blocked_before_observation",
+  "decision_reason": "B4.7 requires an owner-controlled paper ledger with event, cash, unit, timestamp, and fractional-quantum evidence. Public Thailand documentation proves a shared test environment and decimal/fractional support but not those required ledger semantics or precision.",
+  "sources": [
+    {
+      "source_id": "webull_th_llms_2026_07_20",
+      "url": "https://developer.webull.co.th/apis/llms.txt",
+      "sha256": "4bc263da9f41cc0810e53dc85672bbfd608e5ad8142a1ab5c3acbf17a22143e8",
+      "supports": "Thailand production/test hosts and the published Thailand endpoint inventory."
+    },
+    {
+      "source_id": "webull_th_sdk_2026_07_20",
+      "url": "https://developer.webull.co.th/apis/docs/sdk.md",
+      "sha256": "614ef29ba9978573a181ebdf04f6bd321c8874ae386669d1d90359342c13f866",
+      "supports": "Shared-test-account warning and dedicated-test-account support path."
+    },
+    {
+      "source_id": "webull_th_positions_2026_07_20",
+      "url": "https://developer.webull.co.th/apis/docs/reference/trade-api/account-position.md",
+      "sha256": "42f9ccebaeba3169bc447b1ac92c9b2fb8101533353f300d7d4dac3bca1caf58",
+      "supports": "Position quantity may be decimal for US fractional positions; no minimum quantum is stated."
+    },
+    {
+      "source_id": "webull_th_instrument_2026_07_20",
+      "url": "https://developer.webull.co.th/apis/docs/reference/trade-api/instrument-list.md",
+      "sha256": "a749c887ff7c23ef66683f0ebd0494ee3813cc883beaf0b3b5e841d1b34a6318",
+      "supports": "Instrument response exposes fractionable and lot_size but not fractional quantum."
+    },
+    {
+      "source_id": "webull_th_preview_2026_07_20",
+      "url": "https://developer.webull.co.th/apis/docs/reference/trade-api/common-order-preview.md",
+      "sha256": "436a1f2c5c97ebf131d2543bc93f1e68466530ebc6681b822d720c7435ab8c68",
+      "supports": "Fractional decimal quantity and amount inputs are accepted; no minimum share quantum is stated."
+    },
+    {
+      "source_id": "webull_global_cash_activity_2026_07_20",
+      "url": "https://developer.webull.com/apis/docs/reference/trade-cash-activity-by-type.md",
+      "sha256": "9e424505661fd4821467f8e9470b071996b9e09488da899c26e1dacae55efc82",
+      "supports": "Global cash-activity path and enum omit documented dividend/capital-distribution subtypes."
+    },
+    {
+      "source_id": "webull_global_corporate_action_2026_07_20",
+      "url": "https://developer.webull.com/apis/docs/reference/broker-market-data-api/corp-action-using-get.md",
+      "sha256": "7a86a4c63d6c1a1a7f045a15eff083c3909a8d1336139529a8ea884d22e31a00",
+      "supports": "Global corporate-action endpoint is instrument-level split/reverse-split data."
+    },
+    {
+      "source_id": "webull_thai_lab_commit_2026_07_20",
+      "url": "https://github.com/nutdnuy/webull-openapi-thai-lab/tree/304f5aa1b2389a981f997ebe8481740db2bb00eb",
+      "commit": "304f5aa1b2389a981f997ebe8481740db2bb00eb",
+      "supports": "Secondary UAT-first examples and absence of a documented account corporate-action ledger workflow."
+    }
+  ]
+}

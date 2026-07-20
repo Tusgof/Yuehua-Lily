@@ -163,7 +163,7 @@ Past reports are reproduced by checking out their recorded commit hash. Do not c
 ## 10. Current Verified State
 
 - **Verified date**: 2026-07-20
-- **Bootstrap**: B0 through B4.7 complete
+- **Bootstrap**: B0 through B4.8 complete
 - **Legacy Note status**: retired and deleted by `docs/DECISION_RECORD_002_RESEARCH_LOG_CONTRACT.md` after its research content was promoted
 - **Human research logs**: contract active; L-0 sizing and Webull capability are logs 001 and 006; L-1 baseline, remediation, validation-capacity, and Alpha Vantage corporate-action audits are logs 002 through 005 under `research_log/`
 - **Dashboard**: retained under `Dashboard/`, demoted from product/state owner
@@ -175,12 +175,13 @@ Past reports are reproduced by checking out their recorded commit hash. Do not c
 - **Alpha Vantage corporate actions**: B4.4 completed 16/16 free payloads in 16 attempts and stored 772 rows; 11/16 pre-2016 symbol-endpoint pairs reconcile exactly while five dividend pairs do not; the source is a current snapshot without point-in-time revisions, so the result remains E1 scope-restricted and validation stays sealed
 - **Owner scope decision**: B4.5 accepts the unresolved corporate-action history as an E1 limitation and pauses additional source search; a future comparison is allowed only through a separately locked E0 shadow-accounting dry run that tests operations, not edge or historical correctness
 - **Webull Thailand capability**: B4.6 production read-only authentication, account list, balance, and positions succeeded; all ten current ETF candidates returned `status=OC` and `fractionable=true`; no private account values, preview, order, paper trade, paid spend, or validation data were exposed
-- **Shadow-accounting gate**: B4.7 locks the three streams, fixed L-0 ten-sleeve accounting portfolio, account-scaled materiality thresholds, no-netting rule, minimum evidence, 365-day stop, and claim limits; the dry run remains `planned_not_started`
+- **Shadow-accounting gate**: B4.7 locks the three streams, fixed L-0 ten-sleeve accounting portfolio, account-scaled materiality thresholds, no-netting rule, minimum evidence, 365-day stop, and claim limits
+- **Shadow-accounting activation**: B4.8 is complete with `activation_blocked_before_observation`; Webull Thailand public evidence does not establish a dedicated owner-controlled test ledger, account-level corporate-action cash/unit paths, or the minimum fractional-share quantum. Runtime network/order allowlists remain empty, no forward start marker exists, and the dry run has not started
 - **Databento**: `DATABENTO_API_02` passes metadata access with USD 0 spend, but relevant US-equity coverage begins in 2018 or later and no dedicated corporate-actions history was exposed; owner-reported USD 50 credit has unverified real-payment provenance
 
 ## 11. Next Safe Action
 
-Keep validation returns sealed and leave L-1 at E1. Implement and lock a separate B4.8 activation contract with hermetic fixtures, immutable/redacted event containers, report validation, exact paper-environment endpoints, and a committed forward start marker. B4.7 does not authorize a broker/provider call, event observation, preview, paper order, production position, or real-money action.
+Keep validation returns sealed and leave L-1 at E1. Obtain written Webull Thailand confirmation of a dedicated owner-controlled test ledger, auditable account-level corporate-action cash/unit paths, and the minimum fractional-share quantum. Any activation requires a new owner-approved, hash-locked gate that supersedes B4.8; until then, broker/provider calls, event observation, preview, paper orders, production fallback, and real-money actions remain forbidden.
 
 ## 12. Invariants
 

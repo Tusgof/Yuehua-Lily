@@ -347,6 +347,31 @@
         "Sufficient operational evidence requires at least 180 days plus three matched events across two symbols, with a 365-day hard stop. Too few events is insufficient evidence; any event-level breach reopens the point-in-time source program and blocks automatic promotion.",
         "B4.7 made no broker or provider call, observed no prospective event, opened no validation data, authorized no activation or paper order, and made no E2, edge, historical-return, execution-quality, deployment, or real-money claim."
       ]
+    },
+    {
+      "id": "B4.8",
+      "title": "L-1 shadow-accounting activation contract and readiness boundary",
+      "status": "done",
+      "depends_on": ["B4.7"],
+      "required_artifacts": [
+        {"path": "experiments/l_1_shadow_accounting_activation_contract.json", "must": "locked_and_valid"},
+        {"path": "experiments/inputs/b4_8_webull_shadow_accounting_capability_inventory.json", "must": "exist"},
+        {"path": "schemas/l_1_shadow_accounting_event.schema.json", "must": "exist"},
+        {"path": "schemas/l_1_shadow_accounting_report.schema.json", "must": "exist"},
+        {"path": "scripts/validate_l_1_shadow_accounting_activation_contract.py", "must": "pass"},
+        {"path": "scripts/validate_l_1_shadow_accounting_report.py", "must": "exist"},
+        {"path": "tests/test_validate_l_1_shadow_accounting_activation_contract.py", "must": "pass_in_hermetic_tier"},
+        {"path": "tests/test_validate_l_1_shadow_accounting_report.py", "must": "pass_in_hermetic_tier"}
+      ],
+      "forbidden": ["shared public Webull test account", "production account or host", "broker or provider API call", "preview or order endpoint", "activation marker", "prospective event observation", "validation price or return access", "signal or PnL computation", "E2, edge, historical-correctness, deployment, or real-money claim"],
+      "evidence": [
+        "experiments/l_1_shadow_accounting_activation_contract.json is locked under append-only gate l_1_shadow_accounting_activation_v1 with contract SHA-256 62d23376a83823b6b710afb2dc74fdaf2f04d008c79a88a71a2b6dc06bff4d79 and validator SHA-256 8f0bce4261ad6bc26976eae4904152578de2e0b810a8103b2ec718526af67e55.",
+        "Public Webull Thailand documentation confirms production and test hosts plus shared test accounts, but warns that shared positions and orders may change at any time. No dedicated owner-controlled test account was verified or used.",
+        "The published Thailand endpoint inventory lacks account cash-activity, account corporate-action, dividend/split ledger, and corporate-action event-subscription paths. Fractionable flags and decimal inputs are documented, but minimum fractional share quantum is not.",
+        "B4.8 therefore locks activation_blocked_before_observation with empty runtime network and order allowlists, null forward markers, zero broker/provider request caps, no production fallback, and four explicit activation blockers.",
+        "Event and report schemas plus three immutable synthetic fixtures exercise no-material, material-breach, and activation-blocked decisions. The report validator recomputes strict-greater materiality, prevents cross-event netting, verifies evidence minimums, requires zero order/production calls, and retains the validation seal.",
+        "B4.8 performed public-document and source-code inspection only: zero account, broker, provider, preview, order, market-data, or prospective-event calls; USD 0 spend; validation remained sealed and the dry run did not start."
+      ]
     }
   ]
 }

@@ -1,0 +1,18 @@
+{
+  "schema_version": "lily_l1_shadow_accounting_report_v1",
+  "hypothesis_id": "L-1",
+  "evidence_tier": "E0",
+  "edge_claim": "none",
+  "report_mode": "synthetic_fixture",
+  "observation_start": null,
+  "observation_end": null,
+  "broker_fractional_quantum": null,
+  "event_ledger_sha256": null,
+  "container_registry_sha256": null,
+  "events": [],
+  "summary": {"elapsed_calendar_days": 0, "relevant_event_count": 0, "distinct_symbol_count": 0, "event_breach_count": 0},
+  "decision": "activation_blocked_before_observation",
+  "activation_blockers": ["auditable_thailand_account_corporate_action_cash_ledger_not_documented"],
+  "request_attestation": {"production_broker_calls": 0, "preview_calls": 0, "order_endpoint_calls": 0, "orders_sent": 0, "paid_spend_usd": 0},
+  "validation_return_seal": {"status": "sealed_not_accessed", "prices_opened": false, "returns_opened": false, "signals_opened": false, "positions_opened": false, "regimes_opened": false, "benchmarks_opened": false, "pnl_opened": false}
+}

@@ -21,6 +21,8 @@
     "scripts/validate_l_1_alpha_vantage_corporate_actions_report.py",
     "scripts/validate_l_1_corporate_action_scope_decision.py",
     "scripts/validate_l_1_prospective_shadow_accounting_preregistration.py",
+    "scripts/validate_l_1_shadow_accounting_activation_contract.py",
+    "scripts/validate_l_1_shadow_accounting_report.py",
     "scripts/validate_l_0_webull_th_read_only_capability_probe.py",
     "scripts/run_l_0_webull_th_read_only_capability_probe.py",
     "scripts/validate_l_0_webull_th_read_only_capability_report.py",

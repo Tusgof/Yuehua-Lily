@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://yuehua.local/schemas/l_1_shadow_accounting_report.schema.json",
+  "title": "Lily L-1 prospective shadow-accounting report",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "hypothesis_id",
+    "evidence_tier",
+    "edge_claim",
+    "report_mode",
+    "observation_start",
+    "observation_end",
+    "broker_fractional_quantum",
+    "event_ledger_sha256",
+    "container_registry_sha256",
+    "events",
+    "summary",
+    "decision",
+    "activation_blockers",
+    "request_attestation",
+    "validation_return_seal"
+  ],
+  "properties": {
+    "schema_version": {"const": "lily_l1_shadow_accounting_report_v1"},
+    "hypothesis_id": {"const": "L-1"},
+    "evidence_tier": {"const": "E0"},
+    "edge_claim": {"const": "none"},
+    "report_mode": {"enum": ["synthetic_fixture", "prospective_observation"]},
+    "observation_start": {"type": ["string", "null"], "format": "date"},
+    "observation_end": {"type": ["string", "null"], "format": "date"},
+    "broker_fractional_quantum": {"type": ["number", "null"], "exclusiveMinimum": 0},
+    "event_ledger_sha256": {"type": ["string", "null"], "pattern": "^[0-9a-f]{64}$"},
+    "container_registry_sha256": {"type": ["string", "null"], "pattern": "^[0-9a-f]{64}$"},
+    "events": {"type": "array"},
+    "summary": {"type": "object"},
+    "decision": {"enum": ["activation_blocked_before_observation", "insufficient_operational_evidence", "no_material_operational_discrepancy_observed_within_preregistered_scope", "material_operational_discrepancy_observed"]},
+    "activation_blockers": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+    "request_attestation": {"type": "object"},
+    "validation_return_seal": {"type": "object"}
+  }
+}

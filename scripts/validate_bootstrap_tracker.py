@@ -236,6 +236,18 @@ def _validate_done_artifact(
     if must == "contain_synthetic_data_fixtures":
         return _validate_synthetic_data_fixtures(target, order_id, artifact_path)
     if must == "locked_and_valid":
+        if artifact_path == "experiments/l_1_shadow_accounting_activation_contract.json":
+            return _validate_locked_preregistration_gate(
+                target,
+                order_id,
+                artifact_path,
+                gate_id="l_1_shadow_accounting_activation_v1",
+                label="l1_shadow_accounting_activation",
+                expected_status="locked_activation_blocked",
+                edge_claim_field="edge_claim",
+                project_root=project_root,
+                verify_runtime=verify_runtime,
+            )
         if artifact_path == "experiments/l_1_prospective_shadow_accounting_preregistration.json":
             return _validate_locked_preregistration_gate(
                 target,

@@ -1,0 +1,55 @@
+{
+  "schema_version": "lily_l1_shadow_accounting_report_v1",
+  "hypothesis_id": "L-1",
+  "evidence_tier": "E0",
+  "edge_claim": "none",
+  "report_mode": "synthetic_fixture",
+  "observation_start": "2026-07-21",
+  "observation_end": "2027-01-18",
+  "broker_fractional_quantum": 0.000001,
+  "event_ledger_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "container_registry_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+  "events": [
+    {
+      "event_id": "event-001",
+      "symbol": "VTI",
+      "event_type": "cash_dividend",
+      "reference_nav_usd": 1000.0,
+      "comparisons": [
+        {"stream_pair": "webull_vs_alpha_vantage", "cash_difference_usd": 0.25, "unit_difference": 0.0, "target_weight_tracking_difference": 0.0001, "order_notional_difference_usd": 0.25, "posting_delay_us_sessions": 1, "reported_material_dimensions": []},
+        {"stream_pair": "webull_vs_lily_yahoo", "cash_difference_usd": 0.1, "unit_difference": 0.0, "target_weight_tracking_difference": 0.00005, "order_notional_difference_usd": 0.1, "posting_delay_us_sessions": 0, "reported_material_dimensions": []},
+        {"stream_pair": "alpha_vantage_vs_lily_yahoo", "cash_difference_usd": 0.15, "unit_difference": 0.0, "target_weight_tracking_difference": 0.00005, "order_notional_difference_usd": 0.15, "posting_delay_us_sessions": null, "reported_material_dimensions": []}
+      ],
+      "reported_event_breach": false
+    },
+    {
+      "event_id": "event-002",
+      "symbol": "VGK",
+      "event_type": "cash_dividend",
+      "reference_nav_usd": 1002.0,
+      "comparisons": [
+        {"stream_pair": "webull_vs_alpha_vantage", "cash_difference_usd": 0.75, "unit_difference": 0.0, "target_weight_tracking_difference": 0.0002, "order_notional_difference_usd": 0.5, "posting_delay_us_sessions": 2, "reported_material_dimensions": []},
+        {"stream_pair": "webull_vs_lily_yahoo", "cash_difference_usd": 0.5, "unit_difference": 0.0, "target_weight_tracking_difference": 0.0001, "order_notional_difference_usd": 0.25, "posting_delay_us_sessions": 1, "reported_material_dimensions": []},
+        {"stream_pair": "alpha_vantage_vs_lily_yahoo", "cash_difference_usd": 0.25, "unit_difference": 0.0, "target_weight_tracking_difference": 0.0001, "order_notional_difference_usd": 0.25, "posting_delay_us_sessions": null, "reported_material_dimensions": []}
+      ],
+      "reported_event_breach": false
+    },
+    {
+      "event_id": "event-003",
+      "symbol": "VTI",
+      "event_type": "stock_split",
+      "reference_nav_usd": 1010.0,
+      "comparisons": [
+        {"stream_pair": "webull_vs_alpha_vantage", "cash_difference_usd": 0.0, "unit_difference": 0.00005, "target_weight_tracking_difference": 0.0002, "order_notional_difference_usd": 0.5, "posting_delay_us_sessions": 1, "reported_material_dimensions": []},
+        {"stream_pair": "webull_vs_lily_yahoo", "cash_difference_usd": 0.0, "unit_difference": 0.00002, "target_weight_tracking_difference": 0.0001, "order_notional_difference_usd": 0.25, "posting_delay_us_sessions": 0, "reported_material_dimensions": []},
+        {"stream_pair": "alpha_vantage_vs_lily_yahoo", "cash_difference_usd": 0.0, "unit_difference": 0.00003, "target_weight_tracking_difference": 0.0001, "order_notional_difference_usd": 0.25, "posting_delay_us_sessions": null, "reported_material_dimensions": []}
+      ],
+      "reported_event_breach": false
+    }
+  ],
+  "summary": {"elapsed_calendar_days": 181, "relevant_event_count": 3, "distinct_symbol_count": 2, "event_breach_count": 0},
+  "decision": "no_material_operational_discrepancy_observed_within_preregistered_scope",
+  "activation_blockers": [],
+  "request_attestation": {"production_broker_calls": 0, "preview_calls": 0, "order_endpoint_calls": 0, "orders_sent": 0, "paid_spend_usd": 0},
+  "validation_return_seal": {"status": "sealed_not_accessed", "prices_opened": false, "returns_opened": false, "signals_opened": false, "positions_opened": false, "regimes_opened": false, "benchmarks_opened": false, "pnl_opened": false}
+}

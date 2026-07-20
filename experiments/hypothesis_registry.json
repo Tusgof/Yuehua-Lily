@@ -225,6 +225,11 @@
           "date": "2026-07-20",
           "decision": "B4_7_prospective_shadow_accounting_preregistered_not_activated",
           "notes": "Gate l_1_prospective_shadow_accounting_v1 locks three streams, the fixed L-0 ten-sleeve accounting portfolio, account-scaled materiality thresholds, no netting, at least 180 days plus three matched events across two symbols, and a 365-day stop. No broker or provider call, event observation, activation, paper order, validation access, edge, E2, historical-correctness, deployment, or real-money claim is authorized."
+        },
+        {
+          "date": "2026-07-20",
+          "decision": "B4_8_activation_blocked_before_observation",
+          "notes": "Gate l_1_shadow_accounting_activation_v1 blocks activation because public Webull Thailand evidence does not establish a dedicated owner-controlled test ledger, account-level corporate-action cash/unit paths, or the minimum fractional-share quantum. Runtime network and order allowlists are empty, request caps are zero, no forward marker exists, and no broker/provider call or prospective observation occurred. Written Webull Thailand confirmation plus a new owner-approved superseding gate is required. Validation remains sealed and L-1 remains scope-restricted E1."
         }
       ]
     },
