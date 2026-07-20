@@ -220,6 +220,11 @@
           "date": "2026-07-15",
           "decision": "B4_5_owner_accepts_E1_scope_and_pauses_source_search",
           "notes": "The owner accepts the unresolved historical corporate-action difference as an explicit E1 limitation and pauses new or paid source search. Validation remains sealed. Any future comparison requires a separate E0 operational dry-run preregistration with edge_claim none, materiality thresholds locked before observation, and no historical-correctness or E2 interpretation."
+        },
+        {
+          "date": "2026-07-20",
+          "decision": "B4_7_prospective_shadow_accounting_preregistered_not_activated",
+          "notes": "Gate l_1_prospective_shadow_accounting_v1 locks three streams, the fixed L-0 ten-sleeve accounting portfolio, account-scaled materiality thresholds, no netting, at least 180 days plus three matched events across two symbols, and a 365-day stop. No broker or provider call, event observation, activation, paper order, validation access, edge, E2, historical-correctness, deployment, or real-money claim is authorized."
         }
       ]
     },

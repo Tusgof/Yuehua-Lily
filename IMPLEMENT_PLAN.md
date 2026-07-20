@@ -161,6 +161,16 @@ B4.6 locks and executes a production read-only probe against the owner's Webull 
 
 Exit: all four read-only endpoints succeed, and VTI, VGK, EWJ, IPAC, VWO, IEF, SCHP, GLDM, PDBC, and VNQI return `status=OC` and `fractionable=true`. This is E0 operational evidence only. Minimum order, funding FX, execution quality, and realized costs remain outside the claim.
 
+### B4.7 — Prospective Shadow-Accounting Preregistration
+
+B4.7 locks an `E0` design before any prospective observation. It compares a Webull Thailand paper ledger, an Alpha Vantage current-snapshot shadow ledger, and Lily's Yahoo-event accounting on the frozen L-0 ten-sleeve portfolio. Materiality is account-scaled for cash, units, weight tracking, hypothetical order notional, and posting delay; opposite discrepancies cannot be netted.
+
+Exit: gate `l_1_prospective_shadow_accounting_v1` is hash-bound with at least 180 days and three matched events across two symbols required, a 365-day hard stop, and explicit insufficient-evidence and claim rules. No API call, event observation, activation, preview, paper order, validation access, signal, PnL, E2, edge, or real-money action occurs in B4.7.
+
+### B4.8 — Activation Contract (Not Started)
+
+Before the dry run begins, separately lock the paper environment and exact endpoints, broker fractional quantum, forward start/stop timestamps, immutable redacted containers, event-ledger implementation, hermetic fixtures, report validator, request/cost limits, and order attestation. If Webull cannot expose an auditable paper ledger, stop; do not substitute production or real money.
+
 ## 6. Acceptance Gate
 
 E2 requires all of the following:
@@ -213,7 +223,7 @@ If MinTRL validation cost is unaffordable or undefined against the benchmark nul
 | Founding decisions | Complete | pushed founding pack |
 | P0–P4 | Active after bootstrap | Maintain governance, reproducibility, statistics, data, and restore controls |
 | L-0 | Scope-restricted E0; B4.6 verifies production read-only and fractional metadata for ten ETF candidates | Minimum order, funding FX, execution quality, and realized-cost evidence |
-| L-1 | Scope-restricted E1; B4.5 accepts the corporate-action limitation and B4.6 resolves the Webull read-only prerequisite | Separate E0 shadow-accounting preregistration if approved; validation remains sealed |
+| L-1 | Scope-restricted E1; B4.7 locks the E0 shadow-accounting design but does not activate it | B4.8 activation contract; validation remains sealed |
 | L-2 | Proposed | L-1 evidence |
 | L-3 | Proposed | baseline infrastructure and preregistration |
 | L-4 | Proposed | universe/data integrity and preregistration |

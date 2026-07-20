@@ -327,6 +327,26 @@
         "The request attestation records four read-only calls, zero preview calls, zero order endpoint calls, zero orders, and USD 0 spend.",
         "The result is E0 operational capability evidence only. Validation returns remain sealed, and the probe does not authorize paper trading, shadow accounting, E2, edge, deployment, or real money."
       ]
+    },
+    {
+      "id": "B4.7",
+      "title": "L-1 prospective shadow-accounting dry-run preregistration",
+      "status": "done",
+      "depends_on": ["B4.6"],
+      "required_artifacts": [
+        {"path": "experiments/l_1_prospective_shadow_accounting_preregistration.json", "must": "locked_and_valid"},
+        {"path": "scripts/validate_l_1_prospective_shadow_accounting_preregistration.py", "must": "pass"},
+        {"path": "tests/test_validate_l_1_prospective_shadow_accounting_preregistration.py", "must": "pass_in_hermetic_tier"}
+      ],
+      "forbidden": ["Webull or provider API call", "prospective event observation", "validation price or return access", "signal or PnL computation", "order preview or endpoint", "paper trade activation", "production or real-money position", "E2, edge, historical-correctness, or deployment claim"],
+      "evidence": [
+        "experiments/l_1_prospective_shadow_accounting_preregistration.json is locked under append-only gate l_1_prospective_shadow_accounting_v1 with contract SHA-256 ee17ecc385c0fadd808d7c5e5a5af0ab426c133994ff54ef4071e9a242c45d88 and validator SHA-256 e42631efac2d6a64bb74df98ba35653a7f5b15558e69415954843fc4fbbd3a4a.",
+        "The gate predeclares the Webull Thailand paper ledger as an operational reference, Alpha Vantage as a current-snapshot shadow ledger, and Lily's Yahoo-event ledger as the strategy-accounting stream; production or real-money substitution is forbidden.",
+        "The common accounting portfolio freezes the L-0 USD 1,000 ten-sleeve weights at 90% gross and 10% cash, uses only forward quotes after activation, and computes no trend signal, validation return, benchmark, or PnL.",
+        "Materiality is locked before observation: cash greater than max(USD 1, 5 bps NAV), units greater than max(0.0001 share, broker quantum), tracking weight greater than 10 bps, hypothetical order notional greater than max(USD 1, 10 bps NAV), or posting delay beyond two US sessions. Opposite discrepancies may not be netted.",
+        "Sufficient operational evidence requires at least 180 days plus three matched events across two symbols, with a 365-day hard stop. Too few events is insufficient evidence; any event-level breach reopens the point-in-time source program and blocks automatic promotion.",
+        "B4.7 made no broker or provider call, observed no prospective event, opened no validation data, authorized no activation or paper order, and made no E2, edge, historical-return, execution-quality, deployment, or real-money claim."
+      ]
     }
   ]
 }

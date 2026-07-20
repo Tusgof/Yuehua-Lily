@@ -1,0 +1,206 @@
+{
+  "schema_version": "lily_l1_prospective_shadow_accounting_preregistration_v1",
+  "order_id": "B4.7",
+  "hypothesis_id": "L-1",
+  "created_at": "2026-07-20T04:28:00Z",
+  "status": "locked_before_observation",
+  "evidence_tier": "E0",
+  "edge_claim": "none",
+  "purpose": "Prospectively test whether corporate-action source differences create operationally material cash, unit, weight-tracking, or hypothetical rebalance-order differences without opening validation returns or testing strategy edge.",
+  "owner_authorization": "The owner said to continue with the separately hash-locked E0 prospective shadow-accounting preregistration on 2026-07-20.",
+  "execution_state": {
+    "design_and_lock_only": true,
+    "dry_run_status": "planned_not_started",
+    "activation_authorized_by_this_gate": false,
+    "broker_or_provider_called_in_B4_7": false,
+    "paper_order_authorized_by_this_gate": false,
+    "real_order_authorized": false,
+    "prospective_event_observed": false,
+    "validation_window_status": "sealed_not_accessed"
+  },
+  "research_question": "During a locked forward-only E0 dry run, do Alpha Vantage or Lily's Yahoo-event accounting differ materially from the Webull paper ledger for corporate actions affecting the ten-ETF shadow portfolio?",
+  "scope": {
+    "broker_reference": "Webull Thailand paper-account event, cash, and unit ledger; production holdings or real-money transactions are forbidden.",
+    "symbols": ["VTI", "VGK", "EWJ", "IPAC", "VWO", "IEF", "SCHP", "GLDM", "PDBC", "VNQI"],
+    "included_event_types": ["cash_dividend", "capital_gains_distribution", "stock_split", "reverse_split"],
+    "out_of_scope_event_rule": "Record any other event type in the coverage inventory, exclude it from the primary comparison, and retain a scope blocker; never silently coerce it into an included type.",
+    "currency": "USD",
+    "observation_direction": "forward_only_from_committed_activation_timestamp",
+    "historical_backfill_allowed": false,
+    "validation_prices_or_returns_allowed": false,
+    "strategy_signal_allowed": false,
+    "performance_measurement_allowed": false
+  },
+  "comparison_streams": [
+    {
+      "stream_id": "webull_th_paper_ledger",
+      "role": "operational_reference_not_research_ground_truth",
+      "inputs": "Auditable paper-account corporate-action, cash, unit, and posting records exported or read after a separately authorized activation.",
+      "required_capability": "The paper environment must expose event, cash, unit, and timestamp evidence that can be hashed and reconciled without exposing account identifiers.",
+      "substitution_rule": "If Webull Thailand cannot provide an auditable paper ledger, stop before observation and report activation_blocked; do not substitute a production or real-money account."
+    },
+    {
+      "stream_id": "alpha_vantage_current_snapshot_shadow_ledger",
+      "role": "independent_provider_current_snapshot",
+      "inputs": "Forward snapshots from the Alpha Vantage DIVIDENDS and SPLITS endpoints acquired only after separate activation, normalized and applied to the common opening ledger.",
+      "provenance_limit": "This is a current snapshot, not a point-in-time revision archive or historical ground truth.",
+      "selection_rule": "No provider field may be selected or discarded according to the resulting weight, order, return, or PnL impact."
+    },
+    {
+      "stream_id": "lily_yahoo_event_strategy_accounting",
+      "role": "predeclared_strategy_accounting_stream",
+      "inputs": "Forward Yahoo chart events explicitly labeled dividend, capital gain, or split, applied by Lily's deterministic ledger to the common opening cash and units; adjusted close alone is forbidden.",
+      "portfolio_rule": "Use the frozen L-0 ten-sleeve target weights and prospective quotes only; do not calculate a trend signal or load a pre-activation price history.",
+      "revision_rule": "Every later provider revision is a new immutable observation linked to the earlier container; never overwrite the first-seen record."
+    }
+  ],
+  "common_shadow_portfolio": {
+    "reference_capital_usd": 1000.0,
+    "cash_target_weight": 0.1,
+    "gross_target_weight": 0.9,
+    "target_weights": {
+      "VTI": 0.07363636,
+      "VGK": 0.07363636,
+      "EWJ": 0.07363636,
+      "IPAC": 0.07363636,
+      "VWO": 0.07363636,
+      "IEF": 0.14727273,
+      "SCHP": 0.14727273,
+      "GLDM": 0.08181818,
+      "PDBC": 0.08181818,
+      "VNQI": 0.07363636
+    },
+    "target_weight_source": "reports/feasibility/l_0_sizing_feasibility.json, USD 1,000 ten-sleeve scenario",
+    "initialization_rule": "At activation, establish identical opening cash and fractional units in all three streams from the paper ledger and one common forward-only quote snapshot. Record the broker fractional quantum before any event observation.",
+    "price_rule": "Use one shared forward-only end-of-session USD quote per symbol for all stream comparisons; never use a pre-activation quote or a validation-window price.",
+    "accounting_precision_rule": "Retain source precision and at least eight decimal places internally. Apply no discretionary rounding; the broker fractional quantum is used only in the locked unit materiality formula.",
+    "weight_tracking_delta_definition": "For each stream and symbol, post-event market value divided by stream NAV minus the frozen target weight.",
+    "hypothetical_rebalance_definition": "Target notional under the frozen weight minus post-event stream notional, calculated with the common quote; record only the difference between streams and never transmit an order."
+  },
+  "event_record_contract": {
+    "required_fields": [
+      "observation_id",
+      "stream_id",
+      "symbol",
+      "event_type",
+      "provider_or_broker_event_identifier_when_available",
+      "effective_or_ex_date",
+      "record_date_when_available",
+      "payment_date_when_available",
+      "cash_delta_usd",
+      "unit_delta",
+      "target_weight_tracking_delta",
+      "hypothetical_rebalance_order_delta_usd",
+      "source_observed_at",
+      "source_container_sha256",
+      "source_payload_sha256",
+      "reference_nav_usd",
+      "reference_quote_sha256",
+      "first_seen_or_revision"
+    ],
+    "event_match_key": "symbol plus normalized event_type plus effective_or_ex_date; use the provider or broker event identifier as corroboration when available, never as the sole key.",
+    "missing_field_rule": "Preserve null with a named reason for dates or identifiers documented as unavailable. Cash, units, source timestamp, source container hash, reference NAV, and reference quote hash may not be imputed.",
+    "container_rule": "Store immutable redacted source containers and normalized rows with separate SHA-256 values; revisions append new observations."
+  },
+  "materiality_thresholds": {
+    "reference_nav_definition": "Webull paper-account NAV at the prior US session close before the event, or the locked USD 1,000 opening NAV before the first close; the chosen value is shared by all streams for that event.",
+    "cash_balance_difference_usd": "absolute pairwise stream difference greater than max(USD 1.00, 0.0005 times reference NAV)",
+    "unit_balance_difference": "absolute pairwise stream difference greater than max(0.0001 share, the broker-reported minimum fractional share quantum recorded before observation)",
+    "target_weight_tracking_difference": "absolute pairwise difference greater than 0.0010, equal to 10 basis points of NAV",
+    "hypothetical_order_notional_difference_usd": "absolute pairwise difference greater than max(USD 1.00, 0.0010 times reference NAV)",
+    "event_detection_or_posting_delay": "Either Alpha Vantage shadow accounting or Lily strategy accounting first sees or posts the matched event more than two US trading sessions after the Webull paper ledger posting timestamp",
+    "strict_comparison_rule": "A value equal to a threshold is non-material; only a strictly greater value breaches.",
+    "unknown_broker_precision_rule": "If the broker fractional quantum is not documented before the first event observation, activation is blocked and the threshold may not be chosen after seeing an event."
+  },
+  "breach_and_decision_rules": {
+    "event_level_breach": "An event is materially discrepant if any pairwise comparison breaches any one locked materiality dimension.",
+    "aggregate_breach": "One or more event-level breaches produces material_operational_discrepancy_observed and reopens the point-in-time source program under B4.5.",
+    "no_netting_rule": "Never net opposite cash, unit, weight, order, or delay discrepancies across streams, symbols, events, or dates.",
+    "multiple_dimensions_rule": "Report every breached dimension even when one breach already determines the aggregate outcome.",
+    "minimum_relevant_event_count": 3,
+    "minimum_distinct_symbol_count": 2,
+    "minimum_calendar_days": 180,
+    "maximum_calendar_days": 365,
+    "sufficient_evidence_rule": "Complete only after at least 180 calendar days and at least three matched relevant events across at least two symbols, or at the 365-day hard stop.",
+    "insufficient_evidence_rule": "At the 365-day hard stop, if the event or symbol minimum is not reached, report insufficient_operational_evidence; do not extend automatically and do not infer that discrepancies are small.",
+    "no_breach_outcome": "If evidence is sufficient and no event breaches, report no_material_operational_discrepancy_observed_within_preregistered_scope only.",
+    "breach_outcome": "If any event breaches, report material_operational_discrepancy_observed, retain all raw evidence, stop any automatic operational promotion, and reopen source investigation.",
+    "unreconciled_event_rule": "A broker event lacking either provider match by the end of the two-session delay threshold is a delay breach; a provider event lacking a broker match remains an explicit unmatched-event blocker and may not be treated as zero."
+  },
+  "activation_prerequisites": [
+    "A separate owner-approved activation order is committed after this gate.",
+    "The Webull Thailand paper environment, not production or real money, exposes an auditable event, cash, unit, and timestamp ledger.",
+    "The broker minimum fractional share quantum is documented and committed before observation.",
+    "The dry-run implementation, report validator, hermetic fixtures, credential-redaction checks, and immutable-container checks pass before activation.",
+    "The exact activation timestamp, 365-day stop timestamp, opening redacted ledger hashes, common quote hashes, and zero-order attestation are committed before the first eligible event is inspected.",
+    "Prospective provider acquisition limits, request budgets, and cost guard are separately locked; no provider request is authorized by B4.7.",
+    "The 2016-01-04 through 2026-06-30 validation-return window remains sealed and no pre-activation return, signal, position, regime, benchmark, or PnL is loaded."
+  ],
+  "stop_conditions": [
+    "Paper ledger capability is absent, unauditable, or requires a production or real-money position.",
+    "Broker fractional quantum is unknown when activation would begin.",
+    "Any credential, account identifier, balance, or position value would be persisted without the locked redaction and hashing contract.",
+    "Any code path requests validation prices or returns, calculates a trend signal, or computes strategy PnL.",
+    "Any preview, paper order, or other broker action is attempted before a separate activation order authorizes its exact endpoint and environment.",
+    "A paid data action is required without a separate cost-gate decision.",
+    "The 365-day hard stop is reached.",
+    "An event-level material breach is confirmed; collection may continue only for incident reconciliation, not promotion."
+  ],
+  "validation_return_seal": {
+    "untouched_start": "2016-01-04",
+    "untouched_end": "2026-06-30",
+    "status": "sealed_not_accessed",
+    "prices_opened": false,
+    "adjusted_prices_opened": false,
+    "returns_opened": false,
+    "signals_opened": false,
+    "positions_opened": false,
+    "regimes_opened": false,
+    "benchmarks_opened": false,
+    "pnl_opened": false
+  },
+  "claim_limits": [
+    "The Webull paper ledger is an operational reference, not research ground truth.",
+    "Prospective observations cannot prove that historical provider discrepancies were immaterial or correct historical returns.",
+    "No outcome establishes strategy edge, E2 validation, historical-return correctness, broker execution quality, deployment readiness, or real-money suitability.",
+    "Too few events means insufficient operational evidence, not absence of a discrepancy.",
+    "A clean result applies only to the symbols, event types, streams, dates, thresholds, and operational setup preregistered here."
+  ],
+  "required_future_outputs": [
+    "activation record and validator",
+    "immutable redacted source containers and dual hashes",
+    "append-only normalized event ledger",
+    "event-level pairwise discrepancy table",
+    "machine JSON and matching Thai research log after completion or stop",
+    "zero-order or separately authorized paper-order endpoint attestation",
+    "producing git commit and gate hashes",
+    "explicit E0 and edge_claim none labels"
+  ],
+  "next_safe_action": "Implement and lock a separate B4.8 activation contract with hermetic fixtures and report validation; do not call Webull or providers, observe an event, preview an order, or begin paper trading under B4.7.",
+  "source_lineage": [
+    {
+      "path": "experiments/l_1_corporate_action_scope_decision.json",
+      "sha256": "5f9540d369e1d6aadcbabdb6e57268e42c7024625c748ed85880ecb905417b8a",
+      "use": "B4.5 owner decision, required streams, dimensions, claim limits, and source-search reopen rule."
+    },
+    {
+      "path": "reports/feasibility/l_0_webull_th_read_only_capability.json",
+      "sha256": "365f0d4ce5db85cc9356f11457ac9776a79fc2ca290c85813f9428c89815f630",
+      "use": "B4.6 verifies production read-only and ten-symbol fractional metadata but does not authorize paper trading."
+    },
+    {
+      "path": "reports/feasibility/l_0_sizing_feasibility.json",
+      "sha256": "b544759382b90d50dc76af4bc9752ea34eab2d946b616f6d286a41a4104a13c2",
+      "use": "Frozen USD 1,000 ten-sleeve target weights, 90% gross exposure, and 10% cash."
+    },
+    {
+      "path": "docs/EVIDENCE_TIER_POLICY.md",
+      "use": "E0 operational dry runs carry no edge claim and do not promote L-1."
+    },
+    {
+      "path": "wiki/concepts/strategy-research-workflow.md",
+      "sha256": "25d5ebb09648fc12c7e531d6fd4d951a937c7c4ded329ca1302b3e920194522d",
+      "use": "Separate paper-trade decisions from deployment and define written stop conditions before execution."
+    }
+  ]
+}
