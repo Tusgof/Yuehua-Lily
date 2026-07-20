@@ -88,10 +88,10 @@ def validate_report_payload(payload: dict[str, Any], *, known_ids: set[str]) -> 
     hypothesis_id = payload.get("hypothesis_id")
     evidence_tier = payload.get("evidence_tier")
     tier_blockers = payload.get("tier_blockers")
-    if (
-        tier_blockers is None
-        and payload.get("schema_version") == "lily_l0_webull_th_fractional_preview_report_v1"
-    ):
+    if tier_blockers is None and payload.get("schema_version") in {
+        "lily_l0_webull_th_fractional_preview_report_v1",
+        "lily_l0_webull_th_fractional_preview_report_v2",
+    }:
         tier_blockers = payload.get("claim_limits")
 
     if hypothesis_id not in known_ids:

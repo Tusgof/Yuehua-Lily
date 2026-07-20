@@ -447,7 +447,7 @@
     {
       "id": "B4.12",
       "title": "Webull Thailand UAT authentication-budget remediation and one bounded execution",
-      "status": "in_progress",
+      "status": "done",
       "depends_on": ["B4.11"],
       "required_artifacts": [
         {"path": "experiments/l_0_webull_th_fractional_preview_activation_v2.json", "must": "locked_and_valid"},
@@ -466,7 +466,10 @@
         "The owner authorized the next Lily step on 2026-07-20, including creation of a superseding B4.12 gate and one bounded Webull Thailand UAT execution after the gate is committed, pushed, and passes CI.",
         "Gate l_0_webull_th_fractional_preview_activation_v2 preserves the locked B4.10/B4.11 files and supersedes only the B4.11 execution authority through a new artifact path.",
         "The v2 runner fixes the authentication budget to one token-create plus at most seven token checks over 30 seconds at five-second intervals, retains eight VTI preview requests, caps all broker requests at sixteen, disables retry, and keeps tokens in process memory only.",
-        "At this gate-commit stage B4.12 has made zero broker, authentication, preview, order, provider, validation, or paid requests. Execution may occur once only after origin/main CI passes."
+        "Gate commit 152c8e1e8ecc946b889472707b4b3280e63d4e02 was pushed to origin/main and Hermetic CI run 29721298183 passed before any B4.12 credential read or broker request.",
+        "The one authorized execution loaded the first official shared-UAT row in process memory only and made one token-create plus seven token-check requests over the locked 30-second window. Authentication did not become NORMAL, so the decision is blocked_before_preview with zero preview requests.",
+        "The redacted report passes its validator. Forbidden, production, order-mutation/query, order, provider, validation, and paid requests are all zero; no raw response or private material was persisted.",
+        "Thai research log 008 records the E0 scope restriction. The validation window remains sealed, no fractional minimum is known, and B4.12 cannot be rerun without a new owner-approved gate backed by new evidence."
       ]
     }
   ]

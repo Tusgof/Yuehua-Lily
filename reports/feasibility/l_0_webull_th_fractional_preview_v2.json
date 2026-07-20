@@ -1,0 +1,76 @@
+{
+  "activation_gate_id": "l_0_webull_th_fractional_preview_activation_v2",
+  "authentication_polling": {
+    "duration_seconds": 30,
+    "interval_seconds": 5,
+    "maximum_auth_check_requests": 7,
+    "maximum_auth_create_requests": 1
+  },
+  "blockers": [
+    "authentication_not_normal_within_30_seconds"
+  ],
+  "claim_limits": [
+    "The report measures tested VTI acceptance on the shared Thailand UAT environment only; it does not prove an order was placed or filled.",
+    "The result does not establish an exact broker minimum and may not be generalized to other symbols or production.",
+    "The report provides no execution-quality, strategy-edge, E2, deployment, paper-trading, or real-money evidence."
+  ],
+  "contract_sha256": "5af50b2eb96b053f3745b5aeeb930ff9414b5b602d5c423204efb5473b54a1ad",
+  "decision": "blocked_before_preview",
+  "edge_claim": "none",
+  "environment": "webull_thailand_uat",
+  "evidence_tier": "E0",
+  "host": "th-api.uat.webullbroker.com",
+  "hypothesis_id": "L-0",
+  "linked_hypothesis_id": "L-1",
+  "order_id": "B4.12",
+  "produced_at": "2026-07-20T06:20:27.200452Z",
+  "producing_git_commit": "152c8e1e8ecc946b889472707b4b3280e63d4e02",
+  "report_mode": "uat_preview",
+  "request_attestation": {
+    "auth_check_request_count": 7,
+    "auth_create_request_count": 1,
+    "authentication_paths": [
+      "/openapi/auth/token/create",
+      "/openapi/auth/token/check",
+      "/openapi/auth/token/check",
+      "/openapi/auth/token/check",
+      "/openapi/auth/token/check",
+      "/openapi/auth/token/check",
+      "/openapi/auth/token/check",
+      "/openapi/auth/token/check"
+    ],
+    "authentication_request_count": 8,
+    "forbidden_request_count": 0,
+    "order_mutation_or_query_count": 0,
+    "orders_sent": 0,
+    "paid_spend_usd": 0,
+    "preview_path": "/openapi/trade/order/preview",
+    "preview_request_count": 0,
+    "private_material_persisted": false,
+    "production_request_count": 0,
+    "raw_response_persisted": false,
+    "synthetic_preview_row_count": 0,
+    "total_broker_request_count": 8
+  },
+  "rows": [],
+  "schema_version": "lily_l0_webull_th_fractional_preview_report_v2",
+  "summary": {
+    "accepted_count": 0,
+    "exact_broker_minimum_known": false,
+    "largest_rejected_tested_quantity": null,
+    "rejected_count": 0,
+    "smallest_accepted_tested_quantity": null,
+    "tested_quantity_count": 0
+  },
+  "validation_return_seal": {
+    "adjusted_prices_opened": false,
+    "benchmarks_opened": false,
+    "pnl_opened": false,
+    "positions_opened": false,
+    "prices_opened": false,
+    "regimes_opened": false,
+    "returns_opened": false,
+    "signals_opened": false,
+    "status": "sealed_not_accessed"
+  }
+}

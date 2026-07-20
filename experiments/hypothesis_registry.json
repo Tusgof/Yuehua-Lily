@@ -92,6 +92,10 @@
         {
           "path": "reports/feasibility/l_0_webull_th_fractional_preview.json",
           "evidence_tier": "E0"
+        },
+        {
+          "path": "reports/feasibility/l_0_webull_th_fractional_preview_v2.json",
+          "evidence_tier": "E0"
         }
       ],
       "decision_log": [
@@ -129,6 +133,11 @@
           "date": "2026-07-20",
           "decision": "B4_12_superseding_authentication_budget_gate_locked_before_execution",
           "notes": "Gate l_0_webull_th_fractional_preview_activation_v2 preserves the B4.10/B4.11 artifacts and funds one token create plus at most seven token checks over a fixed 30-second SDK polling window. The VTI quantity grid and all production, order, privacy, provider, validation, claim, and zero-spend boundaries remain unchanged. No B4.12 network request has occurred at the gate stage; L-0 remains scope-restricted E0."
+        },
+        {
+          "date": "2026-07-20",
+          "decision": "B4_12_execution_blocked_before_preview_after_30_second_authentication_window",
+          "notes": "After the v2 gate commit and CI passed, the one authorized run made one token-create and seven token-check requests. Authentication remained non-NORMAL at 30 seconds, so no preview, order, production, provider, or validation request occurred. The result does not establish whether any VTI quantity is accepted and L-0 remains scope-restricted E0."
         }
       ]
     },
@@ -279,6 +288,11 @@
           "date": "2026-07-20",
           "decision": "B4_12_gate_adds_no_linked_L1_evidence_before_execution",
           "notes": "The B4.12 superseding gate changes only the bounded L-0 shared-UAT authentication budget and preserves the validation seal. Before execution it adds no broker-ledger, corporate-action, return, edge, or validation evidence to L-1, which remains scope-restricted E1."
+        },
+        {
+          "date": "2026-07-20",
+          "decision": "B4_12_authentication_timeout_adds_no_L1_evidence",
+          "notes": "The single B4.12 shared-UAT run exhausted its fixed 30-second authentication window before preview. It adds no broker-ledger, corporate-action, price, return, edge, or validation evidence to L-1. Validation remains sealed and L-1 remains scope-restricted E1."
         }
       ]
     },

@@ -44,15 +44,17 @@ class EvidenceTierValidatorTests(unittest.TestCase):
         self.assertEqual([], validate_report_payload(payload, known_ids={"L-1"}))
 
     def test_fractional_preview_claim_limits_supply_E0_tier_boundary(self) -> None:
-        payload = {
-            "schema_version": "lily_l0_webull_th_fractional_preview_report_v1",
-            "hypothesis_id": "L-0",
-            "evidence_tier": "E0",
-            "edge_claim": "none",
-            "claim_limits": ["UAT preview is not production or edge evidence"],
-            "decision": "blocked_before_preview",
-        }
-        self.assertEqual([], validate_report_payload(payload, known_ids={"L-0"}))
+        for version in ("v1", "v2"):
+            with self.subTest(version=version):
+                payload = {
+                    "schema_version": f"lily_l0_webull_th_fractional_preview_report_{version}",
+                    "hypothesis_id": "L-0",
+                    "evidence_tier": "E0",
+                    "edge_claim": "none",
+                    "claim_limits": ["UAT preview is not production or edge evidence"],
+                    "decision": "blocked_before_preview",
+                }
+                self.assertEqual([], validate_report_payload(payload, known_ids={"L-0"}))
 
     def test_E2_with_independent_completed_review_passes(self) -> None:
         payload = {
