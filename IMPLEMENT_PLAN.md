@@ -177,7 +177,13 @@ Exit: B4.8 locks `activation_blocked_before_observation`. Public Webull Thailand
 
 B4.9 accepts the published Webull Thailand API inventory as the current boundary. Account-level corporate-action event, cash, unit, dividend, and split ledgers are classified as unavailable; the B4.7 three-stream dry run is closed without observation. Alpha Vantage and Lily Yahoo accounting remain limited research streams and neither is promoted to ground truth.
 
-Exit: gate `l_1_shadow_accounting_activation_v2` supersedes the B4.8 gate and preregisters, but does not execute, a UAT-only VTI preview grid of eight fixed quantities from 1 through 0.0000001. Only `POST /openapi/trade/order/preview` may be considered by the later B4.10 execution order. Production, balance, positions, AMOUNT mode, retries, order mutation/query endpoints, validation access, paper trading, and real money remain forbidden.
+Exit: gate `l_1_shadow_accounting_activation_v2` supersedes the B4.8 gate and preregisters, but does not execute, a UAT-only VTI preview grid of eight fixed quantities from 1 through 0.0000001. Only `POST /openapi/trade/order/preview` may be considered by the later machinery and activation orders. Production, balance, positions, AMOUNT mode, retries, order mutation/query endpoints, validation access, paper trading, and real money remain forbidden.
+
+### B4.10 — UAT Fractional-preview Machinery Gate (Complete, Not Executed)
+
+B4.10 implements and hash-locks the fail-closed runner, exact Thailand UAT request path, eight-value VTI QTY grid, request caps, report schema/validator, and three hermetic fixtures. The runner requires both `--execute` and a future active `l_0_webull_th_fractional_preview_activation_v1` gate before it reads credentials or imports the SDK.
+
+Exit: gate `l_0_webull_th_fractional_preview_probe_v1` is active with machinery status `locked_machinery_ready_execution_not_authorized`. B4.10 makes zero Webull, provider, authentication, preview, order, or validation requests and creates no experiment report or research log. The next possible order is a separately owner-approved B4.11 activation gate; it may not authorize production, balance, positions, order mutation/query, validation access, paper trading, or real money.
 
 ## 6. Acceptance Gate
 
@@ -230,8 +236,8 @@ If MinTRL validation cost is unaffordable or undefined against the benchmark nul
 |:--|:--|:--|
 | Founding decisions | Complete | pushed founding pack |
 | P0–P4 | Active after bootstrap | Maintain governance, reproducibility, statistics, data, and restore controls |
-| L-0 | Scope-restricted E0; B4.6 verifies production read-only and fractional metadata for ten ETF candidates; B4.9 locks a representative UAT preview design | B4.10 machinery and separately approved UAT preview execution; funding FX, execution quality, and realized-cost evidence remain open |
-| L-1 | Scope-restricted E1; B4.9 closes the unavailable Webull-ledger dry run without observation and retains two explicitly limited accounting streams | Validation remains sealed; no broker-ledger or historical-correctness claim |
+| L-0 | Scope-restricted E0; B4.6 verifies production read-only and fractional metadata for ten ETF candidates; B4.10 locks fail-closed UAT preview machinery without execution | Separately approve and hash-lock B4.11 before any UAT call; funding FX, execution quality, and realized-cost evidence remain open |
+| L-1 | Scope-restricted E1; B4.9 closes the unavailable Webull-ledger dry run without observation; B4.10 adds no L-1 evidence | Validation remains sealed; no broker-ledger or historical-correctness claim |
 | L-2 | Proposed | L-1 evidence |
 | L-3 | Proposed | baseline infrastructure and preregistration |
 | L-4 | Proposed | universe/data integrity and preregistration |

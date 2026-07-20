@@ -105,6 +105,11 @@
           "date": "2026-07-15",
           "decision": "B4_6_webull_th_read_only_and_fractional_metadata_verified",
           "notes": "The owner's Webull Thailand production application passed authentication, account-list, balance, and positions read-only calls. All ten locked ETF candidates returned status OC and fractionable true. L-0 remains scope-restricted because minimum order, funding FX, execution quality, and realized costs were not tested; no preview, order, paper trade, edge, E2, validation unlock, or real-money action is authorized."
+        },
+        {
+          "date": "2026-07-20",
+          "decision": "B4_10_fractional_preview_machinery_locked_not_executed",
+          "notes": "Gate l_0_webull_th_fractional_preview_probe_v1 hash-locks the fail-closed runner, exact Thailand UAT VTI quantity grid, request guard, report validator, and three synthetic fixtures. B4.10 made no broker, provider, authentication, preview, order, or validation request. A separate owner-approved B4.11 activation gate is required before credential access or execution; L-0 remains scope-restricted E0."
         }
       ]
     },
@@ -235,6 +240,11 @@
           "date": "2026-07-20",
           "decision": "B4_9_accepts_published_webull_scope_and_closes_three_stream_path",
           "notes": "Gate l_1_shadow_accounting_activation_v2 supersedes v1. The owner accepts the published Webull Thailand API as the current scope, so the absent account-level corporate-action ledger is treated as unavailable rather than awaiting written confirmation. The B4.7 three-stream dry run closes without observation; Alpha Vantage and Lily Yahoo accounting remain two limited non-ground-truth research streams. A representative eight-request VTI UAT preview grid is preregistered but not executed. Validation remains sealed and L-1 remains scope-restricted E1."
+        },
+        {
+          "date": "2026-07-20",
+          "decision": "B4_10_linked_preview_machinery_locked_no_new_evidence",
+          "notes": "The L-0 fractional-preview machinery is hash-locked with an E0 ceiling but was not executed. It adds no broker, corporate-action, return, edge, or validation evidence to L-1; the validation window remains sealed and L-1 remains scope-restricted E1."
         }
       ]
     },

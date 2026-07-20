@@ -1,0 +1,22 @@
+{
+  "schema_version": "lily_l0_webull_th_fractional_preview_report_v1",
+  "order_id": "B4.10",
+  "hypothesis_id": "L-0",
+  "linked_hypothesis_id": "L-1",
+  "evidence_tier": "E0",
+  "edge_claim": "none",
+  "report_mode": "synthetic_fixture",
+  "produced_at": "2026-07-20T00:00:00Z",
+  "producing_git_commit": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "environment": "webull_thailand_uat",
+  "host": "th-api.uat.webullbroker.com",
+  "contract_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+  "activation_gate_id": null,
+  "rows": [],
+  "summary": {"tested_quantity_count": 0, "accepted_count": 0, "rejected_count": 0, "smallest_accepted_tested_quantity": null, "largest_rejected_tested_quantity": null, "exact_broker_minimum_known": false},
+  "decision": "blocked_before_preview",
+  "blockers": ["execution_activation_missing"],
+  "request_attestation": {"authentication_paths": [], "authentication_request_count": 0, "preview_path": "/openapi/trade/order/preview", "preview_request_count": 0, "synthetic_preview_row_count": 0, "total_broker_request_count": 0, "forbidden_request_count": 0, "production_request_count": 0, "order_mutation_or_query_count": 0, "orders_sent": 0, "raw_response_persisted": false, "credential_or_account_identifier_persisted": false, "paid_spend_usd": 0},
+  "validation_return_seal": {"status": "sealed_not_accessed", "prices_opened": false, "adjusted_prices_opened": false, "returns_opened": false, "signals_opened": false, "positions_opened": false, "regimes_opened": false, "benchmarks_opened": false, "pnl_opened": false},
+  "claim_limits": ["The report measures tested UAT preview acceptance only; it does not prove an order was placed or filled.", "The result may not be generalized from VTI UAT to all symbols or production.", "The report provides no execution-quality, strategy-edge, E2, deployment, or real-money evidence."]
+}

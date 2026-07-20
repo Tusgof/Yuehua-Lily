@@ -163,7 +163,7 @@ Past reports are reproduced by checking out their recorded commit hash. Do not c
 ## 10. Current Verified State
 
 - **Verified date**: 2026-07-20
-- **Bootstrap**: B0 through B4.9 complete
+- **Bootstrap**: B0 through B4.10 complete
 - **Legacy Note status**: retired and deleted by `docs/DECISION_RECORD_002_RESEARCH_LOG_CONTRACT.md` after its research content was promoted
 - **Human research logs**: contract active; L-0 sizing and Webull capability are logs 001 and 006; L-1 baseline, remediation, validation-capacity, and Alpha Vantage corporate-action audits are logs 002 through 005 under `research_log/`
 - **Dashboard**: retained under `Dashboard/`, demoted from product/state owner
@@ -178,11 +178,12 @@ Past reports are reproduced by checking out their recorded commit hash. Do not c
 - **Shadow-accounting gate**: B4.7 locks the three streams, fixed L-0 ten-sleeve accounting portfolio, account-scaled materiality thresholds, no-netting rule, minimum evidence, 365-day stop, and claim limits
 - **Shadow-accounting activation**: B4.8 stopped before observation because Webull Thailand does not publish the required account-level corporate-action ledger; its v1 activation gate is preserved as superseded history
 - **Webull API scope decision**: B4.9 accepts the published Thailand API as the current capability boundary, closes the B4.7 three-stream dry run as not started, retains Alpha Vantage and Lily Yahoo accounting as limited non-ground-truth research streams, and locks but does not execute an eight-request VTI UAT fractional-preview design
+- **Fractional-preview machinery**: B4.10 hash-locks the fail-closed runner, exact Thailand UAT path and VTI QTY grid, report schema/validator, and three hermetic fixtures; it performs zero API calls and cannot execute without a separate B4.11 activation gate
 - **Databento**: `DATABENTO_API_02` passes metadata access with USD 0 spend, but relevant US-equity coverage begins in 2018 or later and no dedicated corporate-actions history was exposed; owner-reported USD 50 credit has unverified real-payment provenance
 
 ## 11. Next Safe Action
 
-Keep validation returns sealed and leave L-1 at E1. Implement and hash-lock B4.10 runner/report machinery for the exact UAT preview matrix, then obtain separate owner approval before the first authentication or preview call. Production access, order mutation/query endpoints, provider collection, paper trading, and real-money actions remain forbidden.
+Keep validation returns sealed and leave L-1 at E1. Review B4.10, then create a separately owner-approved and hash-locked B4.11 activation gate before the first UAT credential read, authentication, or preview call. Production access, order mutation/query endpoints, provider collection, paper trading, and real-money actions remain forbidden.
 
 ## 12. Invariants
 

@@ -1,0 +1,31 @@
+{
+  "schema_version": "lily_l0_webull_th_fractional_preview_report_v1",
+  "order_id": "B4.10",
+  "hypothesis_id": "L-0",
+  "linked_hypothesis_id": "L-1",
+  "evidence_tier": "E0",
+  "edge_claim": "none",
+  "report_mode": "synthetic_fixture",
+  "produced_at": "2026-07-20T00:00:00Z",
+  "producing_git_commit": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "environment": "webull_thailand_uat",
+  "host": "th-api.uat.webullbroker.com",
+  "contract_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+  "activation_gate_id": null,
+  "rows": [
+    {"quantity": "1", "outcome": "accepted", "response_class": "success", "documented_error_code": null, "response_sha256": "1111111111111111111111111111111111111111111111111111111111111111"},
+    {"quantity": "0.1", "outcome": "accepted", "response_class": "success", "documented_error_code": null, "response_sha256": "2222222222222222222222222222222222222222222222222222222222222222"},
+    {"quantity": "0.01", "outcome": "accepted", "response_class": "success", "documented_error_code": null, "response_sha256": "3333333333333333333333333333333333333333333333333333333333333333"},
+    {"quantity": "0.001", "outcome": "accepted", "response_class": "success", "documented_error_code": null, "response_sha256": "4444444444444444444444444444444444444444444444444444444444444444"},
+    {"quantity": "0.0001", "outcome": "rejected", "response_class": "business_error", "documented_error_code": "MIN_QTY", "response_sha256": "5555555555555555555555555555555555555555555555555555555555555555"},
+    {"quantity": "0.00001", "outcome": "rejected", "response_class": "business_error", "documented_error_code": "MIN_QTY", "response_sha256": "6666666666666666666666666666666666666666666666666666666666666666"},
+    {"quantity": "0.000001", "outcome": "rejected", "response_class": "business_error", "documented_error_code": "MIN_QTY", "response_sha256": "7777777777777777777777777777777777777777777777777777777777777777"},
+    {"quantity": "0.0000001", "outcome": "rejected", "response_class": "business_error", "documented_error_code": "MIN_QTY", "response_sha256": "8888888888888888888888888888888888888888888888888888888888888888"}
+  ],
+  "summary": {"tested_quantity_count": 8, "accepted_count": 4, "rejected_count": 4, "smallest_accepted_tested_quantity": "0.001", "largest_rejected_tested_quantity": "0.0001", "exact_broker_minimum_known": false},
+  "decision": "mixed_tested_quantity_acceptance",
+  "blockers": [],
+  "request_attestation": {"authentication_paths": [], "authentication_request_count": 0, "preview_path": "/openapi/trade/order/preview", "preview_request_count": 0, "synthetic_preview_row_count": 8, "total_broker_request_count": 0, "forbidden_request_count": 0, "production_request_count": 0, "order_mutation_or_query_count": 0, "orders_sent": 0, "raw_response_persisted": false, "credential_or_account_identifier_persisted": false, "paid_spend_usd": 0},
+  "validation_return_seal": {"status": "sealed_not_accessed", "prices_opened": false, "adjusted_prices_opened": false, "returns_opened": false, "signals_opened": false, "positions_opened": false, "regimes_opened": false, "benchmarks_opened": false, "pnl_opened": false},
+  "claim_limits": ["The report measures tested UAT preview acceptance only; it does not prove an order was placed or filled.", "The result may not be generalized from VTI UAT to all symbols or production.", "The report provides no execution-quality, strategy-edge, E2, deployment, or real-money evidence."]
+}

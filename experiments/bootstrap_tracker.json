@@ -392,6 +392,33 @@
         "B4.9 made three public-document requests and zero broker, provider, authentication, preview, order, or validation requests; sent zero orders; incurred USD 0 spend; and did not start paper trading or the shadow-accounting dry run.",
         "A separate B4.10 must implement and lock the runner, report schema, validator, request guard, redaction tests, and hermetic fixtures and receive owner approval before the first UAT authentication or preview call."
       ]
+    },
+    {
+      "id": "B4.10",
+      "title": "Webull Thailand UAT fractional-preview machinery gate",
+      "status": "done",
+      "depends_on": ["B4.9"],
+      "required_artifacts": [
+        {"path": "experiments/l_0_webull_th_fractional_preview_probe.json", "must": "locked_and_valid"},
+        {"path": "scripts/run_l_0_webull_th_fractional_preview_probe.py", "must": "exist"},
+        {"path": "schemas/l_0_webull_th_fractional_preview_report.schema.json", "must": "exist"},
+        {"path": "scripts/validate_l_0_webull_th_fractional_preview_report.py", "must": "exist"},
+        {"path": "tests/fixtures/webull_fractional_preview/report_all_accepted.json", "must": "exist"},
+        {"path": "tests/fixtures/webull_fractional_preview/report_mixed.json", "must": "exist"},
+        {"path": "tests/fixtures/webull_fractional_preview/report_blocked.json", "must": "exist"},
+        {"path": "tests/test_validate_l_0_webull_th_fractional_preview_probe.py", "must": "pass_in_hermetic_tier"},
+        {"path": "tests/test_validate_l_0_webull_th_fractional_preview_report.py", "must": "pass_in_hermetic_tier"},
+        {"path": "tests/test_run_l_0_webull_th_fractional_preview_probe.py", "must": "pass_in_hermetic_tier"}
+      ],
+      "forbidden": ["Webull or provider API call", "UAT authentication or preview execution", "production host or account", "balance or position access", "place, replace, cancel, history, open-order, or order-detail endpoint", "credential or account identifier persistence", "validation price or return access", "signal or PnL computation", "paper trade, E2, edge, execution-quality, deployment, or real-money claim"],
+      "evidence": [
+        "Gate l_0_webull_th_fractional_preview_probe_v1 locks B4.10 with contract SHA-256 4bfee4a8cd69b069988913121898fd6affd8642380b0ed877f377872bef3c77e and validator SHA-256 8eeb84e287d17adb99e50f3b8ac6294652ed53dff1073de500fba51c48e68df6.",
+        "The runner is fail-closed: it requires --execute plus a future separately hash-locked B4.11 activation artifact before credential reads, SDK import, authentication, or preview execution.",
+        "The request guard permits at most three authentication requests and eight POST /openapi/trade/order/preview requests to th-api.uat.webullbroker.com for VTI using the exact locked QTY grid. It blocks production, retries, AMOUNT mode, balance, positions, and every order mutation or query path.",
+        "The runner uses generic ApiRequest for the official Thailand path because the pinned SDK 2.0.13 PreviewOrderRequest helper uses /openapi/trade/stock/order/preview and documents HK/US rather than Thailand support.",
+        "The report schema, validator, and three hash-bound synthetic fixtures cover all-accepted, mixed, and pre-preview-blocked outcomes. Tests recompute summaries and decisions, enforce request caps and the validation seal, and block tampering.",
+        "B4.10 made zero broker, provider, authentication, preview, order, or validation requests; sent zero orders; incurred USD 0 spend; and created no research log because no experiment was executed."
+      ]
     }
   ]
 }

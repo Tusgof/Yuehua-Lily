@@ -244,6 +244,18 @@ def _validate_done_artifact(
             verify_runtime=verify_runtime,
         )
     if must == "locked_and_valid":
+        if artifact_path == "experiments/l_0_webull_th_fractional_preview_probe.json":
+            return _validate_locked_preregistration_gate(
+                target,
+                order_id,
+                artifact_path,
+                gate_id="l_0_webull_th_fractional_preview_probe_v1",
+                label="l0_webull_th_fractional_preview_probe",
+                expected_status="locked_machinery_ready_execution_not_authorized",
+                edge_claim_field="edge_claim",
+                project_root=project_root,
+                verify_runtime=verify_runtime,
+            )
         if artifact_path == "experiments/l_1_shadow_accounting_activation_contract.json":
             return _validate_locked_preregistration_gate(
                 target,
