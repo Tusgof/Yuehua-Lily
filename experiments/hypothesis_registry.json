@@ -230,6 +230,11 @@
           "date": "2026-07-20",
           "decision": "B4_8_activation_blocked_before_observation",
           "notes": "Gate l_1_shadow_accounting_activation_v1 blocks activation because public Webull Thailand evidence does not establish a dedicated owner-controlled test ledger, account-level corporate-action cash/unit paths, or the minimum fractional-share quantum. Runtime network and order allowlists are empty, request caps are zero, no forward marker exists, and no broker/provider call or prospective observation occurred. Written Webull Thailand confirmation plus a new owner-approved superseding gate is required. Validation remains sealed and L-1 remains scope-restricted E1."
+        },
+        {
+          "date": "2026-07-20",
+          "decision": "B4_9_accepts_published_webull_scope_and_closes_three_stream_path",
+          "notes": "Gate l_1_shadow_accounting_activation_v2 supersedes v1. The owner accepts the published Webull Thailand API as the current scope, so the absent account-level corporate-action ledger is treated as unavailable rather than awaiting written confirmation. The B4.7 three-stream dry run closes without observation; Alpha Vantage and Lily Yahoo accounting remain two limited non-ground-truth research streams. A representative eight-request VTI UAT preview grid is preregistered but not executed. Validation remains sealed and L-1 remains scope-restricted E1."
         }
       ]
     },

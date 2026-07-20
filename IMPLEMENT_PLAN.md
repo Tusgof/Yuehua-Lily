@@ -173,6 +173,12 @@ Before the dry run begins, separately lock the paper environment and exact endpo
 
 Exit: B4.8 locks `activation_blocked_before_observation`. Public Webull Thailand evidence does not establish a dedicated owner-controlled test ledger, account-level corporate-action cash/unit paths, or the minimum fractional-share quantum. Runtime allowlists and request caps remain empty/zero, no activation marker exists, and no broker/provider call or prospective observation occurred. Activation requires written Webull Thailand confirmation and a new owner-approved gate that supersedes B4.8.
 
+### B4.9 — Webull API Scope And Fractional-preview Preregistration (Complete)
+
+B4.9 accepts the published Webull Thailand API inventory as the current boundary. Account-level corporate-action event, cash, unit, dividend, and split ledgers are classified as unavailable; the B4.7 three-stream dry run is closed without observation. Alpha Vantage and Lily Yahoo accounting remain limited research streams and neither is promoted to ground truth.
+
+Exit: gate `l_1_shadow_accounting_activation_v2` supersedes the B4.8 gate and preregisters, but does not execute, a UAT-only VTI preview grid of eight fixed quantities from 1 through 0.0000001. Only `POST /openapi/trade/order/preview` may be considered by the later B4.10 execution order. Production, balance, positions, AMOUNT mode, retries, order mutation/query endpoints, validation access, paper trading, and real money remain forbidden.
+
 ## 6. Acceptance Gate
 
 E2 requires all of the following:
@@ -224,8 +230,8 @@ If MinTRL validation cost is unaffordable or undefined against the benchmark nul
 |:--|:--|:--|
 | Founding decisions | Complete | pushed founding pack |
 | P0–P4 | Active after bootstrap | Maintain governance, reproducibility, statistics, data, and restore controls |
-| L-0 | Scope-restricted E0; B4.6 verifies production read-only and fractional metadata for ten ETF candidates | Minimum order, funding FX, execution quality, and realized-cost evidence |
-| L-1 | Scope-restricted E1; B4.8 completes the activation contract but blocks activation before observation | Written Webull Thailand confirmation and a new superseding activation gate; validation remains sealed |
+| L-0 | Scope-restricted E0; B4.6 verifies production read-only and fractional metadata for ten ETF candidates; B4.9 locks a representative UAT preview design | B4.10 machinery and separately approved UAT preview execution; funding FX, execution quality, and realized-cost evidence remain open |
+| L-1 | Scope-restricted E1; B4.9 closes the unavailable Webull-ledger dry run without observation and retains two explicitly limited accounting streams | Validation remains sealed; no broker-ledger or historical-correctness claim |
 | L-2 | Proposed | L-1 evidence |
 | L-3 | Proposed | baseline infrastructure and preregistration |
 | L-4 | Proposed | universe/data integrity and preregistration |

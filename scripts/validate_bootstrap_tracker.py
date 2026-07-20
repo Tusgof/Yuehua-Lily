@@ -235,15 +235,31 @@ def _validate_done_artifact(
         return _validate_provider_boundary_schemas(target, order_id, artifact_path)
     if must == "contain_synthetic_data_fixtures":
         return _validate_synthetic_data_fixtures(target, order_id, artifact_path)
+    if must == "superseded_by_l_1_shadow_accounting_activation_v2":
+        return _validate_shadow_accounting_gate_supersession(
+            target,
+            order_id,
+            artifact_path,
+            project_root=project_root,
+            verify_runtime=verify_runtime,
+        )
     if must == "locked_and_valid":
         if artifact_path == "experiments/l_1_shadow_accounting_activation_contract.json":
             return _validate_locked_preregistration_gate(
                 target,
                 order_id,
                 artifact_path,
-                gate_id="l_1_shadow_accounting_activation_v1",
+                gate_id=(
+                    "l_1_shadow_accounting_activation_v2"
+                    if order_id == "B4.9"
+                    else "l_1_shadow_accounting_activation_v1"
+                ),
                 label="l1_shadow_accounting_activation",
-                expected_status="locked_activation_blocked",
+                expected_status=(
+                    "locked_scope_decision_and_preview_probe"
+                    if order_id == "B4.9"
+                    else "locked_activation_blocked"
+                ),
                 edge_claim_field="edge_claim",
                 project_root=project_root,
                 verify_runtime=verify_runtime,
@@ -937,6 +953,66 @@ def _validate_locked_preregistration_gate(
         blockers.append(f"{order_id}:{label}_preregistration_not_locked")
     if preregistration.get(edge_claim_field) != "none":
         blockers.append(f"{order_id}:{label}_preregistration_edge_claim_not_none")
+    return blockers, not blockers, False
+
+
+def _validate_shadow_accounting_gate_supersession(
+    target: Path,
+    order_id: str,
+    artifact_path: str,
+    *,
+    project_root: Path,
+    verify_runtime: bool,
+) -> tuple[list[str], bool, bool]:
+    if not target.is_file():
+        return [f"{order_id}:missing_artifact:{artifact_path}"], False, False
+    try:
+        contract = json.loads(target.read_text(encoding="utf-8"))
+        rows = [
+            json.loads(line)
+            for line in (project_root / "experiments" / "locked_gates.jsonl")
+            .read_text(encoding="utf-8")
+            .splitlines()
+            if line.strip()
+        ]
+    except (FileNotFoundError, json.JSONDecodeError) as exc:
+        return [f"{order_id}:shadow_accounting_supersession_unreadable:{exc.__class__.__name__}"], False, False
+
+    blockers: list[str] = []
+    predecessor = [row for row in rows if row.get("gate_id") == "l_1_shadow_accounting_activation_v1"]
+    successor = [row for row in rows if row.get("gate_id") == "l_1_shadow_accounting_activation_v2"]
+    if len(predecessor) != 1:
+        blockers.append(f"{order_id}:shadow_accounting_predecessor_entry_count:{len(predecessor)}")
+    elif (
+        predecessor[0].get("artifact_sha256")
+        != "62d23376a83823b6b710afb2dc74fdaf2f04d008c79a88a71a2b6dc06bff4d79"
+        or predecessor[0].get("validator_sha256")
+        != "8f0bce4261ad6bc26976eae4904152578de2e0b810a8103b2ec718526af67e55"
+    ):
+        blockers.append(f"{order_id}:shadow_accounting_predecessor_hash_history_mismatch")
+    if len(successor) != 1:
+        blockers.append(f"{order_id}:shadow_accounting_successor_entry_count:{len(successor)}")
+    else:
+        row = successor[0]
+        if row.get("supersedes_gate_id") != "l_1_shadow_accounting_activation_v1":
+            blockers.append(f"{order_id}:shadow_accounting_supersession_link_mismatch")
+        if row.get("artifact_path") != artifact_path or row.get("artifact_sha256") != hashlib.sha256(target.read_bytes()).hexdigest():
+            blockers.append(f"{order_id}:shadow_accounting_successor_artifact_mismatch")
+        validator_path = project_root / str(row.get("validator_path", ""))
+        if not validator_path.is_file() or row.get("validator_sha256") != hashlib.sha256(validator_path.read_bytes()).hexdigest():
+            blockers.append(f"{order_id}:shadow_accounting_successor_validator_mismatch")
+        elif verify_runtime:
+            completed = subprocess.run(
+                [sys.executable, str(validator_path)],
+                cwd=project_root,
+                text=True,
+                capture_output=True,
+                check=False,
+            )
+            if completed.returncode != 0:
+                blockers.append(f"{order_id}:shadow_accounting_successor_validator_failed")
+    if contract.get("order_id") != "B4.9" or contract.get("status") != "locked_scope_decision_and_preview_probe":
+        blockers.append(f"{order_id}:shadow_accounting_successor_contract_state_mismatch")
     return blockers, not blockers, False
 
 

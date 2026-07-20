@@ -384,6 +384,64 @@ class BootstrapTrackerValidatorTests(unittest.TestCase):
         self.assertTrue(checked)
         self.assertFalse(unverified)
 
+    def test_B48_supersession_rule_preserves_predecessor_and_checks_active_gate(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            experiments = root / "experiments"
+            scripts = root / "scripts"
+            experiments.mkdir()
+            scripts.mkdir()
+            artifact = experiments / "l_1_shadow_accounting_activation_contract.json"
+            validator = scripts / "validate_l_1_shadow_accounting_activation_contract.py"
+            artifact.write_text(
+                json.dumps({"order_id": "B4.9", "status": "locked_scope_decision_and_preview_probe"}),
+                encoding="utf-8",
+            )
+            validator.write_text("print('pass')\n", encoding="utf-8")
+            predecessor = {
+                "gate_id": "l_1_shadow_accounting_activation_v1",
+                "artifact_sha256": "62d23376a83823b6b710afb2dc74fdaf2f04d008c79a88a71a2b6dc06bff4d79",
+                "validator_sha256": "8f0bce4261ad6bc26976eae4904152578de2e0b810a8103b2ec718526af67e55",
+            }
+            successor = {
+                "gate_id": "l_1_shadow_accounting_activation_v2",
+                "supersedes_gate_id": "l_1_shadow_accounting_activation_v1",
+                "artifact_path": "experiments/l_1_shadow_accounting_activation_contract.json",
+                "artifact_sha256": hashlib.sha256(artifact.read_bytes()).hexdigest(),
+                "validator_path": "scripts/validate_l_1_shadow_accounting_activation_contract.py",
+                "validator_sha256": hashlib.sha256(validator.read_bytes()).hexdigest(),
+            }
+            manifest = experiments / "locked_gates.jsonl"
+            manifest.write_text(
+                "\n".join(json.dumps(row) for row in (predecessor, successor)) + "\n",
+                encoding="utf-8",
+            )
+            blockers, checked, unverified = self.validator._validate_done_artifact(
+                "B4.8",
+                "experiments/l_1_shadow_accounting_activation_contract.json",
+                "superseded_by_l_1_shadow_accounting_activation_v2",
+                project_root=root,
+                verify_runtime=False,
+                runtime_cache={},
+            )
+            successor["supersedes_gate_id"] = "wrong_gate"
+            manifest.write_text(
+                "\n".join(json.dumps(row) for row in (predecessor, successor)) + "\n",
+                encoding="utf-8",
+            )
+            broken, _, _ = self.validator._validate_done_artifact(
+                "B4.8",
+                "experiments/l_1_shadow_accounting_activation_contract.json",
+                "superseded_by_l_1_shadow_accounting_activation_v2",
+                project_root=root,
+                verify_runtime=False,
+                runtime_cache={},
+            )
+        self.assertEqual([], blockers)
+        self.assertTrue(checked)
+        self.assertFalse(unverified)
+        self.assertIn("B4.8:shadow_accounting_supersession_link_mismatch", broken)
+
     def test_B31_format_requires_scoped_question_contract(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)

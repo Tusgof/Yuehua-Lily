@@ -354,7 +354,7 @@
       "status": "done",
       "depends_on": ["B4.7"],
       "required_artifacts": [
-        {"path": "experiments/l_1_shadow_accounting_activation_contract.json", "must": "locked_and_valid"},
+        {"path": "experiments/l_1_shadow_accounting_activation_contract.json", "must": "superseded_by_l_1_shadow_accounting_activation_v2"},
         {"path": "experiments/inputs/b4_8_webull_shadow_accounting_capability_inventory.json", "must": "exist"},
         {"path": "schemas/l_1_shadow_accounting_event.schema.json", "must": "exist"},
         {"path": "schemas/l_1_shadow_accounting_report.schema.json", "must": "exist"},
@@ -371,6 +371,26 @@
         "B4.8 therefore locks activation_blocked_before_observation with empty runtime network and order allowlists, null forward markers, zero broker/provider request caps, no production fallback, and four explicit activation blockers.",
         "Event and report schemas plus three immutable synthetic fixtures exercise no-material, material-breach, and activation-blocked decisions. The report validator recomputes strict-greater materiality, prevents cross-event netting, verifies evidence minimums, requires zero order/production calls, and retains the validation seal.",
         "B4.8 performed public-document and source-code inspection only: zero account, broker, provider, preview, order, market-data, or prospective-event calls; USD 0 spend; validation remained sealed and the dry run did not start."
+      ]
+    },
+    {
+      "id": "B4.9",
+      "title": "Webull Thailand API scope decision and fractional-preview preregistration",
+      "status": "done",
+      "depends_on": ["B4.8"],
+      "required_artifacts": [
+        {"path": "experiments/l_1_shadow_accounting_activation_contract.json", "must": "locked_and_valid"},
+        {"path": "scripts/validate_l_1_shadow_accounting_activation_contract.py", "must": "pass"},
+        {"path": "tests/test_validate_l_1_shadow_accounting_activation_contract.py", "must": "pass_in_hermetic_tier"}
+      ],
+      "forbidden": ["Webull or provider API call", "UAT authentication", "order preview execution", "place, replace, cancel, history, open-order, or order-detail endpoint", "balance or position access", "credential or account identifier persistence", "validation price or return access", "signal or PnL computation", "E2, edge, execution-quality, deployment, or real-money claim"],
+      "evidence": [
+        "The owner accepted the published Webull Thailand API inventory as the available scope and approved designing a bounded UAT preview probe without first requesting written Webull confirmation.",
+        "Gate l_1_shadow_accounting_activation_v2 supersedes v1 with artifact SHA-256 e23a86840b7b2572abba16798d66914ddf2a734658a904493aa863fa23aaca8c and validator SHA-256 783abdfb9e3d28dc6e925813ee41c04d429c4521a3b1e2caec31455f8026ad58; the append-only manifest preserves the B4.8 predecessor hashes.",
+        "B4.9 classifies account-level corporate-action event, cash, unit, dividend, and split ledgers as unavailable under the published Thailand API and closes the B4.7 three-stream dry-run path as not started. Alpha Vantage and Lily Yahoo accounting remain two limited research streams, not ground truth.",
+        "The future probe is preregistered for Webull Thailand UAT only, VTI only, POST /openapi/trade/order/preview only, and eight fixed QTY values from 1 through 0.0000001. Production, balance, positions, order state, retries, AMOUNT mode, and every order-mutating or order-query endpoint are forbidden.",
+        "B4.9 made three public-document requests and zero broker, provider, authentication, preview, order, or validation requests; sent zero orders; incurred USD 0 spend; and did not start paper trading or the shadow-accounting dry run.",
+        "A separate B4.10 must implement and lock the runner, report schema, validator, request guard, redaction tests, and hermetic fixtures and receive owner approval before the first UAT authentication or preview call."
       ]
     }
   ]
