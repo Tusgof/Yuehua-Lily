@@ -423,7 +423,7 @@
     {
       "id": "B4.11",
       "title": "Webull Thailand UAT fractional-preview activation and execution",
-      "status": "in_progress",
+      "status": "done",
       "depends_on": ["B4.10"],
       "required_artifacts": [
         {"path": "experiments/l_0_webull_th_fractional_preview_activation.json", "must": "locked_and_valid"},
@@ -437,7 +437,11 @@
         "The owner explicitly authorized creation of B4.11 and one bounded Webull Thailand UAT fractional-preview execution on 2026-07-20.",
         "Gate l_0_webull_th_fractional_preview_activation_v1 locks the B4.10 contract SHA-256 4bfee4a8cd69b069988913121898fd6affd8642380b0ed877f377872bef3c77e and runner SHA-256 edec1e1658c74abb87d116b2680d4a292481bbce3eec6d18984634f2369aa06a.",
         "The activation allows only the exact VTI QTY matrix on th-api.uat.webullbroker.com after the gate is committed and pushed. Production, orders, balance, positions, retries, AMOUNT mode, providers, validation, and real money remain forbidden.",
-        "Execution is pending because WEBULL_UAT_APP_KEY, WEBULL_UAT_APP_SECRET, and WEBULL_UAT_ACCOUNT_ID were absent before activation; no credential value or API request was accessed."
+        "The first preflight attempt stopped before network access because the three UAT variables were absent. The later authorized execution loaded the official shared-test row in process memory only and persisted no credential or account identifier.",
+        "The guarded execution made three authentication requests: one token create and two token checks. The request guard blocked the fourth authentication attempt, so the decision is blocked_before_preview with zero preview requests, zero order endpoints, zero orders, zero production requests, and USD 0 spend.",
+        "B4.11 made three public-document requests: the official SDK page twice and llms.txt once. Shared UAT values were loaded only in process memory for the authorized run and were not persisted.",
+        "SDK 2.0.13 source inspection shows a five-second token-check interval and a 300-second default duration. The locked three-request authentication budget is therefore incompatible with the SDK polling loop when the token does not become NORMAL within the first two checks.",
+        "The redacted report passes its validator and Thai research log 007 records the E0 scope restriction. Validation returns remain sealed; no fill, fractional minimum, all-symbol, production, execution-quality, edge, E2, deployment, or real-money claim is made."
       ]
     }
   ]

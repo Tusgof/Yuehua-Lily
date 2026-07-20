@@ -88,6 +88,10 @@
         {
           "path": "reports/feasibility/l_0_webull_th_read_only_capability.json",
           "evidence_tier": "E0"
+        },
+        {
+          "path": "reports/feasibility/l_0_webull_th_fractional_preview.json",
+          "evidence_tier": "E0"
         }
       ],
       "decision_log": [
@@ -115,6 +119,11 @@
           "date": "2026-07-20",
           "decision": "B4_11_activation_locked_execution_pending_uat_variables",
           "notes": "The owner explicitly approved one bounded Webull Thailand UAT preview execution. Gate l_0_webull_th_fractional_preview_activation_v1 is hash-locked before credential or network access, but all three required WEBULL_UAT variables are absent. No API request occurred; L-0 remains scope-restricted E0."
+        },
+        {
+          "date": "2026-07-20",
+          "decision": "B4_11_execution_blocked_before_preview_by_authentication_cap",
+          "notes": "The one authorized run used the official shared UAT credential row in process memory only. Token create plus two token checks consumed the locked three-request authentication budget; the guard blocked the fourth authentication attempt. No preview, order, production, provider, or validation request occurred. The result establishes no fractional minimum and L-0 remains scope-restricted E0."
         }
       ]
     },
@@ -255,6 +264,11 @@
           "date": "2026-07-20",
           "decision": "B4_11_activation_locked_no_linked_L1_evidence",
           "notes": "Owner approval and the activation gate authorize only the bounded L-0 UAT preview. Missing UAT variables prevent execution, and no broker or validation observation occurred. L-1 remains scope-restricted E1 with validation sealed."
+        },
+        {
+          "date": "2026-07-20",
+          "decision": "B4_11_authentication_cap_block_adds_no_L1_evidence",
+          "notes": "The guarded UAT run stopped after three authentication requests and before any preview. It adds no broker-ledger, corporate-action, return, edge, or validation evidence to L-1. Validation remains sealed and L-1 remains scope-restricted E1."
         }
       ]
     },

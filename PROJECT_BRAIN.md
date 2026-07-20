@@ -179,12 +179,12 @@ Past reports are reproduced by checking out their recorded commit hash. Do not c
 - **Shadow-accounting activation**: B4.8 stopped before observation because Webull Thailand does not publish the required account-level corporate-action ledger; its v1 activation gate is preserved as superseded history
 - **Webull API scope decision**: B4.9 accepts the published Thailand API as the current capability boundary, closes the B4.7 three-stream dry run as not started, retains Alpha Vantage and Lily Yahoo accounting as limited non-ground-truth research streams, and locks but does not execute an eight-request VTI UAT fractional-preview design
 - **Fractional-preview machinery**: B4.10 hash-locks the fail-closed runner, exact Thailand UAT path and VTI QTY grid, report schema/validator, and three hermetic fixtures; it performs zero API calls and cannot execute without a separate B4.11 activation gate
-- **Fractional-preview activation**: B4.11 is owner-approved and hash-locked for one bounded UAT execution; the three required `WEBULL_UAT_*` variables are not yet present, so execution remains pending with zero API calls
+- **Fractional-preview execution**: B4.11 completed with `blocked_before_preview`; token create plus two token checks consumed the three-request authentication cap and the guard blocked the fourth attempt, leaving zero previews, orders, production calls, paid spend, or validation access
 - **Databento**: `DATABENTO_API_02` passes metadata access with USD 0 spend, but relevant US-equity coverage begins in 2018 or later and no dedicated corporate-actions history was exposed; owner-reported USD 50 credit has unverified real-payment provenance
 
 ## 11. Next Safe Action
 
-Keep validation returns sealed and leave L-1 at E1. After the B4.11 activation commit is visible on `origin/main`, provide the three named UAT environment variables and run the locked probe exactly once. Production access, order mutation/query endpoints, provider collection, paper trading, and real-money actions remain forbidden.
+Keep validation returns sealed, leave L-0 scope-restricted E0 and L-1 scope-restricted E1, and do not rerun B4.11. If the owner wants another UAT attempt, first create a superseding gate that explicitly funds the SDK authentication polling budget and retains all preview/order/privacy limits. Production access, order mutation/query endpoints, provider collection, paper trading, and real-money actions remain forbidden.
 
 ## 12. Invariants
 

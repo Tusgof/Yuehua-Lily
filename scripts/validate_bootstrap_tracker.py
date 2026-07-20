@@ -40,7 +40,7 @@ HIGH_RISK_VALUE_PATTERN = re.compile(
 SENSITIVE_ASSIGNMENT = re.compile(
     r'''(?im)^\s*["']?([A-Z0-9_]*(?:API_KEY|APP_KEY|SECRET|TOKEN|PASSWORD|ACCOUNT_ID)[A-Z0-9_]*)["']?\s*[:=]\s*["']?([^"'# ,\s]+)'''
 )
-PLACEHOLDER_VALUES = {"", "null", "none", "placeholder", "changeme", "example", "not_set"}
+PLACEHOLDER_VALUES = {"", "null", "none", "false", "true", "placeholder", "changeme", "example", "not_set"}
 
 
 def validate_tracker(
