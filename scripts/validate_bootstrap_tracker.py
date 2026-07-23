@@ -207,6 +207,14 @@ def _validate_done_artifact(
         return ([] if passed else [f"{order_id}:all_test_tiers_failed"], passed, False)
     if must == "run_hermetic_on_push":
         return _validate_ci(target, order_id, artifact_path)
+    if must == "use_checkout_v5_and_run_hermetic_on_push":
+        return _validate_ci_checkout_v5(target, order_id, artifact_path)
+    if must == "match_webull_th_uat_scope_decision":
+        return _validate_webull_th_uat_scope_decision(target, order_id, artifact_path)
+    if must == "match_uat_scope_project_memory":
+        return _validate_uat_scope_project_memory(target, order_id, artifact_path)
+    if must == "match_uat_scope_implementation_plan":
+        return _validate_uat_scope_implementation_plan(target, order_id, artifact_path)
     if must == "pin_supported_python":
         return _validate_python_pin(target, order_id, artifact_path)
     if must == "declare_python_and_dependencies":
@@ -1393,6 +1401,55 @@ def _validate_ci(target: Path, order_id: str, artifact_path: str) -> tuple[list[
     required = ("push:", "pull_request:", "actions/checkout@", "actions/setup-python@", "python scripts/run_test_tier.py hermetic")
     missing = [item for item in required if item not in text]
     return ([f"{order_id}:ci_missing:{item}" for item in missing], not missing, False)
+
+
+def _validate_ci_checkout_v5(target: Path, order_id: str, artifact_path: str) -> tuple[list[str], bool, bool]:
+    blockers, _, _ = _validate_ci(target, order_id, artifact_path)
+    if target.is_file() and "uses: actions/checkout@v5" not in target.read_text(encoding="utf-8"):
+        blockers.append(f"{order_id}:ci_missing:uses: actions/checkout@v5")
+    return blockers, not blockers, False
+
+
+def _validate_webull_th_uat_scope_decision(
+    target: Path, order_id: str, artifact_path: str
+) -> tuple[list[str], bool, bool]:
+    required = (
+        "https://developer.webull.co.th/apis/docs/sdk.md",
+        "https://developer.webull.co.th/apis/docs/trade-api/getting-started/",
+        "https://developer.webull.co.th/apis/docs/market-data-api/getting-started/",
+        "unverified_reference",
+        "ไม่ใช่หลักฐานว่า Webull เปิด UAT เป็นบริการสาธารณะ",
+        "UAT ที่เจ้าของควบคุมได้",
+    )
+    return _validate_required_text(target, order_id, artifact_path, "uat_scope_decision", required)
+
+
+def _validate_uat_scope_project_memory(
+    target: Path, order_id: str, artifact_path: str
+) -> tuple[list[str], bool, bool]:
+    required = ("B4.13 confirms", "No UAT work is planned", "new locked gate")
+    return _validate_required_text(target, order_id, artifact_path, "uat_scope_project_memory", required)
+
+
+def _validate_uat_scope_implementation_plan(
+    target: Path, order_id: str, artifact_path: str
+) -> tuple[list[str], bool, bool]:
+    required = ("### B4.13", "### B4.14", "No UAT work planned")
+    return _validate_required_text(target, order_id, artifact_path, "uat_scope_implementation_plan", required)
+
+
+def _validate_required_text(
+    target: Path,
+    order_id: str,
+    artifact_path: str,
+    rule_name: str,
+    required: tuple[str, ...],
+) -> tuple[list[str], bool, bool]:
+    if not target.is_file():
+        return [f"{order_id}:missing_artifact:{artifact_path}"], False, False
+    text = target.read_text(encoding="utf-8")
+    missing = [item for item in required if item not in text]
+    return ([f"{order_id}:{rule_name}_missing:{item}" for item in missing], not missing, False)
 
 
 def _validate_python_pin(target: Path, order_id: str, artifact_path: str) -> tuple[list[str], bool, bool]:

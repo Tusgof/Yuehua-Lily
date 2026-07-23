@@ -199,13 +199,17 @@ Exit: gate commit `152c8e1e8ecc946b889472707b4b3280e63d4e02` was pushed and pass
 
 ### B4.13 — UAT Documentation Scope Decision (Complete)
 
-B4.13 records that the SDK markdown reference to `th-api.uat.webullbroker.com` does not establish a publicly available UAT service or an access entitlement for Lily. The public developer documentation exposes Trade API and Market Data API getting-started surfaces only; it does not document owner-controlled UAT provisioning or non-interactive authentication.
+B4.13 records that the SDK markdown reference to `th-api.uat.webullbroker.com` does not establish a publicly available UAT service or an access entitlement for Lily. The inspected public pages are the Trade API and Market Data API getting-started pages; they do not document owner-controlled UAT provisioning or non-interactive authentication.
 
 Exit: UAT is closed as an unsupported path for Lily. This static E0 decision makes no broker or provider call, changes no locked gate, and does not establish a broker defect, preview result, production capability, execution result, or strategy evidence.
 
 ### B4.14 — Project-memory Synchronization (Complete)
 
 B4.14 aligns project memory with B4.13. No UAT work is planned, and the UAT hostname is not treated as a public test-environment entitlement. L-0 remains scope-restricted E0, L-1 remains scope-restricted E1, and validation stays sealed.
+
+### B4.16 — Governance Content-validation Remediation (Complete)
+
+B4.16 responds to the independent review finding that B4.13–B4.15 completion checks were too weak. The tracker now validates the inspected source list and claim limits in Decision Record 004, the UAT-closure statements in project memory, and the exact `actions/checkout@v5` requirement in CI.
 
 ## 6. Acceptance Gate
 

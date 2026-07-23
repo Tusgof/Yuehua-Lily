@@ -590,6 +590,63 @@ class BootstrapTrackerValidatorTests(unittest.TestCase):
         self.assertFalse(unverified)
         self.assertIn("B4.2:cost_ledger_nonzero_spend", blockers)
 
+    def test_B413_scope_decision_requires_all_inspected_sources_and_limit(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            record = root / "decision.md"
+            record.write_text("unverified_reference\n", encoding="utf-8")
+            blockers, checked, unverified = self.validator._validate_done_artifact(
+                "B4.13",
+                "decision.md",
+                "match_webull_th_uat_scope_decision",
+                project_root=root,
+                verify_runtime=False,
+                runtime_cache={},
+            )
+        self.assertFalse(checked)
+        self.assertFalse(unverified)
+        self.assertIn(
+            "B4.13:uat_scope_decision_missing:https://developer.webull.co.th/apis/docs/sdk.md",
+            blockers,
+        )
+
+    def test_B414_project_memory_requires_closed_uat_scope(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            memory = root / "brain.md"
+            memory.write_text("B4.13 confirms\n", encoding="utf-8")
+            blockers, checked, unverified = self.validator._validate_done_artifact(
+                "B4.14",
+                "brain.md",
+                "match_uat_scope_project_memory",
+                project_root=root,
+                verify_runtime=False,
+                runtime_cache={},
+            )
+        self.assertFalse(checked)
+        self.assertFalse(unverified)
+        self.assertIn("B4.14:uat_scope_project_memory_missing:No UAT work is planned", blockers)
+
+    def test_B415_ci_rule_requires_checkout_v5(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            workflow = root / "ci.yml"
+            workflow.write_text(
+                "push:\npull_request:\nactions/checkout@v4\nactions/setup-python@v6\npython scripts/run_test_tier.py hermetic\n",
+                encoding="utf-8",
+            )
+            blockers, checked, unverified = self.validator._validate_done_artifact(
+                "B4.15",
+                "ci.yml",
+                "use_checkout_v5_and_run_hermetic_on_push",
+                project_root=root,
+                verify_runtime=False,
+                runtime_cache={},
+            )
+        self.assertFalse(checked)
+        self.assertFalse(unverified)
+        self.assertIn("B4.15:ci_missing:uses: actions/checkout@v5", blockers)
+
 
 def _tracker_with_artifact(path: str, must: str) -> dict[str, object]:
     return {

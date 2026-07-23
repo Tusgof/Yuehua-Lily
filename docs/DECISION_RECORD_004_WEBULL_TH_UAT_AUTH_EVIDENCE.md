@@ -13,13 +13,17 @@
 
 งานนี้เป็นการตรวจเอกสารแบบ static เท่านั้น ไม่มีการเรียก broker หรือ provider API, authentication, app/SMS/2FA flow, preview, order, production, paper trading, หรือ real-money action และไม่มีการอ่านหรือบันทึก credential, token หรือ account identifier
 
-## หลักฐาน
+## แหล่งข้อมูลที่ตรวจ
 
-แหล่งข้อมูลคือ `https://developer.webull.co.th/apis/docs/sdk.md` ซึ่งตรวจเมื่อ `2026-07-23T16:54:04Z` โดยมี HTTP status `200`, `Last-Modified` `2026-07-19T03:14:09Z`, ETag `W/"131f-19f785def7f"` และ SHA-256 ของเนื้อหา UTF-8 `614ef29ba9978573a181ebdf04f6bd321c8874ae386669d1d90359342c13f866`
+- `https://developer.webull.co.th/apis/docs/sdk.md` ตรวจเมื่อ `2026-07-23T16:54:04Z` โดยมี HTTP status `200`, `Last-Modified` `2026-07-19T03:14:09Z`, ETag `W/"131f-19f785def7f"` และ SHA-256 ของเนื้อหา UTF-8 `614ef29ba9978573a181ebdf04f6bd321c8874ae386669d1d90359342c13f866`
+- `https://developer.webull.co.th/apis/docs/trade-api/getting-started/` ตรวจว่าเข้าถึงได้ด้วย HTTP status `200` เมื่อ `2026-07-24`
+- `https://developer.webull.co.th/apis/docs/market-data-api/getting-started/` ตรวจว่าเข้าถึงได้ด้วย HTTP status `200` เมื่อ `2026-07-24`
+
+## หลักฐาน
 
 การตรวจแบบ redacted ยืนยันเพียงว่า SDK markdown อ้างถึง Thailand UAT host และมีคำเกี่ยวกับ two-factor authentication, verification และ test account การอ้างถึง hostname นี้ไม่ใช่หลักฐานว่า Webull เปิด UAT เป็นบริการสาธารณะ หรือให้ Lily มีสิทธิ์ใช้งาน
 
-หน้าสาธารณะของ Webull Thailand ที่เผยแพร่สำหรับ developer มีเพียง getting-started ของ Trade API และ Market Data API ไม่มีคำสั่งสำหรับจัดสรรบัญชี UAT ที่เจ้าของควบคุมได้ และไม่มีเส้นทาง authentication แบบไม่ต้องยืนยันตัวตน ผลการตรวจไม่แสดง ไม่บันทึก และไม่ใช้ค่า credential ใด ๆ
+สำหรับการตัดสินใจนี้ หน้าสาธารณะที่ตรวจคือ getting-started ของ Trade API และ Market Data API ตามรายการข้างต้น ทั้งสองหน้าไม่ให้คำสั่งสำหรับจัดสรรบัญชี UAT ที่เจ้าของควบคุมได้ หรือเส้นทาง authentication แบบไม่ต้องยืนยันตัวตน ผลการตรวจไม่แสดง ไม่บันทึก และไม่ใช้ค่า credential ใด ๆ
 
 ## การตัดสินใจ
 

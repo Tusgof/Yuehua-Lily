@@ -478,14 +478,14 @@
       "status": "done",
       "depends_on": ["B4.12"],
       "required_artifacts": [
-        {"path": "docs/DECISION_RECORD_004_WEBULL_TH_UAT_AUTH_EVIDENCE.md", "must": "exist"}
+        {"path": "docs/DECISION_RECORD_004_WEBULL_TH_UAT_AUTH_EVIDENCE.md", "must": "match_webull_th_uat_scope_decision"}
       ],
       "forbidden": ["broker or provider API call", "authentication, app, SMS, or two-factor flow", "credential, token, or account-identifier read or persistence", "production, preview, order, paper-trading, or real-money action", "validation price or return access", "signal or PnL computation", "fractional-minimum, execution-quality, E2, edge, deployment, or real-money claim"],
       "evidence": [
         "The owner approved B4.13 as a static official-documentation review after B4.12; this order authorizes no broker or provider request.",
         "A 2026-07-23 retrieval of https://developer.webull.co.th/apis/docs/sdk.md returned HTTP 200, Last-Modified 2026-07-19T03:14:09Z, ETag W/\"131f-19f785def7f\", and redacted-content SHA-256 614ef29ba9978573a181ebdf04f6bd321c8874ae386669d1d90359342c13f866. No credential values were printed, persisted, or used.",
         "The SDK markdown references a Thailand UAT host and terms for two-factor authentication, verification, and test accounts, but this reference does not establish a publicly available UAT service or access entitlement. It does not document owner-controlled UAT-account provisioning or a non-interactive authentication path.",
-        "The public Webull Thailand developer documentation currently exposes Trade API and Market Data API getting-started surfaces only. Therefore Lily has no verified access to a shared UAT environment for a further probe unless genuinely new official evidence or a dedicated owner-controlled test account appears. This is an E0 operational scope decision only; it does not establish a broker defect, fractional-preview result, production capability, or execution outcome.",
+        "The inspected public Webull Thailand pages are the Trade API and Market Data API getting-started pages. They do not establish a shared UAT access entitlement for Lily; a further probe requires genuinely new official evidence or a dedicated owner-controlled test account. This is an E0 operational scope decision only; it does not establish a broker defect, fractional-preview result, production capability, or execution outcome.",
         "No locked gate is created because B4.13 is static documentation review only. Any future broker probe still requires new evidence, explicit owner approval, and a new locked gate; B4.11 and B4.12 remain one-run-only."
       ]
     },
@@ -495,8 +495,8 @@
       "status": "done",
       "depends_on": ["B4.13"],
       "required_artifacts": [
-        {"path": "PROJECT_BRAIN.md", "must": "exist"},
-        {"path": "IMPLEMENT_PLAN.md", "must": "exist"}
+        {"path": "PROJECT_BRAIN.md", "must": "match_uat_scope_project_memory"},
+        {"path": "IMPLEMENT_PLAN.md", "must": "match_uat_scope_implementation_plan"}
       ],
       "forbidden": ["broker or provider API call", "authentication, preview, order, production, paper-trading, or real-money action", "credential, token, or account-identifier read or persistence", "validation price or return access", "signal or PnL computation", "locked-gate or manifest-line modification", "E2, edge, execution-quality, deployment, or real-money claim"],
       "evidence": [
@@ -511,13 +511,29 @@
       "status": "done",
       "depends_on": ["B4.14"],
       "required_artifacts": [
-        {"path": ".github/workflows/ci.yml", "must": "run_hermetic_on_push"}
+        {"path": ".github/workflows/ci.yml", "must": "use_checkout_v5_and_run_hermetic_on_push"}
       ],
       "forbidden": ["broker or provider API call", "credential, token, or account-identifier read or persistence", "validation price or return access", "signal or PnL computation", "locked-gate or manifest-line modification", "E2, edge, execution-quality, deployment, or real-money claim"],
       "evidence": [
         "Hermetic CI after B4.14 passed but emitted a Node.js 20 deprecation warning for actions/checkout@v4.",
         "B4.15 changes only the checkout action reference to actions/checkout@v5; the workflow retains pinned Python, the hermetic test command, and tracker validation unchanged.",
         "This maintenance order is unrelated to broker capability or research evidence and preserves every hypothesis status, locked artifact, cost boundary, and validation seal."
+      ]
+    },
+    {
+      "id": "B4.16",
+      "title": "Governance content-validation remediation",
+      "status": "done",
+      "depends_on": ["B4.15"],
+      "required_artifacts": [
+        {"path": "scripts/validate_bootstrap_tracker.py", "must": "pass"},
+        {"path": "tests/test_validate_bootstrap_tracker.py", "must": "pass_in_hermetic_tier"}
+      ],
+      "forbidden": ["broker or provider API call", "credential, token, or account-identifier read or persistence", "validation price or return access", "signal or PnL computation", "locked-gate or manifest-line modification", "E2, edge, execution-quality, deployment, or real-money claim"],
+      "evidence": [
+        "The Inspector accepted B4.13–B4.15 with an observation that exist-only completion rules did not validate their documented decisions, and requested a small remediation before the next material research order.",
+        "B4.16 replaces the B4.13/B4.14/B4.15 exist-or-generic rules with content validators that require the inspected source URLs and UAT claim limit, synchronized project-memory scope, and actions/checkout@v5 respectively.",
+        "Hermetic regression tests include negative cases for missing UAT decision content, missing closed-UAT project-memory language, and checkout v4. The remediation changes no research evidence, locked artifact, broker boundary, or validation seal."
       ]
     }
   ]
