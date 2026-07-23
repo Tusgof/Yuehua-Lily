@@ -504,6 +504,21 @@
         "B4.14 synchronizes PROJECT_BRAIN.md and IMPLEMENT_PLAN.md with B4.13: the Thailand UAT hostname is an unverified reference, not a public access entitlement, and no UAT work is planned.",
         "This documentation-only order makes no broker or provider call, preserves every locked artifact and manifest line, leaves L-0 scope-restricted E0 and L-1 scope-restricted E1, and keeps validation sealed."
       ]
+    },
+    {
+      "id": "B4.15",
+      "title": "CI Node.js deprecation remediation",
+      "status": "done",
+      "depends_on": ["B4.14"],
+      "required_artifacts": [
+        {"path": ".github/workflows/ci.yml", "must": "run_hermetic_on_push"}
+      ],
+      "forbidden": ["broker or provider API call", "credential, token, or account-identifier read or persistence", "validation price or return access", "signal or PnL computation", "locked-gate or manifest-line modification", "E2, edge, execution-quality, deployment, or real-money claim"],
+      "evidence": [
+        "Hermetic CI after B4.14 passed but emitted a Node.js 20 deprecation warning for actions/checkout@v4.",
+        "B4.15 changes only the checkout action reference to actions/checkout@v5; the workflow retains pinned Python, the hermetic test command, and tracker validation unchanged.",
+        "This maintenance order is unrelated to broker capability or research evidence and preserves every hypothesis status, locked artifact, cost boundary, and validation seal."
+      ]
     }
   ]
 }
