@@ -471,6 +471,23 @@
         "The redacted report passes its validator. Forbidden, production, order-mutation/query, order, provider, validation, and paid requests are all zero; no raw response or private material was persisted.",
         "Thai research log 008 records the E0 scope restriction. The validation window remains sealed, no fractional minimum is known, and B4.12 cannot be rerun without a new owner-approved gate backed by new evidence."
       ]
+    },
+    {
+      "id": "B4.13",
+      "title": "Webull Thailand UAT authentication documentation evidence review",
+      "status": "done",
+      "depends_on": ["B4.12"],
+      "required_artifacts": [
+        {"path": "docs/DECISION_RECORD_004_WEBULL_TH_UAT_AUTH_EVIDENCE.md", "must": "exist"}
+      ],
+      "forbidden": ["broker or provider API call", "authentication, app, SMS, or two-factor flow", "credential, token, or account-identifier read or persistence", "production, preview, order, paper-trading, or real-money action", "validation price or return access", "signal or PnL computation", "fractional-minimum, execution-quality, E2, edge, deployment, or real-money claim"],
+      "evidence": [
+        "The owner approved B4.13 as a static official-documentation review after B4.12; this order authorizes no broker or provider request.",
+        "A 2026-07-23 retrieval of https://developer.webull.co.th/apis/docs/sdk.md returned HTTP 200, Last-Modified 2026-07-19T03:14:09Z, ETag W/\"131f-19f785def7f\", and redacted-content SHA-256 614ef29ba9978573a181ebdf04f6bd321c8874ae386669d1d90359342c13f866. No credential values were printed, persisted, or used.",
+        "The document contains the Thailand UAT host and terms for two-factor authentication, verification, and test accounts, but does not document owner-controlled UAT-account provisioning or a non-interactive authentication path.",
+        "Therefore the shared UAT environment remains unavailable to Lily for a further probe unless genuinely new official evidence or a dedicated owner-controlled test account appears. This is an E0 operational scope decision only; it does not establish a broker defect, fractional-preview result, production capability, or execution outcome.",
+        "No locked gate is created because B4.13 is static documentation review only. Any future broker probe still requires new evidence, explicit owner approval, and a new locked gate; B4.11 and B4.12 remain one-run-only."
+      ]
     }
   ]
 }
