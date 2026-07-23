@@ -162,8 +162,8 @@ Past reports are reproduced by checking out their recorded commit hash. Do not c
 
 ## 10. Current Verified State
 
-- **Verified date**: 2026-07-20
-- **Bootstrap**: B0 through B4.12 complete
+- **Verified date**: 2026-07-24
+- **Bootstrap**: B0 through B4.14 complete
 - **Legacy Note status**: retired and deleted by `docs/DECISION_RECORD_002_RESEARCH_LOG_CONTRACT.md` after its research content was promoted
 - **Human research logs**: contract active; L-0 sizing and Webull capability are logs 001 and 006; L-1 baseline, remediation, validation-capacity, and Alpha Vantage corporate-action audits are logs 002 through 005 under `research_log/`
 - **Dashboard**: retained under `Dashboard/`, demoted from product/state owner
@@ -181,11 +181,13 @@ Past reports are reproduced by checking out their recorded commit hash. Do not c
 - **Fractional-preview machinery**: B4.10 hash-locks the fail-closed runner, exact Thailand UAT path and VTI QTY grid, report schema/validator, and three hermetic fixtures; it performs zero API calls and cannot execute without a separate B4.11 activation gate
 - **Fractional-preview execution**: B4.11 completed with `blocked_before_preview`; token create plus two token checks consumed the three-request authentication cap and the guard blocked the fourth attempt, leaving zero previews, orders, production calls, paid spend, or validation access
 - **Authentication-budget remediation**: B4.12 preserved the locked B4.10/B4.11 files and executed only after the v2 gate commit passed CI. One token create plus seven checks used the full 30-second window without reaching NORMAL, so the result is `blocked_before_preview` with zero previews, orders, production calls, provider calls, validation access, or paid spend
+- **UAT documentation scope**: B4.13 confirms that the SDK markdown reference to a Thailand UAT hostname is not evidence of public UAT availability or Lily access entitlement. The public developer documentation exposes Trade API and Market Data API surfaces only; no owner-controlled UAT provisioning or non-interactive authentication path is documented
+- **Project-memory synchronization**: B4.14 records the UAT branch as closed with no planned UAT work; it changes no locked artifact, evidence tier, hypothesis status, or validation boundary
 - **Databento**: `DATABENTO_API_02` passes metadata access with USD 0 spend, but relevant US-equity coverage begins in 2018 or later and no dedicated corporate-actions history was exposed; owner-reported USD 50 credit has unverified real-payment provenance
 
 ## 11. Next Safe Action
 
-Keep validation returns sealed, leave L-0 scope-restricted E0 and L-1 scope-restricted E1, and do not rerun B4.11 or B4.12. A further Webull UAT attempt requires new evidence such as a documented verification step or a dedicated test account, plus a new owner-approved gate; merely lengthening the polling window is insufficient justification. The next research order should be planned separately and must not open validation returns, production access, paper trading, or real-money actions.
+Keep validation returns sealed, leave L-0 scope-restricted E0 and L-1 scope-restricted E1, and do not rerun B4.11 or B4.12. No UAT work is planned: a hostname reference is not a public UAT entitlement. Any future broker probe requires genuinely new official evidence or a dedicated owner-controlled test account, explicit owner approval, and a new locked gate. The next research order must be planned separately and must not open validation returns, production access, paper trading, or real-money actions.
 
 ## 12. Invariants
 

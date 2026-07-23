@@ -197,6 +197,16 @@ B4.12 preserves every locked B4.10/B4.11 file and creates a new superseding acti
 
 Exit: gate commit `152c8e1e8ecc946b889472707b4b3280e63d4e02` was pushed and passed Hermetic CI before execution. The one authorized run made one token-create and seven token-check requests over 30 seconds, but authentication remained non-NORMAL. The run stopped with zero previews, orders, production calls, provider calls, validation access, or paid spend. The redacted v2 report and Thai research log 008 record `blocked_before_preview`; the evidence ceiling remains E0 and no rerun is authorized.
 
+### B4.13 — UAT Documentation Scope Decision (Complete)
+
+B4.13 records that the SDK markdown reference to `th-api.uat.webullbroker.com` does not establish a publicly available UAT service or an access entitlement for Lily. The public developer documentation exposes Trade API and Market Data API getting-started surfaces only; it does not document owner-controlled UAT provisioning or non-interactive authentication.
+
+Exit: UAT is closed as an unsupported path for Lily. This static E0 decision makes no broker or provider call, changes no locked gate, and does not establish a broker defect, preview result, production capability, execution result, or strategy evidence.
+
+### B4.14 — Project-memory Synchronization (Complete)
+
+B4.14 aligns project memory with B4.13. No UAT work is planned, and the UAT hostname is not treated as a public test-environment entitlement. L-0 remains scope-restricted E0, L-1 remains scope-restricted E1, and validation stays sealed.
+
 ## 6. Acceptance Gate
 
 E2 requires all of the following:
@@ -248,7 +258,7 @@ If MinTRL validation cost is unaffordable or undefined against the benchmark nul
 |:--|:--|:--|
 | Founding decisions | Complete | pushed founding pack |
 | P0–P4 | Active after bootstrap | Maintain governance, reproducibility, statistics, data, and restore controls |
-| L-0 | Scope-restricted E0; B4.6 verifies production read-only and fractional metadata; B4.11 stops at the three-request authentication cap before any preview | Optional superseding authentication-budget gate; fractional minimum, funding FX, execution quality, and realized-cost evidence remain open |
+| L-0 | Scope-restricted E0; B4.6 verifies production read-only and fractional metadata; B4.11/B4.12 stop before preview; B4.13 confirms the UAT hostname is not a public access entitlement | No UAT work planned; fractional minimum, funding FX, execution quality, and realized-cost evidence remain open |
 | L-1 | Scope-restricted E1; B4.9 closes the unavailable Webull-ledger dry run without observation; B4.10 adds no L-1 evidence | Validation remains sealed; no broker-ledger or historical-correctness claim |
 | L-2 | Proposed | L-1 evidence |
 | L-3 | Proposed | baseline infrastructure and preregistration |

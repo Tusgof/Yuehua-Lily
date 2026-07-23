@@ -488,6 +488,22 @@
         "The public Webull Thailand developer documentation currently exposes Trade API and Market Data API getting-started surfaces only. Therefore Lily has no verified access to a shared UAT environment for a further probe unless genuinely new official evidence or a dedicated owner-controlled test account appears. This is an E0 operational scope decision only; it does not establish a broker defect, fractional-preview result, production capability, or execution outcome.",
         "No locked gate is created because B4.13 is static documentation review only. Any future broker probe still requires new evidence, explicit owner approval, and a new locked gate; B4.11 and B4.12 remain one-run-only."
       ]
+    },
+    {
+      "id": "B4.14",
+      "title": "Project-memory synchronization after UAT scope decision",
+      "status": "done",
+      "depends_on": ["B4.13"],
+      "required_artifacts": [
+        {"path": "PROJECT_BRAIN.md", "must": "exist"},
+        {"path": "IMPLEMENT_PLAN.md", "must": "exist"}
+      ],
+      "forbidden": ["broker or provider API call", "authentication, preview, order, production, paper-trading, or real-money action", "credential, token, or account-identifier read or persistence", "validation price or return access", "signal or PnL computation", "locked-gate or manifest-line modification", "E2, edge, execution-quality, deployment, or real-money claim"],
+      "evidence": [
+        "The owner instructed Lily to perform the next safe task after confirming that public Webull Thailand developer documentation exposes Trade API and Market Data API surfaces only.",
+        "B4.14 synchronizes PROJECT_BRAIN.md and IMPLEMENT_PLAN.md with B4.13: the Thailand UAT hostname is an unverified reference, not a public access entitlement, and no UAT work is planned.",
+        "This documentation-only order makes no broker or provider call, preserves every locked artifact and manifest line, leaves L-0 scope-restricted E0 and L-1 scope-restricted E1, and keeps validation sealed."
+      ]
     }
   ]
 }
