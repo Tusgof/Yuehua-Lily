@@ -643,6 +643,22 @@
         "The absolute maximum 26,016 joint independent-bet equivalents is below locked MinTRL_falsify 54,048; actual sessions, missingness, serial dependence, and cross-asset correlation can only reduce capacity. L-2 is therefore E1 underfunded_scope_restricted under the current preregistration.",
         "The gate forbids container inspection, return parsing, backtesting, and falsification reporting. A later redesign requires owner approval and a new preregistration before data access."
       ]
+    },
+    {
+      "id": "B6.4",
+      "title": "L-2 locked-source capacity binding remediation",
+      "status": "done",
+      "depends_on": ["B6.3"],
+      "required_artifacts": [
+        {"path": "experiments/l_2_falsification_capacity_gate_v2.json", "must": "locked_and_valid"},
+        {"path": "scripts/validate_l_2_falsification_capacity_gate_v2.py", "must": "pass"},
+        {"path": "tests/test_validate_l_2_falsification_capacity_gate_v2.py", "must": "pass_in_hermetic_tier"}
+      ],
+      "forbidden": ["falsification-container inspection or market-return parsing", "L-2 backtest or falsification execution", "opening the validation window", "broker/provider call, credential use, paid action, paper trade, or real-money action", "in-place locked-history edit", "edge, E2, deployment, or real-money claim"],
+      "evidence": [
+        "The v2 capacity validator resolves each declared source path, verifies actual SHA-256 and B6.2 manifest identity, then derives window, eight-asset count, and MinTRL from the locked sources rather than gate declarations.",
+        "It recomputes 3,252 × 8 = 26,016 < 54,048 and rejects source path/hash, start/end, universe, MinTRL, capacity, outcome, execution, and hard-stop tampering."
+      ]
     }
   ]
 }

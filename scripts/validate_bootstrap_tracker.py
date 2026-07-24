@@ -440,6 +440,8 @@ def _validate_done_artifact(
                 project_root=project_root,
                 verify_runtime=verify_runtime,
             )
+        if artifact_path == "experiments/l_2_falsification_capacity_gate_v2.json":
+            return _validate_locked_preregistration_gate(target, order_id, artifact_path, gate_id="l_2_falsification_capacity_gate_v2", label="l2_falsification_capacity_gate_v2", expected_status="locked_underfunded_execution_forbidden", edge_claim_field="edge_claim", project_root=project_root, verify_runtime=verify_runtime)
         return _validate_l0_locked_gate(
             target,
             order_id,
