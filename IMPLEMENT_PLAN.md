@@ -223,6 +223,12 @@ B5.1 preserves B5 v1 and appends superseding gate `l_2_multi_lookback_tstat_v2`.
 
 The primary utility, MinTRL, PSR, and DSR input is the same paired daily net active-return series. Annualized planning Sharpes are divided by `sqrt(252)` before calling the per-period MinTRL kernel; locked requirements are 54,048 for falsification, 54,056 for no-improvement validation, and 216,218 for minimum-useful-improvement validation. The unambiguous decision matrix and DSR active-return trial inventory remain pre-execution only; validation remains sealed.
 
+### B5.2 — L-2 Shared Time-Index Remediation (Complete)
+
+B5.2 preserves v1/v2 and appends superseding gate `l_2_multi_lookback_tstat_v3`. At decision close `t`, the candidate and its matched comparator use exactly the same return window `r[t-k]`, `k=0..h-1`, for every horizon. Return `r[t]` is available after that close; `r[t+1]` and later returns are forbidden from signals, weights, and decisions.
+
+Both t-index targets execute at the official close of the next actual NYSE session `t+1`; no same-close execution is allowed. Their paired active-return observation uses the same post-execution effective interval, so neither comparator mismatch nor a timing variant can support L-2. This is pre-execution governance only and validation remains sealed.
+
 ## 6. Acceptance Gate
 
 E2 requires all of the following:

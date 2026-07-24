@@ -1,0 +1,91 @@
+{
+  "schema_version": "lily_l2_multi_lookback_tstat_preregistration_v3",
+  "hypothesis_id": "L-2",
+  "created_at": "2026-07-24T00:00:00Z",
+  "status": "locked_before_execution",
+  "supersedes_gate_id": "l_2_multi_lookback_tstat_v2",
+  "evidence_ceiling_without_adversarial_review": "E1",
+  "edge_claim_before_execution": "none",
+  "purpose": "Remediate the L-2 preregistration before execution by giving the candidate and matched comparator one explicit decision index, signal return window, execution index, and active-return window without changing locked v2.",
+  "owner_authorization": "The owner explicitly authorized B5.2 on 2026-07-24 to remediate the L-2 time-index contract, with no backtest, validation access, broker/provider call, or paid action.",
+  "superseded_artifact": {
+    "path": "experiments/l_2_multi_lookback_tstat_preregistration_v2.json",
+    "sha256": "84a7bb45070b54846a709573506c8213a3bc62d28cfa25f4982415d40d94e1f3",
+    "remediation": "v2 did not make the candidate and matched comparator's shared decision-index return window explicit, leaving an off-by-one implementation ambiguity."
+  },
+  "inherits_v2": {
+    "source_path": "experiments/l_2_multi_lookback_tstat_preregistration_v2.json",
+    "source_sha256": "84a7bb45070b54846a709573506c8213a3bc62d28cfa25f4982415d40d94e1f3",
+    "inherits": "Every v2 field except the candidate/comparator time-index wording and this explicit time_index_contract, including universe, timing calendar, sizing, costs, return accounting, primary utility, DSR, MinTRL, decision matrix, and validation seal."
+  },
+  "pre_measurement_state": {
+    "L2_analysis_code_written": false,
+    "L2_market_data_acquired": false,
+    "L2_market_returns_inspected": false,
+    "L2_backtest_run": false,
+    "untouched_validation_opened": false,
+    "paid_data_used": false,
+    "broker_credentials_used": false,
+    "orders_or_paper_trades_sent": false
+  },
+  "candidate_signal": {
+    "name": "equal_weight_multi_lookback_t_stat",
+    "lookback_sessions_in_order": [32, 64, 126, 252],
+    "shared_decision_return_window": "At decision close t, for every horizon h use exactly r[t-k] for k=0..h-1; r[t] is the latest admissible return and r[t+1] or later is forbidden.",
+    "component_formula": "t_stat_h[t] = mean(r[t-k] for k=0..h-1) divided by the sample standard deviation of that same set times sqrt(h); require h complete observations.",
+    "component_standard_deviation_ddof": 1,
+    "combined_signal_formula": "q_tstat[t] = arithmetic mean of tanh(t_stat_h[t]) across the locked horizons.",
+    "additional_horizons_forbidden": true
+  },
+  "comparators": {
+    "primary": {
+      "id": "matched_32_64_126_252_directional_count",
+      "lookback_sessions_in_order": [32, 64, 126, 252],
+      "shared_decision_return_window": "At the same decision close t and for each same horizon h, use exactly r[t-k] for k=0..h-1; the set must equal the candidate component's set and cannot contain r[t+1] or later.",
+      "component_formula": "q_count_h[t] = sum(sign(r[t-k]) for k=0..h-1) / h, using the inherited directional-count zero and missing-return rules.",
+      "combined_signal_formula": "q_count_matched[t] = arithmetic mean of q_count_h[t] across the locked horizons.",
+      "role": "Primary comparator only; it differs from the candidate only by the signal transform."
+    },
+    "secondary": {
+      "id": "L1_60_day_directional_count_raw",
+      "role": "Secondary descriptive reference only; it cannot replace the primary comparator, active-return series, inference, or decision rule."
+    }
+  },
+  "time_index_contract": {
+    "decision_index": "t is the last actual NYSE trading session selected for rebalance, immediately after its official close.",
+    "shared_signal_information_set": "Candidate and primary matched comparator both use the same available return observations r[t-k] for k=0..h-1 at decision close t, separately for every locked horizon h.",
+    "future_return_prohibition": "No candidate or comparator signal, weight, volatility, covariance, cost, or decision input may use r[t+1] or any return after t.",
+    "weight_index": "Both portfolios compute their target weights at decision index t from their respective signals and the identical inherited non-signal inputs available at t.",
+    "execution_index": "Both portfolios execute their t-index targets at the official close of the next actual NYSE trading session t+1; same-close execution at t is forbidden.",
+    "shared_portfolio_return_window": "For each decision t, candidate and primary comparator net returns use the identical effective interval beginning immediately after their shared execution close at t+1 and ending immediately before the next shared executable rebalance close; the paired active return subtracts those two identical-window net returns.",
+    "holiday_rule": "If the next calendar day is not a NYSE session, t+1 means the next actual NYSE trading session; never manufacture a session."
+  },
+  "primary_utility_and_inference": {
+    "observation_unit": "paired same-decision-index daily net active return: candidate and primary matched-horizon comparator net returns over the identical shared_portfolio_return_window",
+    "primary_utility": "annualized Sharpe of the paired daily net active-return series",
+    "minimum_useful_improvement_annual_sharpe": 0.1,
+    "inference_input_rule": "PSR, DSR, and MinTRL use only the same paired active-return observations generated from the shared decision and return windows."
+  },
+  "search_accounting_and_DSR": {
+    "DSR_input_series": "For every locked trial, use paired same-decision-index daily net active returns over the identical shared_portfolio_return_window; its candidate and comparator share the trial's exact r[t-k] window.",
+    "trial_horizon_rule": "Primary is 32/64/126/252; every leave-one-out sensitivity uses identical candidate and comparator horizon lists and the same time_index_contract.",
+    "selection_rule": "Only the primary can support L-2; no sensitivity, L-1 60-day reference, or time-index variation may be promoted."
+  },
+  "validation_seal": {
+    "window": {"start": "2016-01-04", "end": "2026-06-30"},
+    "status": "sealed_not_accessed",
+    "forbidden_fields": ["prices", "returns", "signals", "positions", "regimes", "benchmarks", "PnL"],
+    "unlock_rule": "No L-2 validation access in B5.2. A later execution order requires separate owner approval and a new locked gate."
+  },
+  "wiki_sources": [
+    {"path": "wiki/code-notes/standard-backtest-engine.md", "sha256": "31421160c75fe302c067938b1042050aa33f3bb7dbb00ab2cc033ea6c03af94b"},
+    {"path": "wiki/concepts/backtesting.md", "sha256": "40f8134fcbf09a3fcddd9bf0de284910eceb6c9a5ed97c1b1d6dbfd904094839"}
+  ],
+  "hard_stops": [
+    "L-2 return, signal, portfolio, or backtest execution during B5.2",
+    "opening the 2016-01-04 through 2026-06-30 validation window",
+    "broker or provider request, credential use, paid action, paper trade, or real-money action",
+    "in-place change to any locked preregistration or validator after hashing",
+    "edge, E2, execution-quality, deployment, or real-money claim from B5.2"
+  ]
+}

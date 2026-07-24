@@ -357,6 +357,11 @@
           "date": "2026-07-24",
           "decision": "B5_1_preregistration_inference_remediated_before_execution",
           "notes": "Gate l_2_multi_lookback_tstat_v2 supersedes v1 without mutation. It makes the matched-horizon directional-count signal the primary comparator, keeps L-1 60-day as secondary reference, and locks per-period paired-active-return MinTRL and DSR inputs. No L-2 market result or validation access exists."
+        },
+        {
+          "date": "2026-07-24",
+          "decision": "B5_2_shared_time_index_remediated_before_execution",
+          "notes": "Gate l_2_multi_lookback_tstat_v3 supersedes v2 without mutation. Candidate and matched comparator now share decision index t, use r[t-k] for k=0..h-1, execute at the next actual session close t+1, and use identical post-execution active-return windows. No L-2 market result or validation access exists."
         }
       ]
     },

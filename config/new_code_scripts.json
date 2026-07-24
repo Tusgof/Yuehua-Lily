@@ -44,6 +44,7 @@
     "scripts/validate_l_1_baseline_preregistration.py",
     "scripts/validate_l_2_multi_lookback_tstat_preregistration.py",
     "scripts/validate_l_2_multi_lookback_tstat_preregistration_v2.py",
+    "scripts/validate_l_2_multi_lookback_tstat_preregistration_v3.py",
     "scripts/validate_locked_gates.py"
   ]
 }

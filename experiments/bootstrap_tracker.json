@@ -569,6 +569,23 @@
         "The primary utility, PSR, DSR input, and MinTRL observation are the same paired daily net active-return series. Annualized Sharpe planning values are converted by sqrt(252) before the MinTRL kernel, producing locked falsify/validate requirements of 54048/54056/216218.",
         "The validator and hermetic negative/golden tests reject unmatched comparators, annual-to-period conversion tampering, DSR input substitution, validation opening, and locked decision-matrix ambiguity."
       ]
+    },
+    {
+      "id": "B5.2",
+      "title": "L-2 shared time-index remediation",
+      "status": "done",
+      "depends_on": ["B5.1"],
+      "required_artifacts": [
+        {"path": "experiments/l_2_multi_lookback_tstat_preregistration_v3.json", "must": "locked_and_valid"},
+        {"path": "scripts/validate_l_2_multi_lookback_tstat_preregistration_v3.py", "must": "pass"},
+        {"path": "tests/test_validate_l_2_multi_lookback_tstat_preregistration_v3.py", "must": "pass_in_hermetic_tier"}
+      ],
+      "forbidden": ["L-2 backtest or market-return execution", "opening the 2016-01-04 through 2026-06-30 validation window", "broker or provider call", "credential use", "paid action", "paper trade or real-money action", "in-place edit to a locked artifact, validator, or manifest line", "edge, E2, execution-quality, deployment, or real-money claim"],
+      "evidence": [
+        "Gate l_2_multi_lookback_tstat_v3 supersedes v2 without changing v2 or any existing manifest line. It locks one decision index t, shared signal return observations r[t-k] for k=0..h-1, and an explicit ban on r[t+1] or later for both the candidate and matched comparator.",
+        "Both t-index targets execute at the next actual NYSE close t+1, and their paired active-return observation uses the same post-execution effective interval. The L-1 60-day series remains secondary only.",
+        "The validator and hermetic negative tests reject a candidate t-1 window, comparator future-return window, same-close execution, mismatched active-return window, and validation opening."
+      ]
     }
   ]
 }

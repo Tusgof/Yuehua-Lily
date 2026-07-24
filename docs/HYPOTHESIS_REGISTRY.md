@@ -53,7 +53,7 @@
   3. At least one preregistered turnover/cost or risk-adjusted component improves outside the search sample.
 - **Validation**: lock paired daily net active-return Sharpe against the matched comparator before execution; log all trials; require primary-margin PSR and DSR on that same series; meet `MinTRL_validate` using effective observations.
 - **Falsification**: after `MinTRL_falsify`, annualized paired active-return Sharpe is below `0.10` and primary-margin PSR is at most `0.05`, followed by a mechanism autopsy.
-- **Locked B5.1 design**: v2 supersedes but does not alter B5 v1; equal-weight t-stat and directional-count horizons are both `32/64/126/252`; annualized planning Sharpes are converted to daily Sharpe before MinTRL; five-trial DSR active-return log; 60-day L-1 is secondary only; validation remains sealed.
+- **Locked B5.2 design**: v3 supersedes but does not alter v1/v2; at decision close `t`, candidate and matched comparator both use exactly `r[t-k]`, `k=0..h-1`; both execute at the next actual session close `t+1`; paired active returns use the same post-execution interval; 60-day L-1 is secondary only; validation remains sealed.
 
 ## L-3 — Inverse-Volatility Sizing
 
