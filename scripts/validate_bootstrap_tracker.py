@@ -380,6 +380,18 @@ def _validate_done_artifact(
                 project_root=project_root,
                 verify_runtime=verify_runtime,
             )
+        if artifact_path == "experiments/l_2_multi_lookback_tstat_preregistration_v2.json":
+            return _validate_locked_preregistration_gate(
+                target,
+                order_id,
+                artifact_path,
+                gate_id="l_2_multi_lookback_tstat_v2",
+                label="l2_multi_lookback_tstat_v2",
+                expected_status="locked_before_execution",
+                edge_claim_field="edge_claim_before_execution",
+                project_root=project_root,
+                verify_runtime=verify_runtime,
+            )
         return _validate_l0_locked_gate(
             target,
             order_id,

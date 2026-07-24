@@ -301,7 +301,7 @@
       "family": "candidate_signal",
       "counts_toward_family_stop": true,
       "status": "active",
-      "statement": "A matched-horizon multi-lookback t-stat signal improves a preregistered risk-adjusted utility or turnover/cost efficiency criterion versus the 60-day baseline.",
+      "statement": "A 32/64/126/252 multi-lookback t-stat signal improves the Sharpe of paired daily net active returns versus the matched-horizon directional-count comparator; the 60-day L-1 baseline is secondary reference only.",
       "economic_rationale": "Combining horizons may reduce dependence on one arbitrary lookback while retaining trend exposure.",
       "testable_predictions": [
         "Improvement survives matched universe, timing, sizing, and cost assumptions.",
@@ -314,7 +314,7 @@
         "Meet MinTRL_validate using autocorrelation-adjusted effective observations."
       ],
       "falsification_criteria": [
-        "After MinTRL_falsify, the candidate fails the locked paired utility margin and has no compensating turnover/cost advantage across required regimes.",
+        "After MinTRL_falsify, the paired active-return utility is below its locked margin with a primary-margin PSR at most 0.05.",
         "A mechanism autopsy explains whether horizon aggregation added noise, lag, or cost."
       ],
       "required_data": [
@@ -352,6 +352,11 @@
           "date": "2026-07-24",
           "decision": "B5_preregistration_locked_before_execution",
           "notes": "Gate l_2_multi_lookback_tstat_v1 locks the matched-protocol 32/64/126/252 t-stat candidate, paired utility, DSR trial log, dual MinTRL, and sealed validation boundary. No L-2 market result, edge claim, broker/provider action, or validation access exists."
+        },
+        {
+          "date": "2026-07-24",
+          "decision": "B5_1_preregistration_inference_remediated_before_execution",
+          "notes": "Gate l_2_multi_lookback_tstat_v2 supersedes v1 without mutation. It makes the matched-horizon directional-count signal the primary comparator, keeps L-1 60-day as secondary reference, and locks per-period paired-active-return MinTRL and DSR inputs. No L-2 market result or validation access exists."
         }
       ]
     },

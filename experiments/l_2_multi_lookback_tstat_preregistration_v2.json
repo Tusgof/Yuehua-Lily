@@ -1,0 +1,140 @@
+{
+  "schema_version": "lily_l2_multi_lookback_tstat_preregistration_v2",
+  "hypothesis_id": "L-2",
+  "created_at": "2026-07-24T00:00:00Z",
+  "status": "locked_before_execution",
+  "supersedes_gate_id": "l_2_multi_lookback_tstat_v1",
+  "evidence_ceiling_without_adversarial_review": "E1",
+  "edge_claim_before_execution": "none",
+  "purpose": "Remediate the L-2 preregistration before execution by aligning the matched-horizon primary utility, DSR input, and per-period MinTRL inference without changing the locked v1 artifact.",
+  "owner_authorization": "The owner explicitly authorized B5.1 on 2026-07-24 to create a superseding L-2 preregistration gate, with no backtest, validation access, broker/provider call, or paid action.",
+  "superseded_artifact": {
+    "path": "experiments/l_2_multi_lookback_tstat_preregistration.json",
+    "sha256": "1e7c1a4c5743ddb21bce4ad96b8c5a5a8092e4e04af4642ebcd1fa66c674786f",
+    "remediation": "v1 passed annualized Sharpe values directly to a per-period MinTRL kernel and used the 60-day L-1 baseline as the primary comparator despite the matched-horizon L-2 research question."
+  },
+  "pre_measurement_state": {
+    "L2_analysis_code_written": false,
+    "L2_market_data_acquired": false,
+    "L2_market_returns_inspected": false,
+    "L2_backtest_run": false,
+    "untouched_validation_opened": false,
+    "paid_data_used": false,
+    "broker_credentials_used": false,
+    "orders_or_paper_trades_sent": false
+  },
+  "baseline_inheritance": {
+    "source_path": "experiments/l_1_baseline_preregistration.json",
+    "source_sha256": "91527c2f4ec00134767df86849f36b9876b00eb44cd56dc01650d33bf938fe29",
+    "shared_sections": ["universes", "timing_and_calendar", "portfolio_construction", "costs", "return_accounting", "benchmarks", "sample_and_unlock_order", "data_integrity"],
+    "comparison_rule": "Candidate and every comparator use identical inherited universe, availability timestamps, one-session execution delay, sizing, rebalancing, cost model, return accounting, dates, and missingness handling. Only the signal transform differs."
+  },
+  "candidate_signal": {
+    "name": "equal_weight_multi_lookback_t_stat",
+    "lookback_sessions_in_order": [32, 64, 126, 252],
+    "component_formula": "For each asset and horizon h, t_stat_h[t] = mean of the h prior available daily economic returns divided by their sample standard deviation times sqrt(h); require h complete observations and use no return at or after t.",
+    "component_standard_deviation_ddof": 1,
+    "component_zero_variance_rule": "Set that component to 0 and record the event; do not substitute an epsilon or drop the asset.",
+    "combined_signal_formula": "q_tstat[t] = arithmetic mean of tanh(t_stat_h[t]) across the four locked horizons.",
+    "research_exposure": "signed q_tstat in [-1,1]",
+    "current_capital_exposure": "max(q_tstat,0) in [0,1]",
+    "same_signal_availability_rule": "The candidate signal is frozen before the inherited one-session execution delay; same-close execution is forbidden.",
+    "additional_horizons_forbidden": true
+  },
+  "comparators": {
+    "primary": {
+      "id": "matched_32_64_126_252_directional_count",
+      "name": "equal_weight_multi_lookback_directional_count",
+      "lookback_sessions_in_order": [32, 64, 126, 252],
+      "component_formula": "q_count_h[t] = sum(sign(r[t-k]) for k=0..h-1) / h, using the inherited directional-count zero and missing-return rules.",
+      "combined_signal_formula": "q_count_matched[t] = arithmetic mean of q_count_h[t] across the four locked horizons.",
+      "role": "Primary comparator. It matches every candidate horizon and all inherited portfolio plumbing; it differs only by using directional counts instead of t-stat components."
+    },
+    "secondary": {
+      "id": "L1_60_day_directional_count_raw",
+      "source_path": "experiments/l_1_baseline_preregistration.json",
+      "role": "Secondary descriptive reference only. Its 60-day single-lookback return difference is reported on identical dates but cannot replace the primary utility, MinTRL, PSR, DSR, or decision rule."
+    }
+  },
+  "primary_utility_and_inference": {
+    "observation_unit": "paired same-date daily net active return: candidate net portfolio return minus primary matched-horizon comparator net portfolio return",
+    "primary_utility": "annualized Sharpe of the paired daily net active-return series",
+    "minimum_useful_improvement_annual_sharpe": 0.1,
+    "annualization_sessions": 252,
+    "annual_to_per_period_conversion": "per_period_Sharpe = annualized_Sharpe / sqrt(252) before every MinTRL, PSR, or DSR calculation",
+    "minimum_useful_improvement_per_period_sharpe": 0.00629940788348712,
+    "primary_margin_PSR_requirement": "PSR on the paired daily net active-return series against the minimum_useful_improvement_per_period_sharpe is at least 0.95.",
+    "secondary_diagnostic": "Candidate turnover must not exceed the matched-horizon comparator turnover by more than 20 percent; this diagnostic cannot replace the primary utility.",
+    "L1_secondary_reference": "Report the annualized Sharpe of candidate minus the L-1 60-day baseline on identical dates descriptively only; no L-1-referenced statistic supports an L-2 decision."
+  },
+  "search_accounting_and_DSR": {
+    "DSR_input_series": "For every locked trial, use its paired same-date daily net active-return series: t-stat candidate net portfolio return minus that trial's matched-horizon directional-count comparator net portfolio return.",
+    "locked_trial_inventory": [
+      {"trial_id": "primary_32_64_126_252", "candidate_horizons": [32, 64, 126, 252], "comparator_horizons": [32, 64, 126, 252], "claim_eligible": true},
+      {"trial_id": "leave_out_32", "candidate_horizons": [64, 126, 252], "comparator_horizons": [64, 126, 252], "claim_eligible": false},
+      {"trial_id": "leave_out_64", "candidate_horizons": [32, 126, 252], "comparator_horizons": [32, 126, 252], "claim_eligible": false},
+      {"trial_id": "leave_out_126", "candidate_horizons": [32, 64, 252], "comparator_horizons": [32, 64, 252], "claim_eligible": false},
+      {"trial_id": "leave_out_252", "candidate_horizons": [32, 64, 126], "comparator_horizons": [32, 64, 126], "claim_eligible": false}
+    ],
+    "effective_trials_for_DSR": "maximum of 5 and the effective-rank estimate from the complete locked trial active-return correlation matrix",
+    "trial_sharpe_dispersion": "Population standard deviation of per-period Sharpe estimates across the complete locked trial active-return inventory on the evaluated window; no omitted failed trial.",
+    "search_aware_null_per_period": "minimum_useful_improvement_per_period_sharpe plus expected_maximum_sharpe from the complete trial active-return inventory.",
+    "DSR_requirement": "DSR probability for the primary paired daily active-return series against the locked search-aware per-period null is at least 0.95 before validation-grade candidacy.",
+    "additional_search_forbidden": ["horizon addition, deletion, or reweighting", "t-stat transform selection", "utility-threshold selection", "universe, timing, sizing, cost, benchmark, regime, or date-window selection", "post-result promotion of a sensitivity"],
+    "debug_run_rule": "Any run that reads market returns is a logged trial even if labelled debugging; synthetic fixture tests are not trials."
+  },
+  "dual_MinTRL": {
+    "observation_frequency": "daily paired net active-return differences",
+    "annualization_sessions": 252,
+    "one_sided_significance": 0.05,
+    "power": 0.8,
+    "planning_skewness": 0.0,
+    "planning_raw_Pearson_kurtosis": 6.0,
+    "planning_autocorrelations_lags_1_to_5": [0.1, 0.05, 0.025, 0.0125, 0.00625],
+    "actual_recalculation": "Use primary paired daily net active-return lags 1-5 from the prior opened stage. Report calendar observations, paired dates, holding overlap, time-effective observations, and joint independent-bet equivalents; raw trades never substitute for effective observations.",
+    "falsify": {
+      "sequence": 1,
+      "claimed_minimum_annual_sharpe": 0.1,
+      "adverse_true_annual_sharpe": -0.1,
+      "claimed_minimum_per_period_sharpe": 0.00629940788348712,
+      "adverse_true_per_period_sharpe": -0.00629940788348712,
+      "required_joint_independent_bet_equivalents": 54048
+    },
+    "validate": {
+      "sequence": 2,
+      "null_plans": [
+        {"id": "no_improvement", "expected_annual_sharpe": 0.2, "null_annual_sharpe": 0.0, "expected_per_period_sharpe": 0.01259881576697424, "null_per_period_sharpe": 0.0, "required_joint_independent_bet_equivalents": 54056},
+        {"id": "minimum_useful_improvement", "expected_annual_sharpe": 0.2, "null_annual_sharpe": 0.1, "expected_per_period_sharpe": 0.01259881576697424, "null_per_period_sharpe": 0.00629940788348712, "required_joint_independent_bet_equivalents": 216218}
+      ],
+      "binding_required_joint_independent_bet_equivalents": 216218
+    },
+    "kernel": "lib/statistics.py minimum_track_record_length_falsify and minimum_track_record_length_validate; both receive only per-period Sharpe inputs.",
+    "raw_trade_count_never_substitutes_for_effective_observations": true
+  },
+  "falsification_decision_matrix": [
+    {"outcome": "underfunded", "conditions": "Actual primary active-return independent-bet equivalents are below 54048.", "decision": "No falsification conclusion; remain E1 scope_restricted."},
+    {"outcome": "falsified", "conditions": "Actual primary active-return independent-bet equivalents are at least 54048 and primary annualized active Sharpe is below 0.10 and primary-margin PSR is at most 0.05.", "decision": "Falsify L-2 only after the required mechanism autopsy covers horizon diversification, signal transform, lag, noise, and cost."},
+    {"outcome": "not_falsified_not_validated", "conditions": "Any other falsification-stage result, missing data, integrity blocker, or failure to fund all validation nulls.", "decision": "Remain E1 scope_restricted; do not open validation or promote a sensitivity."},
+    {"outcome": "validation_grade_candidate", "conditions": "Primary annualized active Sharpe is at least 0.10, primary-margin PSR and DSR are each at least 0.95, actual primary active-return independent-bet equivalents fund both validation nulls at 216218, and inherited integrity, cost, regime, and adversarial-review gates pass.", "decision": "Only then may L-2 become an E2 candidate; E2 promotion still requires a separate independent adversarial review."}
+  ],
+  "validation_seal": {
+    "window": {"start": "2016-01-04", "end": "2026-06-30"},
+    "status": "sealed_not_accessed",
+    "forbidden_fields": ["prices", "returns", "signals", "positions", "regimes", "benchmarks", "PnL"],
+    "unlock_rule": "No L-2 validation access in B5.1. A later execution order must first pass the inherited L-1 data and validation boundary, fund every L-2 MinTRL_validate null using actual paired-active-return dependence, and receive separate owner approval and a new locked gate."
+  },
+  "wiki_sources": [
+    {"path": "wiki/concepts/multi-lookback-trend-following.md", "sha256": "e6791d5ecf781a06b4c96befa33cdb9d3866f49caa8b2bd91efa1d0ce8f4d4d7"},
+    {"path": "wiki/concepts/minimum-track-record-length.md", "sha256": "ca65225740673bd363be7461b8022281da08ae32e6ff42f8887f1072eb51ad81"},
+    {"path": "wiki/concepts/deflated-sharpe-ratio.md", "sha256": "90663b67e49dcec90bd641e801f9464e593ff8fe9091b2d70e9f4645381af556"},
+    {"path": "wiki/concepts/probabilistic-sharpe-ratio.md", "sha256": "a644495d207403711a55d815abb0722018bba23d428d3d904dd6c4b5a8cef6a5"},
+    {"path": "wiki/concepts/directional-count-trend-signal.md", "sha256": "0eb4e3cbd6eceab838d5fc88c0500bedfbe345389eb3646fb19200b6b97b7490"}
+  ],
+  "hard_stops": [
+    "L-2 return, signal, portfolio, or backtest execution during B5.1",
+    "opening the 2016-01-04 through 2026-06-30 validation window",
+    "broker or provider request, credential use, paid action, paper trade, or real-money action",
+    "in-place change to any locked preregistration or validator after hashing",
+    "edge, E2, execution-quality, deployment, or real-money claim from B5.1"
+  ]
+}

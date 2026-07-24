@@ -45,15 +45,15 @@
 ## L-2 — Multi-Lookback Candidate Versus Baseline
 
 - **Status**: active after B5 preregistration; depends on L-1 and remains unexecuted
-- **Statement**: A matched-horizon multi-lookback t-stat signal improves preregistered risk-adjusted utility or turnover/cost efficiency versus the 60-day baseline.
+- **Statement**: A 32/64/126/252 multi-lookback t-stat signal improves paired net active-return Sharpe versus the matched-horizon directional-count comparator; the 60-day L-1 baseline is secondary reference only.
 - **Rationale**: Combining horizons may reduce dependence on one arbitrary lookback while preserving trend exposure.
 - **Predictions**:
   1. Any improvement survives matched universe, timing, sizing, and cost assumptions.
   2. Improvement is not explained solely by greater leverage or a different effective horizon.
   3. At least one preregistered turnover/cost or risk-adjusted component improves outside the search sample.
-- **Validation**: lock one utility rule before execution; compare on paired dates and identical portfolio plumbing; log all trials; require DSR or untouched revalidation; meet `MinTRL_validate` using effective observations.
-- **Falsification**: after `MinTRL_falsify`, the candidate fails the locked paired utility margin and has no compensating turnover/cost advantage across required regimes, followed by a mechanism autopsy.
-- **Locked B5 design**: equal-weight t-stat horizons `32/64/126/252`; identical L-1 universe, timing, sizing, and costs; primary paired annualized net-Sharpe improvement threshold `0.10`; five-trial DSR log; dual MinTRL; validation remains sealed.
+- **Validation**: lock paired daily net active-return Sharpe against the matched comparator before execution; log all trials; require primary-margin PSR and DSR on that same series; meet `MinTRL_validate` using effective observations.
+- **Falsification**: after `MinTRL_falsify`, annualized paired active-return Sharpe is below `0.10` and primary-margin PSR is at most `0.05`, followed by a mechanism autopsy.
+- **Locked B5.1 design**: v2 supersedes but does not alter B5 v1; equal-weight t-stat and directional-count horizons are both `32/64/126/252`; annualized planning Sharpes are converted to daily Sharpe before MinTRL; five-trial DSR active-return log; 60-day L-1 is secondary only; validation remains sealed.
 
 ## L-3 — Inverse-Volatility Sizing
 

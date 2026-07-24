@@ -163,12 +163,12 @@ Past reports are reproduced by checking out their recorded commit hash. Do not c
 ## 10. Current Verified State
 
 - **Verified date**: 2026-07-24
-- **Bootstrap**: B0 through B4.16 complete; B5 preregistration complete
+- **Bootstrap**: B0 through B4.16 complete; B5.1 preregistration remediation complete
 - **Legacy Note status**: retired and deleted by `docs/DECISION_RECORD_002_RESEARCH_LOG_CONTRACT.md` after its research content was promoted
 - **Human research logs**: contract active; L-0 sizing and Webull capability are logs 001 and 006; L-1 baseline, remediation, validation-capacity, and Alpha Vantage corporate-action audits are logs 002 through 005 under `research_log/`
 - **Dashboard**: retained under `Dashboard/`, demoted from product/state owner
 - **Founding decisions**: `docs/DECISION_RECORD_001_PROJECT_REFOUNDING.md`
-- **Registry**: L-0 scope-restricted E0; L-1 scope-restricted E1; L-2 through L-4 proposed
+- **Registry**: L-0 scope-restricted E0; L-1 scope-restricted E1; L-2 active but unexecuted; L-3 through L-4 proposed
 - **L-1 falsification execution**: complete through 2015-12-31; not falsified, not validated; validation sealed
 - **L-1 data-quality remediation**: cash resolved at E1; historical fees decision-bounded; corporate actions pass the locked daily tolerance for 6/8 symbols; the later B4.6 probe resolves Webull candidate-ticker and fractional OpenAPI capability for the current ten-ETF set
 - **L-1 validation capacity**: 2,637 calendar-only sessions project to 20,376 joint independent-bet equivalents versus the binding 8,673 under locked actual dependence; planning sensitivity projects 7,604; validation remains sealed
@@ -185,7 +185,7 @@ Past reports are reproduced by checking out their recorded commit hash. Do not c
 - **Project-memory synchronization**: B4.14 records the UAT branch as closed with no planned UAT work; it changes no locked artifact, evidence tier, hypothesis status, or validation boundary
 - **CI runtime maintenance**: B4.15 updates the Hermetic CI checkout action from v4 to v5 to remove the observed Node.js 20 deprecation path; the pinned Python, hermetic test, and tracker-validation steps remain unchanged
 - **Governance content validation**: B4.16 makes tracker completion for B4.13–B4.15 validate the UAT decision sources and limits, synchronized project-memory statements, and the exact checkout v5 requirement
-- **L-2 candidate preregistration**: B5 locks the unexecuted 32/64/126/252 multi-lookback t-stat candidate against the 60-day baseline with identical inherited protocol, paired utility, DSR search accounting, dual MinTRL, and a sealed validation window
+- **L-2 candidate preregistration**: B5.1 supersedes B5 without altering v1; it locks the unexecuted 32/64/126/252 t-stat candidate against a matched-horizon directional-count comparator, retains the 60-day L-1 baseline only as secondary reference, converts annualized Sharpe values to daily units before MinTRL, and keeps validation sealed
 - **Databento**: `DATABENTO_API_02` passes metadata access with USD 0 spend, but relevant US-equity coverage begins in 2018 or later and no dedicated corporate-actions history was exposed; owner-reported USD 50 credit has unverified real-payment provenance
 
 ## 11. Next Safe Action

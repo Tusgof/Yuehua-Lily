@@ -217,6 +217,12 @@ B5 locks the 32/64/126/252 equal-weight t-stat candidate against the 60-day base
 
 Exit: gate `l_2_multi_lookback_tstat_v1` is hash-bound before execution. Dual MinTRL is locked on paired portfolio-return differences, and the 2016-01-04 through 2026-06-30 validation window remains sealed. B5 makes no market-data, broker, provider, paid, paper-trading, or real-money request and creates no L-2 performance result.
 
+### B5.1 — L-2 Preregistration Inference Remediation (Complete)
+
+B5.1 preserves B5 v1 and appends superseding gate `l_2_multi_lookback_tstat_v2`. Its primary comparator is the equal-weight 32/64/126/252 directional-count signal, so candidate and comparator share horizons as well as all inherited L-1 portfolio plumbing. The L-1 60-day baseline is a secondary descriptive reference only.
+
+The primary utility, MinTRL, PSR, and DSR input is the same paired daily net active-return series. Annualized planning Sharpes are divided by `sqrt(252)` before calling the per-period MinTRL kernel; locked requirements are 54,048 for falsification, 54,056 for no-improvement validation, and 216,218 for minimum-useful-improvement validation. The unambiguous decision matrix and DSR active-return trial inventory remain pre-execution only; validation remains sealed.
+
 ## 6. Acceptance Gate
 
 E2 requires all of the following:
