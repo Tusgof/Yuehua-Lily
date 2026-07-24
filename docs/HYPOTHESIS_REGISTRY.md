@@ -44,7 +44,7 @@
 
 ## L-2 — Multi-Lookback Candidate Versus Baseline
 
-- **Status**: proposed; depends on L-1
+- **Status**: active after B5 preregistration; depends on L-1 and remains unexecuted
 - **Statement**: A matched-horizon multi-lookback t-stat signal improves preregistered risk-adjusted utility or turnover/cost efficiency versus the 60-day baseline.
 - **Rationale**: Combining horizons may reduce dependence on one arbitrary lookback while preserving trend exposure.
 - **Predictions**:
@@ -53,6 +53,7 @@
   3. At least one preregistered turnover/cost or risk-adjusted component improves outside the search sample.
 - **Validation**: lock one utility rule before execution; compare on paired dates and identical portfolio plumbing; log all trials; require DSR or untouched revalidation; meet `MinTRL_validate` using effective observations.
 - **Falsification**: after `MinTRL_falsify`, the candidate fails the locked paired utility margin and has no compensating turnover/cost advantage across required regimes, followed by a mechanism autopsy.
+- **Locked B5 design**: equal-weight t-stat horizons `32/64/126/252`; identical L-1 universe, timing, sizing, and costs; primary paired annualized net-Sharpe improvement threshold `0.10`; five-trial DSR log; dual MinTRL; validation remains sealed.
 
 ## L-3 — Inverse-Volatility Sizing
 

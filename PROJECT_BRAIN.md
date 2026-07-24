@@ -163,7 +163,7 @@ Past reports are reproduced by checking out their recorded commit hash. Do not c
 ## 10. Current Verified State
 
 - **Verified date**: 2026-07-24
-- **Bootstrap**: B0 through B4.16 complete
+- **Bootstrap**: B0 through B4.16 complete; B5 preregistration complete
 - **Legacy Note status**: retired and deleted by `docs/DECISION_RECORD_002_RESEARCH_LOG_CONTRACT.md` after its research content was promoted
 - **Human research logs**: contract active; L-0 sizing and Webull capability are logs 001 and 006; L-1 baseline, remediation, validation-capacity, and Alpha Vantage corporate-action audits are logs 002 through 005 under `research_log/`
 - **Dashboard**: retained under `Dashboard/`, demoted from product/state owner
@@ -185,6 +185,7 @@ Past reports are reproduced by checking out their recorded commit hash. Do not c
 - **Project-memory synchronization**: B4.14 records the UAT branch as closed with no planned UAT work; it changes no locked artifact, evidence tier, hypothesis status, or validation boundary
 - **CI runtime maintenance**: B4.15 updates the Hermetic CI checkout action from v4 to v5 to remove the observed Node.js 20 deprecation path; the pinned Python, hermetic test, and tracker-validation steps remain unchanged
 - **Governance content validation**: B4.16 makes tracker completion for B4.13–B4.15 validate the UAT decision sources and limits, synchronized project-memory statements, and the exact checkout v5 requirement
+- **L-2 candidate preregistration**: B5 locks the unexecuted 32/64/126/252 multi-lookback t-stat candidate against the 60-day baseline with identical inherited protocol, paired utility, DSR search accounting, dual MinTRL, and a sealed validation window
 - **Databento**: `DATABENTO_API_02` passes metadata access with USD 0 spend, but relevant US-equity coverage begins in 2018 or later and no dedicated corporate-actions history was exposed; owner-reported USD 50 credit has unverified real-payment provenance
 
 ## 11. Next Safe Action

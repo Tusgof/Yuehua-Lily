@@ -1,0 +1,129 @@
+{
+  "schema_version": "lily_l2_multi_lookback_tstat_preregistration_v1",
+  "hypothesis_id": "L-2",
+  "created_at": "2026-07-24T00:00:00Z",
+  "status": "locked_before_execution",
+  "evidence_ceiling_without_adversarial_review": "E1",
+  "edge_claim_before_execution": "none",
+  "purpose": "Test one preregistered multi-lookback t-stat candidate against the locked L-1 60-day directional-count baseline without selecting horizons, costs, timing, or utility after observing results.",
+  "owner_authorization": "The owner explicitly authorized B5 on 2026-07-24, with no backtest, validation access, broker/provider call, or paid action in this session.",
+  "pre_measurement_state": {
+    "L2_analysis_code_written": false,
+    "L2_market_data_acquired": false,
+    "L2_market_returns_inspected": false,
+    "L2_backtest_run": false,
+    "untouched_validation_opened": false,
+    "paid_data_used": false,
+    "broker_credentials_used": false,
+    "orders_or_paper_trades_sent": false
+  },
+  "baseline_inheritance": {
+    "source_path": "experiments/l_1_baseline_preregistration.json",
+    "source_sha256": "91527c2f4ec00134767df86849f36b9876b00eb44cd56dc01650d33bf938fe29",
+    "shared_sections": [
+      "universes",
+      "timing_and_calendar",
+      "portfolio_construction",
+      "costs",
+      "return_accounting",
+      "benchmarks",
+      "sample_and_unlock_order",
+      "data_integrity"
+    ],
+    "comparison_rule": "Candidate and baseline use identical inherited universe, availability timestamps, one-session execution delay, sizing, rebalancing, cost model, return accounting, benchmarks, dates, and missingness handling. Only the signal differs."
+  },
+  "candidate_signal": {
+    "name": "equal_weight_multi_lookback_t_stat",
+    "lookback_sessions_in_order": [32, 64, 126, 252],
+    "component_formula": "For each asset and horizon h, t_stat_h[t] = mean of the h prior available daily economic returns divided by their sample standard deviation times sqrt(h); require h complete observations and use no return at or after t.",
+    "component_standard_deviation_ddof": 1,
+    "component_zero_variance_rule": "Set that component to 0 and record the event; do not substitute an epsilon or drop the asset.",
+    "combined_signal_formula": "q_multi[t] = arithmetic mean of tanh(t_stat_h[t]) across the four locked horizons.",
+    "research_exposure": "signed q_multi in [-1,1]",
+    "current_capital_exposure": "max(q_multi,0) in [0,1]",
+    "same_signal_availability_rule": "The candidate signal is frozen before the inherited one-session execution delay; same-close execution is forbidden.",
+    "horizon_rationale": "32, 64, 126, and 252 sessions are the source-supported multi-lookback set that fits the inherited L-1 warm-up and timing. The 504-session source horizon is excluded because it would change that inherited timing.",
+    "additional_horizons_forbidden": true
+  },
+  "comparison_and_utility": {
+    "primary_branch": "research_signed",
+    "baseline_signal": "locked L-1 60_day_directional_count_raw",
+    "observation_unit": "paired same-date daily net portfolio-return difference: candidate minus baseline",
+    "primary_utility": "annualized net Sharpe(candidate) minus annualized net Sharpe(baseline) on identical eligible dates",
+    "minimum_useful_improvement_annual_sharpe": 0.1,
+    "secondary_diagnostic": "candidate turnover must not exceed baseline turnover by more than 20 percent; this diagnostic cannot replace the primary utility.",
+    "selection_rule": "Only primary_32_64_126_252 can support the L-2 claim. A sensitivity cannot be promoted, substituted, or used to revise the utility threshold."
+  },
+  "search_accounting_and_DSR": {
+    "locked_trial_inventory": [
+      {"trial_id": "primary_32_64_126_252", "horizons": [32, 64, 126, 252], "claim_eligible": true},
+      {"trial_id": "leave_out_32", "horizons": [64, 126, 252], "claim_eligible": false},
+      {"trial_id": "leave_out_64", "horizons": [32, 126, 252], "claim_eligible": false},
+      {"trial_id": "leave_out_126", "horizons": [32, 64, 252], "claim_eligible": false},
+      {"trial_id": "leave_out_252", "horizons": [32, 64, 126], "claim_eligible": false}
+    ],
+    "effective_trials_for_DSR": "maximum of 5 and the effective-rank estimate from the complete locked trial-return correlation matrix",
+    "trial_sharpe_dispersion": "Population standard deviation across the complete locked trial inventory on the evaluated window; no omitted failed trial.",
+    "DSR_requirement": "DSR probability for the selected primary candidate versus its search-aware hurdle must be at least 0.95 before validation-grade candidacy.",
+    "additional_search_forbidden": [
+      "horizon addition, deletion, or reweighting",
+      "t-stat transform selection",
+      "utility-threshold selection",
+      "universe, timing, sizing, cost, benchmark, regime, or date-window selection",
+      "post-result promotion of a sensitivity"
+    ],
+    "debug_run_rule": "Any run that reads market returns is a logged trial even if labelled debugging; synthetic fixture tests are not trials."
+  },
+  "dual_MinTRL": {
+    "observation_frequency": "daily paired portfolio-return differences",
+    "annualization_sessions": 252,
+    "one_sided_significance": 0.05,
+    "power": 0.8,
+    "planning_skewness": 0.0,
+    "planning_raw_Pearson_kurtosis": 6.0,
+    "planning_autocorrelations_lags_1_to_5": [0.1, 0.05, 0.025, 0.0125, 0.00625],
+    "actual_recalculation": "Use paired-difference return lags 1-5 from the prior opened stage. Report calendar observations, paired dates, holding overlap, time-effective observations, and joint independent-bet equivalents; raw trades never substitute for effective observations.",
+    "falsify": {
+      "sequence": 1,
+      "claimed_minimum_annual_sharpe_improvement": 0.1,
+      "adverse_true_annual_sharpe_improvement": -0.1,
+      "required_joint_independent_bet_equivalents": 219
+    },
+    "validate": {
+      "sequence": 2,
+      "null_plans": [
+        {"id": "no_improvement", "expected_annual_sharpe_improvement": 0.2, "null_annual_sharpe_improvement": 0.0, "required_joint_independent_bet_equivalents": 227},
+        {"id": "minimum_useful_improvement", "expected_annual_sharpe_improvement": 0.2, "null_annual_sharpe_improvement": 0.1, "required_joint_independent_bet_equivalents": 903}
+      ],
+      "binding_required_joint_independent_bet_equivalents": 903
+    },
+    "kernel": "lib/statistics.py minimum_track_record_length_falsify and minimum_track_record_length_validate",
+    "raw_trade_count_never_substitutes_for_effective_observations": true
+  },
+  "validation_seal": {
+    "window": {"start": "2016-01-04", "end": "2026-06-30"},
+    "status": "sealed_not_accessed",
+    "forbidden_fields": ["prices", "returns", "signals", "positions", "regimes", "benchmarks", "PnL"],
+    "unlock_rule": "No L-2 validation access in B5. A later execution order must first pass the inherited L-1 data and validation boundary, fund every L-2 MinTRL_validate null using actual paired dependence, and receive separate owner approval and a new locked gate."
+  },
+  "decision_rules": {
+    "falsified": "After MinTRL_falsify is funded, primary utility is below 0.0 and the turnover diagnostic fails, with a written mechanism autopsy covering horizon diversification, lag, noise, and cost.",
+    "not_falsified_but_not_validated": "Any underpowered, mixed, missing-data, cost-limited, or sealed-validation result remains E1 scope_restricted.",
+    "validation_grade_candidate": "The primary utility is at least 0.10, DSR is at least 0.95 using the complete trial log, both MinTRL_validate nulls are funded, and inherited integrity, cost, regime, and adversarial-review gates pass.",
+    "E2_promotion": "A separate independent adversarial review with no unresolved critical issue is required; B5 cannot promote L-2."
+  },
+  "wiki_sources": [
+    {"path": "wiki/concepts/multi-lookback-trend-following.md", "sha256": "e6791d5ecf781a06b4c96befa33cdb9d3866f49caa8b2bd91efa1d0ce8f4d4d7"},
+    {"path": "wiki/concepts/minimum-track-record-length.md", "sha256": "ca65225740673bd363be7461b8022281da08ae32e6ff42f8887f1072eb51ad81"},
+    {"path": "wiki/concepts/deflated-sharpe-ratio.md", "sha256": "90663b67e49dcec90bd641e801f9464e593ff8fe9091b2d70e9f4645381af556"},
+    {"path": "wiki/concepts/probabilistic-sharpe-ratio.md", "sha256": "a644495d207403711a55d815abb0722018bba23d428d3d904dd6c4b5a8cef6a5"},
+    {"path": "wiki/concepts/directional-count-trend-signal.md", "sha256": "0eb4e3cbd6eceab838d5fc88c0500bedfbe345389eb3646fb19200b6b97b7490"}
+  ],
+  "hard_stops": [
+    "L-2 return, signal, portfolio, or backtest execution during B5",
+    "opening the 2016-01-04 through 2026-06-30 validation window",
+    "broker or provider request, credential use, paid action, paper trade, or real-money action",
+    "in-place change to this preregistration or validator after hashing",
+    "edge, E2, execution-quality, deployment, or real-money claim from B5"
+  ]
+}

@@ -211,6 +211,12 @@ B4.14 aligns project memory with B4.13. No UAT work is planned, and the UAT host
 
 B4.16 responds to the independent review finding that B4.13–B4.15 completion checks were too weak. The tracker now validates the inspected source list and claim limits in Decision Record 004, the UAT-closure statements in project memory, and the exact `actions/checkout@v5` requirement in CI.
 
+### B5 — L-2 Multi-Lookback t-stat Candidate Preregistration (Complete)
+
+B5 locks the 32/64/126/252 equal-weight t-stat candidate against the 60-day baseline. Candidate and baseline inherit the same L-1 universe, timing, sizing, costs, return accounting, benchmarks, sample order, and data-integrity rules. The primary utility is paired annualized net-Sharpe improvement of at least 0.10; the complete DSR log contains the primary candidate and four leave-one-horizon-out sensitivities.
+
+Exit: gate `l_2_multi_lookback_tstat_v1` is hash-bound before execution. Dual MinTRL is locked on paired portfolio-return differences, and the 2016-01-04 through 2026-06-30 validation window remains sealed. B5 makes no market-data, broker, provider, paid, paper-trading, or real-money request and creates no L-2 performance result.
+
 ## 6. Acceptance Gate
 
 E2 requires all of the following:

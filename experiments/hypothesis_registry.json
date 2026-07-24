@@ -300,7 +300,7 @@
       "id": "L-2",
       "family": "candidate_signal",
       "counts_toward_family_stop": true,
-      "status": "proposed",
+      "status": "active",
       "statement": "A matched-horizon multi-lookback t-stat signal improves a preregistered risk-adjusted utility or turnover/cost efficiency criterion versus the 60-day baseline.",
       "economic_rationale": "Combining horizons may reduce dependence on one arbitrary lookback while retaining trend exposure.",
       "testable_predictions": [
@@ -347,6 +347,11 @@
           "date": "2026-07-15",
           "decision": "seeded_from_owner_hypothesis_prediction_2",
           "notes": "Candidate remains a design input, not a preferred result."
+        },
+        {
+          "date": "2026-07-24",
+          "decision": "B5_preregistration_locked_before_execution",
+          "notes": "Gate l_2_multi_lookback_tstat_v1 locks the matched-protocol 32/64/126/252 t-stat candidate, paired utility, DSR trial log, dual MinTRL, and sealed validation boundary. No L-2 market result, edge claim, broker/provider action, or validation access exists."
         }
       ]
     },
