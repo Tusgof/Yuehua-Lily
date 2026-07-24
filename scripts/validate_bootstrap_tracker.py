@@ -199,6 +199,14 @@ def _validate_done_artifact(
             project_root=project_root,
             verify_runtime=verify_runtime,
         )
+    if must == "locked_with_l3_snapshots":
+        return _validate_l3_v1_locked_snapshot_coverage(
+            target,
+            order_id,
+            artifact_path,
+            project_root=project_root,
+            verify_runtime=verify_runtime,
+        )
     if must in {"pass_in_hermetic_tier", "pass_hermetic_tier"}:
         if not target.exists():
             return [f"{order_id}:missing_artifact:{artifact_path}"], False, False
@@ -1355,6 +1363,36 @@ def _validate_l3_v1_snapshot_coverage(
     if completed.returncode != 0:
         blockers.append(f"{order_id}:l3_v1_snapshot_test_failed")
     return blockers, not blockers, False
+
+
+def _validate_l3_v1_locked_snapshot_coverage(
+    target: Path,
+    order_id: str,
+    artifact_path: str,
+    *,
+    project_root: Path,
+    verify_runtime: bool,
+) -> tuple[list[str], bool, bool]:
+    locked_blockers, _, _ = _validate_locked_preregistration_gate(
+        target,
+        order_id,
+        artifact_path,
+        gate_id="l_3_inverse_volatility_sizing_v1",
+        label="l3_inverse_volatility_sizing",
+        expected_status="locked_before_execution",
+        edge_claim_field="edge_claim",
+        project_root=project_root,
+        verify_runtime=False,
+    )
+    snapshot_blockers, snapshot_checked, snapshot_unverified = _validate_l3_v1_snapshot_coverage(
+        project_root / "scripts/validate_l_3_inverse_volatility_sizing_preregistration.py",
+        order_id,
+        "scripts/validate_l_3_inverse_volatility_sizing_preregistration.py",
+        project_root=project_root,
+        verify_runtime=verify_runtime,
+    )
+    blockers = locked_blockers + snapshot_blockers
+    return blockers, not blockers and snapshot_checked, snapshot_unverified
 
 
 def _validate_l3_manifest_identity(
