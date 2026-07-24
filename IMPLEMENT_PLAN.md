@@ -229,6 +229,12 @@ B5.2 preserves v1/v2 and appends superseding gate `l_2_multi_lookback_tstat_v3`.
 
 Both t-index targets execute at the official close of the next actual NYSE session `t+1`; no same-close execution is allowed. Their paired active-return observation uses the same post-execution effective interval, so neither comparator mismatch nor a timing variant can support L-2. This is pre-execution governance only and validation remains sealed.
 
+### B6 — L-2 Falsification Execution Contract And Preflight (Complete, Not Executed)
+
+B6 locks a fail-closed runner, report schema/validator, and synthetic fixture. The runner validates v2 and v3 independently: v2 owns inference, DSR, MinTRL, trial inventory, and decision matrix; v3 owns only the shared time-index contract. It contains no data loader and rejects execution until a separately owner-approved B6.1 activation gate exists.
+
+Exit: gate `l_2_falsification_execution_contract_v1` is hash-bound. B6 reads no market returns, does not inspect a falsification-only container, and produces no L-2 report or Thai research log. A future B6.1 must first lock its activation, enforce a container with `max_date <= 2015-12-31` before parsing any return row, retain the 2016-01-04 through 2026-06-30 validation seal, and then write the report plus research log 009 if execution actually occurs.
+
 ## 6. Acceptance Gate
 
 E2 requires all of the following:

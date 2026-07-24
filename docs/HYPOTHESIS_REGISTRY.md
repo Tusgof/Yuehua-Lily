@@ -54,6 +54,7 @@
 - **Validation**: lock paired daily net active-return Sharpe against the matched comparator before execution; log all trials; require primary-margin PSR and DSR on that same series; meet `MinTRL_validate` using effective observations.
 - **Falsification**: after `MinTRL_falsify`, annualized paired active-return Sharpe is below `0.10` and primary-margin PSR is at most `0.05`, followed by a mechanism autopsy.
 - **Locked B5.2 design**: v3 supersedes but does not alter v1/v2; at decision close `t`, candidate and matched comparator both use exactly `r[t-k]`, `k=0..h-1`; both execute at the next actual session close `t+1`; paired active returns use the same post-execution interval; 60-day L-1 is secondary only; validation remains sealed.
+- **B6 machinery**: a hash-locked, fail-closed runner validates v2/v3 independently and applies only the v3 time-index override. It cannot read data or execute until a separately approved B6.1 activation gate exists.
 
 ## L-3 — Inverse-Volatility Sizing
 

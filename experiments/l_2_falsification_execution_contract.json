@@ -1,0 +1,66 @@
+{
+  "schema_version": "lily_l2_falsification_execution_contract_v1",
+  "order_id": "B6",
+  "hypothesis_id": "L-2",
+  "created_at": "2026-07-24T00:00:00Z",
+  "status": "locked_machinery_ready_execution_not_authorized",
+  "evidence_ceiling": "E1",
+  "edge_claim": "none",
+  "owner_authorization": "The owner authorized B6 machinery and gate creation on 2026-07-24. This authorization excludes reading market returns, falsification execution, validation access, broker/provider activity, paid action, paper trade, and real-money action.",
+  "preregistration_sources": {
+    "v2_path": "experiments/l_2_multi_lookback_tstat_preregistration_v2.json",
+    "v2_sha256": "84a7bb45070b54846a709573506c8213a3bc62d28cfa25f4982415d40d94e1f3",
+    "v3_path": "experiments/l_2_multi_lookback_tstat_preregistration_v3.json",
+    "v3_sha256": "507bf40a0a6ac1690ff0c6898bf20dc79c3b8dee78d18251c5835e45d7b60afc"
+  },
+  "overlay_rule": "Load and validate v2 and v3 independently; v3 overrides only the time-index contract and v2 remains the sole source of primary inference, DSR, MinTRL, trial inventory, and decision matrix.",
+  "falsification_window": {"start": "2007-02-05", "end": "2015-12-31"},
+  "execution_contract": {
+    "shared_decision_index": "At decision close t, candidate and matched comparator both use exactly r[t-k] for k=0..h-1 for each matched horizon h.",
+    "future_return_prohibition": "No signal, target weight, or decision input may use r[t+1] or a later return.",
+    "execution": "Execute both t-index targets at the official close of the next actual NYSE session t+1; same-close execution is forbidden.",
+    "active_return": "Candidate and matched-comparator net returns use identical post-execution effective windows; their difference is the sole primary inference series.",
+    "primary_inference": "Inherit v2 paired daily net active-return Sharpe, annual-to-daily Sharpe conversion, PSR, DSR, dual MinTRL, five-trial inventory, and falsification decision matrix without substitution."
+  },
+  "data_boundary": {
+    "B6_market_returns_read": false,
+    "B6_1_input_environment_name": "LILY_L2_FALSIFICATION_CONTAINER",
+    "B6_1_required_container_metadata": "A separately approved falsification-only container must prove max_date <= 2015-12-31 before any return row is parsed; validation rows are forbidden.",
+    "provider_or_network_allowed": false,
+    "paid_spend_cap_usd": 0
+  },
+  "machinery_state": {
+    "runner_hash_locked": true,
+    "report_schema_and_validator_hash_locked": true,
+    "synthetic_fixture_hash_locked": true,
+    "execution_authorized_by_B6": false,
+    "activation_gate_required": "l_2_falsification_execution_activation_v1",
+    "activation_order_planned": "B6.1"
+  },
+  "machine_artifacts": [
+    {"path": "scripts/run_l_2_falsification.py", "sha256": "7214155ad77bb4e4637d1c2a4457f91f2339843e25909bc0b9527b73aa5713f9"},
+    {"path": "scripts/validate_l_2_falsification_execution_contract.py", "sha256": "780241429e798f1b2b93cd508ea398ca58c113215b520d520ddd9ac9c3dcdea2"},
+    {"path": "scripts/validate_l_2_falsification_report.py", "sha256": "54754065d6fbab0171228a35613ebee79451d375e57a0f26355b99e5a2bd90bc"},
+    {"path": "schemas/l_2_falsification_report.schema.json", "sha256": "b1d4779f47b06eced4435d55bdfac3db8d1ecbc1bd802b63ef36478301c6465f"},
+    {"path": "tests/fixtures/l2_falsification/report_not_run.json", "sha256": "e146d501a60b1152b9fe1905ee00c7660fd1c44a1860b92e20cb7838fffa1db0"}
+  ],
+  "validation_return_seal": {
+    "status": "sealed_not_accessed",
+    "prices_opened": false,
+    "returns_opened": false,
+    "signals_opened": false,
+    "positions_opened": false,
+    "regimes_opened": false,
+    "benchmarks_opened": false,
+    "PnL_opened": false
+  },
+  "hard_stops": [
+    "Any market return, backtest, or falsification execution during B6.",
+    "Any B6.1 activation gate absent, invalid, or not separately owner-approved.",
+    "Any validation price, return, signal, position, regime, benchmark, or PnL observation.",
+    "Any v2/v3 hash, validator, manifest, overlay, time-index, or falsification-window mismatch.",
+    "Any broker/provider request, credential use, paid action, paper trade, or real-money action.",
+    "Any edge, E2, execution-quality, deployment, or real-money claim."
+  ],
+  "next_safe_action": "After this contract is committed and Hermetic CI passes, request separate owner approval for a new B6.1 activation gate before any falsification-only container is inspected or execution code is added."
+}

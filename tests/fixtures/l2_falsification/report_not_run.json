@@ -1,0 +1,23 @@
+{
+  "schema_version": "lily_l2_falsification_report_v1",
+  "order_id": "B6.1",
+  "hypothesis_id": "L-2",
+  "evidence_tier": "E1",
+  "edge_claim": "none",
+  "report_mode": "synthetic_fixture",
+  "execution_status": "not_run",
+  "producing_git_commit": "1111111111111111111111111111111111111111",
+  "contract_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+  "v2_sha256": "84a7bb45070b54846a709573506c8213a3bc62d28cfa25f4982415d40d94e1f3",
+  "v3_sha256": "507bf40a0a6ac1690ff0c6898bf20dc79c3b8dee78d18251c5835e45d7b60afc",
+  "falsification_window": {"start": "2007-02-05", "end": "2015-12-31"},
+  "validation_return_seal": {"status": "sealed_not_accessed", "prices_opened": false, "returns_opened": false, "signals_opened": false, "positions_opened": false, "regimes_opened": false, "benchmarks_opened": false, "PnL_opened": false},
+  "market_returns_read": false,
+  "decision": "not_run",
+  "blockers": ["b6_1_activation_gate_required"],
+  "claim_limits": [
+    "This synthetic fixture proves only report-validator mechanics; it contains no market result.",
+    "A B6.1 report may use only the locked falsification window and remains E1 with edge_claim none.",
+    "No report may open validation, authorize broker/provider activity, paper trading, or real-money action."
+  ]
+}

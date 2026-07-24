@@ -48,6 +48,12 @@
       "summary_path": "reports/feasibility/l_0_webull_th_fractional_preview_v2.json",
       "research_log_path": "research_log/008-lily-l0-webull-th-fractional-preview-auth-remediation.md",
       "required_when_summary_exists": true
+    },
+    {
+      "experiment_id": "L2-FALSIFICATION",
+      "summary_path": "reports/experiments/l_2_falsification_summary.json",
+      "research_log_path": "research_log/009-lily-l2-falsification.md",
+      "required_when_summary_exists": true
     }
   ]
 }

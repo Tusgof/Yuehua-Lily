@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://yuehua.local/schemas/l_2_falsification_report.schema.json",
+  "title": "Lily L-2 falsification report",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "order_id", "hypothesis_id", "evidence_tier", "edge_claim", "report_mode", "execution_status", "producing_git_commit", "contract_sha256", "v2_sha256", "v3_sha256", "falsification_window", "validation_return_seal", "market_returns_read", "decision", "blockers", "claim_limits"],
+  "properties": {
+    "schema_version": {"const": "lily_l2_falsification_report_v1"},
+    "order_id": {"const": "B6.1"},
+    "hypothesis_id": {"const": "L-2"},
+    "evidence_tier": {"const": "E1"},
+    "edge_claim": {"const": "none"},
+    "report_mode": {"enum": ["synthetic_fixture", "falsification_execution"]},
+    "execution_status": {"enum": ["not_run", "scope_restricted", "falsified", "not_falsified_not_validated"]},
+    "producing_git_commit": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+    "contract_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "v2_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "v3_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "falsification_window": {"const": {"start": "2007-02-05", "end": "2015-12-31"}},
+    "validation_return_seal": {"const": {"status": "sealed_not_accessed", "prices_opened": false, "returns_opened": false, "signals_opened": false, "positions_opened": false, "regimes_opened": false, "benchmarks_opened": false, "PnL_opened": false}},
+    "market_returns_read": {"type": "boolean"},
+    "decision": {"enum": ["not_run", "scope_restricted", "falsified", "not_falsified_not_validated"]},
+    "blockers": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+    "claim_limits": {"type": "array", "minItems": 3, "items": {"type": "string"}}
+  }
+}

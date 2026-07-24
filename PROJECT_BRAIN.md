@@ -186,6 +186,7 @@ Past reports are reproduced by checking out their recorded commit hash. Do not c
 - **CI runtime maintenance**: B4.15 updates the Hermetic CI checkout action from v4 to v5 to remove the observed Node.js 20 deprecation path; the pinned Python, hermetic test, and tracker-validation steps remain unchanged
 - **Governance content validation**: B4.16 makes tracker completion for B4.13–B4.15 validate the UAT decision sources and limits, synchronized project-memory statements, and the exact checkout v5 requirement
 - **L-2 candidate preregistration**: B5.2 supersedes B5.1 without altering v1/v2; it locks shared decision index t and return window r[t-k], k=0..h-1, for the 32/64/126/252 t-stat candidate and matched-horizon comparator, executes both at t+1 close, retains L-1 60-day only as secondary reference, and keeps validation sealed
+- **L-2 falsification machinery**: B6 locks the v2/v3 overlay, synthetic report contract, and fail-closed runner; it makes zero market-data, validation, broker, provider, paid, paper-trading, or real-money request. B6.1 requires a new owner-approved activation gate before any falsification-only container may be inspected
 - **Databento**: `DATABENTO_API_02` passes metadata access with USD 0 spend, but relevant US-equity coverage begins in 2018 or later and no dedicated corporate-actions history was exposed; owner-reported USD 50 credit has unverified real-payment provenance
 
 ## 11. Next Safe Action

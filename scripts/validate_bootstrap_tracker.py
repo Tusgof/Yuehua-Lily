@@ -404,6 +404,18 @@ def _validate_done_artifact(
                 project_root=project_root,
                 verify_runtime=verify_runtime,
             )
+        if artifact_path == "experiments/l_2_falsification_execution_contract.json":
+            return _validate_locked_preregistration_gate(
+                target,
+                order_id,
+                artifact_path,
+                gate_id="l_2_falsification_execution_contract_v1",
+                label="l2_falsification_execution_contract",
+                expected_status="locked_machinery_ready_execution_not_authorized",
+                edge_claim_field="edge_claim",
+                project_root=project_root,
+                verify_runtime=verify_runtime,
+            )
         return _validate_l0_locked_gate(
             target,
             order_id,

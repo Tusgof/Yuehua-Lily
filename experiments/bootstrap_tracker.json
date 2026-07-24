@@ -586,6 +586,27 @@
         "Both t-index targets execute at the next actual NYSE close t+1, and their paired active-return observation uses the same post-execution effective interval. The L-1 60-day series remains secondary only.",
         "The validator and hermetic negative tests reject a candidate t-1 window, comparator future-return window, same-close execution, mismatched active-return window, and validation opening."
       ]
+    },
+    {
+      "id": "B6",
+      "title": "L-2 falsification execution contract and preflight",
+      "status": "done",
+      "depends_on": ["B5.2"],
+      "required_artifacts": [
+        {"path": "experiments/l_2_falsification_execution_contract.json", "must": "locked_and_valid"},
+        {"path": "scripts/run_l_2_falsification.py", "must": "exist"},
+        {"path": "schemas/l_2_falsification_report.schema.json", "must": "exist"},
+        {"path": "scripts/validate_l_2_falsification_report.py", "must": "exist"},
+        {"path": "tests/test_run_l_2_falsification.py", "must": "pass_in_hermetic_tier"},
+        {"path": "tests/test_validate_l_2_falsification_execution_contract.py", "must": "pass_in_hermetic_tier"},
+        {"path": "tests/test_validate_l_2_falsification_report.py", "must": "pass_in_hermetic_tier"}
+      ],
+      "forbidden": ["market-return read or L-2 backtest execution", "opening the 2016-01-04 through 2026-06-30 validation window", "broker or provider call", "credential use", "paid action", "paper trade or real-money action", "edge, E2, execution-quality, deployment, or real-money claim"],
+      "evidence": [
+        "Gate l_2_falsification_execution_contract_v1 locks fail-closed machinery only. It loads and validates v2 and v3 separately, grants v3 precedence only for time indexing, and leaves every v2 inference field intact.",
+        "B6 authorizes neither a falsification-only container read nor execution. The runner stops at b6_1_activation_gate_required before any data loader exists, and a later B6.1 activation requires separate owner approval and a new locked gate.",
+        "Hermetic tests cover v2/v3 overlay tampering, execution-authorization tampering, validation-opening report rejection, and the runner's hard stop. The synthetic fixture contains no market return."
+      ]
     }
   ]
 }
