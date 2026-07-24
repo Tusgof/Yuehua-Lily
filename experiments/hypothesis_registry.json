@@ -367,6 +367,11 @@
           "date": "2026-07-24",
           "decision": "B6_falsification_machinery_locked_before_data_access",
           "notes": "Gate l_2_falsification_execution_contract_v1 locks v2/v3 overlay validation, a falsification-only preflight boundary, synthetic report validation, and a fail-closed runner. It authorizes neither market-return reading nor execution; a separately owner-approved B6.1 activation gate is required."
+        },
+        {
+          "date": "2026-07-24",
+          "decision": "B6_2_report_contract_remediated_before_data_access",
+          "notes": "Gate l_2_falsification_execution_contract_v2 supersedes B6 v1 only for report validation. It rejects unsupported falsification claims through closed-world, provenance-bound, v2/v3 decision-evidence validation; it authorizes neither container inspection nor market-return execution."
         }
       ]
     },

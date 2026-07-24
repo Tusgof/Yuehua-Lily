@@ -607,6 +607,25 @@
         "B6 authorizes neither a falsification-only container read nor execution. The runner stops at b6_1_activation_gate_required before any data loader exists, and a later B6.1 activation requires separate owner approval and a new locked gate.",
         "Hermetic tests cover v2/v3 overlay tampering, execution-authorization tampering, validation-opening report rejection, and the runner's hard stop. The synthetic fixture contains no market return."
       ]
+    },
+    {
+      "id": "B6.2",
+      "title": "L-2 falsification report-contract remediation",
+      "status": "done",
+      "depends_on": ["B6"],
+      "required_artifacts": [
+        {"path": "experiments/l_2_falsification_execution_contract_v2.json", "must": "locked_and_valid"},
+        {"path": "schemas/l_2_falsification_report_v2.schema.json", "must": "exist"},
+        {"path": "scripts/validate_l_2_falsification_report_v2.py", "must": "exist"},
+        {"path": "tests/test_validate_l_2_falsification_execution_contract_v2.py", "must": "pass_in_hermetic_tier"},
+        {"path": "tests/test_validate_l_2_falsification_report_v2.py", "must": "pass_in_hermetic_tier"}
+      ],
+      "forbidden": ["falsification-container inspection or market-return read", "L-2 backtest execution", "opening the 2016-01-04 through 2026-06-30 validation window", "broker or provider call", "credential use", "paid action", "paper trade or real-money action", "in-place edit to a locked artifact, validator, schema, runner, fixture, or manifest line", "edge, E2, execution-quality, deployment, or real-money claim"],
+      "evidence": [
+        "Gate l_2_falsification_execution_contract_v2 supersedes but does not modify B6 v1. It locks a closed-world report validator that rejects unknown fields and binds each accepted report to the active v2 contract, locked preregistration hashes, and the reproducing checkout HEAD.",
+        "A synthetic report can only be no-data/not_run. A pre-data preflight failure can only be scope_restricted. Falsified and not_falsified_not_validated reports require complete locked v2/v3 decision evidence; falsification also requires the five-part mechanism autopsy.",
+        "Hermetic negative tests reject forged no-data falsification, fake contract provenance, unknown fields, missing or mismatched decision metrics, incomplete trial inventory, absent autopsy, and validation opening. B6.2 performs no data access or execution."
+      ]
     }
   ]
 }

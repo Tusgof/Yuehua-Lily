@@ -235,6 +235,12 @@ B6 locks a fail-closed runner, report schema/validator, and synthetic fixture. T
 
 Exit: gate `l_2_falsification_execution_contract_v1` is hash-bound. B6 reads no market returns, does not inspect a falsification-only container, and produces no L-2 report or Thai research log. A future B6.1 must first lock its activation, enforce a container with `max_date <= 2015-12-31` before parsing any return row, retain the 2016-01-04 through 2026-06-30 validation seal, and then write the report plus research log 009 if execution actually occurs.
 
+### B6.2 — L-2 Falsification Report-Contract Remediation (Complete, Not Executed)
+
+B6.2 preserves B6 v1 and locks superseding gate `l_2_falsification_execution_contract_v2` after the report validator was shown to accept unsupported no-data falsification claims. The v2 report contract is closed-world and binds an accepted report to the active contract hash, exact v2/v3 hashes, and the reproducing checkout HEAD. Synthetic reports are strictly `not_run`; a pre-data failure is strictly `scope_restricted`; only actual falsification execution can produce `falsified` or `not_falsified_not_validated`.
+
+Execution reports must carry the locked container/max-date proof, effective-observation and independent-bet counts, paired daily net active-return statistics, annual-to-daily conversion, PSR/DSR, all five trials, costs/turnover, decision-matrix trace, v3 timing attestation, and sealed validation declaration. A `falsified` result additionally requires the five-part mechanism autopsy. B6.2 reads no data and does not authorize B6.1.
+
 ## 6. Acceptance Gate
 
 E2 requires all of the following:

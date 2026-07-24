@@ -1,0 +1,62 @@
+{
+  "schema_version": "lily_l2_falsification_execution_contract_v2",
+  "order_id": "B6.2",
+  "hypothesis_id": "L-2",
+  "created_at": "2026-07-24T00:00:00Z",
+  "supersedes_gate_id": "l_2_falsification_execution_contract_v1",
+  "status": "locked_report_contract_remediated_execution_not_authorized",
+  "evidence_ceiling": "E1",
+  "edge_claim": "none",
+  "owner_authorization": "The owner explicitly authorized B6.2 on 2026-07-24 to supersede only the L-2 falsification report-contract layer after Inspector finding P1. This authorization excludes any falsification-container inspection, market-return reading, execution, validation access, broker/provider activity, credential use, paid action, paper trade, and real-money action.",
+  "locked_sources": {
+    "b6_v1_path": "experiments/l_2_falsification_execution_contract.json",
+    "b6_v1_sha256": "129ff83c13e90e3c0d5538474a6092112ae27f0aad0f2f39215c1c474b54886e",
+    "v2_path": "experiments/l_2_multi_lookback_tstat_preregistration_v2.json",
+    "v2_sha256": "84a7bb45070b54846a709573506c8213a3bc62d28cfa25f4982415d40d94e1f3",
+    "v3_path": "experiments/l_2_multi_lookback_tstat_preregistration_v3.json",
+    "v3_sha256": "507bf40a0a6ac1690ff0c6898bf20dc79c3b8dee78d18251c5835e45d7b60afc"
+  },
+  "overlay_rule": "Load and validate v2 and v3 independently; v3 overrides only the time-index contract and v2 remains the sole source of primary inference, DSR, MinTRL, trial inventory, and decision matrix.",
+  "falsification_window": {"start": "2007-02-05", "end": "2015-12-31"},
+  "report_contract": {
+    "schema_path": "schemas/l_2_falsification_report_v2.schema.json",
+    "validator_path": "scripts/validate_l_2_falsification_report_v2.py",
+    "closed_world_rule": "The validator enforces exact mode-specific field sets and rejects every additional field, including nested evidence objects.",
+    "provenance_rule": "contract_sha256 must equal this active contract's SHA-256, v2_sha256 and v3_sha256 must equal their locked sources, and producing_git_commit must equal the validating checkout HEAD.",
+    "synthetic_rule": "synthetic_fixture is no-data and can only be not_run.",
+    "preflight_rule": "A pre-data preflight failure can only be scope_restricted with no return-row parsing; it can never be falsified.",
+    "execution_rule": "falsified and not_falsified_not_validated require market-return execution plus the complete v2/v3 decision evidence, including container provenance/max_date, observations and independent-bet equivalents, paired active-return statistics, annual-to-daily conversion, PSR, DSR, complete five-trial inventory, costs/turnover, decision trace, timing attestation, and the validation seal.",
+    "falsification_autopsy_rule": "falsified additionally requires a mechanism autopsy covering horizon diversification, signal transform, lag, noise, and cost."
+  },
+  "machinery_state": {
+    "b6_v1_runner_preserved": true,
+    "execution_authorized_by_B6_2": false,
+    "activation_gate_required": "l_2_falsification_execution_activation_v1",
+    "activation_order_planned": "B6.1"
+  },
+  "machine_artifacts": [
+    {"path": "scripts/run_l_2_falsification.py", "sha256": "7214155ad77bb4e4637d1c2a4457f91f2339843e25909bc0b9527b73aa5713f9"},
+    {"path": "schemas/l_2_falsification_report_v2.schema.json", "sha256": "19d1b3f7275a3d25aeb88ade414c4e6ee7ebc2a4a65f6325fe028a086062dc12"},
+    {"path": "scripts/validate_l_2_falsification_execution_contract_v2.py", "sha256": "6113ae48e889c9556d3ddc3ac550bd2d65cb82099e658428fcb7d15346445b30"},
+    {"path": "scripts/validate_l_2_falsification_report_v2.py", "sha256": "051379b5cab60ce2fcab3fb37f9687755b6d93aaaafc9a7e9cb1883a7790684b"}
+  ],
+  "validation_return_seal": {
+    "status": "sealed_not_accessed",
+    "prices_opened": false,
+    "returns_opened": false,
+    "signals_opened": false,
+    "positions_opened": false,
+    "regimes_opened": false,
+    "benchmarks_opened": false,
+    "PnL_opened": false
+  },
+  "hard_stops": [
+    "Any falsification-container inspection, market-return reading, backtest, or L-2 execution during B6.2.",
+    "Any B6.1 activation gate absent, invalid, or not separately owner-approved.",
+    "Any validation price, return, signal, position, regime, benchmark, or PnL observation.",
+    "Any in-place change to the B6 v1 artifact, validator, schema, runner, fixture, or locked manifest line.",
+    "Any broker/provider request, credential use, paid action, paper trade, or real-money action.",
+    "Any edge, E2, execution-quality, deployment, or real-money claim."
+  ],
+  "next_safe_action": "After B6.2 is committed and independently accepted, request separate owner approval for B6.1 activation before any falsification-only container is inspected."
+}

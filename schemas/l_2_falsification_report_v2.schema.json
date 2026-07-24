@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://yuehua.local/schemas/l_2_falsification_report_v2.schema.json",
+  "title": "Lily L-2 falsification report v2",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "order_id", "hypothesis_id", "evidence_tier", "edge_claim", "report_mode", "execution_status", "producing_git_commit", "contract_sha256", "v2_sha256", "v3_sha256", "falsification_window", "validation_return_seal", "market_returns_read", "decision", "blockers", "claim_limits"],
+  "properties": {
+    "schema_version": {"const": "lily_l2_falsification_report_v2"},
+    "order_id": {"const": "B6.1"},
+    "hypothesis_id": {"const": "L-2"},
+    "evidence_tier": {"const": "E1"},
+    "edge_claim": {"const": "none"},
+    "report_mode": {"enum": ["synthetic_fixture", "preflight_failure", "falsification_execution"]},
+    "execution_status": {"enum": ["not_run", "scope_restricted", "falsified", "not_falsified_not_validated"]},
+    "producing_git_commit": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+    "contract_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "v2_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "v3_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "falsification_window": {"const": {"start": "2007-02-05", "end": "2015-12-31"}},
+    "validation_return_seal": {"const": {"status": "sealed_not_accessed", "prices_opened": false, "returns_opened": false, "signals_opened": false, "positions_opened": false, "regimes_opened": false, "benchmarks_opened": false, "PnL_opened": false}},
+    "market_returns_read": {"type": "boolean"},
+    "decision": {"enum": ["not_run", "scope_restricted", "falsified", "not_falsified_not_validated"]},
+    "blockers": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string"}},
+    "claim_limits": {"type": "array", "minItems": 3, "uniqueItems": true, "items": {"type": "string"}},
+    "preflight_attestation": {"type": "object", "additionalProperties": false},
+    "falsification_container": {"type": "object", "additionalProperties": false},
+    "observation_counts": {"type": "object", "additionalProperties": false},
+    "primary_statistics": {"type": "object", "additionalProperties": false},
+    "costs_and_turnover": {"type": "object", "additionalProperties": false},
+    "trial_inventory": {"type": "array", "minItems": 5, "maxItems": 5},
+    "decision_matrix_trace": {"type": "object", "additionalProperties": false},
+    "v3_timing_attestation": {"type": "object", "additionalProperties": false},
+    "mechanism_autopsy": {"type": "object", "additionalProperties": false}
+  },
+  "allOf": [
+    {"if": {"properties": {"report_mode": {"const": "synthetic_fixture"}}}, "then": {"properties": {"execution_status": {"const": "not_run"}, "decision": {"const": "not_run"}, "market_returns_read": {"const": false}}}},
+    {"if": {"properties": {"report_mode": {"const": "preflight_failure"}}}, "then": {"properties": {"execution_status": {"const": "scope_restricted"}, "decision": {"const": "scope_restricted"}, "market_returns_read": {"const": false}}, "required": ["preflight_attestation"]}},
+    {"if": {"properties": {"report_mode": {"const": "falsification_execution"}}}, "then": {"properties": {"market_returns_read": {"const": true}}, "required": ["falsification_container", "observation_counts", "primary_statistics", "costs_and_turnover", "trial_inventory", "decision_matrix_trace", "v3_timing_attestation"]}},
+    {"if": {"properties": {"execution_status": {"const": "falsified"}}}, "then": {"required": ["mechanism_autopsy"]}}
+  ]
+}
