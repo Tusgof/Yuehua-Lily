@@ -1,0 +1,73 @@
+{
+  "schema_version": "lily_l3_inverse_volatility_sizing_preregistration_v2",
+  "order_id": "B7.2",
+  "checkpoint": "B7.2_hermetic_source_provenance_remediation_only",
+  "gate_id": "l_3_inverse_volatility_sizing_v2",
+  "hypothesis_id": "L-3",
+  "status": "locked_before_execution",
+  "evidence_ceiling": "E0",
+  "edge_claim": "none",
+  "supersedes_gate_id": "l_3_inverse_volatility_sizing_v1",
+  "owner_authorization": "Inspector-authorized B7.2 hermetic source-provenance remediation only; it does not authorize B7.1, data access, validation access, or execution.",
+  "source_binding": {
+    "v1_preregistration": {
+      "path": "experiments/l_3_inverse_volatility_sizing_preregistration_v1.json",
+      "sha256": "0e0aaf281c75a450bbdf1015c1f400fc7ce8a398952ea25ddbb0ba2f4557c2b0"
+    },
+    "v1_validator": {
+      "path": "scripts/validate_l_3_inverse_volatility_sizing_preregistration.py",
+      "sha256": "948dd2737e0f04f6f9c256ad91bb2cb348bbe48eb58db3d77150b6ef4abd55be"
+    },
+    "v1_manifest_row": {
+      "gate_id": "l_3_inverse_volatility_sizing_v1",
+      "artifact_path": "experiments/l_3_inverse_volatility_sizing_preregistration_v1.json",
+      "artifact_sha256": "0e0aaf281c75a450bbdf1015c1f400fc7ce8a398952ea25ddbb0ba2f4557c2b0",
+      "validator_path": "scripts/validate_l_3_inverse_volatility_sizing_preregistration.py",
+      "validator_sha256": "948dd2737e0f04f6f9c256ad91bb2cb348bbe48eb58db3d77150b6ef4abd55be"
+    },
+    "methodology_snapshots": [
+      {
+        "wiki_relative_path": "wiki/concepts/inverse-volatility-weighting.md",
+        "snapshot_path": "methodology_snapshots/l3_inverse_volatility_sizing_v1/wiki/concepts/inverse-volatility-weighting.md",
+        "sha256": "c59b512d3df9499a738b1ee256d388376f04edee1c59727f2f79ddcc905e7f72"
+      },
+      {
+        "wiki_relative_path": "wiki/concepts/position-sizing.md",
+        "snapshot_path": "methodology_snapshots/l3_inverse_volatility_sizing_v1/wiki/concepts/position-sizing.md",
+        "sha256": "6d24c4ffc6770590baaeb90402af4e413040ff6856b0585773657da85dc68343"
+      },
+      {
+        "wiki_relative_path": "wiki/concepts/minimum-track-record-length.md",
+        "snapshot_path": "methodology_snapshots/l3_inverse_volatility_sizing_v1/wiki/concepts/minimum-track-record-length.md",
+        "sha256": "ca65225740673bd363be7461b8022281da08ae32e6ff42f8887f1072eb51ad81"
+      }
+    ]
+  },
+  "research_semantics": {
+    "inherits_immutable_v1_artifact": "All L-3 research question, candidate/comparator, metric, threshold, realized-confirmation, statistics, capacity, regime, side-effect, decision-matrix, validation-seal, B7.1, and hard-stop semantics are exactly those in the source-bound v1 preregistration.",
+    "v1_artifact_sha256": "0e0aaf281c75a450bbdf1015c1f400fc7ce8a398952ea25ddbb0ba2f4557c2b0"
+  },
+  "hermeticity_remediation": {
+    "scope": "Supersedes only v1 external-Wiki source verification with byte-preserving repository snapshots; no research semantic is replaced or relaxed.",
+    "hermetic_validator_rule": "The default validator reads only repository files and must pass in a clean clone.",
+    "external_wiki_verification": "Not part of hermetic CI and not required by this gate; any future external-Wiki comparison is a separately invoked state-audit check."
+  },
+  "validation_seal": {
+    "start": "2016-01-04",
+    "end": "2026-06-30",
+    "opened": false,
+    "pooled_with_falsification": false
+  },
+  "b7_1": {
+    "authorized": false,
+    "data_access_authorized": false,
+    "execution_authorized": false,
+    "next_safe_action": "Separate owner authorization and a new B7.1 gate are required before any data, return, signal, position, covariance, execution, or decision observation."
+  },
+  "hard_stops": [
+    "No dataset, market price, market return, signal, position, covariance estimate, regime observation, benchmark, or PnL read or computation.",
+    "No validation-window access or falsification/validation pooling.",
+    "No B7.1 activity, execution, broker/provider call, credential use, paid action, paper trade, or real-money action.",
+    "No threshold weakening, source substitution, locked-history edit, edge claim, E1/E2 promotion, deployment, or real-money claim."
+  ]
+}

@@ -69,6 +69,7 @@
 - **Regimes and capacity**: 26 weekly pairs is descriptive only. Each inferential regime must independently fund its own paired requirement; an inferential 2-of-3 statement cannot pool regimes. The locked-date optimistic regime-eligible ceiling is 366 weekly slots before actual-session, missingness, and non-evaluable-pair reductions.
 - **Decision boundary**: a funded one-sided upper confidence bound below `0.05`, or a funded/evaluable primary result with a breached locked side-effect limit, may falsify the composite claim only with a mechanism autopsy. Validation needs a one-sided lower confidence bound above `0.05`, realized confirmation, every side-effect limit met, and independently funded claimed regimes.
 - **Seal**: validation is sealed; B7.1 requires separate owner approval and a new activation/preflight gate before any data, return, signal, position, covariance, execution, or result observation. No market evidence is recorded by B7.
+- **B7.2 hermetic source-provenance remediation**: active v2 supersedes only the v1 external-Wiki source-verification layer with byte-preserving repository snapshots for hermetic CI. The v1 research semantics remain unchanged; evidence remains E0 with edge claim none.
 
 ## L-4 — Breadth
 

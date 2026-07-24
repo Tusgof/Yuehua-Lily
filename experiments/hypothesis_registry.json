@@ -431,7 +431,7 @@
       "evidence": [
         {
           "evidence_tier": "E0",
-          "path": "experiments/l_3_inverse_volatility_sizing_preregistration_v1.json"
+          "path": "experiments/l_3_inverse_volatility_sizing_preregistration_v2.json"
         }
       ],
       "decision_log": [
@@ -444,6 +444,11 @@
           "date": "2026-07-24",
           "decision": "B7_inverse_volatility_preregistration_locked_E0",
           "notes": "Inspector-accepted B7 lock fixes L1 research_signed eight ETFs, q/volatility versus q, weekly paired portfolio HHI delta, 0.05 useful reduction, ex-ante plus fixed-weight realized confirmation, side-effect limits, MinTRL_falsify 49, binding MinTRL_validate 49, independently funded regimes, optimistic 366-slot regime ceiling, sealed validation, edge_claim none, and B7.1 owner-approval requirement. No market evidence was read."
+        },
+        {
+          "date": "2026-07-24",
+          "decision": "B7_2_hermetic_source_provenance_remediated_E0",
+          "notes": "B7.2 makes the active L-3 gate v2 by replacing only the external-Wiki source-verification layer with byte-preserving repository snapshots. The immutable v1 research semantics, E0 edge_claim none, sealed validation, and B7.1 owner-approval requirement remain unchanged. No market evidence was read."
         }
       ]
     },

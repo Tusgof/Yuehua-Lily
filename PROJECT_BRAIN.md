@@ -163,7 +163,7 @@ Past reports are reproduced by checking out their recorded commit hash. Do not c
 ## 10. Current Verified State
 
 - **Verified date**: 2026-07-24
-- **Bootstrap**: B0 through B4.16 complete; B5.2 and B6.4 L-2 remediation complete; B7 L-3 governance lock complete
+- **Bootstrap**: B0 through B4.16 complete; B5.2 and B6.4 L-2 remediation complete; B7 L-3 governance lock and B7.2 hermetic source-provenance remediation complete
 - **Legacy Note status**: retired and deleted by `docs/DECISION_RECORD_002_RESEARCH_LOG_CONTRACT.md` after its research content was promoted
 - **Human research logs**: contract active; L-0 sizing and Webull capability are logs 001 and 006; L-1 baseline, remediation, validation-capacity, and Alpha Vantage corporate-action audits are logs 002 through 005 under `research_log/`
 - **Dashboard**: retained under `Dashboard/`, demoted from product/state owner
@@ -189,7 +189,7 @@ Past reports are reproduced by checking out their recorded commit hash. Do not c
 - **L-2 falsification machinery**: B6 locks the v2/v3 overlay, synthetic report contract, and fail-closed runner; it makes zero market-data, validation, broker, provider, paid, paper-trading, or real-money request. B6.1 requires a new owner-approved activation gate before any falsification-only container may be inspected
 - **L-2 report-contract remediation**: B6.2 supersedes B6 only for report validation. The closed-world v2 report validator binds active-contract/v2/v3/git provenance and requires all locked decision evidence before it can accept a falsified or not-falsified result; B6.1 remains unauthorized
 - **L-2 capacity gate**: B6.3 establishes a no-return upper bound of 26,016 joint independent-bet equivalents, below the locked 54,048 `MinTRL_falsify`; L-2 is E1 underfunded_scope_restricted and B6.1/container inspection is forbidden unless a separately approved preregistration redesign changes the statistical capacity
-- **L-3 inverse-volatility sizing gate**: B7 locks L1 research_signed eight ETFs; q/volatility versus q under identical weekly inherited constraints; weekly paired component-risk HHI delta with a 0.05 useful reduction; ex-ante plus fixed-weight realized confirmation; side-effect limits; `MinTRL_falsify` 49 and binding `MinTRL_validate` 49; independently funded regimes with an optimistic 366-slot ceiling; E0/edge none and sealed validation. B7.1 is not authorized.
+- **L-3 inverse-volatility sizing gate**: B7 locks L1 research_signed eight ETFs; q/volatility versus q under identical weekly inherited constraints; weekly paired component-risk HHI delta with a 0.05 useful reduction; ex-ante plus fixed-weight realized confirmation; side-effect limits; `MinTRL_falsify` 49 and binding `MinTRL_validate` 49; independently funded regimes with an optimistic 366-slot ceiling; E0/edge none and sealed validation. B7.2 makes v2 active by superseding only v1 external-Wiki source verification with hermetic source-provenance snapshots; research semantics remain unchanged. B7.1 is not authorized.
 - **Databento**: `DATABENTO_API_02` passes metadata access with USD 0 spend, but relevant US-equity coverage begins in 2018 or later and no dedicated corporate-actions history was exposed; owner-reported USD 50 credit has unverified real-payment provenance
 
 ## 11. Next Safe Action

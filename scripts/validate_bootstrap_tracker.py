@@ -454,6 +454,18 @@ def _validate_done_artifact(
                 project_root=project_root,
                 verify_runtime=verify_runtime,
             )
+        if artifact_path == "experiments/l_3_inverse_volatility_sizing_preregistration_v2.json":
+            return _validate_locked_preregistration_gate(
+                target,
+                order_id,
+                artifact_path,
+                gate_id="l_3_inverse_volatility_sizing_v2",
+                label="l3_inverse_volatility_sizing_v2",
+                expected_status="locked_before_execution",
+                edge_claim_field="edge_claim",
+                project_root=project_root,
+                verify_runtime=verify_runtime,
+            )
         return _validate_l0_locked_gate(
             target,
             order_id,
@@ -465,16 +477,30 @@ def _validate_done_artifact(
         return _validate_l1_manifest(target, order_id, artifact_path, project_root=project_root)
     if must == "contain_l3_manifest_identity":
         return _validate_l3_manifest_identity(target, order_id, artifact_path, project_root=project_root)
+    if must == "contain_l3_v2_manifest_identity":
+        return _validate_l3_v2_manifest_identity(target, order_id, artifact_path, project_root=project_root)
+    if must == "match_l3_v2_source_binding":
+        return _validate_l3_v2_source_binding(target, order_id, artifact_path, project_root=project_root)
     if must == "match_l3_registry_mirror":
         return _validate_l3_registry_mirror(target, order_id, artifact_path)
+    if must == "match_l3_v2_registry_mirror":
+        return _validate_l3_v2_registry_mirror(target, order_id, artifact_path)
     if must == "match_l3_human_registry_mirror":
         return _validate_l3_human_registry_mirror(target, order_id, artifact_path)
+    if must == "match_l3_v2_human_registry_mirror":
+        return _validate_l3_v2_human_registry_mirror(target, order_id, artifact_path)
     if must == "match_l3_project_memory":
         return _validate_l3_project_memory(target, order_id, artifact_path)
+    if must == "match_l3_v2_project_memory":
+        return _validate_l3_v2_project_memory(target, order_id, artifact_path)
     if must == "match_l3_implementation_plan":
         return _validate_l3_implementation_plan(target, order_id, artifact_path)
+    if must == "match_l3_v2_implementation_plan":
+        return _validate_l3_v2_implementation_plan(target, order_id, artifact_path)
     if must == "register_l3_validator":
         return _validate_l3_validator_registration(target, order_id, artifact_path)
+    if must == "register_l3_v2_validator":
+        return _validate_l3_v2_validator_registration(target, order_id, artifact_path)
     if must == "define_human_readable_research_log_contract":
         return _validate_research_log_format(target, order_id, artifact_path)
     if must == "contain_l0_and_l1_research_log_requirements":
@@ -1314,6 +1340,78 @@ def _validate_l3_manifest_identity(
     return blockers, not blockers, False
 
 
+def _validate_l3_v2_manifest_identity(
+    target: Path,
+    order_id: str,
+    artifact_path: str,
+    *,
+    project_root: Path,
+) -> tuple[list[str], bool, bool]:
+    if not target.is_file():
+        return [f"{order_id}:missing_artifact:{artifact_path}"], False, False
+    gate_path = project_root / "experiments/l_3_inverse_volatility_sizing_preregistration_v2.json"
+    validator_path = project_root / "scripts/validate_l_3_inverse_volatility_sizing_preregistration_v2.py"
+    try:
+        rows = [json.loads(line) for line in target.read_text(encoding="utf-8").splitlines() if line.strip()]
+    except json.JSONDecodeError:
+        return [f"{order_id}:l3_v2_locked_gate_manifest_invalid_jsonl"], False, False
+    matching = [row for row in rows if row.get("gate_id") == "l_3_inverse_volatility_sizing_v2"]
+    blockers: list[str] = []
+    if len(matching) != 1:
+        return [f"{order_id}:l3_v2_locked_gate_entry_count:{len(matching)}"], False, False
+    row = matching[0]
+    expected = {
+        "gate_type": "preregistration",
+        "artifact_path": "experiments/l_3_inverse_volatility_sizing_preregistration_v2.json",
+        "validator_path": "scripts/validate_l_3_inverse_volatility_sizing_preregistration_v2.py",
+        "supersedes_gate_id": "l_3_inverse_volatility_sizing_v1",
+    }
+    for key, value in expected.items():
+        if row.get(key) != value:
+            blockers.append(f"{order_id}:l3_v2_manifest_{key}_mismatch")
+    if not gate_path.is_file() or row.get("artifact_sha256") != hashlib.sha256(gate_path.read_bytes()).hexdigest():
+        blockers.append(f"{order_id}:l3_v2_manifest_artifact_hash_mismatch")
+    if not validator_path.is_file() or row.get("validator_sha256") != hashlib.sha256(validator_path.read_bytes()).hexdigest():
+        blockers.append(f"{order_id}:l3_v2_manifest_validator_hash_mismatch")
+    if "hermetic source-provenance remediation" not in str(row.get("notes", "")).lower():
+        blockers.append(f"{order_id}:l3_v2_manifest_remediation_note_missing")
+    return blockers, not blockers, False
+
+
+def _validate_l3_v2_source_binding(
+    target: Path,
+    order_id: str,
+    artifact_path: str,
+    *,
+    project_root: Path,
+) -> tuple[list[str], bool, bool]:
+    if not target.is_file():
+        return [f"{order_id}:missing_artifact:{artifact_path}"], False, False
+    try:
+        gate = json.loads(target.read_text(encoding="utf-8"))
+    except json.JSONDecodeError:
+        return [f"{order_id}:l3_v2_gate_invalid_json"], False, False
+    expected = [
+        ("methodology_snapshots/l3_inverse_volatility_sizing_v1/wiki/concepts/inverse-volatility-weighting.md", "c59b512d3df9499a738b1ee256d388376f04edee1c59727f2f79ddcc905e7f72"),
+        ("methodology_snapshots/l3_inverse_volatility_sizing_v1/wiki/concepts/position-sizing.md", "6d24c4ffc6770590baaeb90402af4e413040ff6856b0585773657da85dc68343"),
+        ("methodology_snapshots/l3_inverse_volatility_sizing_v1/wiki/concepts/minimum-track-record-length.md", "ca65225740673bd363be7461b8022281da08ae32e6ff42f8887f1072eb51ad81"),
+    ]
+    source_binding = gate.get("source_binding") if isinstance(gate, dict) else None
+    snapshots = source_binding.get("methodology_snapshots") if isinstance(source_binding, dict) else None
+    blockers: list[str] = []
+    if not isinstance(snapshots, list) or len(snapshots) != len(expected):
+        blockers.append(f"{order_id}:l3_v2_snapshot_declarations_mismatch")
+        return blockers, False, False
+    for snapshot, (path, digest) in zip(snapshots, expected, strict=True):
+        if not isinstance(snapshot, dict) or snapshot.get("snapshot_path") != path or snapshot.get("sha256") != digest:
+            blockers.append(f"{order_id}:l3_v2_snapshot_declarations_mismatch")
+            continue
+        source = project_root / path
+        if not source.is_file() or hashlib.sha256(source.read_bytes()).hexdigest() != digest:
+            blockers.append(f"{order_id}:l3_v2_snapshot_hash_mismatch:{path}")
+    return blockers, not blockers, False
+
+
 def _validate_l3_registry_mirror(
     target: Path,
     order_id: str,
@@ -1334,7 +1432,11 @@ def _validate_l3_registry_mirror(
     if l3.get("status") != "active" or l3.get("edge_claim") not in (None, "none"):
         blockers.append(f"{order_id}:l3_registry_status_or_edge_claim_mismatch")
     evidence = l3.get("evidence")
-    if evidence != [{"evidence_tier": "E0", "path": "experiments/l_3_inverse_volatility_sizing_preregistration_v1.json"}]:
+    allowed_evidence = (
+        [{"evidence_tier": "E0", "path": "experiments/l_3_inverse_volatility_sizing_preregistration_v1.json"}],
+        [{"evidence_tier": "E0", "path": "experiments/l_3_inverse_volatility_sizing_preregistration_v2.json"}],
+    )
+    if evidence not in allowed_evidence:
         blockers.append(f"{order_id}:l3_registry_E0_evidence_mismatch")
     falsify = l3.get("mintrl_falsify")
     validate = l3.get("mintrl_validate")
@@ -1357,6 +1459,41 @@ def _validate_l3_registry_mirror(
     return blockers, not blockers, False
 
 
+def _validate_l3_v2_registry_mirror(
+    target: Path,
+    order_id: str,
+    artifact_path: str,
+) -> tuple[list[str], bool, bool]:
+    if not target.is_file():
+        return [f"{order_id}:missing_artifact:{artifact_path}"], False, False
+    try:
+        registry = json.loads(target.read_text(encoding="utf-8"))
+    except json.JSONDecodeError:
+        return [f"{order_id}:l3_v2_registry_invalid_json"], False, False
+    hypotheses = registry.get("hypotheses") if isinstance(registry, dict) else None
+    matching = [item for item in hypotheses or [] if isinstance(item, dict) and item.get("id") == "L-3"]
+    if len(matching) != 1:
+        return [f"{order_id}:l3_v2_registry_entry_count:{len(matching)}"], False, False
+    l3 = matching[0]
+    blockers: list[str] = []
+    if l3.get("status") != "active" or l3.get("edge_claim") not in (None, "none"):
+        blockers.append(f"{order_id}:l3_v2_registry_status_or_edge_claim_mismatch")
+    evidence = l3.get("evidence")
+    expected_evidence = [{"evidence_tier": "E0", "path": "experiments/l_3_inverse_volatility_sizing_preregistration_v2.json"}]
+    if evidence != expected_evidence:
+        blockers.append(f"{order_id}:l3_v2_registry_active_evidence_mismatch")
+    falsify = l3.get("mintrl_falsify")
+    validate = l3.get("mintrl_validate")
+    if not isinstance(falsify, dict) or falsify.get("required_weekly_paired_observations") != 49:
+        blockers.append(f"{order_id}:l3_v2_registry_falsify_mintrl_mismatch")
+    if not isinstance(validate, dict) or validate.get("binding_required_weekly_paired_observations") != 49:
+        blockers.append(f"{order_id}:l3_v2_registry_validate_mintrl_mismatch")
+    decision_log = l3.get("decision_log")
+    if not isinstance(decision_log, list) or not any(entry.get("decision") == "B7_2_hermetic_source_provenance_remediated_E0" for entry in decision_log if isinstance(entry, dict)):
+        blockers.append(f"{order_id}:l3_v2_registry_decision_log_missing")
+    return blockers, not blockers, False
+
+
 def _validate_l3_human_registry_mirror(
     target: Path,
     order_id: str,
@@ -1368,6 +1505,16 @@ def _validate_l3_human_registry_mirror(
         artifact_path,
         "l3_human_registry",
         ("active, unexecuted E0 governance", "research_signed", "q / max(annualized_volatility, 0.05)", "comparator `q`", "MinTRL_falsify = 49", "MinTRL_validate = 49", "366", "B7.1 requires separate owner approval"),
+    )
+
+
+def _validate_l3_v2_human_registry_mirror(
+    target: Path,
+    order_id: str,
+    artifact_path: str,
+) -> tuple[list[str], bool, bool]:
+    return _validate_l3_text_mirror(
+        target, order_id, artifact_path, "l3_v2_human_registry", ("B7.2", "v2", "hermetic source-provenance", "v1 research semantics remain unchanged", "B7.1 requires separate owner approval")
     )
 
 
@@ -1385,6 +1532,16 @@ def _validate_l3_project_memory(
     )
 
 
+def _validate_l3_v2_project_memory(
+    target: Path,
+    order_id: str,
+    artifact_path: str,
+) -> tuple[list[str], bool, bool]:
+    return _validate_l3_text_mirror(
+        target, order_id, artifact_path, "l3_v2_project_memory", ("B7.2", "v2", "hermetic source-provenance", "B7.1 is not authorized")
+    )
+
+
 def _validate_l3_implementation_plan(
     target: Path,
     order_id: str,
@@ -1396,6 +1553,16 @@ def _validate_l3_implementation_plan(
         artifact_path,
         "l3_implementation_plan",
         ("B7 is complete as E0 governance only", "research_signed", "MinTRL_falsify` is 49", "MinTRL_validate` 49", "366 weekly slots", "B7.1 is not authorized"),
+    )
+
+
+def _validate_l3_v2_implementation_plan(
+    target: Path,
+    order_id: str,
+    artifact_path: str,
+) -> tuple[list[str], bool, bool]:
+    return _validate_l3_text_mirror(
+        target, order_id, artifact_path, "l3_v2_implementation_plan", ("B7.2", "v2", "hermetic source-provenance", "B7.1 is not authorized")
     )
 
 
@@ -1428,6 +1595,24 @@ def _validate_l3_validator_registration(
     registered = "scripts/validate_l_3_inverse_volatility_sizing_preregistration.py"
     if not isinstance(scripts, list) or scripts.count(registered) != 1:
         return [f"{order_id}:l3_validator_registration_mismatch"], False, False
+    return [], True, False
+
+
+def _validate_l3_v2_validator_registration(
+    target: Path,
+    order_id: str,
+    artifact_path: str,
+) -> tuple[list[str], bool, bool]:
+    if not target.is_file():
+        return [f"{order_id}:missing_artifact:{artifact_path}"], False, False
+    try:
+        payload = json.loads(target.read_text(encoding="utf-8"))
+    except json.JSONDecodeError:
+        return [f"{order_id}:l3_v2_script_registry_invalid_json"], False, False
+    scripts = payload.get("scripts") if isinstance(payload, dict) else None
+    registered = "scripts/validate_l_3_inverse_volatility_sizing_preregistration_v2.py"
+    if not isinstance(scripts, list) or scripts.count(registered) != 1:
+        return [f"{order_id}:l3_v2_validator_registration_mismatch"], False, False
     return [], True, False
 
 

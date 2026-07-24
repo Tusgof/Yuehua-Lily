@@ -7,15 +7,30 @@ import unittest
 from collections.abc import Callable
 from pathlib import Path
 from typing import Any
+from unittest.mock import patch
 
 from lib.io import load_json, write_json
-from scripts.validate_l_3_inverse_volatility_sizing_preregistration import GATE, MANIFEST, validate_gate
+from scripts import validate_l_3_inverse_volatility_sizing_preregistration as validator
+
+
+GATE = validator.GATE
+MANIFEST = validator.MANIFEST
+validate_gate = validator.validate_gate
+SNAPSHOT_WIKI_ROOT = (
+    Path(__file__).resolve().parents[1]
+    / "methodology_snapshots/l3_inverse_volatility_sizing_v1"
+)
 
 
 Mutation = Callable[[dict[str, Any]], None]
 
 
 class L3InverseVolatilityPreregistrationTests(unittest.TestCase):
+    def setUp(self) -> None:
+        self.wiki_root_patch = patch.object(validator, "WIKI_ROOT", SNAPSHOT_WIKI_ROOT)
+        self.wiki_root_patch.start()
+        self.addCleanup(self.wiki_root_patch.stop)
+
     def test_gate_passes(self) -> None:
         self.assertEqual("pass", validate_gate()["status"])
 

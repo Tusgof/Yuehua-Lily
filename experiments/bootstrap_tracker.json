@@ -683,6 +683,32 @@
         "Gate l_3_inverse_volatility_sizing_v1 locks the fixed L1 research_signed eight-ETF q/volatility candidate versus q comparator, weekly paired portfolio HHI delta, 0.05 useful reduction, realized confirmation, side-effect limits, dual 49-observation validation plans, and the optimistic 366 regime ceiling without data access.",
         "B7 is E0 governance only with edge_claim none. Validation remains sealed, and B7.1 requires separate owner approval before any data or execution path."
       ]
+    },
+    {
+      "id": "B7.2",
+      "title": "L-3 hermetic source-provenance remediation",
+      "status": "done",
+      "depends_on": ["B7"],
+      "required_artifacts": [
+        {"path": "experiments/l_3_inverse_volatility_sizing_preregistration_v2.json", "must": "locked_and_valid"},
+        {"path": "experiments/l_3_inverse_volatility_sizing_preregistration_v2.json", "must": "match_l3_v2_source_binding"},
+        {"path": "scripts/validate_l_3_inverse_volatility_sizing_preregistration_v2.py", "must": "pass"},
+        {"path": "tests/test_validate_l_3_inverse_volatility_sizing_preregistration.py", "must": "pass_in_hermetic_tier"},
+        {"path": "tests/test_validate_l_3_inverse_volatility_sizing_preregistration_v2.py", "must": "pass_in_hermetic_tier"},
+        {"path": "tests/test_statistics_golden.py", "must": "pass_in_hermetic_tier"},
+        {"path": "experiments/locked_gates.jsonl", "must": "contain_l3_v2_manifest_identity"},
+        {"path": "experiments/hypothesis_registry.json", "must": "match_l3_v2_registry_mirror"},
+        {"path": "docs/HYPOTHESIS_REGISTRY.md", "must": "match_l3_v2_human_registry_mirror"},
+        {"path": "PROJECT_BRAIN.md", "must": "match_l3_v2_project_memory"},
+        {"path": "IMPLEMENT_PLAN.md", "must": "match_l3_v2_implementation_plan"},
+        {"path": "config/new_code_scripts.json", "must": "register_l3_v2_validator"}
+      ],
+      "forbidden": ["B7.1 gate or execution machinery", "dataset/container/market price/return/signal/position/covariance/regime/benchmark/PnL read or computation", "validation-window opening or falsification/validation pooling", "broker/provider/network data call, credential or environment-variable read, paid action, paper trade, or real money", "research-semantic change, threshold weakening, source substitution, locked-history edit, E1/E2 promotion, or edge/deployment claim"],
+      "evidence": [
+        "GitHub Hermetic CI for B7 v1 failed only because its immutable validator resolves approved Wiki methodology outside the repository, which is unavailable in a clean runner.",
+        "B7.2 preserves v1 and its manifest row, records byte-preserving repository snapshots for exactly the three approved methodology pages, and activates v2 that source-binds v1 artifact/validator/manifest identity plus the snapshot hashes.",
+        "B7.2 is E0 hermetic governance remediation only: v1 research semantics remain unchanged, validation remains sealed, edge_claim remains none, and B7.1/data/execution require separate owner approval."
+      ]
     }
   ]
 }

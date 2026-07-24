@@ -86,6 +86,59 @@ class BootstrapTrackerValidatorTests(unittest.TestCase):
         self.assertFalse(unverified)
         self.assertIn("B7:l3_registry_status_or_edge_claim_mismatch", blockers)
 
+    def test_B7_2_manifest_done_claim_rejects_forged_artifact_hash(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            experiments = root / "experiments"
+            scripts = root / "scripts"
+            experiments.mkdir()
+            scripts.mkdir()
+            gate = experiments / "l_3_inverse_volatility_sizing_preregistration_v2.json"
+            validator = scripts / "validate_l_3_inverse_volatility_sizing_preregistration_v2.py"
+            gate.write_text("{}\n", encoding="utf-8")
+            validator.write_text("pass\n", encoding="utf-8")
+            row = {
+                "gate_id": "l_3_inverse_volatility_sizing_v2",
+                "gate_type": "preregistration",
+                "artifact_path": "experiments/l_3_inverse_volatility_sizing_preregistration_v2.json",
+                "artifact_sha256": "0" * 64,
+                "validator_path": "scripts/validate_l_3_inverse_volatility_sizing_preregistration_v2.py",
+                "validator_sha256": hashlib.sha256(validator.read_bytes()).hexdigest(),
+                "supersedes_gate_id": "l_3_inverse_volatility_sizing_v1",
+                "notes": "hermetic source-provenance remediation",
+            }
+            manifest = experiments / "locked_gates.jsonl"
+            manifest.write_text(json.dumps(row) + "\n", encoding="utf-8")
+            blockers, checked, unverified = self.validator._validate_done_artifact(
+                "B7.2",
+                "experiments/locked_gates.jsonl",
+                "contain_l3_v2_manifest_identity",
+                project_root=root,
+                verify_runtime=False,
+                runtime_cache={},
+            )
+        self.assertFalse(checked)
+        self.assertFalse(unverified)
+        self.assertIn("B7.2:l3_v2_manifest_artifact_hash_mismatch", blockers)
+
+    def test_B7_2_done_claim_rejects_incomplete_snapshot_binding(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            gate = root / "experiments" / "l_3_inverse_volatility_sizing_preregistration_v2.json"
+            gate.parent.mkdir()
+            gate.write_text(json.dumps({"source_binding": {"methodology_snapshots": []}}), encoding="utf-8")
+            blockers, checked, unverified = self.validator._validate_done_artifact(
+                "B7.2",
+                "experiments/l_3_inverse_volatility_sizing_preregistration_v2.json",
+                "match_l3_v2_source_binding",
+                project_root=root,
+                verify_runtime=False,
+                runtime_cache={},
+            )
+        self.assertFalse(checked)
+        self.assertFalse(unverified)
+        self.assertIn("B7.2:l3_v2_snapshot_declarations_mismatch", blockers)
+
     def test_done_claim_without_artifact_fails(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
