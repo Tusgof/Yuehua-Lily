@@ -56,6 +56,7 @@
 - **Locked B5.2 design**: v3 supersedes but does not alter v1/v2; at decision close `t`, candidate and matched comparator both use exactly `r[t-k]`, `k=0..h-1`; both execute at the next actual session close `t+1`; paired active returns use the same post-execution interval; 60-day L-1 is secondary only; validation remains sealed.
 - **B6 machinery**: a hash-locked, fail-closed runner validates v2/v3 independently and applies only the v3 time-index override. It cannot read data or execute until a separately approved B6.1 activation gate exists.
 - **B6.2 remediation**: a superseding report contract rejects unsupported results. Only real-data falsification reports may carry a falsified/not-falsified decision, and they must bind the active contract, v2/v3 sources, checkout commit, complete decision metrics, trial inventory, timing attestation, and—if falsified—the mechanism autopsy.
+- **B6.3 capacity outcome**: before any data access, the fixed window and eight-asset universe cannot fund the locked 54,048 falsification MinTRL even at their impossible 26,016 joint-bet ceiling. L-2 is underfunded/scope-restricted, not falsified.
 
 ## L-3 — Inverse-Volatility Sizing
 

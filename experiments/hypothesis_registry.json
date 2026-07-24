@@ -372,6 +372,11 @@
           "date": "2026-07-24",
           "decision": "B6_2_report_contract_remediated_before_data_access",
           "notes": "Gate l_2_falsification_execution_contract_v2 supersedes B6 v1 only for report validation. It rejects unsupported falsification claims through closed-world, provenance-bound, v2/v3 decision-evidence validation; it authorizes neither container inspection nor market-return execution."
+        },
+        {
+          "date": "2026-07-24",
+          "decision": "B6_3_static_capacity_underfunded_before_data_access",
+          "notes": "Gate l_2_falsification_capacity_gate_v1 proves the absolute upper bound of 26,016 joint independent-bet equivalents is below locked MinTRL_falsify 54,048 for the current L-2 window and fixed eight-asset universe. L-2 remains E1 scope_restricted; no container or return may be inspected."
         }
       ]
     },

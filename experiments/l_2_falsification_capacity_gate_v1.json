@@ -1,0 +1,40 @@
+{
+  "schema_version": "lily_l2_falsification_capacity_gate_v1",
+  "order_id": "B6.3",
+  "hypothesis_id": "L-2",
+  "created_at": "2026-07-24T00:00:00Z",
+  "supersedes_gate_id": "l_2_falsification_execution_contract_v2",
+  "status": "locked_underfunded_execution_forbidden",
+  "evidence_ceiling": "E1",
+  "edge_claim": "none",
+  "owner_authorization": "The owner explicitly authorized B6.3 on 2026-07-24 after Inspector finding A. This static capacity gate may read only locked governance artifacts; it excludes falsification-container inspection, market-return reading, execution, validation access, broker/provider activity, credential use, paid action, paper trade, and real-money action.",
+  "locked_sources": {
+    "l1_baseline_path": "experiments/l_1_baseline_preregistration.json",
+    "l1_baseline_sha256": "91527c2f4ec00134767df86849f36b9876b00eb44cd56dc01650d33bf938fe29",
+    "l2_v2_path": "experiments/l_2_multi_lookback_tstat_preregistration_v2.json",
+    "l2_v2_sha256": "84a7bb45070b54846a709573506c8213a3bc62d28cfa25f4982415d40d94e1f3",
+    "b6_2_path": "experiments/l_2_falsification_execution_contract_v2.json",
+    "b6_2_sha256": "595f66b9bae804957dffc15cbe1d8e388cdef225d93c5396aa556ef8a7f639b7"
+  },
+  "falsification_window": {"start": "2007-02-05", "end": "2015-12-31"},
+  "absolute_upper_bound": {
+    "calendar_days_inclusive": 3252,
+    "fixed_research_asset_count": 8,
+    "maximum_time_effective_observations": 3252,
+    "maximum_cross_sectional_effective_dimensions": 8,
+    "maximum_joint_independent_bet_equivalents": 26016,
+    "required_mintrl_falsify": 54048
+  },
+  "capacity_outcome": "underfunded_scope_restricted",
+  "market_returns_read": false,
+  "execution_authorized": false,
+  "decision": "The absolute upper bound is below MinTRL_falsify before accounting for NYSE sessions, warm-up, missingness, serial dependence, or cross-asset correlation. L-2 under the current locked window/universe is E1 scope_restricted and cannot inspect a container, parse returns, run a backtest, or issue a falsification result.",
+  "hard_stops": [
+    "No falsification-container inspection or market-return parsing while this capacity gate is underfunded.",
+    "No L-2 backtest, falsified, or not_falsified_not_validated report under the current preregistration.",
+    "No validation-window access, broker/provider call, credential use, paid action, paper trade, or real-money action.",
+    "Do not lower MinTRL or manufacture independence to make the current test fundable.",
+    "A redesign of statistical unit, window, or universe requires separate owner approval, a new preregistration/gate, and new rationale before any return is observed."
+  ],
+  "next_safe_action": "Owner decision only: retain L-2 as underfunded under the current preregistration, or separately authorize a defensible superseding redesign before data access. B6.1 is not authorized."
+}

@@ -50,6 +50,7 @@
     "scripts/validate_l_2_falsification_report.py",
     "scripts/validate_l_2_falsification_execution_contract_v2.py",
     "scripts/validate_l_2_falsification_report_v2.py",
+    "scripts/validate_l_2_falsification_capacity_gate.py",
     "scripts/validate_locked_gates.py"
   ]
 }

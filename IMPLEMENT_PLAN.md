@@ -241,6 +241,12 @@ B6.2 preserves B6 v1 and locks superseding gate `l_2_falsification_execution_con
 
 Execution reports must carry the locked container/max-date proof, effective-observation and independent-bet counts, paired daily net active-return statistics, annual-to-daily conversion, PSR/DSR, all five trials, costs/turnover, decision-matrix trace, v3 timing attestation, and sealed validation declaration. A `falsified` result additionally requires the five-part mechanism autopsy. B6.2 reads no data and does not authorize B6.1.
 
+### B6.3 — L-2 Static Falsification Capacity Gate (Complete, Underfunded)
+
+B6.3 supersedes the B6.2 execution path with a no-return capacity gate. The inclusive 2007-02-05 through 2015-12-31 calendar window has 3,252 days and the locked research universe has eight assets. Even the impossible ceiling of one independent observation per calendar day per asset is 26,016 joint independent-bet equivalents, below locked `MinTRL_falsify` 54,048.
+
+Exit: L-2 is `underfunded_scope_restricted` at E1 under the current preregistration. The gate forbids container inspection, return parsing, backtest execution, and a falsified/not-falsified report. Any redesign of statistical unit, window, or universe needs a separately owner-approved preregistration before data access.
+
 ## 6. Acceptance Gate
 
 E2 requires all of the following:
