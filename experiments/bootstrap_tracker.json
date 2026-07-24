@@ -659,6 +659,30 @@
         "The v2 capacity validator resolves each declared source path, verifies actual SHA-256 and B6.2 manifest identity, then derives window, eight-asset count, and MinTRL from the locked sources rather than gate declarations.",
         "It recomputes 3,252 × 8 = 26,016 < 54,048 and rejects source path/hash, start/end, universe, MinTRL, capacity, outcome, execution, and hard-stop tampering."
       ]
+    },
+    {
+      "id": "B7",
+      "title": "L-3 inverse-volatility sizing preregistration governance lock and publication",
+      "status": "done",
+      "depends_on": ["B6.4"],
+      "required_artifacts": [
+        {"path": "experiments/l_3_inverse_volatility_sizing_preregistration_v1.json", "must": "locked_and_valid"},
+        {"path": "scripts/validate_l_3_inverse_volatility_sizing_preregistration.py", "must": "pass"},
+        {"path": "tests/test_validate_l_3_inverse_volatility_sizing_preregistration.py", "must": "pass_in_hermetic_tier"},
+        {"path": "tests/test_statistics_golden.py", "must": "pass_in_hermetic_tier"},
+        {"path": "experiments/locked_gates.jsonl", "must": "contain_l3_manifest_identity"},
+        {"path": "experiments/hypothesis_registry.json", "must": "match_l3_registry_mirror"},
+        {"path": "docs/HYPOTHESIS_REGISTRY.md", "must": "match_l3_human_registry_mirror"},
+        {"path": "PROJECT_BRAIN.md", "must": "match_l3_project_memory"},
+        {"path": "IMPLEMENT_PLAN.md", "must": "match_l3_implementation_plan"},
+        {"path": "config/new_code_scripts.json", "must": "register_l3_validator"}
+      ],
+      "forbidden": ["B7.1 gate or execution machinery", "dataset/container/market price/return/signal/position/covariance/regime/benchmark/PnL read or computation", "validation-window opening or falsification/validation pooling", "broker/provider/network data call, credential or environment-variable read, paid action, paper trade, or real money", "threshold weakening, source substitution, asset multiplication, pseudo-replication, locked-history edit, E1/E2 promotion, or edge/deployment claim"],
+      "evidence": [
+        "Inspector accepted Checkpoint A: the L-3 validator had zero blockers, seven adversarial tests and eleven statistics golden tests passed, and git diff --check passed before this append-only lock.",
+        "Gate l_3_inverse_volatility_sizing_v1 locks the fixed L1 research_signed eight-ETF q/volatility candidate versus q comparator, weekly paired portfolio HHI delta, 0.05 useful reduction, realized confirmation, side-effect limits, dual 49-observation validation plans, and the optimistic 366 regime ceiling without data access.",
+        "B7 is E0 governance only with edge_claim none. Validation remains sealed, and B7.1 requires separate owner approval before any data or execution path."
+      ]
     }
   ]
 }

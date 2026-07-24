@@ -89,7 +89,7 @@ Seed order:
 4. L-3 — inverse-volatility sizing versus equal notional;
 5. L-4 — breadth versus single-market dependency.
 
-Current machine status is authoritative in `experiments/hypothesis_registry.json`: L-0 is scope-restricted after E0 sizing evidence; L-1 is scope-restricted after E1 falsification-window, data-quality remediation, and validation-capacity evidence, while its validation window remains sealed; L-2 through L-4 remain proposed.
+Current machine status is authoritative in `experiments/hypothesis_registry.json`: L-0 is scope-restricted after E0 sizing evidence; L-1 is scope-restricted after E1 falsification-window, data-quality remediation, and validation-capacity evidence, while its validation window remains sealed; L-2 is E1 underfunded/scope-restricted; L-3 is active but unexecuted E0 governance; L-4 remains proposed.
 
 The family review triggers after three consecutive adequately powered falsifications of distinct edge/mechanism hypotheses. L-0 and engineering failures do not count.
 
@@ -163,12 +163,12 @@ Past reports are reproduced by checking out their recorded commit hash. Do not c
 ## 10. Current Verified State
 
 - **Verified date**: 2026-07-24
-- **Bootstrap**: B0 through B4.16 complete; B5.2 preregistration remediation complete
+- **Bootstrap**: B0 through B4.16 complete; B5.2 and B6.4 L-2 remediation complete; B7 L-3 governance lock complete
 - **Legacy Note status**: retired and deleted by `docs/DECISION_RECORD_002_RESEARCH_LOG_CONTRACT.md` after its research content was promoted
 - **Human research logs**: contract active; L-0 sizing and Webull capability are logs 001 and 006; L-1 baseline, remediation, validation-capacity, and Alpha Vantage corporate-action audits are logs 002 through 005 under `research_log/`
 - **Dashboard**: retained under `Dashboard/`, demoted from product/state owner
 - **Founding decisions**: `docs/DECISION_RECORD_001_PROJECT_REFOUNDING.md`
-- **Registry**: L-0 scope-restricted E0; L-1 scope-restricted E1; L-2 active but unexecuted; L-3 through L-4 proposed
+- **Registry**: L-0 scope-restricted E0; L-1 scope-restricted E1; L-2 E1 underfunded_scope_restricted; L-3 active/unexecuted E0; L-4 proposed
 - **L-1 falsification execution**: complete through 2015-12-31; not falsified, not validated; validation sealed
 - **L-1 data-quality remediation**: cash resolved at E1; historical fees decision-bounded; corporate actions pass the locked daily tolerance for 6/8 symbols; the later B4.6 probe resolves Webull candidate-ticker and fractional OpenAPI capability for the current ten-ETF set
 - **L-1 validation capacity**: 2,637 calendar-only sessions project to 20,376 joint independent-bet equivalents versus the binding 8,673 under locked actual dependence; planning sensitivity projects 7,604; validation remains sealed
@@ -189,11 +189,12 @@ Past reports are reproduced by checking out their recorded commit hash. Do not c
 - **L-2 falsification machinery**: B6 locks the v2/v3 overlay, synthetic report contract, and fail-closed runner; it makes zero market-data, validation, broker, provider, paid, paper-trading, or real-money request. B6.1 requires a new owner-approved activation gate before any falsification-only container may be inspected
 - **L-2 report-contract remediation**: B6.2 supersedes B6 only for report validation. The closed-world v2 report validator binds active-contract/v2/v3/git provenance and requires all locked decision evidence before it can accept a falsified or not-falsified result; B6.1 remains unauthorized
 - **L-2 capacity gate**: B6.3 establishes a no-return upper bound of 26,016 joint independent-bet equivalents, below the locked 54,048 `MinTRL_falsify`; L-2 is E1 underfunded_scope_restricted and B6.1/container inspection is forbidden unless a separately approved preregistration redesign changes the statistical capacity
+- **L-3 inverse-volatility sizing gate**: B7 locks L1 research_signed eight ETFs; q/volatility versus q under identical weekly inherited constraints; weekly paired component-risk HHI delta with a 0.05 useful reduction; ex-ante plus fixed-weight realized confirmation; side-effect limits; `MinTRL_falsify` 49 and binding `MinTRL_validate` 49; independently funded regimes with an optimistic 366-slot ceiling; E0/edge none and sealed validation. B7.1 is not authorized.
 - **Databento**: `DATABENTO_API_02` passes metadata access with USD 0 spend, but relevant US-equity coverage begins in 2018 or later and no dedicated corporate-actions history was exposed; owner-reported USD 50 credit has unverified real-payment provenance
 
 ## 11. Next Safe Action
 
-Keep validation returns sealed, leave L-0 scope-restricted E0 and L-1 scope-restricted E1, and do not rerun B4.11 or B4.12. No UAT work is planned: a hostname reference is not a public UAT entitlement. Any future broker probe requires genuinely new official evidence or a dedicated owner-controlled test account, explicit owner approval, and a new locked gate. The next research order must be planned separately and must not open validation returns, production access, paper trading, or real-money actions.
+Keep validation returns sealed, leave L-0 scope-restricted E0, L-1 scope-restricted E1, and L-2 underfunded/scope-restricted, and do not rerun B4.11 or B4.12. The next safe L-3 action is a separate owner-approved B7.1 activation/preflight gate before any data, return, signal, position, covariance, execution, or result observation. No UAT work is planned: a hostname reference is not a public UAT entitlement. Any future broker probe requires genuinely new official evidence or a dedicated owner-controlled test account, explicit owner approval, and a new locked gate.
 
 ## 12. Invariants
 

@@ -60,15 +60,15 @@
 
 ## L-3 — Inverse-Volatility Sizing
 
-- **Status**: proposed; depends on baseline plumbing
-- **Statement**: Inverse-volatility sizing reduces portfolio risk concentration relative to equal notional without unacceptable turnover, leverage, or cost.
-- **Rationale**: Equal notional lets volatile markets dominate risk; scaling by volatility should distribute risk more evenly.
-- **Predictions**:
-  1. Maximum asset and sleeve risk contributions fall.
-  2. Concentration reduction survives volatility regimes and estimator perturbations.
-  3. The benefit is not erased by resizing turnover or leverage.
-- **Validation**: preregister ex-ante and realized concentration metrics, estimator windows, leverage/cash limits, turnover, and required regimes; meet the paired effective-sample gate.
-- **Falsification**: after `MinTRL_falsify`, inverse-vol sizing does not reduce the locked concentration metrics in most required regimes or its benefit is fully offset by locked cost/leverage limits, followed by a mechanism autopsy.
+- **Status**: active, unexecuted E0 governance; edge claim none
+- **Locked scope**: the fixed L1 `research_signed` eight ETFs only; candidate `q / max(annualized_volatility, 0.05)` versus comparator `q`, with identical inherited weekly rebalance, next-actual-NYSE-close execution, 90% gross/10% cash/25% asset-cap constraints, 60-session risk inputs, and scale-down-only target volatility.
+- **Primary metric**: one weekly paired portfolio observation, `HHI_comparator - HHI_inverse_volatility`, using signed absolute component-risk shares after common constraints. The minimum useful mean reduction is `0.05`; there is no asset multiplier or pseudo-replication.
+- **Realized confirmation**: retain each branch’s execution-close weights and use exactly `t+1` through `t+20` actual-session returns with the same HHI normalization. Missing rows or a nonzero-position undefined denominator make the pair non-evaluable; weights are retained and no row or asset is silently dropped.
+- **Side effects**: turnover/cost relative increase must not exceed `0.20`; cap/cash/scale-down frequency increase must not exceed `10` percentage points. A zero denominator or other non-evaluable side effect is scope-restricted, never accepted or falsified silently.
+- **Statistics**: `MinTRL_falsify = 49` for null `0.05` versus adverse `0.00`. Validation locks both `0.00` versus `0.05` and minimum-useful `0.05` versus expected `0.10` paired-mean plans; each is `49`, so binding `MinTRL_validate = 49`.
+- **Regimes and capacity**: 26 weekly pairs is descriptive only. Each inferential regime must independently fund its own paired requirement; an inferential 2-of-3 statement cannot pool regimes. The locked-date optimistic regime-eligible ceiling is 366 weekly slots before actual-session, missingness, and non-evaluable-pair reductions.
+- **Decision boundary**: a funded one-sided upper confidence bound below `0.05`, or a funded/evaluable primary result with a breached locked side-effect limit, may falsify the composite claim only with a mechanism autopsy. Validation needs a one-sided lower confidence bound above `0.05`, realized confirmation, every side-effect limit met, and independently funded claimed regimes.
+- **Seal**: validation is sealed; B7.1 requires separate owner approval and a new activation/preflight gate before any data, return, signal, position, covariance, execution, or result observation. No market evidence is recorded by B7.
 
 ## L-4 — Breadth
 

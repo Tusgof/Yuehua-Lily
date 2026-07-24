@@ -384,35 +384,39 @@
       "id": "L-3",
       "family": "position_sizing",
       "counts_toward_family_stop": false,
-      "status": "proposed",
-      "statement": "Inverse-volatility sizing reduces portfolio risk concentration relative to equal notional without unacceptable turnover, leverage, or cost.",
+      "status": "active",
+      "statement": "On the fixed L1 research_signed eight-ETF universe, q divided by volatility is tested against q under identical inherited weekly constraints for a reduction in paired portfolio component-risk concentration without unacceptable locked side effects.",
       "economic_rationale": "Equal notional allows volatile markets to dominate risk; volatility scaling should distribute risk more evenly.",
       "testable_predictions": [
-        "Maximum asset and sleeve risk contributions fall.",
-        "Concentration reduction survives volatility regimes and estimator perturbations.",
-        "The benefit is not erased by resizing turnover or leverage."
+        "Weekly paired portfolio HHI comparator-minus-inverse-volatility delta reaches the locked 0.05 minimum useful reduction.",
+        "Fixed execution-close weights retain the locked realized component-risk confirmation over t+1 through t+20 actual sessions.",
+        "Any concentration benefit is not offset by the locked turnover/cost or cap/cash/scale-down side-effect limits."
       ],
       "validation_criteria": [
-        "Lock ex-ante and realized concentration metrics, estimator windows, leverage/cash limits, turnover, and regimes.",
-        "Meet the paired effective-sample validation gate."
+        "Validation remains sealed until a separately authorized stage funds both paired-mean plans: 0.00 versus 0.05 and 0.05 versus 0.10, with binding MinTRL_validate 49.",
+        "A validation candidate needs a one-sided lower confidence bound above 0.05, realized-risk confirmation, every side-effect limit met, and independently funded claimed regimes."
       ],
       "falsification_criteria": [
-        "After MinTRL_falsify, inverse-volatility sizing does not reduce locked concentration metrics in most required regimes or its benefit is fully offset by locked cost/leverage limits.",
-        "A mechanism autopsy explains estimator, correlation, or implementation failure."
+        "After MinTRL_falsify 49, a one-sided upper confidence bound below 0.05 or a funded/evaluable primary result with a breached locked side-effect limit can falsify the composite claim only with a mechanism autopsy.",
+        "A non-evaluable side effect is scope_restricted, never silently accepted or falsified."
       ],
       "required_data": [
-        "Matched asset returns, volatility estimates, positions, costs, and realized risk contributions."
+        "No data is authorized by B7. A separate owner-approved B7.1 gate is required before matched returns, volatility estimates, positions, costs, or realized risk contributions may be read."
       ],
       "mintrl_falsify": {
-        "status": "must_be_computed_before_execution",
-        "observation_unit": "paired concentration observations with serial-dependence adjustment"
+        "status": "locked_E0_planning_only",
+        "observation_unit": "weekly paired portfolio HHI delta with serial-dependence adjustment",
+        "null_mean_delta": 0.05,
+        "adverse_alternative_mean_delta": 0.0,
+        "required_weekly_paired_observations": 49
       },
       "mintrl_validate": {
-        "status": "must_be_computed_before_validation_claim",
-        "nulls": [
-          "no concentration reduction",
-          "preregistered minimum useful reduction"
-        ]
+        "status": "locked_E0_planning_only",
+        "plans": [
+          "portfolio_zero: null 0.00 versus expected 0.05, required weekly paired observations 49",
+          "minimum_useful: null 0.05 versus expected 0.10, required weekly paired observations 49"
+        ],
+        "binding_required_weekly_paired_observations": 49
       },
       "known_kill_zones": [
         "volatility-estimator lag",
@@ -421,14 +425,25 @@
         "excess leverage in calm regimes"
       ],
       "dependencies": [
-        "L-1 portfolio plumbing"
+        "L-1 locked research_signed universe/timing/constraints",
+        "separate owner-approved B7.1 activation/preflight gate before any data or execution"
       ],
-      "evidence": [],
+      "evidence": [
+        {
+          "evidence_tier": "E0",
+          "path": "experiments/l_3_inverse_volatility_sizing_preregistration_v1.json"
+        }
+      ],
       "decision_log": [
         {
           "date": "2026-07-15",
           "decision": "seeded_from_owner_hypothesis_prediction_3",
           "notes": "Sizing architecture hypothesis; excluded from the mechanism family-stop count."
+        },
+        {
+          "date": "2026-07-24",
+          "decision": "B7_inverse_volatility_preregistration_locked_E0",
+          "notes": "Inspector-accepted B7 lock fixes L1 research_signed eight ETFs, q/volatility versus q, weekly paired portfolio HHI delta, 0.05 useful reduction, ex-ante plus fixed-weight realized confirmation, side-effect limits, MinTRL_falsify 49, binding MinTRL_validate 49, independently funded regimes, optimistic 366-slot regime ceiling, sealed validation, edge_claim none, and B7.1 owner-approval requirement. No market evidence was read."
         }
       ]
     },

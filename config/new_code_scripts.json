@@ -52,6 +52,7 @@
     "scripts/validate_l_2_falsification_report_v2.py",
     "scripts/validate_l_2_falsification_capacity_gate.py",
     "scripts/validate_l_2_falsification_capacity_gate_v2.py",
+    "scripts/validate_l_3_inverse_volatility_sizing_preregistration.py",
     "scripts/validate_locked_gates.py"
   ]
 }

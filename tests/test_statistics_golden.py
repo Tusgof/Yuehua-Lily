@@ -20,6 +20,7 @@ from lib.statistics import (
     newey_west_variance_of_mean,
     normal_cdf,
     normal_ppf,
+    paired_mean_minimum_observations,
     probabilistic_sharpe_ratio,
     raw_kurtosis_population,
     sharpe_ratio,
@@ -116,6 +117,51 @@ class StatisticsGoldenTests(unittest.TestCase):
                 adverse_true_sharpe=falsify["adverse_true_sharpe"],
                 **common,
             ),
+        )
+
+    def test_paired_mean_power_anchor(self) -> None:
+        """Hand-calculated L-3-style paired portfolio planning example."""
+        lags = [0.25, 0.125, 0.0625, 0.03125, 0.015625]
+        self.assertAlmostEqual(1.96875, asymptotic_autocorrelation_inflation(lags), places=12)
+        self.assertEqual(
+            49,
+            paired_mean_minimum_observations(
+                alternative_mean=0.05,
+                null_mean=0.0,
+                planning_standard_deviation=0.10,
+                autocorrelations=lags,
+                significance=0.05,
+                power=0.80,
+            ),
+        )
+        self.assertEqual(
+            49,
+            paired_mean_minimum_observations(
+                alternative_mean=0.0,
+                null_mean=0.05,
+                planning_standard_deviation=0.10,
+                autocorrelations=lags,
+                significance=0.05,
+                power=0.80,
+            ),
+        )
+        self.assertEqual(
+            49,
+            paired_mean_minimum_observations(
+                alternative_mean=0.10,
+                null_mean=0.05,
+                planning_standard_deviation=0.10,
+                autocorrelations=lags,
+                significance=0.05,
+                power=0.80,
+            ),
+        )
+        self.assertIsNone(
+            paired_mean_minimum_observations(
+                alternative_mean=0.05,
+                null_mean=0.05,
+                planning_standard_deviation=0.10,
+            )
         )
 
     def test_deflated_sharpe_search_hurdle_anchor(self) -> None:

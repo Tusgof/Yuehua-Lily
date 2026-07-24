@@ -1,0 +1,175 @@
+{
+  "schema_version": "lily_l3_inverse_volatility_sizing_preregistration_v1",
+  "order_id": "B7",
+  "checkpoint": "A_contract_machinery_only",
+  "hypothesis_id": "L-3",
+  "status": "locked_before_execution",
+  "evidence_ceiling": "E0",
+  "edge_claim": "none",
+  "owner_authorization": "B7 Checkpoint A planning and contract machinery only; B7.1, data access, and execution are not authorized.",
+  "source_binding": {
+    "l1_preregistration": {
+      "path": "experiments/l_1_baseline_preregistration.json",
+      "sha256": "91527c2f4ec00134767df86849f36b9876b00eb44cd56dc01650d33bf938fe29"
+    },
+    "l1_manifest_row": {
+      "gate_id": "l_1_baseline_v1",
+      "artifact_path": "experiments/l_1_baseline_preregistration.json",
+      "artifact_sha256": "91527c2f4ec00134767df86849f36b9876b00eb44cd56dc01650d33bf938fe29",
+      "validator_path": "scripts/validate_l_1_baseline_preregistration.py",
+      "validator_sha256": "c568f5db8236e253e63056ed2797ead9259397d293c478e7f0abf53bfda70232"
+    },
+    "wiki_sources": [
+      {
+        "path": "wiki/concepts/inverse-volatility-weighting.md",
+        "sha256": "c59b512d3df9499a738b1ee256d388376f04edee1c59727f2f79ddcc905e7f72"
+      },
+      {
+        "path": "wiki/concepts/position-sizing.md",
+        "sha256": "6d24c4ffc6770590baaeb90402af4e413040ff6856b0585773657da85dc68343"
+      },
+      {
+        "path": "wiki/concepts/minimum-track-record-length.md",
+        "sha256": "ca65225740673bd363be7461b8022281da08ae32e6ff42f8887f1072eb51ad81"
+      }
+    ]
+  },
+  "research_question": "On the fixed L-1 research_signed eight-ETF universe, does q divided by volatility reduce post-constraint component-risk concentration versus q with the same constraints, without unacceptable locked side effects?",
+  "candidate_and_comparator": {
+    "candidate_raw_score": "q[i,t] / max(annualized_volatility[i,t], 0.05)",
+    "comparator_raw_score": "q[i,t]",
+    "l2_signal": "forbidden",
+    "asset_multiplier": "forbidden",
+    "shared_universe": "L1 research_signed eight ETFs only",
+    "shared_signal": "L1 60_day_directional_count_raw only",
+    "shared_rebalance": "weekly only",
+    "shared_execution": "next actual NYSE close only",
+    "shared_constraints": "L1 90% gross normalization, 10% minimum cash, 25% absolute asset cap, 60-session EWMA PSD-clipped covariance, and target-volatility scale-down-only"
+  },
+  "primary_metric": {
+    "unit": "one weekly paired portfolio observation; never an asset, sleeve, daily, or trade observation",
+    "measurement_point": "after each branch independently applies the same inherited constraints and normalization",
+    "component_risk_formula": "c[i,t] = w[i,t] * (Sigma[t] * w[t])[i]",
+    "absolute_share_formula": "a[i,t] = abs(c[i,t]) / sum_j(abs(c[j,t]))",
+    "hhi_formula": "HHI[t] = sum_i(a[i,t]^2)",
+    "paired_delta_formula": "delta[t] = HHI_comparator[t] - HHI_inverse_volatility[t]",
+    "active_set_rule": "For each branch and weekly date, the active set is exactly the fixed L1 eight-ETF order restricted to components with nonzero abs(c[i,t]) after all constraints; zero components remain zero terms and are never substituted or dropped from the paired date.",
+    "cash_rule": "Cash is excluded from the eight-asset HHI and reported separately; it is not an asset contribution.",
+    "all_zero_score_rule": "If an inherited branch score is all zero, retain that branch's inherited cash weights. That branch creates no HHI pair rather than a zero-concentration observation.",
+    "undefined_denominator_rule": "If either branch has nonzero positions and sum_j(abs(c[j,t])) is zero, non-finite, or undefined, the paired metric is non-evaluable: retain inherited weights, record the blocker, do not alter weights, and do not silently drop or complete-case filter the date.",
+    "negative_contribution_rule": "Take the absolute value of every signed component contribution before normalization.",
+    "threshold_rationale": "Synthetic contribution vectors only: comparator (0.50, 0.50, 0, 0, 0, 0, 0, 0) has HHI 0.50; candidate (0.60, 0.2707106781, 0.1292893219, 0, 0, 0, 0, 0) has HHI 0.45. The 0.05 threshold is this concrete portfolio-level redistribution, not a generic one-asset movement or a Lily-return result."
+  },
+  "decision_thresholds": {
+    "mean_hhi_delta_minimum": 0.05,
+    "mean_largest_absolute_component_share_delta_minimum": 0.05,
+    "realized_mean_hhi_delta_minimum": 0.05,
+    "turnover_and_cost_relative_increase_maximum": 0.2,
+    "cap_cash_scale_down_frequency_increase_maximum_percentage_points": 10.0
+  },
+  "realized_confirmation": {
+    "weight_lock": "Fix each branch's own post-constraint execution-close weights at the next actual NYSE close t+1; never rebalance, rescale, or substitute weights inside the confirmation window.",
+    "return_rows": "Use exactly the 20 actual NYSE-session return rows labelled t+1 through t+20, inclusive, for every fixed L1 research_signed asset.",
+    "minimum_complete_rows": 20,
+    "missingness_rule": "Any missing required asset return row, missing execution-close weight, non-finite covariance, or undefined nonzero-position denominator makes the entire paired date non-evaluable; retain weights and record the blocker without a silent row or asset drop.",
+    "realized_covariance": "Compute each branch's component risk from its fixed weights and the covariance of those same 20 actual-session return rows.",
+    "normalization": "Use the identical signed absolute component-risk HHI formula and date-specific active-set rule from primary_metric.",
+    "overlap_and_dependence": "Twenty-session confirmation windows overlap across weekly observations. Recompute dependence from the resulting weekly paired deltas only; never multiply observations by eight or by twenty.",
+    "threshold": "The mean realized comparator-minus-inverse-volatility HHI delta must be at least 0.05."
+  },
+  "statistics": {
+    "observation_unit": "weekly paired portfolio HHI delta",
+    "planning_standard_deviation_delta": 0.1,
+    "one_sided_alpha": 0.05,
+    "power": 0.8,
+    "planning_autocorrelations_lags_1_to_5": [0.25, 0.125, 0.0625, 0.03125, 0.015625],
+    "asymptotic_autocorrelation_inflation_formula": "1 + 2 * sum(lag_1_to_5)",
+    "asymptotic_autocorrelation_inflation": 1.96875,
+    "paired_mean_power_formula": "ceil((z_(1-alpha) + z_power)^2 * planning_standard_deviation_delta^2 / abs(alternative_mean_delta - null_mean_delta)^2 * asymptotic_autocorrelation_inflation)",
+    "falsify_plan": {
+      "tail": "lower",
+      "null_mean_delta": 0.05,
+      "adverse_alternative_mean_delta": 0.0,
+      "required_weekly_paired_observations": 49
+    },
+    "validation_plans": {
+      "portfolio_zero": {
+        "tail": "upper",
+        "null_mean_delta": 0.0,
+        "expected_alternative_mean_delta": 0.05,
+        "required_weekly_paired_observations": 49
+      },
+      "minimum_useful": {
+        "tail": "upper",
+        "null_mean_delta": 0.05,
+        "expected_alternative_mean_delta": 0.1,
+        "required_weekly_paired_observations": 49
+      },
+      "binding_required_weekly_paired_observations": 49
+    },
+    "actual_recalculation": "Before either decision, recompute the weekly paired-delta lag-1 through lag-5 autocorrelations, the same asymptotic inflation formula, the falsify requirement, both validation-plan requirements, and their maximum binding validation requirement. Sharpe MinTRL, per-trade counts, assets, daily rows, and return annualization are not inputs."
+  },
+  "static_capacity": {
+    "falsification_window": {
+      "start": "2007-02-05",
+      "end": "2015-12-31"
+    },
+    "calendar_day_formula": "(end - start).days + 1",
+    "calendar_days_inclusive": 3252,
+    "weekly_slot_formula": "floor((end - start).days / 7) + 1",
+    "maximum_weekly_slots_before_actual_session_warmup_or_evaluable_pair_reductions": 465,
+    "portfolio_observations_per_week": 1,
+    "asset_multiplier": 1,
+    "inherited_prior_only_regime_warmup_sessions": 756,
+    "pre_falsification_warmup_window": {
+      "start": "2006-02-03",
+      "end": "2007-02-02"
+    },
+    "maximum_pre_falsification_weekday_slots": 261,
+    "remaining_prior_sessions_to_regime_eligibility": 495,
+    "maximum_sessions_per_calendar_week": 5,
+    "minimum_falsification_week_slots_consumed_for_remaining_warmup": 99,
+    "maximum_regime_eligible_weekly_slots_after_warmup_before_actual_session_or_evaluable_pair_reductions": 366,
+    "planning_capacity_outcome": "funded_for_both_49_observation_plans_but_execution_and_data_remain_sealed",
+    "validation_pooling": "forbidden"
+  },
+  "regime_rule": {
+    "classification": "Inherited L1 prior-only low, middle, and high volatility states after the 756-session warm-up.",
+    "descriptive_coverage": "At least 26 weekly paired observations in a regime permits descriptive reporting only; it is not inferential funding.",
+    "inferential_funding": "Each claimed regime independently needs at least its own actual-recomputed paired MinTRL_falsify effective weekly observations. Do not pool regimes.",
+    "two_of_three_rule": "An inferential 2-of-3 regime statement requires two separately funded claimed regimes; the third regime cannot donate observations."
+  },
+  "side_effect_aggregation": {
+    "eligible_date_set": "Use the identical set of primary-metric-evaluable paired weekly portfolio dates for both branches; a non-evaluable paired date remains a recorded blocker and is not silently deleted.",
+    "turnover_and_cost": "For each branch, sum total one-way turnover and all locked costs across the eligible-date set. Relative increase = (candidate aggregate - comparator aggregate) / comparator aggregate. If the comparator aggregate is zero, the relative comparison is non-evaluable and blocks that side-effect decision; it is never replaced with zero, infinity, or a dropped date.",
+    "cap_cash_scale_down": "For each branch/date, the indicator is one if any absolute asset cap binds, cash exceeds the inherited 10% minimum, or portfolio target-volatility scaling is below one; otherwise zero. Frequency increase in percentage points = 100 * (candidate indicator sum / paired-date count - comparator indicator sum / paired-date count). A zero paired-date count blocks the comparison."
+  },
+  "decision_matrix": {
+    "underfunded": "If the source-derived maximum weekly slots are below the validator-recomputed 49-observation falsify requirement, remain E0 scope_restricted and do not read data.",
+    "falsification": "Only a separately authorized, funded B7.1 falsification execution may falsify the composite L-3 claim after a mechanism autopsy: either the one-sided 95% upper confidence bound of the ex-ante mean paired delta is below 0.05, or a funded and evaluable primary concentration result has any locked side-effect limit breached. A non-evaluable side effect is scope_restricted, never falsified.",
+    "not_falsified_not_validated": "Only a separately authorized, funded B7.1 falsification execution may use this E1 label when the composite falsification rule is not met. Any underfunding, non-evaluable primary metric or side effect, failed side-effect limit without the funded composite-falsification condition, or missing regime funding remains scope_restricted rather than validated.",
+    "validation_candidate": "Requires separately funded untouched validation, both validator-recomputed validation plans with their maximum binding requirement, a one-sided 95% lower confidence bound of the mean paired delta above 0.05, the realized confirmation threshold, every locked side-effect limit evaluable and met, and every claimed regime's independent funding. Never pool falsification and validation observations.",
+    "regime_funded": "A claimed regime is funded only when its own effective weekly paired observations meet its actual-recomputed paired MinTRL_falsify.",
+    "regime_underfunded": "A regime below its own requirement is descriptive at most and cannot contribute to an inferential 2-of-3 statement."
+  },
+  "validation_seal": {
+    "start": "2016-01-04",
+    "end": "2026-06-30",
+    "opened": false,
+    "pooled_with_falsification": false
+  },
+  "b7_1": {
+    "authorized": false,
+    "data_access_authorized": false,
+    "execution_authorized": false,
+    "next_safe_action": "Separate owner authorization and a new B7.1 gate are required before any data, return, signal, position, covariance, execution, or decision observation."
+  },
+  "hard_stops": [
+    "No dataset, market price, market return, signal, position, covariance estimate, regime observation, benchmark, or PnL read or computation.",
+    "No validation-window access or falsification/validation pooling.",
+    "No B7.1 activity, execution, broker/provider call, credential use, paid action, paper trade, or real-money action.",
+    "No L-2 signal, current-capital branch, breadth study, futures path, or asset multiplier.",
+    "No daily, per-asset, per-sleeve, per-trade, or twenty-session pseudo-replication.",
+    "No threshold weakening, source substitution, locked-history edit, edge claim, E1/E2 promotion, deployment, or real-money claim."
+  ]
+}

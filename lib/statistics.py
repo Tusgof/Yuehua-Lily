@@ -210,6 +210,34 @@ def minimum_track_record_length_falsify(
     )
 
 
+def paired_mean_minimum_observations(
+    *,
+    alternative_mean: float,
+    null_mean: float,
+    planning_standard_deviation: float,
+    autocorrelations: Sequence[float] = (),
+    significance: float = 0.05,
+    power: float = 0.80,
+) -> int | None:
+    """One-sided paired-mean planning length with asymptotic lag inflation.
+
+    This is a normal-mean power calculation for a paired portfolio metric.  It
+    deliberately does not use Sharpe moments, annualization, or asset counts.
+    """
+    if planning_standard_deviation <= 0.0:
+        raise ValueError("planning standard deviation must be positive")
+    if not 0.0 < significance < 1.0 or not 0.0 < power < 1.0:
+        raise ValueError("significance and power must be between zero and one")
+    difference = abs(alternative_mean - null_mean)
+    if difference == 0.0:
+        return None
+    z_total = normal_ppf(1.0 - significance) + normal_ppf(power)
+    independent_observations = (z_total * planning_standard_deviation / difference) ** 2
+    return math.ceil(
+        independent_observations * asymptotic_autocorrelation_inflation(autocorrelations)
+    )
+
+
 def _powered_track_record_length(
     *,
     difference: float,

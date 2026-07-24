@@ -75,9 +75,9 @@ Exit: candidate improves a preregistered utility criterion without relying on un
 
 ### T3 / L-3 — Sizing Architecture
 
-Compare inverse-volatility sizing with equal notional using ex-ante and realized risk contribution, concentration, turnover, leverage, drawdown, and regime stability.
+B7 is complete as E0 governance only: it locks the L1 `research_signed` eight-ETF q/volatility candidate versus q comparator under identical inherited weekly constraints and next-actual-NYSE-close timing. The primary unit is the weekly paired portfolio component-risk HHI delta with a 0.05 minimum useful reduction; fixed-weight realized confirmation uses t+1 through t+20 actual sessions. Turnover/cost and cap/cash/scale-down limits are locked, `MinTRL_falsify` is 49, both validation plans bind at `MinTRL_validate` 49, and the optimistic separately funded regime ceiling is 366 weekly slots before actual-session/missingness reductions. Validation remains sealed and B7.1 is not authorized.
 
-Exit: inverse-vol sizing materially reduces preregistered concentration measures without unacceptable cost or leverage side effects, or the claim is falsified.
+Next gate: a separate owner-approved B7.1 activation/preflight gate before any data, signal, position, covariance, execution, or result observation. No B7 result or edge claim exists.
 
 ### T4 / L-4 — Breadth
 
@@ -300,8 +300,8 @@ If MinTRL validation cost is unaffordable or undefined against the benchmark nul
 | P0–P4 | Active after bootstrap | Maintain governance, reproducibility, statistics, data, and restore controls |
 | L-0 | Scope-restricted E0; B4.6 verifies production read-only and fractional metadata; B4.11/B4.12 stop before preview; B4.13 confirms the UAT hostname is not a public access entitlement | No UAT work planned; fractional minimum, funding FX, execution quality, and realized-cost evidence remain open |
 | L-1 | Scope-restricted E1; B4.9 closes the unavailable Webull-ledger dry run without observation; B4.10 adds no L-1 evidence | Validation remains sealed; no broker-ledger or historical-correctness claim |
-| L-2 | Proposed | L-1 evidence |
-| L-3 | Proposed | baseline infrastructure and preregistration |
+| L-2 | E1 underfunded_scope_restricted | Redesign requires a new owner-approved preregistration before any L-2 data access |
+| L-3 | Active/unexecuted E0; B7 governance lock complete | Separate owner-approved B7.1 activation/preflight gate before any data or execution |
 | L-4 | Proposed | universe/data integrity and preregistration |
 
 ## 11. Source Lineage
