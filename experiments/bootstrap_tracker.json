@@ -667,7 +667,7 @@
       "depends_on": ["B6.4"],
       "required_artifacts": [
         {"path": "experiments/l_3_inverse_volatility_sizing_preregistration_v1.json", "must": "locked_and_valid"},
-        {"path": "scripts/validate_l_3_inverse_volatility_sizing_preregistration.py", "must": "pass"},
+        {"path": "scripts/validate_l_3_inverse_volatility_sizing_preregistration.py", "must": "pass_with_l3_snapshots"},
         {"path": "tests/test_validate_l_3_inverse_volatility_sizing_preregistration.py", "must": "pass_in_hermetic_tier"},
         {"path": "tests/test_statistics_golden.py", "must": "pass_in_hermetic_tier"},
         {"path": "experiments/locked_gates.jsonl", "must": "contain_l3_manifest_identity"},

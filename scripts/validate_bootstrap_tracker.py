@@ -191,6 +191,14 @@ def _validate_done_artifact(
             completed.returncode == 0,
             False,
         )
+    if must == "pass_with_l3_snapshots":
+        return _validate_l3_v1_snapshot_coverage(
+            target,
+            order_id,
+            artifact_path,
+            project_root=project_root,
+            verify_runtime=verify_runtime,
+        )
     if must in {"pass_in_hermetic_tier", "pass_hermetic_tier"}:
         if not target.exists():
             return [f"{order_id}:missing_artifact:{artifact_path}"], False, False
@@ -1295,6 +1303,57 @@ def _validate_l1_manifest(
             blockers.append(f"{order_id}:l1_manifest_validator_hash_mismatch")
         if any(other.get("supersedes_gate_id") == "l_1_baseline_v1" for other in rows):
             blockers.append(f"{order_id}:l1_gate_is_not_active")
+    return blockers, not blockers, False
+
+
+def _validate_l3_v1_snapshot_coverage(
+    target: Path,
+    order_id: str,
+    artifact_path: str,
+    *,
+    project_root: Path,
+    verify_runtime: bool,
+) -> tuple[list[str], bool, bool]:
+    if not target.is_file():
+        return [f"{order_id}:missing_artifact:{artifact_path}"], False, False
+    snapshots = (
+        (
+            "methodology_snapshots/l3_inverse_volatility_sizing_v1/wiki/concepts/inverse-volatility-weighting.md",
+            "c59b512d3df9499a738b1ee256d388376f04edee1c59727f2f79ddcc905e7f72",
+        ),
+        (
+            "methodology_snapshots/l3_inverse_volatility_sizing_v1/wiki/concepts/position-sizing.md",
+            "6d24c4ffc6770590baaeb90402af4e413040ff6856b0585773657da85dc68343",
+        ),
+        (
+            "methodology_snapshots/l3_inverse_volatility_sizing_v1/wiki/concepts/minimum-track-record-length.md",
+            "ca65225740673bd363be7461b8022281da08ae32e6ff42f8887f1072eb51ad81",
+        ),
+    )
+    blockers: list[str] = []
+    for path, digest in snapshots:
+        source = project_root / path
+        if not source.is_file() or hashlib.sha256(source.read_bytes()).hexdigest() != digest:
+            blockers.append(f"{order_id}:l3_v1_snapshot_hash_mismatch:{path}")
+    test_path = project_root / "tests/test_validate_l_3_inverse_volatility_sizing_preregistration.py"
+    if not test_path.is_file() or "SNAPSHOT_WIKI_ROOT" not in test_path.read_text(encoding="utf-8"):
+        blockers.append(f"{order_id}:l3_v1_snapshot_test_coverage_missing")
+    if blockers or not verify_runtime:
+        return blockers, not blockers, not verify_runtime
+    completed = subprocess.run(
+        [
+            sys.executable,
+            "-m",
+            "unittest",
+            "tests.test_validate_l_3_inverse_volatility_sizing_preregistration",
+        ],
+        cwd=project_root,
+        text=True,
+        capture_output=True,
+        check=False,
+    )
+    if completed.returncode != 0:
+        blockers.append(f"{order_id}:l3_v1_snapshot_test_failed")
     return blockers, not blockers, False
 
 

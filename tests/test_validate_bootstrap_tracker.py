@@ -139,6 +139,34 @@ class BootstrapTrackerValidatorTests(unittest.TestCase):
         self.assertFalse(unverified)
         self.assertIn("B7.2:l3_v2_snapshot_declarations_mismatch", blockers)
 
+    def test_B7_historical_validator_claim_requires_snapshots(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            validator = root / "scripts" / "validate_l_3_inverse_volatility_sizing_preregistration.py"
+            historical_test = (
+                root / "tests" / "test_validate_l_3_inverse_volatility_sizing_preregistration.py"
+            )
+            validator.parent.mkdir()
+            historical_test.parent.mkdir()
+            validator.write_text("pass\n", encoding="utf-8")
+            historical_test.write_text("SNAPSHOT_WIKI_ROOT = None\n", encoding="utf-8")
+            blockers, checked, unverified = self.validator._validate_done_artifact(
+                "B7",
+                "scripts/validate_l_3_inverse_volatility_sizing_preregistration.py",
+                "pass_with_l3_snapshots",
+                project_root=root,
+                verify_runtime=False,
+                runtime_cache={},
+            )
+        self.assertFalse(checked)
+        self.assertTrue(unverified)
+        self.assertIn(
+            "B7:l3_v1_snapshot_hash_mismatch:"
+            "methodology_snapshots/l3_inverse_volatility_sizing_v1/wiki/concepts/"
+            "inverse-volatility-weighting.md",
+            blockers,
+        )
+
     def test_done_claim_without_artifact_fails(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
