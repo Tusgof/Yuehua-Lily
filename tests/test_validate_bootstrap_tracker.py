@@ -139,6 +139,63 @@ class BootstrapTrackerValidatorTests(unittest.TestCase):
         self.assertFalse(unverified)
         self.assertIn("B7.2:l3_v2_snapshot_declarations_mismatch", blockers)
 
+    def test_B7_1_manifest_done_claim_rejects_forged_artifact_hash(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            experiments = root / "experiments"
+            scripts = root / "scripts"
+            experiments.mkdir()
+            scripts.mkdir()
+            gate = experiments / "l_3_falsification_activation_preflight_v1.json"
+            validator = scripts / "validate_l_3_falsification_activation_preflight_v1.py"
+            gate.write_text("{}\n", encoding="utf-8")
+            validator.write_text("from lib.io import load_json\n", encoding="utf-8")
+            row = {
+                "gate_id": "l_3_falsification_activation_preflight_v1",
+                "gate_type": "activation_preflight_contract",
+                "artifact_path": "experiments/l_3_falsification_activation_preflight_v1.json",
+                "artifact_sha256": "0" * 64,
+                "validator_path": "scripts/validate_l_3_falsification_activation_preflight_v1.py",
+                "validator_sha256": hashlib.sha256(validator.read_bytes()).hexdigest(),
+                "human_approval": "Owner explicitly authorized B7.1 gate only",
+                "notes": "E0 edge_claim none sealed; neither data/container inspection nor execution",
+            }
+            manifest = experiments / "locked_gates.jsonl"
+            manifest.write_text(json.dumps(row) + "\n", encoding="utf-8")
+            blockers, checked, unverified = self.validator._validate_done_artifact(
+                "B7.1",
+                "experiments/locked_gates.jsonl",
+                "contain_l3_b71_manifest_identity",
+                project_root=root,
+                verify_runtime=False,
+                runtime_cache={},
+            )
+        self.assertFalse(checked)
+        self.assertFalse(unverified)
+        self.assertIn("B7.1:l3_b71_manifest_artifact_hash_mismatch", blockers)
+
+    def test_B7_1_registry_done_claim_rejects_authorization_mirror_omission(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            registry = root / "experiments" / "hypothesis_registry.json"
+            registry.parent.mkdir()
+            registry.write_text(
+                json.dumps({"hypotheses": [{"id": "L-3", "status": "active", "edge_claim": "none", "evidence": []}]}),
+                encoding="utf-8",
+            )
+            blockers, checked, unverified = self.validator._validate_done_artifact(
+                "B7.1",
+                "experiments/hypothesis_registry.json",
+                "match_l3_b71_registry_mirror",
+                project_root=root,
+                verify_runtime=False,
+                runtime_cache={},
+            )
+        self.assertFalse(checked)
+        self.assertFalse(unverified)
+        self.assertIn("B7.1:l3_b71_registry_E0_evidence_mismatch", blockers)
+        self.assertIn("B7.1:l3_b71_registry_decision_log_missing", blockers)
+
     def test_B7_historical_validator_claim_requires_snapshots(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)

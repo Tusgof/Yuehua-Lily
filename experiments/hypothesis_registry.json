@@ -431,7 +431,7 @@
       "evidence": [
         {
           "evidence_tier": "E0",
-          "path": "experiments/l_3_inverse_volatility_sizing_preregistration_v2.json"
+          "path": "experiments/l_3_falsification_activation_preflight_v1.json"
         }
       ],
       "decision_log": [
@@ -449,6 +449,11 @@
           "date": "2026-07-24",
           "decision": "B7_2_hermetic_source_provenance_remediated_E0",
           "notes": "B7.2 makes the active L-3 gate v2 by replacing only the external-Wiki source-verification layer with byte-preserving repository snapshots. The immutable v1 research semantics, E0 edge_claim none, sealed validation, and B7.1 owner-approval requirement remain unchanged. No market evidence was read."
+        },
+        {
+          "date": "2026-07-26",
+          "decision": "B7_1_activation_preflight_gate_locked_E0",
+          "notes": "B7.1 locks an E0 gate-only preflight contract that source-binds active v2, immutable v1 semantics, the locked L1 baseline, exact manifest identities, the 465 overall optimistic weekly ceiling, the 366 regime-eligible ceiling, and the validation seal. All six authorization flags are false: data, container inspection, return parsing, execution, report decision, and validation access. L-3 remains active/unexecuted with edge_claim none and validation sealed. Inspector review and successful exact-SHA CI must precede a separate owner-authorized one-run execution order. No market evidence was read."
         }
       ]
     },

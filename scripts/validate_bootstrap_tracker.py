@@ -482,6 +482,18 @@ def _validate_done_artifact(
                 project_root=project_root,
                 verify_runtime=verify_runtime,
             )
+        if artifact_path == "experiments/l_3_falsification_activation_preflight_v1.json":
+            return _validate_locked_preregistration_gate(
+                target,
+                order_id,
+                artifact_path,
+                gate_id="l_3_falsification_activation_preflight_v1",
+                label="l3_b71_activation_preflight",
+                expected_status="locked_activation_preflight_execution_not_authorized",
+                edge_claim_field="edge_claim",
+                project_root=project_root,
+                verify_runtime=verify_runtime,
+            )
         return _validate_l0_locked_gate(
             target,
             order_id,
@@ -495,28 +507,40 @@ def _validate_done_artifact(
         return _validate_l3_manifest_identity(target, order_id, artifact_path, project_root=project_root)
     if must == "contain_l3_v2_manifest_identity":
         return _validate_l3_v2_manifest_identity(target, order_id, artifact_path, project_root=project_root)
+    if must == "contain_l3_b71_manifest_identity":
+        return _validate_l3_b71_manifest_identity(target, order_id, artifact_path, project_root=project_root)
     if must == "match_l3_v2_source_binding":
         return _validate_l3_v2_source_binding(target, order_id, artifact_path, project_root=project_root)
     if must == "match_l3_registry_mirror":
         return _validate_l3_registry_mirror(target, order_id, artifact_path)
     if must == "match_l3_v2_registry_mirror":
         return _validate_l3_v2_registry_mirror(target, order_id, artifact_path)
+    if must == "match_l3_b71_registry_mirror":
+        return _validate_l3_b71_registry_mirror(target, order_id, artifact_path)
     if must == "match_l3_human_registry_mirror":
         return _validate_l3_human_registry_mirror(target, order_id, artifact_path)
     if must == "match_l3_v2_human_registry_mirror":
         return _validate_l3_v2_human_registry_mirror(target, order_id, artifact_path)
+    if must == "match_l3_b71_human_registry_mirror":
+        return _validate_l3_b71_human_registry_mirror(target, order_id, artifact_path)
     if must == "match_l3_project_memory":
         return _validate_l3_project_memory(target, order_id, artifact_path)
     if must == "match_l3_v2_project_memory":
         return _validate_l3_v2_project_memory(target, order_id, artifact_path)
+    if must == "match_l3_b71_project_memory":
+        return _validate_l3_b71_project_memory(target, order_id, artifact_path)
     if must == "match_l3_implementation_plan":
         return _validate_l3_implementation_plan(target, order_id, artifact_path)
     if must == "match_l3_v2_implementation_plan":
         return _validate_l3_v2_implementation_plan(target, order_id, artifact_path)
+    if must == "match_l3_b71_implementation_plan":
+        return _validate_l3_b71_implementation_plan(target, order_id, artifact_path)
     if must == "register_l3_validator":
         return _validate_l3_validator_registration(target, order_id, artifact_path)
     if must == "register_l3_v2_validator":
         return _validate_l3_v2_validator_registration(target, order_id, artifact_path)
+    if must == "register_l3_b71_validator":
+        return _validate_l3_b71_validator_registration(target, order_id, artifact_path)
     if must == "define_human_readable_research_log_contract":
         return _validate_research_log_format(target, order_id, artifact_path)
     if must == "contain_l0_and_l1_research_log_requirements":
@@ -1475,6 +1499,47 @@ def _validate_l3_v2_manifest_identity(
     return blockers, not blockers, False
 
 
+def _validate_l3_b71_manifest_identity(
+    target: Path,
+    order_id: str,
+    artifact_path: str,
+    *,
+    project_root: Path,
+) -> tuple[list[str], bool, bool]:
+    if not target.is_file():
+        return [f"{order_id}:missing_artifact:{artifact_path}"], False, False
+    gate_path = project_root / "experiments/l_3_falsification_activation_preflight_v1.json"
+    validator_path = project_root / "scripts/validate_l_3_falsification_activation_preflight_v1.py"
+    try:
+        rows = [json.loads(line) for line in target.read_text(encoding="utf-8").splitlines() if line.strip()]
+    except json.JSONDecodeError:
+        return [f"{order_id}:l3_b71_locked_gate_manifest_invalid_jsonl"], False, False
+    matching = [row for row in rows if row.get("gate_id") == "l_3_falsification_activation_preflight_v1"]
+    if len(matching) != 1:
+        return [f"{order_id}:l3_b71_locked_gate_entry_count:{len(matching)}"], False, False
+    row = matching[0]
+    expected = {
+        "gate_type": "activation_preflight_contract",
+        "artifact_path": "experiments/l_3_falsification_activation_preflight_v1.json",
+        "validator_path": "scripts/validate_l_3_falsification_activation_preflight_v1.py",
+    }
+    blockers: list[str] = []
+    for key, value in expected.items():
+        if row.get(key) != value:
+            blockers.append(f"{order_id}:l3_b71_manifest_{key}_mismatch")
+    if not gate_path.is_file() or row.get("artifact_sha256") != hashlib.sha256(gate_path.read_bytes()).hexdigest():
+        blockers.append(f"{order_id}:l3_b71_manifest_artifact_hash_mismatch")
+    if not validator_path.is_file() or row.get("validator_sha256") != hashlib.sha256(validator_path.read_bytes()).hexdigest():
+        blockers.append(f"{order_id}:l3_b71_manifest_validator_hash_mismatch")
+    note = str(row.get("notes", "")).lower()
+    approval = str(row.get("human_approval", "")).lower()
+    if not all(item in note for item in ("e0", "edge_claim none", "sealed", "neither data/container inspection nor execution")):
+        blockers.append(f"{order_id}:l3_b71_manifest_claim_limit_or_seal_missing")
+    if "owner explicitly authorized b7.1" not in approval:
+        blockers.append(f"{order_id}:l3_b71_manifest_owner_authorization_missing")
+    return blockers, not blockers, False
+
+
 def _validate_l3_v2_source_binding(
     target: Path,
     order_id: str,
@@ -1532,6 +1597,7 @@ def _validate_l3_registry_mirror(
     allowed_evidence = (
         [{"evidence_tier": "E0", "path": "experiments/l_3_inverse_volatility_sizing_preregistration_v1.json"}],
         [{"evidence_tier": "E0", "path": "experiments/l_3_inverse_volatility_sizing_preregistration_v2.json"}],
+        [{"evidence_tier": "E0", "path": "experiments/l_3_falsification_activation_preflight_v1.json"}],
     )
     if evidence not in allowed_evidence:
         blockers.append(f"{order_id}:l3_registry_E0_evidence_mismatch")
@@ -1576,8 +1642,11 @@ def _validate_l3_v2_registry_mirror(
     if l3.get("status") != "active" or l3.get("edge_claim") not in (None, "none"):
         blockers.append(f"{order_id}:l3_v2_registry_status_or_edge_claim_mismatch")
     evidence = l3.get("evidence")
-    expected_evidence = [{"evidence_tier": "E0", "path": "experiments/l_3_inverse_volatility_sizing_preregistration_v2.json"}]
-    if evidence != expected_evidence:
+    allowed_evidence = (
+        [{"evidence_tier": "E0", "path": "experiments/l_3_inverse_volatility_sizing_preregistration_v2.json"}],
+        [{"evidence_tier": "E0", "path": "experiments/l_3_falsification_activation_preflight_v1.json"}],
+    )
+    if evidence not in allowed_evidence:
         blockers.append(f"{order_id}:l3_v2_registry_active_evidence_mismatch")
     falsify = l3.get("mintrl_falsify")
     validate = l3.get("mintrl_validate")
@@ -1591,6 +1660,38 @@ def _validate_l3_v2_registry_mirror(
     return blockers, not blockers, False
 
 
+def _validate_l3_b71_registry_mirror(
+    target: Path,
+    order_id: str,
+    artifact_path: str,
+) -> tuple[list[str], bool, bool]:
+    if not target.is_file():
+        return [f"{order_id}:missing_artifact:{artifact_path}"], False, False
+    try:
+        registry = json.loads(target.read_text(encoding="utf-8"))
+    except json.JSONDecodeError:
+        return [f"{order_id}:l3_b71_registry_invalid_json"], False, False
+    hypotheses = registry.get("hypotheses") if isinstance(registry, dict) else None
+    matching = [item for item in hypotheses or [] if isinstance(item, dict) and item.get("id") == "L-3"]
+    if len(matching) != 1:
+        return [f"{order_id}:l3_b71_registry_entry_count:{len(matching)}"], False, False
+    l3 = matching[0]
+    blockers: list[str] = []
+    if l3.get("status") != "active" or l3.get("edge_claim") not in (None, "none"):
+        blockers.append(f"{order_id}:l3_b71_registry_status_or_edge_claim_mismatch")
+    if l3.get("evidence") != [{"evidence_tier": "E0", "path": "experiments/l_3_falsification_activation_preflight_v1.json"}]:
+        blockers.append(f"{order_id}:l3_b71_registry_E0_evidence_mismatch")
+    decision_log = l3.get("decision_log")
+    if not isinstance(decision_log, list) or not any(
+        entry.get("decision") == "B7_1_activation_preflight_gate_locked_E0" for entry in decision_log if isinstance(entry, dict)
+    ):
+        blockers.append(f"{order_id}:l3_b71_registry_decision_log_missing")
+    text = json.dumps(l3, ensure_ascii=False)
+    required = ("49", "465", "366", "validation sealed", "edge_claim none", "Inspector", "one-run", "No market evidence was read.")
+    blockers.extend(f"{order_id}:l3_b71_registry_missing:{item}" for item in required if item not in text)
+    return blockers, not blockers, False
+
+
 def _validate_l3_human_registry_mirror(
     target: Path,
     order_id: str,
@@ -1601,7 +1702,7 @@ def _validate_l3_human_registry_mirror(
         order_id,
         artifact_path,
         "l3_human_registry",
-        ("active, unexecuted E0 governance", "research_signed", "q / max(annualized_volatility, 0.05)", "comparator `q`", "MinTRL_falsify = 49", "MinTRL_validate = 49", "366", "B7.1 requires separate owner approval"),
+        ("active, unexecuted E0 governance", "research_signed", "q / max(annualized_volatility, 0.05)", "comparator `q`", "MinTRL_falsify = 49", "MinTRL_validate = 49", "366", "B7.1 locked E0 gate-only preflight"),
     )
 
 
@@ -1611,7 +1712,18 @@ def _validate_l3_v2_human_registry_mirror(
     artifact_path: str,
 ) -> tuple[list[str], bool, bool]:
     return _validate_l3_text_mirror(
-        target, order_id, artifact_path, "l3_v2_human_registry", ("B7.2", "v2", "hermetic source-provenance", "v1 research semantics remain unchanged", "B7.1 requires separate owner approval")
+        target, order_id, artifact_path, "l3_v2_human_registry", ("B7.2", "v2", "hermetic source-provenance", "v1 research semantics remain unchanged", "B7.1 locked E0 gate-only preflight")
+    )
+
+
+def _validate_l3_b71_human_registry_mirror(
+    target: Path,
+    order_id: str,
+    artifact_path: str,
+) -> tuple[list[str], bool, bool]:
+    return _validate_l3_text_mirror(
+        target, order_id, artifact_path, "l3_b71_human_registry",
+        ("B7.1 locked E0 gate-only preflight", "all six authorization flags false", "validation remains sealed", "Inspector review", "separate owner-authorized one-run execution order"),
     )
 
 
@@ -1625,7 +1737,7 @@ def _validate_l3_project_memory(
         order_id,
         artifact_path,
         "l3_project_memory",
-        ("L-2 E1 underfunded_scope_restricted", "L-3 active/unexecuted E0", "MinTRL_falsify` 49", "366-slot", "B7.1 is not authorized", "separate owner-approved B7.1 activation/preflight gate"),
+        ("L-2 E1 underfunded_scope_restricted", "L-3 active/unexecuted E0", "MinTRL_falsify` 49", "366-slot", "B7.1 locked E0 gate-only preflight", "Inspector review"),
     )
 
 
@@ -1635,7 +1747,18 @@ def _validate_l3_v2_project_memory(
     artifact_path: str,
 ) -> tuple[list[str], bool, bool]:
     return _validate_l3_text_mirror(
-        target, order_id, artifact_path, "l3_v2_project_memory", ("B7.2", "v2", "hermetic source-provenance", "B7.1 is not authorized")
+        target, order_id, artifact_path, "l3_v2_project_memory", ("B7.2", "v2", "hermetic source-provenance", "B7.1 locked E0 gate-only preflight")
+    )
+
+
+def _validate_l3_b71_project_memory(
+    target: Path,
+    order_id: str,
+    artifact_path: str,
+) -> tuple[list[str], bool, bool]:
+    return _validate_l3_text_mirror(
+        target, order_id, artifact_path, "l3_b71_project_memory",
+        ("B7.1 locked E0 gate-only preflight", "all six authorization flags false", "validation sealed", "Inspector review", "separate owner-authorized one-run execution order"),
     )
 
 
@@ -1649,7 +1772,7 @@ def _validate_l3_implementation_plan(
         order_id,
         artifact_path,
         "l3_implementation_plan",
-        ("B7 is complete as E0 governance only", "research_signed", "MinTRL_falsify` is 49", "MinTRL_validate` 49", "366 weekly slots", "B7.1 is not authorized"),
+        ("B7 is complete as E0 governance only", "research_signed", "MinTRL_falsify` is 49", "MinTRL_validate` 49", "366 weekly slots", "B7.1 locked E0 gate-only preflight"),
     )
 
 
@@ -1659,7 +1782,18 @@ def _validate_l3_v2_implementation_plan(
     artifact_path: str,
 ) -> tuple[list[str], bool, bool]:
     return _validate_l3_text_mirror(
-        target, order_id, artifact_path, "l3_v2_implementation_plan", ("B7.2", "v2", "hermetic source-provenance", "B7.1 is not authorized")
+        target, order_id, artifact_path, "l3_v2_implementation_plan", ("B7.2", "v2", "hermetic source-provenance", "B7.1 locked E0 gate-only preflight")
+    )
+
+
+def _validate_l3_b71_implementation_plan(
+    target: Path,
+    order_id: str,
+    artifact_path: str,
+) -> tuple[list[str], bool, bool]:
+    return _validate_l3_text_mirror(
+        target, order_id, artifact_path, "l3_b71_implementation_plan",
+        ("B7.1 locked E0 gate-only preflight", "all six authorization flags false", "validation sealed", "Inspector review", "separate owner-authorized one-run execution order"),
     )
 
 
@@ -1710,6 +1844,24 @@ def _validate_l3_v2_validator_registration(
     registered = "scripts/validate_l_3_inverse_volatility_sizing_preregistration_v2.py"
     if not isinstance(scripts, list) or scripts.count(registered) != 1:
         return [f"{order_id}:l3_v2_validator_registration_mismatch"], False, False
+    return [], True, False
+
+
+def _validate_l3_b71_validator_registration(
+    target: Path,
+    order_id: str,
+    artifact_path: str,
+) -> tuple[list[str], bool, bool]:
+    if not target.is_file():
+        return [f"{order_id}:missing_artifact:{artifact_path}"], False, False
+    try:
+        payload = json.loads(target.read_text(encoding="utf-8"))
+    except json.JSONDecodeError:
+        return [f"{order_id}:l3_b71_script_registry_invalid_json"], False, False
+    scripts = payload.get("scripts") if isinstance(payload, dict) else None
+    registered = "scripts/validate_l_3_falsification_activation_preflight_v1.py"
+    if not isinstance(scripts, list) or scripts.count(registered) != 1:
+        return [f"{order_id}:l3_b71_validator_registration_mismatch"], False, False
     return [], True, False
 
 

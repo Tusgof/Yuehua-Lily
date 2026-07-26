@@ -709,6 +709,30 @@
         "B7.2 preserves v1 and its manifest row, records byte-preserving repository snapshots for exactly the three approved methodology pages, and activates v2 that source-binds v1 artifact/validator/manifest identity plus the snapshot hashes.",
         "B7.2 is E0 hermetic governance remediation only: v1 research semantics remain unchanged, validation remains sealed, edge_claim remains none, and B7.1/data/execution require separate owner approval."
       ]
+    },
+    {
+      "id": "B7.1",
+      "title": "L-3 activation/preflight gate-only contract",
+      "status": "done",
+      "depends_on": ["B7.2"],
+      "required_artifacts": [
+        {"path": "experiments/l_3_falsification_activation_preflight_v1.json", "must": "locked_and_valid"},
+        {"path": "scripts/validate_l_3_falsification_activation_preflight_v1.py", "must": "pass"},
+        {"path": "tests/test_validate_l_3_falsification_activation_preflight_v1.py", "must": "pass_in_hermetic_tier"},
+        {"path": "tests/test_statistics_golden.py", "must": "pass_in_hermetic_tier"},
+        {"path": "experiments/locked_gates.jsonl", "must": "contain_l3_b71_manifest_identity"},
+        {"path": "experiments/hypothesis_registry.json", "must": "match_l3_b71_registry_mirror"},
+        {"path": "docs/HYPOTHESIS_REGISTRY.md", "must": "match_l3_b71_human_registry_mirror"},
+        {"path": "PROJECT_BRAIN.md", "must": "match_l3_b71_project_memory"},
+        {"path": "IMPLEMENT_PLAN.md", "must": "match_l3_b71_implementation_plan"},
+        {"path": "config/new_code_scripts.json", "must": "register_l3_b71_validator"}
+      ],
+      "forbidden": ["dataset/container/market date/price/return/signal/position/covariance/regime/turnover/cost/PnL read or computation", "validation access or falsification/validation pooling", "broker/provider/network data call, credential or environment-variable read, paid action, paper trade, or real money", "market-data loader, executable backtest runner, report decision, threshold weakening, locked-history edit, E1/E2 promotion, or edge/deployment claim"],
+      "evidence": [
+        "Gate l_3_falsification_activation_preflight_v1 source-binds active L-3 v2, immutable v1 semantics, locked L1 baseline, their exact manifest rows and hashes, and the sealed validation boundary without binding the whole manifest or creating circular hashes.",
+        "The fail-closed validator and hermetic adversarial tests reject forged lineage, research-fact or capacity drift, pseudo-replication, validation pooling or mixed-container filtering, authorization opening, provider/credential fallback, unknown fields, and missing hard stops without inspecting any data.",
+        "B7.1 is E0 gate-only with edge_claim none. All six data/container/return/execution/report/validation authorization flags are false; L-3 stays active and unexecuted, validation sealed, and a later one-run order needs Inspector acceptance, successful exact-SHA CI, and new owner authorization."
+      ]
     }
   ]
 }
