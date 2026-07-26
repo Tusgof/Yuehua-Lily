@@ -77,7 +77,7 @@ Exit: candidate improves a preregistered utility criterion without relying on un
 
 B7 is complete as E0 governance only: it locks the L1 `research_signed` eight-ETF q/volatility candidate versus q comparator under identical inherited weekly constraints and next-actual-NYSE-close timing. The primary unit is the weekly paired portfolio component-risk HHI delta with a 0.05 minimum useful reduction; fixed-weight realized confirmation uses t+1 through t+20 actual sessions. Turnover/cost and cap/cash/scale-down limits are locked, `MinTRL_falsify` is 49, both validation plans bind at `MinTRL_validate` 49, and the optimistic separately funded regime ceiling is 366 weekly slots before actual-session/missingness reductions. B7.2 makes v2 active through hermetic source-provenance snapshots only; v1 research semantics remain unchanged. B7.1 locked E0 gate-only preflight source-binds v2/v1/L1 and the validation sealed boundary; all six authorization flags false.
 
-Next gate: Inspector review of B7.1, then a separate owner-authorized one-run execution order after successful exact-SHA CI before any data, signal, position, covariance, execution, or result observation. No B7 result or edge claim exists.
+B7.3 used its one owner-authorized run but exceeded the locked 465 weekly-observation ceiling (500 recorded), so its provisional classification is invalidated and L-3 is E1 scope_restricted. Validation remains sealed; no rerun is authorized. No edge claim exists.
 
 ### T4 / L-4 — Breadth
 
@@ -301,7 +301,7 @@ If MinTRL validation cost is unaffordable or undefined against the benchmark nul
 | L-0 | Scope-restricted E0; B4.6 verifies production read-only and fractional metadata; B4.11/B4.12 stop before preview; B4.13 confirms the UAT hostname is not a public access entitlement | No UAT work planned; fractional minimum, funding FX, execution quality, and realized-cost evidence remain open |
 | L-1 | Scope-restricted E1; B4.9 closes the unavailable Webull-ledger dry run without observation; B4.10 adds no L-1 evidence | Validation remains sealed; no broker-ledger or historical-correctness claim |
 | L-2 | E1 underfunded_scope_restricted | Redesign requires a new owner-approved preregistration before any L-2 data access |
-| L-3 | Active/unexecuted E0; B7 governance lock, B7.2 hermetic source-provenance remediation, and B7.1 locked E0 gate-only preflight complete | Inspector review, then a separate owner-authorized one-run execution order after exact-SHA CI; B7.1 authorizes no data or execution |
+| L-3 | E1 scope_restricted; B7.3 sole run invalidated after 500 weekly observations exceeded the 465 ceiling | Validation sealed; a future redesign requires new owner authorization and preregistration; no rerun |
 | L-4 | Proposed | universe/data integrity and preregistration |
 
 ## 11. Source Lineage

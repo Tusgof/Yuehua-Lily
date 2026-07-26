@@ -300,7 +300,7 @@
       "id": "L-2",
       "family": "candidate_signal",
       "counts_toward_family_stop": true,
-      "status": "active",
+      "status": "scope_restricted",
       "statement": "A 32/64/126/252 multi-lookback t-stat signal improves the Sharpe of paired daily net active returns versus the matched-horizon directional-count comparator; the 60-day L-1 baseline is secondary reference only.",
       "economic_rationale": "Combining horizons may reduce dependence on one arbitrary lookback while retaining trend exposure.",
       "testable_predictions": [
@@ -384,7 +384,7 @@
       "id": "L-3",
       "family": "position_sizing",
       "counts_toward_family_stop": false,
-      "status": "active",
+      "status": "scope_restricted",
       "statement": "On the fixed L1 research_signed eight-ETF universe, q divided by volatility is tested against q under identical inherited weekly constraints for a reduction in paired portfolio component-risk concentration without unacceptable locked side effects.",
       "economic_rationale": "Equal notional allows volatile markets to dominate risk; volatility scaling should distribute risk more evenly.",
       "testable_predictions": [
@@ -430,8 +430,8 @@
       ],
       "evidence": [
         {
-          "evidence_tier": "E0",
-          "path": "experiments/l_3_falsification_activation_preflight_v1.json"
+          "evidence_tier": "E1",
+          "path": "reports/experiments/l_3_falsification_report.json"
         }
       ],
       "decision_log": [
@@ -454,6 +454,11 @@
           "date": "2026-07-26",
           "decision": "B7_1_activation_preflight_gate_locked_E0",
           "notes": "B7.1 locks an E0 gate-only preflight contract that source-binds active v2, immutable v1 semantics, the locked L1 baseline, exact manifest identities, the 465 overall optimistic weekly ceiling, the 366 regime-eligible ceiling, and the validation seal. All six authorization flags are false: data, container inspection, return parsing, execution, report decision, and validation access. L-3 remains active/unexecuted with edge_claim none and validation sealed. Inspector review and successful exact-SHA CI must precede a separate owner-authorized one-run execution order. No market evidence was read."
+        },
+        {
+          "date": "2026-07-26",
+          "decision": "B7_3_one_run_invalidated_scope_restricted_E1",
+          "notes": "The one authorized falsification-window run passed its sealed-container preflight but included 500 weekly observations, above the locked 465 ceiling, because warm-up decisions were included. Its provisional falsification result is invalidated; no rerun is authorized. L-3 is E1 scope_restricted with edge_claim none and validation sealed."
         }
       ]
     },

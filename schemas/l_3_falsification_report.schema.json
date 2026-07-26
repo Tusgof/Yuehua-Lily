@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Lily L-3 one-run falsification report",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "order_id", "hypothesis_id", "evidence_tier", "edge_claim", "tier_blockers", "producing_git_commit", "authorization_sha256", "validation_seal", "report_mode", "execution_status", "decision", "market_returns_read", "preflight", "observation_counts", "primary_statistics", "realized_confirmation", "side_effects", "regimes", "mechanism_autopsy", "claim_limits", "post_parse_hard_stop"],
+  "properties": {
+    "schema_version": {"const": "lily_l3_falsification_report_v1"},
+    "order_id": {"const": "B7.3"},
+    "hypothesis_id": {"const": "L-3"},
+    "evidence_tier": {"const": "E1"},
+    "edge_claim": {"const": "none"},
+    "tier_blockers": {"type": "array", "minItems": 1},
+    "execution_status": {"enum": ["falsified", "not_falsified_not_validated", "scope_restricted"]},
+    "decision": {"enum": ["falsified", "not_falsified_not_validated", "scope_restricted"]}
+  }
+}

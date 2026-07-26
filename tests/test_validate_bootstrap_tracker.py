@@ -196,6 +196,29 @@ class BootstrapTrackerValidatorTests(unittest.TestCase):
         self.assertIn("B7.1:l3_b71_registry_E0_evidence_mismatch", blockers)
         self.assertIn("B7.1:l3_b71_registry_decision_log_missing", blockers)
 
+    def test_B7_3_done_claim_rejects_fake_run_count(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            report_path = root / "reports" / "experiments" / "l_3_falsification_report.json"
+            ledger_path = root / "reports" / "experiments" / "l_3_falsification_execution_ledger.jsonl"
+            authorization_path = root / "experiments" / "l_3_one_run_falsification_authorization_v1.json"
+            report_path.parent.mkdir(parents=True)
+            authorization_path.parent.mkdir(exist_ok=True)
+            source_report = json.loads((PROJECT_ROOT / "reports/experiments/l_3_falsification_report.json").read_text(encoding="utf-8"))
+            source_authorization = (PROJECT_ROOT / "experiments/l_3_one_run_falsification_authorization_v1.json").read_text(encoding="utf-8")
+            source_ledger = (PROJECT_ROOT / "reports/experiments/l_3_falsification_execution_ledger.jsonl").read_text(encoding="utf-8")
+            authorization_path.write_text(source_authorization, encoding="utf-8")
+            source_report["authorization_sha256"] = hashlib.sha256(authorization_path.read_bytes()).hexdigest()
+            report_path.write_text(json.dumps(source_report), encoding="utf-8")
+            ledger_path.write_text(source_ledger + source_ledger, encoding="utf-8")
+            blockers, checked, unverified = self.validator._validate_done_artifact(
+                "B7.3", "reports/experiments/l_3_falsification_report.json", "match_l3_b73_report_and_ledger",
+                project_root=root, verify_runtime=False, runtime_cache={},
+            )
+        self.assertFalse(checked)
+        self.assertFalse(unverified)
+        self.assertIn("B7.3:l3_b73_exactly_one_run_ledger_mismatch", blockers)
+
     def test_B7_historical_validator_claim_requires_snapshots(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)

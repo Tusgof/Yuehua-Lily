@@ -737,14 +737,27 @@
     {
       "id": "B7.3",
       "title": "L-3 one-run falsification execution",
-      "status": "in_progress",
+      "status": "done",
       "depends_on": ["B7.1"],
       "required_artifacts": [
-        {"path": "experiments/l_3_one_run_falsification_authorization_v1.json", "must": "locked_and_valid"},
+        {"path": "experiments/l_3_one_run_falsification_authorization_v1.json", "must": "validate_l3_b73_authorization"},
         {"path": "scripts/validate_l_3_one_run_falsification_authorization_v1.py", "must": "pass"},
-        {"path": "scripts/run_l_3_falsification.py", "must": "pass"},
+        {"path": "scripts/run_l_3_falsification.py", "must": "contain_l3_b73_runner_guards"},
+        {"path": "schemas/l_3_falsification_report.schema.json", "must": "contain_l3_b73_report_schema"},
+        {"path": "scripts/validate_l_3_falsification_report.py", "must": "pass"},
         {"path": "reports/experiments/l_3_falsification_execution_ledger.jsonl", "must": "exist"},
-        {"path": "reports/experiments/l_3_falsification_report.json", "must": "exist"}
+        {"path": "reports/experiments/l_3_falsification_report.json", "must": "match_l3_b73_report_and_ledger"},
+        {"path": "experiments/locked_gates.jsonl", "must": "contain_l3_b73_manifest_identity"},
+        {"path": "experiments/hypothesis_registry.json", "must": "match_l3_b73_registry_mirror"},
+        {"path": "docs/HYPOTHESIS_REGISTRY.md", "must": "match_l3_b73_text_mirror"},
+        {"path": "PROJECT_BRAIN.md", "must": "match_l3_b73_text_mirror"},
+        {"path": "IMPLEMENT_PLAN.md", "must": "match_l3_b73_text_mirror"},
+        {"path": "config/new_code_scripts.json", "must": "register_l3_b73_scripts"},
+        {"path": "research_log/009-lily-l3-one-run-falsification.md", "must": "pass_research_log_audit"},
+        {"path": "tests/test_validate_l_3_one_run_falsification_authorization_v1.py", "must": "pass_in_hermetic_tier"},
+        {"path": "tests/test_validate_l_3_falsification_report.py", "must": "pass_in_hermetic_tier"},
+        {"path": "tests/test_run_l_3_falsification.py", "must": "pass_in_hermetic_tier"},
+        {"path": "tests/test_validate_bootstrap_tracker.py", "must": "pass_in_hermetic_tier"}
       ],
       "forbidden": ["validation access", "provider/network acquisition", "credential or environment-variable read", "paid, broker, paper-trade, or real-money action", "second real-return decision run", "edge, validation, deployment, or E2/E3 claim"],
       "evidence": ["Owner authorization dated 2026-07-26 permits exactly one L-3 falsification-window execution after B7.1 Inspector acceptance and exact-SHA CI."]

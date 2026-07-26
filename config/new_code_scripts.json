@@ -56,6 +56,7 @@
     "scripts/validate_l_3_inverse_volatility_sizing_preregistration_v2.py",
     "scripts/validate_l_3_falsification_activation_preflight_v1.py",
     "scripts/validate_l_3_one_run_falsification_authorization_v1.py",
+    "scripts/validate_l_3_falsification_report.py",
     "scripts/run_l_3_falsification.py",
     "scripts/validate_locked_gates.py"
   ]

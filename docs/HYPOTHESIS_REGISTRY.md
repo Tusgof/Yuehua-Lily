@@ -60,7 +60,7 @@
 
 ## L-3 — Inverse-Volatility Sizing
 
-- **Status**: active, unexecuted E0 governance; edge claim none
+- **Status**: E1 scope-restricted after the one authorized falsification-window run; edge claim none
 - **Locked scope**: the fixed L1 `research_signed` eight ETFs only; candidate `q / max(annualized_volatility, 0.05)` versus comparator `q`, with identical inherited weekly rebalance, next-actual-NYSE-close execution, 90% gross/10% cash/25% asset-cap constraints, 60-session risk inputs, and scale-down-only target volatility.
 - **Primary metric**: one weekly paired portfolio observation, `HHI_comparator - HHI_inverse_volatility`, using signed absolute component-risk shares after common constraints. The minimum useful mean reduction is `0.05`; there is no asset multiplier or pseudo-replication.
 - **Realized confirmation**: retain each branch’s execution-close weights and use exactly `t+1` through `t+20` actual-session returns with the same HHI normalization. Missing rows or a nonzero-position undefined denominator make the pair non-evaluable; weights are retained and no row or asset is silently dropped.
@@ -70,6 +70,7 @@
 - **Decision boundary**: a funded one-sided upper confidence bound below `0.05`, or a funded/evaluable primary result with a breached locked side-effect limit, may falsify the composite claim only with a mechanism autopsy. Validation needs a one-sided lower confidence bound above `0.05`, realized confirmation, every side-effect limit met, and independently funded claimed regimes.
 - **B7.1 locked E0 gate-only preflight**: all six authorization flags false (data, container inspection, return parsing, execution, report decision, validation access); validation remains sealed and no market evidence was read. Inspector review and successful exact-SHA CI must precede a separate owner-authorized one-run execution order; this gate does not authorize data or execution.
 - **B7.2 hermetic source-provenance remediation**: active v2 supersedes only the v1 external-Wiki source-verification layer with byte-preserving repository snapshots for hermetic CI. The v1 research semantics remain unchanged; evidence remains E0 with edge claim none.
+- **B7.3 result**: the one permitted run passed the falsification-only container preflight but recorded 500 weekly observations, exceeding the locked 465 ceiling. Its provisional result is invalid; no rerun is authorized. Validation remains sealed.
 
 ## L-4 — Breadth
 

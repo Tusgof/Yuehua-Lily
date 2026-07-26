@@ -1,0 +1,82 @@
+{
+  "authorization_sha256": "640264a8db7efaabfc6071788fbde337ca174b39605ccf2fdbf8a2e8668a10da",
+  "claim_limits": [
+    "E1 only",
+    "edge_claim none",
+    "validation sealed",
+    "no validation pooled"
+  ],
+  "decision": "scope_restricted",
+  "edge_claim": "none",
+  "evidence_tier": "E1",
+  "tier_blockers": [
+    "The only real-return run exceeded the locked 465 weekly-observation ceiling, so its provisional classification is invalid and no rerun is authorized.",
+    "Validation remains sealed and no validation evidence was accessed.",
+    "This E1 bounded failure cannot support an edge or deployment claim."
+  ],
+  "execution_status": "scope_restricted",
+  "hypothesis_id": "L-3",
+  "market_returns_read": true,
+  "mechanism_autopsy": null,
+  "observation_counts": {
+    "asset_multiplier": 1,
+    "effective_independent_bet_equivalents": 144.9225186110948,
+    "mintrl_falsify": 49,
+    "trade_multiplier": 1,
+    "weekly_paired_observations": 500
+  },
+  "order_id": "B7.3",
+  "preflight": {
+    "assets": [
+      "VTI",
+      "VGK",
+      "EWJ",
+      "VWO",
+      "IEF",
+      "TIP",
+      "GLD",
+      "DBC"
+    ],
+    "container_sha256": "6608c0ef88f4b7edaef7523738d7a172215aa4f97c8c403adeba884d6582a4dd",
+    "date_column": "session_date",
+    "maximum_date": "2015-12-31",
+    "minimum_date": "1996-03-12",
+    "schema": "lily_l1_daily_dataset_v1"
+  },
+  "primary_statistics": {
+    "autocorrelations_lags_1_to_5": [
+      0.4494405026395498,
+      0.2601681704923996,
+      0.21358078028655572,
+      0.14440833520298468,
+      0.1634729704326221
+    ],
+    "mean_hhi_delta": 0.017401027407839977,
+    "one_sided_upper_confidence_bound": 0.024009030850137385
+  },
+  "producing_git_commit": "3e3cfc773b8e327dca63bfdd8f2a1b103376173d",
+  "realized_confirmation": {
+    "mean_hhi_delta": 0.01322182325086601,
+    "observations": 500,
+    "threshold": 0.05
+  },
+  "regimes": {
+    "claims": [],
+    "rule": "no regime pooling; no inferential regime claim made"
+  },
+  "post_parse_hard_stop": "The sole run included 500 weekly observations, exceeding the locked 465 overall optimistic ceiling because pre-falsification warm-up decisions were included. The provisional falsification classification is invalid; no rerun is authorized.",
+  "report_mode": "execution_invalidated_post_parse",
+  "schema_version": "lily_l3_falsification_report_v1",
+  "side_effects": {
+    "candidate_turnover": 147.325604256605,
+    "comparator_turnover": 148.62849984209385,
+    "met": true,
+    "relative_increase": -0.008766122156067414
+  },
+  "validation_seal": {
+    "end": "2026-06-30",
+    "start": "2016-01-04",
+    "status": "sealed_not_accessed",
+    "validation_access_authorized": false
+  }
+}
