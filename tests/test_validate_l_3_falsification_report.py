@@ -38,6 +38,19 @@ class L3FalsificationReportTests(unittest.TestCase):
             ledger.write_text(rows + rows, encoding="utf-8")
             self.assertIn("exactly_one_run_ledger_mismatch", validate_report(ledger_path=ledger)["blockers"])
 
+    def test_rejects_missing_forged_or_duplicated_invalidation(self) -> None:
+        rows = LEDGER.read_text(encoding="utf-8").splitlines()
+        cases = [
+            ("\n".join(rows[:1]) + "\n", "raw_ledger_decision_conflicts_without_valid_invalidation"),
+            ("\n".join(rows + [rows[1]]) + "\n", "exactly_one_invalidation_ledger_mismatch"),
+            (rows[0] + "\n" + rows[1].replace("observation_window_started_before_2007-02-05", "forged") + "\n", "invalidation_event_mismatch"),
+        ]
+        for content, blocker in cases:
+            with self.subTest(blocker=blocker), tempfile.TemporaryDirectory() as directory:
+                ledger = Path(directory) / "ledger.jsonl"
+                ledger.write_text(content, encoding="utf-8")
+                self.assertIn(blocker, validate_report(ledger_path=ledger)["blockers"])
+
     def test_rejects_forged_authorization_file(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             authorization = Path(directory) / "authorization.json"

@@ -761,6 +761,30 @@
       ],
       "forbidden": ["validation access", "provider/network acquisition", "credential or environment-variable read", "paid, broker, paper-trade, or real-money action", "second real-return decision run", "edge, validation, deployment, or E2/E3 claim"],
       "evidence": ["Owner authorization dated 2026-07-26 permits exactly one L-3 falsification-window execution after B7.1 Inspector acceptance and exact-SHA CI."]
+    },
+    {
+      "id": "B7.4",
+      "title": "L-3 invalid-run ledger remediation",
+      "status": "done",
+      "depends_on": ["B7.3"],
+      "required_artifacts": [
+        {"path": "experiments/l_3_invalid_run_ledger_remediation_v1.json", "must": "validate_l3_b74_remediation"},
+        {"path": "reports/experiments/l_3_falsification_execution_ledger.jsonl", "must": "match_l3_b74_ledger_state"},
+        {"path": "scripts/validate_l_3_falsification_report.py", "must": "pass"},
+        {"path": "reports/experiments/l_3_falsification_report.json", "must": "match_l3_b74_report_state"},
+        {"path": "scripts/run_l_3_falsification.py", "must": "contain_l3_b73_runner_guards"},
+        {"path": "tests/test_validate_l_3_falsification_report.py", "must": "pass_in_hermetic_tier"},
+        {"path": "tests/test_run_l_3_falsification.py", "must": "pass_in_hermetic_tier"},
+        {"path": "experiments/hypothesis_registry.json", "must": "match_l3_b74_registry_mirror"},
+        {"path": "docs/HYPOTHESIS_REGISTRY.md", "must": "match_l3_b74_text_mirror"},
+        {"path": "PROJECT_BRAIN.md", "must": "match_l3_b74_text_mirror"},
+        {"path": "IMPLEMENT_PLAN.md", "must": "match_l3_b74_text_mirror"},
+        {"path": "research_log/009-lily-l3-one-run-falsification.md", "must": "pass_research_log_audit"},
+        {"path": "config/new_code_scripts.json", "must": "register_l3_b74_report_validator"},
+        {"path": "tests/test_validate_bootstrap_tracker.py", "must": "pass_in_hermetic_tier"}
+      ],
+      "forbidden": ["dataset, container, market return, validation, provider, credential, broker, paid, paper-trade, or real-money access", "execution or a second real-return decision run", "editing or deleting the original ledger row", "threshold/preregistration change", "falsified, not_falsified, edge, validation, E2/E3, deployment, or profitability claim"],
+      "evidence": ["B7.4 appends exactly one invalidation event that source-binds the original B7.3 ledger row and final report without a circular whole-ledger hash.", "The remediation attests market_returns_read_count 0, exactly one real-return decision run, exactly one invalidation, scope_restricted as the sole authoritative outcome, and sealed validation."]
     }
   ]
 }

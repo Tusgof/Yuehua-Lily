@@ -525,6 +525,18 @@ def _validate_done_artifact(
         return _validate_l3_b73_text_mirror(target, order_id, artifact_path)
     if must == "register_l3_b73_scripts":
         return _validate_l3_b73_script_registration(target, order_id, artifact_path)
+    if must == "validate_l3_b74_remediation":
+        return _validate_l3_b74_remediation(target, order_id, artifact_path, project_root=project_root)
+    if must == "match_l3_b74_ledger_state":
+        return _validate_l3_b74_ledger_state(target, order_id, artifact_path, project_root=project_root)
+    if must == "match_l3_b74_report_state":
+        return _validate_l3_b74_report_state(target, order_id, artifact_path)
+    if must == "match_l3_b74_registry_mirror":
+        return _validate_l3_b74_registry_mirror(target, order_id, artifact_path)
+    if must == "match_l3_b74_text_mirror":
+        return _validate_l3_b74_text_mirror(target, order_id, artifact_path)
+    if must == "register_l3_b74_report_validator":
+        return _validate_l3_b74_report_validator_registration(target, order_id, artifact_path)
     if must == "match_l3_v2_source_binding":
         return _validate_l3_v2_source_binding(target, order_id, artifact_path, project_root=project_root)
     if must == "match_l3_registry_mirror":
@@ -1774,6 +1786,102 @@ def _validate_l3_b73_script_registration(target: Path, order_id: str, artifact_p
     required = ("scripts/validate_l_3_one_run_falsification_authorization_v1.py", "scripts/run_l_3_falsification.py", "scripts/validate_l_3_falsification_report.py")
     blockers = [f"{order_id}:l3_b73_script_registration_missing:{path}" for path in required if not isinstance(scripts, list) or scripts.count(path) != 1]
     return blockers, not blockers, False
+
+
+def _validate_l3_b74_remediation(
+    target: Path, order_id: str, artifact_path: str, *, project_root: Path
+) -> tuple[list[str], bool, bool]:
+    if not target.is_file():
+        return [f"{order_id}:missing_artifact:{artifact_path}"], False, False
+    try:
+        remediation = json.loads(target.read_text(encoding="utf-8"))
+    except json.JSONDecodeError:
+        return [f"{order_id}:l3_b74_remediation_invalid_json"], False, False
+    expected = {
+        "schema_version": "lily_l3_invalid_run_ledger_remediation_v1", "order_id": "B7.4", "hypothesis_id": "L-3",
+        "status": "locked_invalid_run_ledger_remediation", "authoritative_outcome": "scope_restricted", "edge_claim": "none",
+        "b7_4_attestation": {"market_returns_read_count": 0, "real_return_decision_run_count": 1, "invalidation_count": 1, "validation_access_authorized": False, "validation_status": "sealed_not_accessed", "second_run_authorized": False},
+    }
+    blockers = [f"{order_id}:l3_b74_remediation_{key}_mismatch" for key, value in expected.items() if remediation.get(key) != value]
+    report = project_root / "reports/experiments/l_3_falsification_report.json"
+    source_binding = remediation.get("source_binding")
+    if not isinstance(source_binding, dict) or source_binding.get("final_report", {}).get("sha256") != hashlib.sha256(report.read_bytes()).hexdigest():
+        blockers.append(f"{order_id}:l3_b74_report_hash_binding_mismatch")
+    invalidation = remediation.get("invalidation")
+    if not isinstance(invalidation, dict) or invalidation.get("reason") != "observation_window_started_before_2007-02-05" or invalidation.get("observed_weekly_paired_observations") != 500 or invalidation.get("locked_weekly_observation_ceiling") != 465 or invalidation.get("provisional_metrics_inference_status") != "invalid_unusable":
+        blockers.append(f"{order_id}:l3_b74_invalidation_facts_mismatch")
+    return blockers, not blockers, False
+
+
+def _validate_l3_b74_ledger_state(
+    target: Path, order_id: str, artifact_path: str, *, project_root: Path
+) -> tuple[list[str], bool, bool]:
+    if not target.is_file():
+        return [f"{order_id}:missing_artifact:{artifact_path}"], False, False
+    try:
+        rows = [line for line in target.read_bytes().splitlines() if line]
+        parsed = [json.loads(line) for line in rows]
+    except (OSError, UnicodeDecodeError, json.JSONDecodeError):
+        return [f"{order_id}:l3_b74_ledger_invalid"], False, False
+    blockers: list[str] = []
+    runs = [row for row in parsed if row.get("event") == "real_return_decision_run"]
+    invalidations = [row for row in parsed if row.get("event") == "real_return_decision_run_invalidated"]
+    if len(parsed) != 2 or len(runs) != 1 or len(invalidations) != 1:
+        blockers.append(f"{order_id}:l3_b74_ledger_event_count_mismatch")
+    if not rows or hashlib.sha256(rows[0]).hexdigest() != "594b8cbbdf7c27769191ab9495275803478481121372cd3bfc6f7e6d3a8a556a":
+        blockers.append(f"{order_id}:l3_b74_original_row_hash_mismatch")
+    if invalidations:
+        event = invalidations[0]
+        expected = {"run_id": "B7.3-L3-ONE", "producing_git_commit": "3e3cfc773b8e327dca63bfdd8f2a1b103376173d", "reason": "observation_window_started_before_2007-02-05", "observed_weekly_paired_observations": 500, "locked_weekly_observation_ceiling": 465, "authoritative_outcome": "scope_restricted", "market_returns_read_count": 0, "authorizes_real_return_decision_run": False, "validation_access_authorized": False}
+        blockers.extend(f"{order_id}:l3_b74_invalidation_{key}_mismatch" for key, value in expected.items() if event.get(key) != value)
+    return blockers, not blockers, False
+
+
+def _validate_l3_b74_report_state(target: Path, order_id: str, artifact_path: str) -> tuple[list[str], bool, bool]:
+    if not target.is_file():
+        return [f"{order_id}:missing_artifact:{artifact_path}"], False, False
+    try:
+        report = json.loads(target.read_text(encoding="utf-8"))
+    except json.JSONDecodeError:
+        return [f"{order_id}:l3_b74_report_invalid_json"], False, False
+    expected = {"decision": "scope_restricted", "execution_status": "scope_restricted", "evidence_tier": "E1", "edge_claim": "none", "report_mode": "execution_invalidated_post_parse"}
+    blockers = [f"{order_id}:l3_b74_report_{key}_mismatch" for key, value in expected.items() if report.get(key) != value]
+    return blockers, not blockers, False
+
+
+def _validate_l3_b74_registry_mirror(target: Path, order_id: str, artifact_path: str) -> tuple[list[str], bool, bool]:
+    if not target.is_file():
+        return [f"{order_id}:missing_artifact:{artifact_path}"], False, False
+    try:
+        hypotheses = json.loads(target.read_text(encoding="utf-8")).get("hypotheses", [])
+    except json.JSONDecodeError:
+        return [f"{order_id}:l3_b74_registry_invalid_json"], False, False
+    l3 = next((item for item in hypotheses if isinstance(item, dict) and item.get("id") == "L-3"), None)
+    if not isinstance(l3, dict):
+        return [f"{order_id}:l3_b74_registry_entry_missing"], False, False
+    decision_log = l3.get("decision_log")
+    valid = l3.get("status") == "scope_restricted" and l3.get("edge_claim") in (None, "none") and isinstance(decision_log, list) and any(entry.get("decision") == "B7_4_invalid_run_ledger_remediated_E1" for entry in decision_log if isinstance(entry, dict))
+    return ([] if valid else [f"{order_id}:l3_b74_registry_terminal_state_mismatch"], valid, False)
+
+
+def _validate_l3_b74_text_mirror(target: Path, order_id: str, artifact_path: str) -> tuple[list[str], bool, bool]:
+    if not target.is_file():
+        return [f"{order_id}:missing_artifact:{artifact_path}"], False, False
+    text = target.read_text(encoding="utf-8")
+    required = ("B7.4", "scope_restricted", "original ledger", "invalid", "validation")
+    blockers = [f"{order_id}:l3_b74_text_mirror_missing:{item}" for item in required if item not in text]
+    return blockers, not blockers, False
+
+
+def _validate_l3_b74_report_validator_registration(target: Path, order_id: str, artifact_path: str) -> tuple[list[str], bool, bool]:
+    if not target.is_file():
+        return [f"{order_id}:missing_artifact:{artifact_path}"], False, False
+    try:
+        scripts = json.loads(target.read_text(encoding="utf-8")).get("scripts")
+    except json.JSONDecodeError:
+        return [f"{order_id}:l3_b74_script_registry_invalid_json"], False, False
+    valid = isinstance(scripts, list) and scripts.count("scripts/validate_l_3_falsification_report.py") == 1
+    return ([] if valid else [f"{order_id}:l3_b74_report_validator_registration_mismatch"], valid, False)
 
 
 def _validate_l3_registry_mirror(

@@ -219,6 +219,21 @@ class BootstrapTrackerValidatorTests(unittest.TestCase):
         self.assertFalse(unverified)
         self.assertIn("B7.3:l3_b73_exactly_one_run_ledger_mismatch", blockers)
 
+    def test_B7_4_done_claim_rejects_original_ledger_row_rewrite(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            ledger = root / "reports" / "experiments" / "l_3_falsification_execution_ledger.jsonl"
+            ledger.parent.mkdir(parents=True)
+            lines = (PROJECT_ROOT / "reports/experiments/l_3_falsification_execution_ledger.jsonl").read_text(encoding="utf-8").splitlines()
+            ledger.write_text(lines[0] + " " + "\n" + lines[1] + "\n", encoding="utf-8")
+            blockers, checked, unverified = self.validator._validate_done_artifact(
+                "B7.4", "reports/experiments/l_3_falsification_execution_ledger.jsonl", "match_l3_b74_ledger_state",
+                project_root=root, verify_runtime=False, runtime_cache={},
+            )
+        self.assertFalse(checked)
+        self.assertFalse(unverified)
+        self.assertIn("B7.4:l3_b74_original_row_hash_mismatch", blockers)
+
     def test_B7_historical_validator_claim_requires_snapshots(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)

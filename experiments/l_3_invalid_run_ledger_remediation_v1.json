@@ -1,0 +1,42 @@
+{
+  "schema_version": "lily_l3_invalid_run_ledger_remediation_v1",
+  "order_id": "B7.4",
+  "hypothesis_id": "L-3",
+  "status": "locked_invalid_run_ledger_remediation",
+  "authoritative_outcome": "scope_restricted",
+  "edge_claim": "none",
+  "source_binding": {
+    "original_ledger_row": {
+      "ledger_path": "reports/experiments/l_3_falsification_execution_ledger.jsonl",
+      "event": "real_return_decision_run",
+      "run_id": "B7.3-L3-ONE",
+      "producing_git_commit": "3e3cfc773b8e327dca63bfdd8f2a1b103376173d",
+      "sha256": "594b8cbbdf7c27769191ab9495275803478481121372cd3bfc6f7e6d3a8a556a"
+    },
+    "final_report": {
+      "path": "reports/experiments/l_3_falsification_report.json",
+      "sha256": "3a61c2e8126aa8aa6cc53507a7cf7c5ae074c5ee84283d3c9c9a3d28c9486bc9"
+    }
+  },
+  "invalidation": {
+    "reason": "observation_window_started_before_2007-02-05",
+    "observed_weekly_paired_observations": 500,
+    "locked_weekly_observation_ceiling": 465,
+    "provisional_metrics_inference_status": "invalid_unusable",
+    "original_falsified_decision_status": "invalid_unusable"
+  },
+  "b7_4_attestation": {
+    "market_returns_read_count": 0,
+    "real_return_decision_run_count": 1,
+    "invalidation_count": 1,
+    "validation_access_authorized": false,
+    "validation_status": "sealed_not_accessed",
+    "second_run_authorized": false
+  },
+  "hard_stops": [
+    "The original real_return_decision_run row is immutable and remains byte-for-byte preserved.",
+    "This remediation opens no dataset, market return, validation, provider, credential, broker, paid, paper-trade, or real-money path.",
+    "No invalidation record can authorize a new real-return decision run.",
+    "The original falsified ledger decision and every provisional metric are invalid for inference and cannot be cited as an L-3 result."
+  ]
+}

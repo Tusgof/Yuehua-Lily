@@ -56,3 +56,9 @@ container ผ่าน preflight: ลำดับ ETF ตรงกับที�
 
 1. หากเจ้าของอนุมัติในอนาคต ต้องสร้าง preregistration และ one-run order ใหม่ที่ตรวจขอบเขต weekly decision date ก่อนอ่าน return
 2. คง validation seal ไว้จนกว่าจะมีคำสั่งเจ้าของใหม่ที่ชัดเจน
+
+## ภาคผนวกแก้ไข B7.4: สถานะ ledger
+
+เมื่อ 2026-07-27 มีการตรวจพบว่า ledger แถวเดิมยังเก็บคำว่า `falsified` แม้รายงานสุดท้ายระบุ `scope_restricted` แถวเดิมถูกเก็บไว้ตามประวัติและไม่ได้แก้ไข B7.4 เพิ่ม invalidation event หนึ่งรายการที่ผูก hash ของ original ledger row และ final report
+
+คำว่า `falsified` ใน original ledger เป็นเพียงผลชั่วคราวและ invalid แล้ว เช่นเดียวกับ metrics ชั่วคราวทั้งหมด จึงห้ามใช้สรุปผล L-3. สถานะที่อ้างอิงได้เพียงสถานะเดียวคือ `E1 scope_restricted`, `edge_claim none`, validation sealed และห้าม rerun. การแก้ไขนี้อ่าน market returns เพิ่ม `0` รายการ.

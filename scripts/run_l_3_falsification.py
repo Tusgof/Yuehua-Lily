@@ -15,6 +15,8 @@ from scripts.validate_l_3_one_run_falsification_authorization_v1 import GATE as 
 REPORT=PROJECT_ROOT/'reports/experiments/l_3_falsification_report.json'
 LEDGER=PROJECT_ROOT/'reports/experiments/l_3_falsification_execution_ledger.jsonl'
 CONTAINER=PROJECT_ROOT/'data/normalized/l1_yahoo_daily_v1.json'
+FALSIFICATION_START='2007-02-05'
+FALSIFICATION_END='2015-12-31'
 class HardStop(RuntimeError):pass
 def _sha(p:Path)->str:return hashlib.sha256(p.read_bytes()).hexdigest()
 def _preflight(path:Path)->dict[str,Any]:
@@ -44,6 +46,8 @@ def _hhi(weights:dict[str,float],cov:list[list[float]])->float|None:
  for i,a in enumerate(ASSETS):c.append(weights[a]*sum(cov[i][j]*weights[b] for j,b in enumerate(ASSETS)))
  denom=sum(abs(x) for x in c)
  return None if denom<=0 or not math.isfinite(denom) else sum((abs(x)/denom)**2 for x in c)
+def _locked_weekly_decision_indices(dates:list[str])->list[int]:
+ return [idx for idx in _weekly_last_sessions(dates) if FALSIFICATION_START<=dates[idx]<=FALSIFICATION_END]
 def _append_ledger(row:dict[str,Any])->None:
  rows=load_jsonl(LEDGER) if LEDGER.exists() else []
  if any(r.get('event')=='real_return_decision_run' for r in rows):raise HardStop('second_real_return_decision_run_forbidden')
@@ -61,8 +65,7 @@ def run()->dict[str,Any]:
   report={**base,'report_mode':'preflight_failure','execution_status':'scope_restricted','decision':'scope_restricted','market_returns_read':False,'preflight_failure':str(e),'claim_limits':['E1 only','edge_claim none','validation sealed']};write_json(REPORT,report);return report
  market=load_market(pre.pop('raw_payload'))
  deltas=[]; realized=[]; turnover_c=turnover_q=0.; side_dates=0
- for idx in _weekly_last_sessions(market['dates']):
-  if market['dates'][idx]<'2007-02-05':continue
+ for idx in _locked_weekly_decision_indices(market['dates']):
   if idx+20>=len(market['dates']):continue
   c,q=_weights(market,idx,True),_weights(market,idx,False)
   if c is None or q is None:continue

@@ -459,6 +459,11 @@
           "date": "2026-07-26",
           "decision": "B7_3_one_run_invalidated_scope_restricted_E1",
           "notes": "The one authorized falsification-window run passed its sealed-container preflight but included 500 weekly observations, above the locked 465 ceiling, because warm-up decisions were included. Its provisional falsification result is invalidated; no rerun is authorized. L-3 is E1 scope_restricted with edge_claim none and validation sealed."
+        },
+        {
+          "date": "2026-07-27",
+          "decision": "B7_4_invalid_run_ledger_remediated_E1",
+          "notes": "B7.4 preserves the original real-run ledger row and appends one hash-bound invalidation event. The original falsified ledger decision and every provisional metric are invalid for inference; the sole authoritative L-3 outcome is E1 scope_restricted, edge_claim none, validation sealed, and no rerun is authorized. B7.4 reads zero market returns."
         }
       ]
     },

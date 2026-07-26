@@ -71,6 +71,7 @@
 - **B7.1 locked E0 gate-only preflight**: all six authorization flags false (data, container inspection, return parsing, execution, report decision, validation access); validation remains sealed and no market evidence was read. Inspector review and successful exact-SHA CI must precede a separate owner-authorized one-run execution order; this gate does not authorize data or execution.
 - **B7.2 hermetic source-provenance remediation**: active v2 supersedes only the v1 external-Wiki source-verification layer with byte-preserving repository snapshots for hermetic CI. The v1 research semantics remain unchanged; evidence remains E0 with edge claim none.
 - **B7.3 result**: the one permitted run passed the falsification-only container preflight but recorded 500 weekly observations, exceeding the locked 465 ceiling. Its provisional result is invalid; no rerun is authorized. Validation remains sealed.
+- **B7.4 ledger remediation**: the original ledger decision `falsified` is explicitly provisional and invalid. One append-only invalidation event binds the original ledger row and final report; the only authoritative outcome is `scope_restricted`, with validation sealed and no additional run authorized.
 
 ## L-4 — Breadth
 
