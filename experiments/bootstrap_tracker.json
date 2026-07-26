@@ -733,6 +733,21 @@
         "The fail-closed validator and hermetic adversarial tests reject forged lineage, research-fact or capacity drift, pseudo-replication, validation pooling or mixed-container filtering, authorization opening, provider/credential fallback, unknown fields, and missing hard stops without inspecting any data.",
         "B7.1 is E0 gate-only with edge_claim none. All six data/container/return/execution/report/validation authorization flags are false; L-3 stays active and unexecuted, validation sealed, and a later one-run order needs Inspector acceptance, successful exact-SHA CI, and new owner authorization."
       ]
+    },
+    {
+      "id": "B7.3",
+      "title": "L-3 one-run falsification execution",
+      "status": "in_progress",
+      "depends_on": ["B7.1"],
+      "required_artifacts": [
+        {"path": "experiments/l_3_one_run_falsification_authorization_v1.json", "must": "locked_and_valid"},
+        {"path": "scripts/validate_l_3_one_run_falsification_authorization_v1.py", "must": "pass"},
+        {"path": "scripts/run_l_3_falsification.py", "must": "pass"},
+        {"path": "reports/experiments/l_3_falsification_execution_ledger.jsonl", "must": "exist"},
+        {"path": "reports/experiments/l_3_falsification_report.json", "must": "exist"}
+      ],
+      "forbidden": ["validation access", "provider/network acquisition", "credential or environment-variable read", "paid, broker, paper-trade, or real-money action", "second real-return decision run", "edge, validation, deployment, or E2/E3 claim"],
+      "evidence": ["Owner authorization dated 2026-07-26 permits exactly one L-3 falsification-window execution after B7.1 Inspector acceptance and exact-SHA CI."]
     }
   ]
 }

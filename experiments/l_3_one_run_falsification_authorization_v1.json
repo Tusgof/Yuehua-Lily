@@ -1,0 +1,20 @@
+{
+  "schema_version": "lily_l3_one_run_falsification_authorization_v1",
+  "order_id": "B7.3",
+  "gate_id": "l_3_one_run_falsification_authorization_v1",
+  "hypothesis_id": "L-3",
+  "status": "locked_one_run_falsification_authorized",
+  "evidence_ceiling": "E1",
+  "edge_claim": "none",
+  "owner_authorization": "Owner explicitly authorized exactly one L-3 falsification-window execution on 2026-07-26 after Inspector accepted B7.1 commit a7c7ebd90ff5adcaf49262cc2297dde5961d94c7 and its exact-SHA Hermetic CI.",
+  "source_binding": {
+    "b7_1": {"path": "experiments/l_3_falsification_activation_preflight_v1.json", "sha256": "b27827ba15b2f7cbd89d10f771da1639d26d54087195ad275df4a72cf39ab5c3"},
+    "l3_v2": {"path": "experiments/l_3_inverse_volatility_sizing_preregistration_v2.json", "sha256": "83a68792614ee0def3ddb96349d6d95c7f0aeb0ac8b1c984c1e3d29ed74e709e"},
+    "l3_v1": {"path": "experiments/l_3_inverse_volatility_sizing_preregistration_v1.json", "sha256": "0e0aaf281c75a450bbdf1015c1f400fc7ce8a398952ea25ddbb0ba2f4557c2b0"},
+    "l1": {"path": "experiments/l_1_baseline_preregistration.json", "sha256": "91527c2f4ec00134767df86849f36b9876b00eb44cd56dc01650d33bf938fe29"}
+  },
+  "approved_container": {"path": "data/normalized/l1_yahoo_daily_v1.json", "falsification_end": "2015-12-31", "validation_start": "2016-01-04"},
+  "one_run": {"maximum_real_return_decision_runs": 1, "ledger_path": "reports/experiments/l_3_falsification_execution_ledger.jsonl", "report_path": "reports/experiments/l_3_falsification_report.json"},
+  "authorizations": {"data_access_authorized": true, "container_inspection_authorized": true, "return_parsing_authorized": true, "execution_authorized": true, "report_decision_authorized": true, "validation_access_authorized": false, "provider_network_acquisition_authorized": false, "credentials_authorized": false, "paid_action_authorized": false, "broker_authorized": false, "paper_trade_authorized": false, "real_money_authorized": false},
+  "hard_stops": ["Only the approved repo-relative container may be opened.", "A container with any validation date hard-stops and is never filtered in memory.", "Missing or extra assets, schema drift, non-finite identifiers, missing sessions policy, unbound lineage, or a second real-return run hard-stop.", "No provider, network, credential, environment-variable, paid, broker, paper-trade, real-money, or validation action is fallback behavior."]
+}
