@@ -234,6 +234,23 @@ class BootstrapTrackerValidatorTests(unittest.TestCase):
         self.assertFalse(unverified)
         self.assertIn("B7.4:l3_b74_original_row_hash_mismatch", blockers)
 
+    def test_B7_5_done_claim_rejects_forged_manifest_identity(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            manifest = root / "experiments" / "locked_gates.jsonl"
+            manifest.parent.mkdir(parents=True)
+            rows = [json.loads(line) for line in (PROJECT_ROOT / "experiments/locked_gates.jsonl").read_text(encoding="utf-8").splitlines() if line]
+            row = next(item for item in rows if item.get("gate_id") == "l_3_corrected_rerun_pre_return_schedule_v1")
+            row["artifact_sha256"] = "0" * 64
+            manifest.write_text("\n".join(json.dumps(item, sort_keys=True) for item in rows) + "\n", encoding="utf-8")
+            blockers, checked, unverified = self.validator._validate_done_artifact(
+                "B7.5", "experiments/locked_gates.jsonl", "contain_l3_b75_manifest_identity",
+                project_root=root, verify_runtime=False, runtime_cache={},
+            )
+        self.assertFalse(checked)
+        self.assertFalse(unverified)
+        self.assertIn("B7.5:l3_b75_manifest_artifact_hash_mismatch", blockers)
+
     def test_B7_historical_validator_claim_requires_snapshots(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)

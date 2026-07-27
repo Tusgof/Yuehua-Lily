@@ -89,7 +89,7 @@ Seed order:
 4. L-3 — inverse-volatility sizing versus equal notional;
 5. L-4 — breadth versus single-market dependency.
 
-Current machine status is authoritative in `experiments/hypothesis_registry.json`: L-0 is scope-restricted after E0 sizing evidence; L-1 is scope-restricted after E1 falsification-window, data-quality remediation, and validation-capacity evidence, while its validation window remains sealed; L-2 is E1 underfunded/scope-restricted; L-3 is active but unexecuted E0 governance; L-4 remains proposed.
+Current machine status is authoritative in `experiments/hypothesis_registry.json`: L-0 is scope-restricted after E0 sizing evidence; L-1 is scope-restricted after E1 falsification-window, data-quality remediation, and validation-capacity evidence, while its validation window remains sealed; L-2 is E1 underfunded/scope-restricted; L-3 is E1 scope-restricted after its invalidated B7.3 run, with B7.5 as E0 corrected no-data governance; L-4 remains proposed.
 
 The family review triggers after three consecutive adequately powered falsifications of distinct edge/mechanism hypotheses. L-0 and engineering failures do not count.
 
@@ -192,11 +192,12 @@ Past reports are reproduced by checking out their recorded commit hash. Do not c
 - **L-3 inverse-volatility sizing gate**: B7 locks L1 research_signed eight ETFs; q/volatility versus q under identical weekly inherited constraints; weekly paired component-risk HHI delta with a 0.05 useful reduction; ex-ante plus fixed-weight realized confirmation; side-effect limits; `MinTRL_falsify` 49 and binding `MinTRL_validate` 49; independently funded regimes with an optimistic 366-slot ceiling; E0/edge none and validation sealed. B7.2 makes v2 active by superseding only v1 external-Wiki source verification with hermetic source-provenance snapshots; research semantics remain unchanged. B7.1 locked E0 gate-only preflight source-binds v2/v1/L1 and the seal; all six authorization flags false, so it authorizes neither data/container inspection nor execution.
 - **L-3 B7.3 one-run result**: the one authorized falsification run used only the sealed falsification container but included 500 weekly observations, exceeding the locked 465 ceiling. The provisional result is invalidated; L-3 is E1 scope_restricted, edge_claim none, validation sealed, and no rerun is authorized.
 - **L-3 B7.4 ledger remediation**: preserves the original ledger row and adds one hash-bound invalidation event. The original ledger decision and every provisional metric are invalid; `scope_restricted` is the sole authoritative state. B7.4 read zero market returns and opened no validation.
+- **L-3 B7.5 corrected rerun schedule gate**: E0 no-data governance only. It source-binds B7.1/B7.3/B7.4 history and preserves all L-3 research semantics while locking decisions no earlier than 2007-02-05, complete t+20 confirmation by 2015-12-31, the 465 weekly-pair ceiling, a date-only hash-bound pre-return schedule attestation, and fresh report/ledger paths. All authorizations are false; B7.3 remains invalidated E1 scope_restricted, validation sealed, and edge_claim none.
 - **Databento**: `DATABENTO_API_02` passes metadata access with USD 0 spend, but relevant US-equity coverage begins in 2018 or later and no dedicated corporate-actions history was exposed; owner-reported USD 50 credit has unverified real-payment provenance
 
 ## 11. Next Safe Action
 
-Keep validation returns sealed and do not rerun B4.11, B4.12, or B7.3. L-3 is E1 scope_restricted because B7.4 invalidated the original ledger decision after the sole run exceeded the 465 observation ceiling; any future L-3 work needs a new owner-authorized preregistration and one-run order. No UAT work is planned: a hostname reference is not a public UAT entitlement. Any future broker probe requires genuinely new official evidence or a dedicated owner-controlled test account, explicit owner approval, and a new locked gate.
+Keep validation returns sealed and do not rerun B4.11, B4.12, or B7.3. L-3 is E1 scope_restricted because B7.4 invalidated the original ledger decision; B7.5 is E0 corrected no-data governance and does not authorize access. Any future L-3 rerun requires Inspector acceptance of B7.5 and a new explicit owner authorization for a fresh one-run order. No UAT work is planned: a hostname reference is not a public UAT entitlement. Any future broker probe requires genuinely new official evidence or a dedicated owner-controlled test account, explicit owner approval, and a new locked gate.
 
 ## 12. Invariants
 

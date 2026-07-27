@@ -72,6 +72,7 @@
 - **B7.2 hermetic source-provenance remediation**: active v2 supersedes only the v1 external-Wiki source-verification layer with byte-preserving repository snapshots for hermetic CI. The v1 research semantics remain unchanged; evidence remains E0 with edge claim none.
 - **B7.3 result**: the one permitted run passed the falsification-only container preflight but recorded 500 weekly observations, exceeding the locked 465 ceiling. Its provisional result is invalid; no rerun is authorized. Validation remains sealed.
 - **B7.4 ledger remediation**: the original ledger decision `falsified` is explicitly provisional and invalid. One append-only invalidation event binds the original ledger row and final report; the only authoritative outcome is `scope_restricted`, with validation sealed and no additional run authorized.
+- **B7.5 corrected rerun schedule gate**: E0 no-data governance only. It preserves the locked scientific semantics while requiring future weekly decisions from 2007-02-05 through 2015-12-31, complete `t+1` through `t+20` confirmation by the end boundary, no more than 465 weekly pairs, and a hash-bound date-only schedule attestation before returns. All B7.5 authorizations remain false. B7.3 remains invalidated E1 `scope_restricted`; validation is sealed, edge claim none, and a future one-run needs Inspector acceptance plus new explicit owner authorization.
 
 ## L-4 — Breadth
 

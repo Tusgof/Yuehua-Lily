@@ -79,6 +79,8 @@ B7 is complete as E0 governance only: it locks the L1 `research_signed` eight-ET
 
 B7.3 used its one owner-authorized run but exceeded the locked 465 weekly-observation ceiling (500 recorded), so its provisional classification is invalidated and L-3 is E1 scope_restricted. B7.4 preserves the original ledger row and appends one hash-bound invalidation: the original ledger `falsified` decision and every provisional metric are invalid, while scope_restricted is the sole authoritative state. B7.4 reads zero market returns. Validation remains sealed; no rerun is authorized. No edge claim exists.
 
+B7.5 is E0 no-data governance only: it preserves the L-3 research question, thresholds, universe, signal, comparator, costs, constraints, statistics, and validation seal while correcting only the future execution-window control. A future date-only pre-return schedule must exclude decisions before 2007-02-05, require complete t+20 confirmation no later than 2015-12-31, stay at or below 465 weekly paired observations, and produce a hash-bound attestation before returns. Its fresh report/ledger namespace cannot overwrite B7.3 history. All B7.5 authorization flags are false; B7.3 remains invalidated E1 scope_restricted, edge claim none, validation sealed, and a future one-run needs Inspector acceptance plus new explicit owner authorization.
+
 ### T4 / L-4 — Breadth
 
 Test whether additional countries, sleeves, and independent markets reduce single-market trend dependency after accounting for trend-state correlation and costs.
@@ -301,7 +303,7 @@ If MinTRL validation cost is unaffordable or undefined against the benchmark nul
 | L-0 | Scope-restricted E0; B4.6 verifies production read-only and fractional metadata; B4.11/B4.12 stop before preview; B4.13 confirms the UAT hostname is not a public access entitlement | No UAT work planned; fractional minimum, funding FX, execution quality, and realized-cost evidence remain open |
 | L-1 | Scope-restricted E1; B4.9 closes the unavailable Webull-ledger dry run without observation; B4.10 adds no L-1 evidence | Validation remains sealed; no broker-ledger or historical-correctness claim |
 | L-2 | E1 underfunded_scope_restricted | Redesign requires a new owner-approved preregistration before any L-2 data access |
-| L-3 | E1 scope_restricted; B7.4 invalidates the original ledger decision after the B7.3 sole run recorded 500 weekly observations above the 465 ceiling | Validation sealed; a future redesign requires new owner authorization and preregistration; no rerun |
+| L-3 | E1 scope_restricted; B7.4 invalidates the original ledger decision after the B7.3 sole run recorded 500 weekly observations above the 465 ceiling; B7.5 is E0 corrected no-data schedule governance | Validation sealed; a future one-run requires Inspector acceptance of B7.5 and new explicit owner authorization; no rerun yet |
 | L-4 | Proposed | universe/data integrity and preregistration |
 
 ## 11. Source Lineage

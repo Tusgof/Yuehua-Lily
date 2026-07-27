@@ -785,6 +785,26 @@
       ],
       "forbidden": ["dataset, container, market return, validation, provider, credential, broker, paid, paper-trade, or real-money access", "execution or a second real-return decision run", "editing or deleting the original ledger row", "threshold/preregistration change", "falsified, not_falsified, edge, validation, E2/E3, deployment, or profitability claim"],
       "evidence": ["B7.4 appends exactly one invalidation event that source-binds the original B7.3 ledger row and final report without a circular whole-ledger hash.", "The remediation attests market_returns_read_count 0, exactly one real-return decision run, exactly one invalidation, scope_restricted as the sole authoritative outcome, and sealed validation."]
+    },
+    {
+      "id": "B7.5",
+      "title": "L-3 corrected rerun preregistration and pre-return schedule gate",
+      "status": "done",
+      "depends_on": ["B7.4"],
+      "required_artifacts": [
+        {"path": "experiments/l_3_corrected_rerun_pre_return_schedule_v1.json", "must": "validate_l3_b75_gate"},
+        {"path": "scripts/validate_l_3_corrected_rerun_pre_return_schedule_v1.py", "must": "pass"},
+        {"path": "tests/test_validate_l_3_corrected_rerun_pre_return_schedule_v1.py", "must": "pass_in_hermetic_tier"},
+        {"path": "experiments/locked_gates.jsonl", "must": "contain_l3_b75_manifest_identity"},
+        {"path": "experiments/hypothesis_registry.json", "must": "match_l3_b75_registry_mirror"},
+        {"path": "docs/HYPOTHESIS_REGISTRY.md", "must": "match_l3_b75_text_mirror"},
+        {"path": "PROJECT_BRAIN.md", "must": "match_l3_b75_text_mirror"},
+        {"path": "IMPLEMENT_PLAN.md", "must": "match_l3_b75_text_mirror"},
+        {"path": "config/new_code_scripts.json", "must": "register_l3_b75_validator"},
+        {"path": "tests/test_validate_bootstrap_tracker.py", "must": "pass_in_hermetic_tier"}
+      ],
+      "forbidden": ["dataset, container, date-column, market return, price, signal, position, covariance, regime, cost, or PnL access or hashing", "execution, report decision, new real-return ledger row, validation access, or filtering a mixed container", "provider/network call, credentials/environment-variable read, acquisition, paid action, broker, paper-trade, or real-money action", "research-semantic or threshold change, edge/falsified/not_falsified/validation/E1/E2/E3/deployment claim, or B7.3/B7.4 history edit"],
+      "evidence": ["B7.5 is an E0 no-data corrected rerun preregistration that source-binds active L-3 v2, immutable v1, B7.1, B7.3 authorization/final invalidated report, and B7.4 remediation plus the exact original row and invalidation event without a whole-manifest or circular hash.", "Synthetic-date-only tests prove the future schedule rejects pre-start decisions, t+20 end crossings, counts above 465, duplicate/non-monotonic weeks, validation dates, forged attestations, namespace reuse, authorization drift, and source or research-semantic drift.", "All B7.5 authorization flags remain false; B7.3 remains invalidated E1 scope_restricted, validation sealed, edge_claim none, and a future one-run requires Inspector acceptance plus a new explicit owner authorization."]
     }
   ]
 }

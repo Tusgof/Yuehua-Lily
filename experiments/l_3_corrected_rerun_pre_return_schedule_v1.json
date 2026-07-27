@@ -1,0 +1,157 @@
+{
+  "schema_version": "lily_l3_corrected_rerun_pre_return_schedule_v1",
+  "order_id": "B7.5",
+  "checkpoint": "corrected_rerun_preregistration_pre_return_schedule_only",
+  "gate_id": "l_3_corrected_rerun_pre_return_schedule_v1",
+  "hypothesis_id": "L-3",
+  "status": "locked_pre_return_schedule_execution_not_authorized",
+  "evidence_ceiling": "E0",
+  "edge_claim": "none",
+  "owner_authorization": "Owner explicitly authorized B7.5 on 2026-07-27 to prepare and hash-lock a corrected no-data L-3 rerun preregistration and pre-return schedule contract after Inspector accepted B7.4 commit 941564e10094e9e5c22da1fccefaa40fad68e82c; it authorizes neither data/container/date-column access nor return parsing, execution, report decision, validation, provider, credential, acquisition, broker, paper-trade, or real-money action.",
+  "source_binding": {
+    "active_l3_v2": {
+      "path": "experiments/l_3_inverse_volatility_sizing_preregistration_v2.json",
+      "sha256": "83a68792614ee0def3ddb96349d6d95c7f0aeb0ac8b1c984c1e3d29ed74e709e",
+      "manifest_identity": {
+        "gate_id": "l_3_inverse_volatility_sizing_v2",
+        "artifact_path": "experiments/l_3_inverse_volatility_sizing_preregistration_v2.json",
+        "artifact_sha256": "83a68792614ee0def3ddb96349d6d95c7f0aeb0ac8b1c984c1e3d29ed74e709e",
+        "validator_path": "scripts/validate_l_3_inverse_volatility_sizing_preregistration_v2.py",
+        "validator_sha256": "1556108bb69f7621ebedcaeb046e53d12b5b7eea473fe36454f02c56399b9ea6"
+      }
+    },
+    "immutable_l3_v1": {
+      "path": "experiments/l_3_inverse_volatility_sizing_preregistration_v1.json",
+      "sha256": "0e0aaf281c75a450bbdf1015c1f400fc7ce8a398952ea25ddbb0ba2f4557c2b0",
+      "manifest_identity": {
+        "gate_id": "l_3_inverse_volatility_sizing_v1",
+        "artifact_path": "experiments/l_3_inverse_volatility_sizing_preregistration_v1.json",
+        "artifact_sha256": "0e0aaf281c75a450bbdf1015c1f400fc7ce8a398952ea25ddbb0ba2f4557c2b0",
+        "validator_path": "scripts/validate_l_3_inverse_volatility_sizing_preregistration.py",
+        "validator_sha256": "948dd2737e0f04f6f9c256ad91bb2cb348bbe48eb58db3d77150b6ef4abd55be"
+      },
+      "through_active_v2_only": true
+    },
+    "b7_1_preflight": {
+      "path": "experiments/l_3_falsification_activation_preflight_v1.json",
+      "sha256": "b27827ba15b2f7cbd89d10f771da1639d26d54087195ad275df4a72cf39ab5c3",
+      "manifest_identity": {
+        "gate_id": "l_3_falsification_activation_preflight_v1",
+        "artifact_path": "experiments/l_3_falsification_activation_preflight_v1.json",
+        "artifact_sha256": "b27827ba15b2f7cbd89d10f771da1639d26d54087195ad275df4a72cf39ab5c3",
+        "validator_path": "scripts/validate_l_3_falsification_activation_preflight_v1.py",
+        "validator_sha256": "3a7c48478f722532a631eecd0288f6a4ffe0e745cc70e73ac725e9c6fb7c7569"
+      }
+    },
+    "b7_3_one_run_authorization": {
+      "path": "experiments/l_3_one_run_falsification_authorization_v1.json",
+      "sha256": "640264a8db7efaabfc6071788fbde337ca174b39605ccf2fdbf8a2e8668a10da",
+      "manifest_identity": {
+        "gate_id": "l_3_one_run_falsification_authorization_v1",
+        "artifact_path": "experiments/l_3_one_run_falsification_authorization_v1.json",
+        "artifact_sha256": "640264a8db7efaabfc6071788fbde337ca174b39605ccf2fdbf8a2e8668a10da",
+        "validator_path": "scripts/validate_l_3_one_run_falsification_authorization_v1.py",
+        "validator_sha256": "2bcd55f7440c0b0ad93795b75ad9811197ece157f874b72e848c8bda1f0d8796"
+      }
+    },
+    "b7_3_final_invalidated_report": {
+      "path": "reports/experiments/l_3_falsification_report.json",
+      "sha256": "3a61c2e8126aa8aa6cc53507a7cf7c5ae074c5ee84283d3c9c9a3d28c9486bc9",
+      "authoritative_outcome": "scope_restricted"
+    },
+    "b7_4_remediation": {
+      "path": "experiments/l_3_invalid_run_ledger_remediation_v1.json",
+      "sha256": "c36194863346290c01583ef362a38fb64b2eb397145067fbbeec888ebcdaa51d",
+      "authoritative_outcome": "scope_restricted",
+      "provisional_metrics_inference_status": "invalid_unusable"
+    },
+    "b7_4_original_run_row": {
+      "path": "reports/experiments/l_3_falsification_execution_ledger.jsonl",
+      "event": "real_return_decision_run",
+      "run_id": "B7.3-L3-ONE",
+      "producing_git_commit": "3e3cfc773b8e327dca63bfdd8f2a1b103376173d",
+      "sha256": "594b8cbbdf7c27769191ab9495275803478481121372cd3bfc6f7e6d3a8a556a"
+    },
+    "b7_4_invalidation_event": {
+      "path": "reports/experiments/l_3_falsification_execution_ledger.jsonl",
+      "event": "real_return_decision_run_invalidated",
+      "run_id": "B7.3-L3-ONE",
+      "sha256": "ce53b723b3394c38ea0b0c85c7411e5aa59a6cc7b20dddf5fe5bf18a5aebb766",
+      "authoritative_outcome": "scope_restricted",
+      "reason": "observation_window_started_before_2007-02-05"
+    },
+    "whole_manifest_hash_binding": false,
+    "self_or_circular_hash_binding": false
+  },
+  "preserved_research_semantics": {
+    "research_universe_tickers_in_order": ["VTI", "VGK", "EWJ", "VWO", "IEF", "TIP", "GLD", "DBC"],
+    "candidate_raw_score": "q[i,t] / max(annualized_volatility[i,t], 0.05)",
+    "comparator_raw_score": "q[i,t]",
+    "inherited_signal": "L1 60_day_directional_count_raw only",
+    "decision_index_and_timing": "weekly decision index after the official close of the last NYSE session of each week; next actual NYSE close execution only",
+    "inherited_constraints_and_cost_accounting": "L1 90% gross normalization, 10% minimum cash, 25% absolute asset cap, 60-session EWMA PSD-clipped covariance, target-volatility scale-down-only, and locked L1 cost accounting",
+    "missing_sessions_policy": "Inherited L1 missing-data policy is mandatory: no price forward fill; any required missing input makes the affected paired date non-evaluable and scope_restricted rather than silently dropped.",
+    "observation_unit": "one weekly paired portfolio observation; never multiply by assets, days, 20-session confirmation rows, sleeves, or trades",
+    "mintrl_falsify_weekly_paired_observations": 49,
+    "optimistic_weekly_capacity_ceiling": 465,
+    "optimistic_regime_eligible_weekly_capacity_ceiling": 366,
+    "regime_inference": "Every regime claim separately needs its actual recomputed requirement and cannot pool regimes.",
+    "validation_seal": {"start": "2016-01-04", "end": "2026-06-30", "opened": false, "pooled_with_falsification": false}
+  },
+  "corrected_execution_window_control": {
+    "falsification_start": "2007-02-05",
+    "falsification_end": "2015-12-31",
+    "warm_up_rule": "Raw warm-up rows before 2007-02-05 may be used only as future signal and volatility history after a separate authorization; they never count as observations, turnover, HHI deltas, realized confirmation, regimes, side effects, or report metrics.",
+    "decision_schedule_rule": "Every selected weekly decision date is unique, monotonically increasing, and within 2007-02-05 through 2015-12-31 inclusive; execution is the next actual eligible session close.",
+    "realized_confirmation_rule": "Every realized-confirmation interval t+1 through t+20 actual eligible sessions is fully contained on or before 2015-12-31.",
+    "weekly_paired_observation_ceiling": 465,
+    "mixed_validation_container_rule": "Any container with a validation date hard-stops before return parsing and must never be filtered in memory."
+  },
+  "pre_return_schedule_attestation_contract": {
+    "required_fields": ["schema_version", "container_identity", "date_column", "first_decision_date", "last_decision_date", "execution_date_boundary", "t_plus_20_max_date", "selected_weekly_paired_observations", "exclusions_by_reason", "selected_decision_dates", "execution_dates", "realized_confirmation_end_dates", "schedule_sha256", "validation_seal_status", "return_fields_accessed"],
+    "schema_version": "lily_l3_pre_return_schedule_attestation_v1",
+    "container_identity_rule": "Records the future authorized repo-relative container identity and SHA-256 after metadata/date-only inspection; no return field may be accessed before this attestation passes.",
+    "schedule_sha256_rule": "SHA-256 of canonical UTF-8 JSON with sorted keys and compact separators for selected_decision_dates only.",
+    "future_report_binding_rule": "A future report must bind this attestation SHA-256 and may not be produced before it passes."
+  },
+  "future_rerun_namespace": {
+    "rerun_id": "L-3-B7.5-CORRECTED-RERUN-ONE",
+    "report_path": "reports/experiments/l_3_corrected_rerun_falsification_report.json",
+    "ledger_path": "reports/experiments/l_3_corrected_rerun_execution_ledger.jsonl",
+    "ledger_initial_state": "new_empty_append_only_ledger_required",
+    "maximum_real_return_decision_runs": 1,
+    "activation_requirement": "Only after Inspector acceptance of B7.5 and a new explicit owner-approved activation/execution order may a fresh authorization bind this gate and create one run in this fresh ledger."
+  },
+  "authorizations": {
+    "data_access_authorized": false,
+    "container_inspection_authorized": false,
+    "date_column_inspection_authorized": false,
+    "return_parsing_authorized": false,
+    "execution_authorized": false,
+    "report_decision_authorized": false,
+    "validation_access_authorized": false,
+    "provider_network_authorized": false,
+    "credentials_authorized": false,
+    "acquisition_authorized": false,
+    "paid_action_authorized": false,
+    "broker_authorized": false,
+    "paper_trade_authorized": false,
+    "real_money_authorized": false
+  },
+  "b7_5_attestation": {
+    "market_data_or_date_column_read_count": 0,
+    "market_returns_read_count": 0,
+    "new_real_return_decision_run_count": 0,
+    "new_ledger_rows_created": 0,
+    "validation_status": "sealed_not_accessed",
+    "b7_3_real_return_decision_run_count": 1,
+    "b7_3_invalidation_count": 1
+  },
+  "hard_stops": [
+    "B7.5 is no-data governance only: no dataset, container, date column, market return, price, signal, position, covariance, regime, cost, or PnL may be opened, read, hashed, parsed, or computed.",
+    "No execution, report decision, new real-return decision ledger row, validation access, provider/network call, credential or environment-variable read, acquisition, paid action, broker action, paper trade, or real-money action is authorized.",
+    "A future runner must hard-stop before return parsing for any pre-start or post-end decision, duplicate or non-monotonic week, incomplete t+20 interval, count above 465, mixed validation date, missing or extra asset, schedule/hash drift, or attempted in-memory filtering.",
+    "The B7.3 report and ledger are immutable invalidated history: they may not be overwritten, reused as the rerun namespace, or cited as an L-3 result; no second B7.3 run is authorized.",
+    "This gate preserves the locked L-3 research semantics and validation seal; it changes only execution-window control and fresh future-run artifact paths, with edge_claim none."
+  ]
+}

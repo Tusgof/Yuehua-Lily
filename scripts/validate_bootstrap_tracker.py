@@ -537,6 +537,16 @@ def _validate_done_artifact(
         return _validate_l3_b74_text_mirror(target, order_id, artifact_path)
     if must == "register_l3_b74_report_validator":
         return _validate_l3_b74_report_validator_registration(target, order_id, artifact_path)
+    if must == "validate_l3_b75_gate":
+        return _validate_l3_b75_gate(target, order_id, artifact_path, project_root=project_root, verify_runtime=verify_runtime, runtime_cache=runtime_cache)
+    if must == "contain_l3_b75_manifest_identity":
+        return _validate_l3_b75_manifest_identity(target, order_id, artifact_path, project_root=project_root)
+    if must == "match_l3_b75_registry_mirror":
+        return _validate_l3_b75_registry_mirror(target, order_id, artifact_path)
+    if must == "match_l3_b75_text_mirror":
+        return _validate_l3_b75_text_mirror(target, order_id, artifact_path)
+    if must == "register_l3_b75_validator":
+        return _validate_l3_b75_validator_registration(target, order_id, artifact_path)
     if must == "match_l3_v2_source_binding":
         return _validate_l3_v2_source_binding(target, order_id, artifact_path, project_root=project_root)
     if must == "match_l3_registry_mirror":
@@ -1882,6 +1892,93 @@ def _validate_l3_b74_report_validator_registration(target: Path, order_id: str, 
         return [f"{order_id}:l3_b74_script_registry_invalid_json"], False, False
     valid = isinstance(scripts, list) and scripts.count("scripts/validate_l_3_falsification_report.py") == 1
     return ([] if valid else [f"{order_id}:l3_b74_report_validator_registration_mismatch"], valid, False)
+
+
+def _validate_l3_b75_gate(
+    target: Path, order_id: str, artifact_path: str, *, project_root: Path, verify_runtime: bool, runtime_cache: dict[str, bool]
+) -> tuple[list[str], bool, bool]:
+    if not target.is_file():
+        return [f"{order_id}:missing_artifact:{artifact_path}"], False, False
+    validator = project_root / "scripts/validate_l_3_corrected_rerun_pre_return_schedule_v1.py"
+    if not validator.is_file():
+        return [f"{order_id}:l3_b75_validator_missing"], False, False
+    completed = subprocess.run([sys.executable, str(validator)], cwd=project_root, text=True, capture_output=True, check=False)
+    passed = completed.returncode == 0
+    return ([] if passed else [f"{order_id}:l3_b75_gate_validator_failed"], passed, False)
+
+
+def _validate_l3_b75_manifest_identity(
+    target: Path, order_id: str, artifact_path: str, *, project_root: Path
+) -> tuple[list[str], bool, bool]:
+    if not target.is_file():
+        return [f"{order_id}:missing_artifact:{artifact_path}"], False, False
+    try:
+        rows = [json.loads(line) for line in target.read_text(encoding="utf-8").splitlines() if line.strip()]
+    except json.JSONDecodeError:
+        return [f"{order_id}:l3_b75_locked_gate_manifest_invalid_jsonl"], False, False
+    matching = [row for row in rows if row.get("gate_id") == "l_3_corrected_rerun_pre_return_schedule_v1"]
+    if len(matching) != 1:
+        return [f"{order_id}:l3_b75_manifest_entry_count:{len(matching)}"], False, False
+    row = matching[0]
+    artifact = project_root / "experiments/l_3_corrected_rerun_pre_return_schedule_v1.json"
+    validator = project_root / "scripts/validate_l_3_corrected_rerun_pre_return_schedule_v1.py"
+    expected = {
+        "gate_type": "corrected_rerun_pre_return_schedule_contract",
+        "artifact_path": "experiments/l_3_corrected_rerun_pre_return_schedule_v1.json",
+        "validator_path": "scripts/validate_l_3_corrected_rerun_pre_return_schedule_v1.py",
+    }
+    blockers = [f"{order_id}:l3_b75_manifest_{key}_mismatch" for key, value in expected.items() if row.get(key) != value]
+    if not artifact.is_file() or row.get("artifact_sha256") != hashlib.sha256(artifact.read_bytes()).hexdigest():
+        blockers.append(f"{order_id}:l3_b75_manifest_artifact_hash_mismatch")
+    if not validator.is_file() or row.get("validator_sha256") != hashlib.sha256(validator.read_bytes()).hexdigest():
+        blockers.append(f"{order_id}:l3_b75_manifest_validator_hash_mismatch")
+    note, approval = str(row.get("notes", "")).lower(), str(row.get("human_approval", "")).lower()
+    if not all(value in note for value in ("e0", "no-data", "465", "validation", "fresh")):
+        blockers.append(f"{order_id}:l3_b75_manifest_claim_limit_missing")
+    if "owner explicitly authorized" not in approval or "2026-07-27" not in approval:
+        blockers.append(f"{order_id}:l3_b75_manifest_owner_authorization_missing")
+    return blockers, not blockers, False
+
+
+def _validate_l3_b75_registry_mirror(target: Path, order_id: str, artifact_path: str) -> tuple[list[str], bool, bool]:
+    if not target.is_file():
+        return [f"{order_id}:missing_artifact:{artifact_path}"], False, False
+    try:
+        hypotheses = json.loads(target.read_text(encoding="utf-8")).get("hypotheses", [])
+    except json.JSONDecodeError:
+        return [f"{order_id}:l3_b75_registry_invalid_json"], False, False
+    l3 = next((item for item in hypotheses if isinstance(item, dict) and item.get("id") == "L-3"), None)
+    if not isinstance(l3, dict):
+        return [f"{order_id}:l3_b75_registry_entry_missing"], False, False
+    decisions = l3.get("decision_log")
+    valid = (
+        l3.get("status") == "scope_restricted" and l3.get("edge_claim") in (None, "none")
+        and isinstance(decisions, list)
+        and any(isinstance(entry, dict) and entry.get("decision") == "B7_5_corrected_rerun_schedule_gate_locked_E0" for entry in decisions)
+    )
+    return ([] if valid else [f"{order_id}:l3_b75_registry_mirror_mismatch"], valid, False)
+
+
+def _validate_l3_b75_text_mirror(target: Path, order_id: str, artifact_path: str) -> tuple[list[str], bool, bool]:
+    if not target.is_file():
+        return [f"{order_id}:missing_artifact:{artifact_path}"], False, False
+    text = target.read_text(encoding="utf-8")
+    normalized = text.lower().replace("_", " ").replace("-", " ")
+    required = ("b7.5", "e0", "465", "scope restricted", "validation", "owner authorization")
+    blockers = [f"{order_id}:l3_b75_text_mirror_missing:{item}" for item in required if item not in normalized]
+    return blockers, not blockers, False
+
+
+def _validate_l3_b75_validator_registration(target: Path, order_id: str, artifact_path: str) -> tuple[list[str], bool, bool]:
+    if not target.is_file():
+        return [f"{order_id}:missing_artifact:{artifact_path}"], False, False
+    try:
+        scripts = json.loads(target.read_text(encoding="utf-8")).get("scripts")
+    except json.JSONDecodeError:
+        return [f"{order_id}:l3_b75_script_registry_invalid_json"], False, False
+    registered = "scripts/validate_l_3_corrected_rerun_pre_return_schedule_v1.py"
+    valid = isinstance(scripts, list) and scripts.count(registered) == 1
+    return ([] if valid else [f"{order_id}:l3_b75_validator_registration_mismatch"], valid, False)
 
 
 def _validate_l3_registry_mirror(
