@@ -1,0 +1,23 @@
+{
+  "schema_version": "lily_l3_corrected_rerun_activation_v1",
+  "order_id": "B7.6",
+  "gate_id": "l_3_corrected_rerun_activation_v1",
+  "hypothesis_id": "L-3",
+  "status": "locked_exactly_one_corrected_falsification_rerun_authorized",
+  "evidence_ceiling": "E1",
+  "edge_claim": "none",
+  "owner_authorization": "Owner explicitly authorized exactly one corrected L-3 falsification-window rerun on 2026-07-27 after Inspector accepted B7.5 commit 6a515c3adb019b7c2199e0a4a5e09a687bd92868 and exact-SHA Hermetic CI.",
+  "source_binding": {
+    "b7_5_gate": {"path": "experiments/l_3_corrected_rerun_pre_return_schedule_v1.json", "sha256": "1202f477bf6d890dfb0b926b3bff9c775215762209627cb53e9c55b5c18957eb", "manifest_identity": {"gate_id": "l_3_corrected_rerun_pre_return_schedule_v1", "artifact_path": "experiments/l_3_corrected_rerun_pre_return_schedule_v1.json", "artifact_sha256": "1202f477bf6d890dfb0b926b3bff9c775215762209627cb53e9c55b5c18957eb", "validator_path": "scripts/validate_l_3_corrected_rerun_pre_return_schedule_v1.py", "validator_sha256": "68f51bae9451a1b617bc121bc38691acd0bfe10b13a2a249a99ca0d1cd87619e"}},
+    "l3_v2": {"path": "experiments/l_3_inverse_volatility_sizing_preregistration_v2.json", "sha256": "83a68792614ee0def3ddb96349d6d95c7f0aeb0ac8b1c984c1e3d29ed74e709e"},
+    "l3_v1": {"path": "experiments/l_3_inverse_volatility_sizing_preregistration_v1.json", "sha256": "0e0aaf281c75a450bbdf1015c1f400fc7ce8a398952ea25ddbb0ba2f4557c2b0"},
+    "b7_4_remediation": {"path": "experiments/l_3_invalid_run_ledger_remediation_v1.json", "sha256": "c36194863346290c01583ef362a38fb64b2eb397145067fbbeec888ebcdaa51d", "authoritative_outcome": "scope_restricted"},
+    "whole_manifest_hash_binding": false,
+    "self_or_circular_hash_binding": false
+  },
+  "approved_container": {"path": "data/normalized/l1_yahoo_daily_v1.json", "falsification_start": "2007-02-05", "falsification_end": "2015-12-31", "validation_start": "2016-01-04", "assets": ["VTI", "VGK", "EWJ", "VWO", "IEF", "TIP", "GLD", "DBC"]},
+  "fresh_namespace": {"rerun_id": "L-3-B7.5-CORRECTED-RERUN-ONE", "report_path": "reports/experiments/l_3_corrected_rerun_falsification_report.json", "ledger_path": "reports/experiments/l_3_corrected_rerun_execution_ledger.jsonl", "attestation_path": "reports/experiments/l_3_corrected_rerun_pre_return_schedule_attestation.json", "maximum_real_return_decision_runs": 1},
+  "execution_implementation": {"runner_path": "scripts/run_l_3_corrected_rerun.py", "runner_sha256": "1c214fc90a0aad48152005d386adc1d7ddc7c236a5a67ffd4e1edc5a6da8a379", "report_validator_path": "scripts/validate_l_3_corrected_rerun_report.py", "report_validator_sha256": "1179ca61dfdf70cd53a85ebaca386a7b9046a5d80beb67272cf8ff307679edd5", "report_schema_path": "schemas/l_3_corrected_rerun_falsification_report.schema.json", "report_schema_sha256": "f76008643cdf0d292c62fa5bcc79fa61624f650537c3fd27541c5e33453a39db"},
+  "authorizations": {"data_access_authorized": true, "container_inspection_authorized": true, "date_column_inspection_authorized": true, "return_parsing_authorized_after_attestation": true, "execution_authorized": true, "report_decision_authorized": true, "validation_access_authorized": false, "provider_network_authorized": false, "credentials_environment_authorized": false, "acquisition_authorized": false, "paid_action_authorized": false, "broker_authorized": false, "paper_trade_authorized": false, "real_money_authorized": false},
+  "hard_stops": ["Date-only schedule attestation must pass before return parsing.", "A mixed or validation container, pre-start decision, post-end date, incomplete t+20 interval, count above 465, asset/order drift, or schedule/hash drift hard-stops before returns.", "The fresh ledger is empty before execution and a second real-return decision run hard-stops before container resolution.", "B7.3/B7.4 history is immutable invalidated history and validation/provider/credential/broker/paid/paper/real-money access remains forbidden."]
+}

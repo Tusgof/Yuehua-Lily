@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Lily L-3 corrected rerun falsification report",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "order_id", "hypothesis_id", "rerun_id", "evidence_tier", "edge_claim", "producing_git_commit", "activation_sha256", "container_sha256", "schedule_attestation_sha256", "validation_seal", "report_mode", "decision", "market_returns_read", "pre_return_schedule_attestation", "observation_counts", "primary_statistics", "realized_confirmation", "side_effects", "regimes", "mechanism_autopsy", "claim_limits"],
+  "properties": {
+    "schema_version": {"const": "lily_l3_corrected_rerun_falsification_report_v1"},
+    "order_id": {"const": "B7.6"},
+    "hypothesis_id": {"const": "L-3"},
+    "rerun_id": {"const": "L-3-B7.5-CORRECTED-RERUN-ONE"},
+    "evidence_tier": {"const": "E1"},
+    "edge_claim": {"const": "none"},
+    "decision": {"enum": ["falsified", "not_falsified_not_validated", "scope_restricted"]}
+  }
+}

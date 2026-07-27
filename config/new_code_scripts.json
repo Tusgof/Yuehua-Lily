@@ -58,6 +58,9 @@
     "scripts/validate_l_3_one_run_falsification_authorization_v1.py",
     "scripts/validate_l_3_falsification_report.py",
     "scripts/validate_l_3_corrected_rerun_pre_return_schedule_v1.py",
+    "scripts/validate_l_3_corrected_rerun_activation_v1.py",
+    "scripts/validate_l_3_corrected_rerun_report.py",
+    "scripts/run_l_3_corrected_rerun.py",
     "scripts/run_l_3_falsification.py",
     "scripts/validate_locked_gates.py"
   ]
