@@ -2049,7 +2049,7 @@ def _validate_l3_b77_manifest_identity(target: Path, order_id: str, artifact_pat
 def _validate_l3_b78_gate(target: Path, order_id: str, artifact_path: str, *, project_root: Path) -> tuple[list[str], bool, bool]:
     if not target.is_file():
         return [f"{order_id}:missing_artifact:{artifact_path}"], False, False
-    run = subprocess.run([sys.executable, "scripts/validate_l_3_corrected_rerun_activation_v3.py"], cwd=project_root, text=True, capture_output=True, check=False)
+    run = subprocess.run([sys.executable, "scripts/validate_l_3_corrected_rerun_activation_v4.py"], cwd=project_root, text=True, capture_output=True, check=False)
     return ([] if run.returncode == 0 else [f"{order_id}:l3_b78_gate_validator_failed"], run.returncode == 0, False)
 
 
@@ -2057,13 +2057,13 @@ def _validate_l3_b78_manifest_identity(target: Path, order_id: str, artifact_pat
     if not target.is_file(): return [f"{order_id}:missing_artifact:{artifact_path}"], False, False
     try: rows = [json.loads(line) for line in target.read_text(encoding="utf-8").splitlines() if line]
     except json.JSONDecodeError: return [f"{order_id}:l3_b78_manifest_invalid"], False, False
-    matches = [row for row in rows if row.get("gate_id") == "l_3_corrected_rerun_activation_v3"]
+    matches = [row for row in rows if row.get("gate_id") == "l_3_corrected_rerun_activation_v4"]
     if len(matches) != 1: return [f"{order_id}:l3_b78_manifest_entry_count:{len(matches)}"], False, False
-    row = matches[0]; artifact = project_root / "experiments/l_3_corrected_rerun_activation_v3.json"; validator = project_root / "scripts/validate_l_3_corrected_rerun_activation_v3.py"
+    row = matches[0]; artifact = project_root / "experiments/l_3_corrected_rerun_activation_v4.json"; validator = project_root / "scripts/validate_l_3_corrected_rerun_activation_v4.py"
     bad = []
-    if row.get("supersedes_gate_id") != "l_3_corrected_rerun_activation_v2": bad.append(f"{order_id}:l3_b78_supersession_mismatch")
-    if row.get("artifact_path") != "experiments/l_3_corrected_rerun_activation_v3.json" or row.get("artifact_sha256") != hashlib.sha256(artifact.read_bytes()).hexdigest(): bad.append(f"{order_id}:l3_b78_manifest_artifact_hash_mismatch")
-    if row.get("validator_path") != "scripts/validate_l_3_corrected_rerun_activation_v3.py" or row.get("validator_sha256") != hashlib.sha256(validator.read_bytes()).hexdigest(): bad.append(f"{order_id}:l3_b78_manifest_validator_hash_mismatch")
+    if row.get("supersedes_gate_id") != "l_3_corrected_rerun_activation_v3": bad.append(f"{order_id}:l3_b78_supersession_mismatch")
+    if row.get("artifact_path") != "experiments/l_3_corrected_rerun_activation_v4.json" or row.get("artifact_sha256") != hashlib.sha256(artifact.read_bytes()).hexdigest(): bad.append(f"{order_id}:l3_b78_manifest_artifact_hash_mismatch")
+    if row.get("validator_path") != "scripts/validate_l_3_corrected_rerun_activation_v4.py" or row.get("validator_sha256") != hashlib.sha256(validator.read_bytes()).hexdigest(): bad.append(f"{order_id}:l3_b78_manifest_validator_hash_mismatch")
     if not isinstance(row.get("reviewed_by"), str) or not row["reviewed_by"].strip(): bad.append(f"{order_id}:l3_b78_reviewer_missing")
     return bad, not bad, False
 
