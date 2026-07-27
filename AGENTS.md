@@ -92,7 +92,7 @@ Agent: Codex (GPT-5.6)
 
 - Versioned machine-readable files in the repo own project state.
 - `research_log/` contains the required Thai human-readable account of completed experiments. It explains machine artifacts but never overrides them.
-- The Lily Inspector owns research-log authorship. An implementation Worker must hand off the machine artifacts and must not create or edit `research_log/` or claim the research order fully closed until the Inspector has reviewed the evidence, written the Thai log, and passed its audit. Only an explicit owner instruction may override this division of responsibility.
+- The Lily Inspector owns both research-log authorship and the decision whether a work order requires a new log, an amendment to an existing log, or no log. An implementation Worker must hand off the machine artifacts and must not create or edit `research_log/` or claim the research order fully closed until the Inspector has reviewed the evidence, recorded that decision, and—when required—written the Thai log and passed its audit. Only an explicit owner instruction may override this division of responsibility.
 - Every completed experiment named in `config/research_log_requirements.json` must have a sequential audited research log using `RESEARCH_LOG_FORMAT.md`.
 - Research questions must be short, testable, explicitly scoped, and paired with a decision rule; vague topics are not research questions.
 - `Dashboard/` may render exported state but may not write authoritative decisions to browser `localStorage`.
