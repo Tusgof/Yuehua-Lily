@@ -83,6 +83,8 @@ B7.5 is E0 no-data governance only: it preserves the L-3 research question, thre
 
 B7.6 used its one owner-authorized corrected attempt but hard-stopped at `date_only_schema_metadata_missing` before return parsing. No fresh schedule attestation or ledger row exists, no empirical metric or decision was produced, and the authoritative outcome is E1 scope_restricted with validation sealed and edge claim none.
 
+B7.7 is E0 synthetic-only remediation. It preserves B7.6 as history, records that its hard stop arose from a schema/schema_version implementation mismatch, and supersedes only the defective execution machinery. A future rerun requires Inspector acceptance of B7.7 plus a new explicit owner authorization.
+
 ### T4 / L-4 — Breadth
 
 Test whether additional countries, sleeves, and independent markets reduce single-market trend dependency after accounting for trend-state correlation and costs.

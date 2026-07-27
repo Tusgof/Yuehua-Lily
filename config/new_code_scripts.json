@@ -62,6 +62,11 @@
     "scripts/validate_l_3_corrected_rerun_report.py",
     "scripts/run_l_3_corrected_rerun.py",
     "scripts/validate_l_3_corrected_rerun_preflight_report.py",
+    "scripts/validate_l_3_corrected_rerun_activation_v2.py",
+    "scripts/validate_l_3_corrected_rerun_preflight_v2.py",
+    "scripts/validate_l_3_corrected_rerun_report_v2.py",
+    "scripts/validate_l_3_b76_preflight_provenance_addendum_v1.py",
+    "scripts/run_l_3_corrected_rerun_v2.py",
     "scripts/run_l_3_falsification.py",
     "scripts/validate_locked_gates.py"
   ]

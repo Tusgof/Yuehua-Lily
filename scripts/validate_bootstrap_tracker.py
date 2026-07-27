@@ -555,6 +555,8 @@ def _validate_done_artifact(
         return _validate_l3_b76_preflight_report(target, order_id, artifact_path, project_root=project_root)
     if must == "contain_l3_b76_manifest_identity":
         return _validate_l3_b76_manifest_identity(target, order_id, artifact_path, project_root=project_root)
+    if must == "contain_l3_b77_manifest_identity":
+        return _validate_l3_b77_manifest_identity(target, order_id, artifact_path, project_root=project_root)
     if must == "match_l3_v2_source_binding":
         return _validate_l3_v2_source_binding(target, order_id, artifact_path, project_root=project_root)
     if must == "match_l3_registry_mirror":
@@ -2017,6 +2019,20 @@ def _validate_l3_b76_manifest_identity(target: Path, order_id: str, artifact_pat
     bad=[]
     if row.get('artifact_sha256')!=hashlib.sha256(artifact.read_bytes()).hexdigest():bad.append(f"{order_id}:l3_b76_manifest_artifact_hash_mismatch")
     if row.get('validator_sha256')!=hashlib.sha256(validator.read_bytes()).hexdigest():bad.append(f"{order_id}:l3_b76_manifest_validator_hash_mismatch")
+    return bad,not bad,False
+
+
+def _validate_l3_b77_manifest_identity(target: Path, order_id: str, artifact_path: str, *, project_root: Path) -> tuple[list[str], bool, bool]:
+    if not target.is_file(): return [f"{order_id}:missing_artifact:{artifact_path}"], False, False
+    try: rows=[json.loads(line) for line in target.read_text(encoding="utf-8").splitlines() if line]
+    except json.JSONDecodeError: return [f"{order_id}:l3_b77_manifest_invalid"], False, False
+    matches=[row for row in rows if row.get("gate_id")=="l_3_corrected_rerun_activation_v2"]
+    artifact=project_root/'experiments/l_3_corrected_rerun_activation_v2.json'; validator=project_root/'scripts/validate_l_3_corrected_rerun_activation_v2.py'
+    if len(matches)!=1:return [f"{order_id}:l3_b77_manifest_entry_count:{len(matches)}"],False,False
+    row=matches[0];bad=[]
+    if row.get('supersedes_gate_id')!='l_3_corrected_rerun_activation_v1':bad.append(f"{order_id}:l3_b77_supersession_mismatch")
+    if row.get('artifact_sha256')!=hashlib.sha256(artifact.read_bytes()).hexdigest():bad.append(f"{order_id}:l3_b77_manifest_artifact_hash_mismatch")
+    if row.get('validator_sha256')!=hashlib.sha256(validator.read_bytes()).hexdigest():bad.append(f"{order_id}:l3_b77_manifest_validator_hash_mismatch")
     return bad,not bad,False
 
 

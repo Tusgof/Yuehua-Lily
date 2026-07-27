@@ -474,6 +474,11 @@
           "date": "2026-07-27",
           "decision": "B7_6_corrected_rerun_preflight_hard_stop_E1",
           "notes": "The owner-authorized corrected rerun hard-stopped at date_only_schema_metadata_missing before return parsing. No schedule attestation or fresh ledger row exists; market_returns_read_count is 0. The authoritative B7.6 outcome is E1 scope_restricted, edge_claim none, validation sealed. B7.3/B7.4 remain immutable invalidated history."
+        },
+        {
+          "date": "2026-07-27",
+          "decision": "B7_7_synthetic_only_execution_contract_remediation_E0",
+          "notes": "Inspector identified B7.6 schema/schema_version and structural-parser defects. B7.7 supersedes only defective execution machinery with synthetic-only per-symbol common-session, explicit side-effect, and closed-world report validation contracts. It opens no real container, return, execution, ledger, or validation path; L-3 remains E1 scope_restricted, edge_claim none, validation sealed."
         }
       ]
     },

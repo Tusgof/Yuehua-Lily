@@ -828,6 +828,24 @@
       ],
       "forbidden": ["validation access or mixed-container filtering", "provider/network, credential/environment, acquisition, paid, broker, paper-trade, or real-money action", "second real-return run or B7.3/B7.4 history mutation", "scientific-semantic change, E2/E3, edge, profitability, deployment, or real-money claim"],
       "evidence": ["Owner authorization dated 2026-07-27 permits one corrected rerun only after B7.5 Inspector acceptance and exact-SHA CI.", "The sole B7.6 attempt hard-stopped at date_only_schema_metadata_missing before return parsing; no fresh ledger row or schedule attestation was created, market_returns_read_count is 0, and the authoritative outcome is E1 scope_restricted with validation sealed."]
+    },
+    {
+      "id": "B7.7",
+      "title": "L-3 no-return corrected-rerun execution-contract remediation",
+      "status": "done",
+      "depends_on": ["B7.5"],
+      "required_artifacts": [
+        {"path": "experiments/l_3_corrected_rerun_activation_v2.json", "must": "exist"},
+        {"path": "scripts/validate_l_3_corrected_rerun_activation_v2.py", "must": "pass"},
+        {"path": "scripts/validate_l_3_corrected_rerun_preflight_v2.py", "must": "pass"},
+        {"path": "scripts/validate_l_3_corrected_rerun_report_v2.py", "must": "exist"},
+        {"path": "experiments/l_3_b76_preflight_provenance_addendum_v1.json", "must": "exist"},
+        {"path": "scripts/validate_l_3_b76_preflight_provenance_addendum_v1.py", "must": "pass"},
+        {"path": "tests/test_l_3_corrected_rerun_v2.py", "must": "pass_in_hermetic_tier"},
+        {"path": "experiments/locked_gates.jsonl", "must": "contain_l3_b77_manifest_identity"}
+      ],
+      "forbidden": ["real container read/hash/scan", "return parsing, schedule attestation, execution, report decision, or ledger row", "validation/provider/credential/broker/paid/paper/real-money access", "locked B7.3/B7.4/B7.6 history edit", "edge or E1/E2/E3 claim"],
+      "evidence": ["B7.7 is synthetic-only E0 remediation. real_container_read_hash_count=0, market_returns_read_count=0, new_schedule_attestation_count=0, fresh_ledger_row_count=0, and validation remains sealed."]
     }
   ]
 }

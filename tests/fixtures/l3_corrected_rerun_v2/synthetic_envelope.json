@@ -1,0 +1,15 @@
+{
+  "schema_version": "lily_l1_daily_dataset_v1",
+  "acquired_at": "2026-07-27T00:00:00Z",
+  "cutoff_inclusive": "2015-12-31",
+  "symbols": [
+    {"symbol":"VTI","records":[{"session_date":"2007-02-05","availability_timestamp":"2026-07-27T00:00:00Z","total_return_close":100.0},{"session_date":"2007-02-06","availability_timestamp":"2026-07-27T00:00:00Z","total_return_close":101.0}]},
+    {"symbol":"VGK","records":[{"session_date":"2007-02-05","availability_timestamp":"2026-07-27T00:00:00Z","total_return_close":100.0},{"session_date":"2007-02-06","availability_timestamp":"2026-07-27T00:00:00Z","total_return_close":101.0}]},
+    {"symbol":"EWJ","records":[{"session_date":"2007-02-05","availability_timestamp":"2026-07-27T00:00:00Z","total_return_close":100.0},{"session_date":"2007-02-06","availability_timestamp":"2026-07-27T00:00:00Z","total_return_close":101.0}]},
+    {"symbol":"VWO","records":[{"session_date":"2007-02-05","availability_timestamp":"2026-07-27T00:00:00Z","total_return_close":100.0},{"session_date":"2007-02-06","availability_timestamp":"2026-07-27T00:00:00Z","total_return_close":101.0}]},
+    {"symbol":"IEF","records":[{"session_date":"2007-02-05","availability_timestamp":"2026-07-27T00:00:00Z","total_return_close":100.0},{"session_date":"2007-02-06","availability_timestamp":"2026-07-27T00:00:00Z","total_return_close":101.0}]},
+    {"symbol":"TIP","records":[{"session_date":"2007-02-05","availability_timestamp":"2026-07-27T00:00:00Z","total_return_close":100.0},{"session_date":"2007-02-06","availability_timestamp":"2026-07-27T00:00:00Z","total_return_close":101.0}]},
+    {"symbol":"GLD","records":[{"session_date":"2007-02-05","availability_timestamp":"2026-07-27T00:00:00Z","total_return_close":100.0},{"session_date":"2007-02-06","availability_timestamp":"2026-07-27T00:00:00Z","total_return_close":101.0}]},
+    {"symbol":"DBC","records":[{"session_date":"2007-02-05","availability_timestamp":"2026-07-27T00:00:00Z","total_return_close":100.0}]}
+  ]
+}
