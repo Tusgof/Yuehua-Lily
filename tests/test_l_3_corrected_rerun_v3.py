@@ -8,7 +8,7 @@ from datetime import date, timedelta
 from pathlib import Path
 
 from lib.l3_corrected_rerun_v3 import ASSETS, END, VALIDATION, build_canonical_schedule, derive_side_effects, scan_synthetic_envelope
-from scripts.validate_l_3_corrected_rerun_activation_v3 import validate
+from scripts.validate_l_3_corrected_rerun_activation_v4 import validate
 
 ROOT = Path(__file__).resolve().parents[1]
 

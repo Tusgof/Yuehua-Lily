@@ -9,8 +9,6 @@ import sys
 from pathlib import Path
 from typing import Any
 
-from jsonschema import Draft202012Validator
-
 ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
@@ -18,6 +16,7 @@ from lib.provenance import file_sha256
 GATE = ROOT / "experiments/l_3_corrected_rerun_activation_v3.json"
 SCHEMA = ROOT / "schemas/l_3_corrected_rerun_report_v3.schema.json"
 _IMPLEMENTATION_PATHS = {"gate": "experiments/l_3_corrected_rerun_activation_v3.json", "runner": "scripts/run_l_3_corrected_rerun_v3.py", "report_validator": "scripts/validate_l_3_corrected_rerun_report_v3.py", "report_schema": "schemas/l_3_corrected_rerun_report_v3.schema.json", "side_effect_library": "lib/l3_corrected_rerun_v3.py"}
+_TOP = {"schema_version", "order_id", "hypothesis_id", "report_mode", "decision", "evidence_tier", "edge_claim", "provenance", "counts", "primary", "realized", "side_effects", "regimes", "validation_seal", "autopsy"}
 
 
 def _sha(path: Path) -> str:
@@ -32,6 +31,44 @@ def _finite_tree(value: Any, location: str = "$") -> list[str]:
     if isinstance(value, list):
         return [item for index, child in enumerate(value) for item in _finite_tree(child, f"{location}[{index}]")]
     return []
+
+
+def _shape_errors(payload: dict[str, Any]) -> list[str]:
+    """Portable closed-world enforcement mirroring the committed JSON Schema."""
+    errors = ["schema:top_level_closed_world" for _ in [0] if set(payload) != _TOP]
+    if payload.get("schema_version") != "lily_l3_corrected_rerun_report_v3" or payload.get("order_id") != "B7.8" or payload.get("hypothesis_id") != "L-3" or payload.get("edge_claim") != "none": errors.append("schema:identity")
+    if payload.get("report_mode") not in {"synthetic_not_run", "pre_return_failure", "future_execution"} or payload.get("decision") not in {"not_run", "scope_restricted", "falsified", "not_falsified_not_validated"} or payload.get("evidence_tier") not in {"E0", "E1"}: errors.append("schema:mode_decision_tier")
+    def exact(name: str, keys: set[str]) -> dict[str, Any] | None:
+        value = payload.get(name)
+        if not isinstance(value, dict) or set(value) != keys:
+            errors.append(f"schema:{name}_closed_world")
+            return None
+        return value
+    provenance = exact("provenance", {"producing_git_commit", "gate", "runner", "report_validator", "report_schema", "side_effect_library", "container_identity", "schedule_identity", "ledger_identity"})
+    if provenance:
+        for name in _IMPLEMENTATION_PATHS:
+            value = provenance[name]
+            if not isinstance(value, dict) or set(value) != {"path", "sha256"} or not isinstance(value["path"], str) or not isinstance(value["sha256"], str): errors.append(f"schema:{name}_identity")
+        for name in ("container_identity", "schedule_identity", "ledger_identity"):
+            value = provenance[name]
+            if not isinstance(value, dict) or set(value) != {"present", "path", "sha256"} or type(value["present"]) is not bool: errors.append(f"schema:{name}_identity")
+    counts = exact("counts", {"paired_observations", "effective_independent_bets", "mintrl_falsify", "asset_multiplier", "day_multiplier", "trade_multiplier", "t20_multiplier"})
+    if counts and (type(counts["paired_observations"]) is not int or not 0 <= counts["paired_observations"] <= 465 or type(counts["effective_independent_bets"]) not in (int, float) or counts["mintrl_falsify"] != 49 or any(counts[key] != 1 for key in ("asset_multiplier", "day_multiplier", "trade_multiplier", "t20_multiplier"))): errors.append("schema:counts")
+    primary = exact("primary", {"ucb", "autocorrelation_ucb_trace"})
+    if primary and (primary["ucb"] is not None and type(primary["ucb"]) not in (int, float) or not isinstance(primary["autocorrelation_ucb_trace"], list)): errors.append("schema:primary")
+    realized = exact("realized", {"evaluable", "complete_t_plus_20", "observations"})
+    if realized and (type(realized["evaluable"]) is not bool or type(realized["complete_t_plus_20"]) is not bool or type(realized["observations"]) is not int or realized["observations"] < 0): errors.append("schema:realized")
+    side = exact("side_effects", {"evaluable", "met", "cost_alias_turnover", "turnover_relative_increase", "cost_relative_increase", "cap_frequency_increase", "cash_frequency_increase", "scale_down_frequency_increase"})
+    if side and (type(side["evaluable"]) is not bool or type(side["met"]) is not bool or side["cost_alias_turnover"] is not False): errors.append("schema:side_effects")
+    regimes = exact("regimes", {"claims", "pooled"})
+    if regimes and (not isinstance(regimes["claims"], list) or regimes["pooled"] is not False): errors.append("schema:regimes")
+    for claim in regimes["claims"] if regimes and isinstance(regimes["claims"], list) else []:
+        if not isinstance(claim, dict) or set(claim) != {"name", "evaluable", "funded", "observations"} or not isinstance(claim["name"], str) or type(claim["evaluable"]) is not bool or type(claim["funded"]) is not bool or type(claim["observations"]) is not int: errors.append("schema:regime_claim")
+    seal = exact("validation_seal", {"status", "accessed"})
+    if seal and seal != {"status": "sealed_not_accessed", "accessed": False}: errors.append("schema:validation_seal")
+    autopsy = payload.get("autopsy")
+    if autopsy is not None and (not isinstance(autopsy, dict) or set(autopsy) != {"volatility_scaling_concentration", "common_constraints", "ex_ante_vs_realized_hhi", "turnover_cost", "implementation_data_alternatives"}): errors.append("schema:autopsy_closed_world")
+    return errors
 
 
 def _head() -> str | None:
@@ -63,10 +100,10 @@ def validate(payload: Any) -> dict[str, Any]:
     if not isinstance(payload, dict):
         return {"status": "blocked", "blockers": ["report_not_object"]}
     try:
-        schema = json.loads(SCHEMA.read_text(encoding="utf-8"))
+        json.loads(SCHEMA.read_text(encoding="utf-8"))
     except Exception as exc:
         return {"status": "blocked", "blockers": [f"schema_unreadable:{type(exc).__name__}"]}
-    blockers.extend(f"schema:{error.message}" for error in Draft202012Validator(schema).iter_errors(payload))
+    blockers.extend(_shape_errors(payload))
     blockers.extend(_finite_tree(payload))
     provenance = payload.get("provenance")
     if not isinstance(provenance, dict):
