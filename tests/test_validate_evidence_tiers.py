@@ -56,6 +56,22 @@ class EvidenceTierValidatorTests(unittest.TestCase):
                 }
                 self.assertEqual([], validate_report_payload(payload, known_ids={"L-0"}))
 
+    def test_corrected_rerun_claim_limits_supply_E1_tier_boundary(self) -> None:
+        payload = {
+            "schema_version": "lily_l3_corrected_rerun_falsification_report_v1",
+            "hypothesis_id": "L-3",
+            "evidence_tier": "E1",
+            "edge_claim": "none",
+            "decision": "scope_restricted",
+            "claim_limits": [
+                "E1 only",
+                "edge_claim none",
+                "validation sealed",
+                "no deployment or profitability claim",
+            ],
+        }
+        self.assertEqual([], validate_report_payload(payload, known_ids={"L-3"}))
+
     def test_E2_with_independent_completed_review_passes(self) -> None:
         payload = {
             "hypothesis_id": "L-1",

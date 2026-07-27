@@ -469,6 +469,11 @@
           "date": "2026-07-27",
           "decision": "B7_5_corrected_rerun_schedule_gate_locked_E0",
           "notes": "B7.5 is E0 no-data governance only. It preserves the L-3 research semantics and seals a corrected pre-return schedule: decisions begin no earlier than 2007-02-05, every t+20 confirmation ends by 2015-12-31, and selected weekly observations cannot exceed 465. B7.3 remains invalidated E1 scope_restricted, edge_claim none, and validation sealed. A fresh future rerun requires Inspector acceptance and a new explicit owner authorization; B7.5 opens no data, date-column, return, execution, report, or ledger-run path."
+        },
+        {
+          "date": "2026-07-27",
+          "decision": "B7_6_corrected_rerun_preflight_hard_stop_E1",
+          "notes": "The owner-authorized corrected rerun hard-stopped at date_only_schema_metadata_missing before return parsing. No schedule attestation or fresh ledger row exists; market_returns_read_count is 0. The authoritative B7.6 outcome is E1 scope_restricted, edge_claim none, validation sealed. B7.3/B7.4 remain immutable invalidated history."
         }
       ]
     },

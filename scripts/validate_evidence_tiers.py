@@ -91,6 +91,7 @@ def validate_report_payload(payload: dict[str, Any], *, known_ids: set[str]) -> 
     if tier_blockers is None and payload.get("schema_version") in {
         "lily_l0_webull_th_fractional_preview_report_v1",
         "lily_l0_webull_th_fractional_preview_report_v2",
+        "lily_l3_corrected_rerun_falsification_report_v1",
     }:
         tier_blockers = payload.get("claim_limits")
 

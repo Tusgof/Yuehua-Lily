@@ -52,13 +52,19 @@
     {
       "experiment_id": "L2-FALSIFICATION",
       "summary_path": "reports/experiments/l_2_falsification_summary.json",
-      "research_log_path": "research_log/010-lily-l2-falsification.md",
+      "research_log_path": "research_log/011-lily-l2-falsification.md",
       "required_when_summary_exists": true
     },
     {
       "experiment_id": "L3-FALSIFICATION-ONE-RUN",
       "summary_path": "reports/experiments/l_3_falsification_report.json",
       "research_log_path": "research_log/009-lily-l3-one-run-falsification.md",
+      "required_when_summary_exists": true
+    },
+    {
+      "experiment_id": "L3-CORRECTED-RERUN",
+      "summary_path": "reports/experiments/l_3_corrected_rerun_falsification_report.json",
+      "research_log_path": "research_log/010-lily-l3-corrected-rerun.md",
       "required_when_summary_exists": true
     }
   ]

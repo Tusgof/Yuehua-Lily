@@ -81,6 +81,8 @@ B7.3 used its one owner-authorized run but exceeded the locked 465 weekly-observ
 
 B7.5 is E0 no-data governance only: it preserves the L-3 research question, thresholds, universe, signal, comparator, costs, constraints, statistics, and validation seal while correcting only the future execution-window control. A future date-only pre-return schedule must exclude decisions before 2007-02-05, require complete t+20 confirmation no later than 2015-12-31, stay at or below 465 weekly paired observations, and produce a hash-bound attestation before returns. Its fresh report/ledger namespace cannot overwrite B7.3 history. All B7.5 authorization flags are false; B7.3 remains invalidated E1 scope_restricted, edge claim none, validation sealed, and a future one-run needs Inspector acceptance plus new explicit owner authorization.
 
+B7.6 used its one owner-authorized corrected attempt but hard-stopped at `date_only_schema_metadata_missing` before return parsing. No fresh schedule attestation or ledger row exists, no empirical metric or decision was produced, and the authoritative outcome is E1 scope_restricted with validation sealed and edge claim none.
+
 ### T4 / L-4 — Breadth
 
 Test whether additional countries, sleeves, and independent markets reduce single-market trend dependency after accounting for trend-state correlation and costs.

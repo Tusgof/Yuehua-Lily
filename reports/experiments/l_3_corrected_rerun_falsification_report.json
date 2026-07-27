@@ -1,0 +1,38 @@
+{
+  "activation_sha256": "f224afd2049f242413fb6db29ff6dfcee7802e9b50a05d860c0cdedefbd778df",
+  "claim_limits": [
+    "E1 only",
+    "edge_claim none",
+    "validation sealed",
+    "no deployment or profitability claim"
+  ],
+  "container_sha256": null,
+  "decision": "scope_restricted",
+  "edge_claim": "none",
+  "evidence_tier": "E1",
+  "hypothesis_id": "L-3",
+  "market_returns_read": false,
+  "mechanism_autopsy": null,
+  "observation_counts": null,
+  "order_id": "B7.6",
+  "pre_return_schedule_attestation": null,
+  "preflight_failure": "date_only_schema_metadata_missing",
+  "primary_statistics": null,
+  "producing_git_commit": "973087e5e2f504a6e1e2298396694626ac9c77d3",
+  "realized_confirmation": null,
+  "regimes": {
+    "claims": [],
+    "rule": "no regime pooling"
+  },
+  "report_mode": "preflight_failure",
+  "rerun_id": "L-3-B7.5-CORRECTED-RERUN-ONE",
+  "schedule_attestation_sha256": null,
+  "schema_version": "lily_l3_corrected_rerun_falsification_report_v1",
+  "side_effects": null,
+  "validation_seal": {
+    "end": "2026-06-30",
+    "start": "2016-01-04",
+    "status": "sealed_not_accessed",
+    "validation_access_authorized": false
+  }
+}

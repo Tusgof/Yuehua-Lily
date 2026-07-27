@@ -551,6 +551,8 @@ def _validate_done_artifact(
         return _validate_l3_b76_activation(target, order_id, artifact_path, project_root=project_root)
     if must == "match_l3_b76_report":
         return _validate_l3_b76_report(target, order_id, artifact_path, project_root=project_root)
+    if must == "match_l3_b76_preflight_report":
+        return _validate_l3_b76_preflight_report(target, order_id, artifact_path, project_root=project_root)
     if must == "contain_l3_b76_manifest_identity":
         return _validate_l3_b76_manifest_identity(target, order_id, artifact_path, project_root=project_root)
     if must == "match_l3_v2_source_binding":
@@ -1997,6 +1999,12 @@ def _validate_l3_b76_report(target: Path, order_id: str, artifact_path: str, *, 
     if not target.is_file(): return [f"{order_id}:missing_artifact:{artifact_path}"], False, False
     run = subprocess.run([sys.executable, "scripts/validate_l_3_corrected_rerun_report.py"], cwd=project_root, text=True, capture_output=True, check=False)
     return ([] if run.returncode == 0 else [f"{order_id}:l3_b76_report_validator_failed"], run.returncode == 0, False)
+
+
+def _validate_l3_b76_preflight_report(target: Path, order_id: str, artifact_path: str, *, project_root: Path) -> tuple[list[str], bool, bool]:
+    if not target.is_file(): return [f"{order_id}:missing_artifact:{artifact_path}"], False, False
+    run = subprocess.run([sys.executable, "scripts/validate_l_3_corrected_rerun_preflight_report.py"], cwd=project_root, text=True, capture_output=True, check=False)
+    return ([] if run.returncode == 0 else [f"{order_id}:l3_b76_preflight_report_validator_failed"], run.returncode == 0, False)
 
 
 def _validate_l3_b76_manifest_identity(target: Path, order_id: str, artifact_path: str, *, project_root: Path) -> tuple[list[str], bool, bool]:

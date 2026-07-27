@@ -73,6 +73,7 @@
 - **B7.3 result**: the one permitted run passed the falsification-only container preflight but recorded 500 weekly observations, exceeding the locked 465 ceiling. Its provisional result is invalid; no rerun is authorized. Validation remains sealed.
 - **B7.4 ledger remediation**: the original ledger decision `falsified` is explicitly provisional and invalid. One append-only invalidation event binds the original ledger row and final report; the only authoritative outcome is `scope_restricted`, with validation sealed and no additional run authorized.
 - **B7.5 corrected rerun schedule gate**: E0 no-data governance only. It preserves the locked scientific semantics while requiring future weekly decisions from 2007-02-05 through 2015-12-31, complete `t+1` through `t+20` confirmation by the end boundary, no more than 465 weekly pairs, and a hash-bound date-only schedule attestation before returns. All B7.5 authorizations remain false. B7.3 remains invalidated E1 `scope_restricted`; validation is sealed, edge claim none, and a future one-run needs Inspector acceptance plus new explicit owner authorization.
+- **B7.6 corrected rerun attempt**: the one owner-authorized attempt hard-stopped at `date_only_schema_metadata_missing` before return parsing. It created neither a schedule attestation nor a fresh ledger row; its only authoritative outcome is E1 `scope_restricted`, with edge claim none and validation sealed. B7.3/B7.4 history remains invalidated and unchanged.
 
 ## L-4 — Breadth
 

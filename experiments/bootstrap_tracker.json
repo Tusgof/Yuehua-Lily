@@ -809,24 +809,25 @@
     {
       "id": "B7.6",
       "title": "L-3 corrected one-run falsification rerun",
-      "status": "in_progress",
+      "status": "blocked",
       "depends_on": ["B7.5"],
       "required_artifacts": [
         {"path": "experiments/l_3_corrected_rerun_activation_v1.json", "must": "validate_l3_b76_activation"},
         {"path": "scripts/validate_l_3_corrected_rerun_activation_v1.py", "must": "pass"},
         {"path": "scripts/run_l_3_corrected_rerun.py", "must": "exist"},
         {"path": "schemas/l_3_corrected_rerun_falsification_report.schema.json", "must": "exist"},
-        {"path": "scripts/validate_l_3_corrected_rerun_report.py", "must": "pass"},
-        {"path": "reports/experiments/l_3_corrected_rerun_pre_return_schedule_attestation.json", "must": "exist"},
-        {"path": "reports/experiments/l_3_corrected_rerun_execution_ledger.jsonl", "must": "exist"},
-        {"path": "reports/experiments/l_3_corrected_rerun_falsification_report.json", "must": "match_l3_b76_report"},
+        {"path": "scripts/validate_l_3_corrected_rerun_preflight_report.py", "must": "pass"},
+        {"path": "reports/experiments/l_3_corrected_rerun_pre_return_schedule_attestation.json", "must": "not_exist"},
+        {"path": "reports/experiments/l_3_corrected_rerun_execution_ledger.jsonl", "must": "not_exist"},
+        {"path": "reports/experiments/l_3_corrected_rerun_falsification_report.json", "must": "match_l3_b76_preflight_report"},
         {"path": "experiments/locked_gates.jsonl", "must": "contain_l3_b76_manifest_identity"},
         {"path": "research_log/010-lily-l3-corrected-rerun.md", "must": "pass_research_log_audit"},
         {"path": "tests/test_validate_l_3_corrected_rerun_activation_v1.py", "must": "pass_in_hermetic_tier"},
+        {"path": "tests/test_validate_l_3_corrected_rerun_preflight_report.py", "must": "pass_in_hermetic_tier"},
         {"path": "tests/test_validate_l_3_corrected_rerun_report.py", "must": "pass_in_hermetic_tier"}
       ],
       "forbidden": ["validation access or mixed-container filtering", "provider/network, credential/environment, acquisition, paid, broker, paper-trade, or real-money action", "second real-return run or B7.3/B7.4 history mutation", "scientific-semantic change, E2/E3, edge, profitability, deployment, or real-money claim"],
-      "evidence": ["Owner authorization dated 2026-07-27 permits one corrected rerun only after B7.5 Inspector acceptance and exact-SHA CI."]
+      "evidence": ["Owner authorization dated 2026-07-27 permits one corrected rerun only after B7.5 Inspector acceptance and exact-SHA CI.", "The sole B7.6 attempt hard-stopped at date_only_schema_metadata_missing before return parsing; no fresh ledger row or schedule attestation was created, market_returns_read_count is 0, and the authoritative outcome is E1 scope_restricted with validation sealed."]
     }
   ]
 }
