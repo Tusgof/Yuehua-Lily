@@ -846,6 +846,30 @@
       ],
       "forbidden": ["real container read/hash/scan", "return parsing, schedule attestation, execution, report decision, or ledger row", "validation/provider/credential/broker/paid/paper/real-money access", "locked B7.3/B7.4/B7.6 history edit", "edge or E1/E2/E3 claim"],
       "evidence": ["B7.7 is synthetic-only E0 remediation. real_container_read_hash_count=0, market_returns_read_count=0, new_schedule_attestation_count=0, fresh_ledger_row_count=0, and validation remains sealed."]
+    },
+    {
+      "id": "B7.8",
+      "title": "L-3 synthetic-only supersession of defective B7.7 execution-contract machinery",
+      "status": "done",
+      "depends_on": ["B7.7"],
+      "required_artifacts": [
+        {"path": "experiments/l_3_corrected_rerun_activation_v3.json", "must": "validate_l3_b78_gate"},
+        {"path": "scripts/validate_l_3_corrected_rerun_activation_v3.py", "must": "pass"},
+        {"path": "scripts/run_l_3_corrected_rerun_v3.py", "must": "exist"},
+        {"path": "schemas/l_3_corrected_rerun_report_v3.schema.json", "must": "exist"},
+        {"path": "scripts/validate_l_3_corrected_rerun_report_v3.py", "must": "exist"},
+        {"path": "lib/l3_corrected_rerun_v3.py", "must": "exist"},
+        {"path": "tests/test_l_3_corrected_rerun_v3.py", "must": "pass_in_hermetic_tier"},
+        {"path": "tests/test_validate_l_3_corrected_rerun_report_v3.py", "must": "pass_in_hermetic_tier"},
+        {"path": "experiments/locked_gates.jsonl", "must": "contain_l3_b78_manifest_identity"},
+        {"path": "experiments/hypothesis_registry.json", "must": "match_l3_b78_registry_mirror"},
+        {"path": "docs/HYPOTHESIS_REGISTRY.md", "must": "match_l3_b78_text_mirror"},
+        {"path": "PROJECT_BRAIN.md", "must": "match_l3_b78_text_mirror"},
+        {"path": "IMPLEMENT_PLAN.md", "must": "match_l3_b78_text_mirror"},
+        {"path": "config/new_code_scripts.json", "must": "register_l3_b78_scripts"}
+      ],
+      "forbidden": ["real container read, hash, scan, or path", "market return, signal, position, covariance, regime, cost, or PnL access or computation", "schedule attestation, execution, report decision, or ledger row", "validation, provider, credential, broker, paid, paper-trade, or real-money access", "scientific threshold, universe, signal, comparator, or locked-history change", "rerun or edge/E1/E2/E3 claim"],
+      "evidence": ["B7.8 is E0 synthetic-only machinery supersession. Exact per-symbol structural scanning, canonical weekly scheduling, strict diagnostic derivation, and closed-world prospective-report validation are hermetic fixtures only.", "All fourteen authorization flags are false; real_container_read_hash_count, market_returns_read_count, new_schedule_attestation_count, and fresh_ledger_row_count are zero; validation remains sealed and edge_claim none."]
     }
   ]
 }

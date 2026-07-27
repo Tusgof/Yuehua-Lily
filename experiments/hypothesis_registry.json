@@ -479,6 +479,11 @@
           "date": "2026-07-27",
           "decision": "B7_7_synthetic_only_execution_contract_remediation_E0",
           "notes": "Inspector identified B7.6 schema/schema_version and structural-parser defects. B7.7 supersedes only defective execution machinery with synthetic-only per-symbol common-session, explicit side-effect, and closed-world report validation contracts. It opens no real container, return, execution, ledger, or validation path; L-3 remains E1 scope_restricted, edge_claim none, validation sealed."
+        },
+        {
+          "date": "2026-07-27",
+          "decision": "B7_8_synthetic_only_execution_contract_supersession_E0",
+          "notes": "B7.8 supersedes defective B7.7 execution-contract machinery only. Hermetic fixtures now enforce exact eight-asset structural scanning, canonical weekly schedule boundaries, strict paired L1 side-effect derivation, and a hash-bound closed-world prospective report contract. It opens no real container, return, execution, schedule attestation, ledger, or validation path; L-3 remains E1 scope_restricted, edge_claim none, validation sealed."
         }
       ]
     },
