@@ -37,6 +37,8 @@ def structural_preflight(metadata: Any) -> dict[str, Any]:
         if any(value is None for value in parsed):
             return {"status": "blocked", "blockers": ["invalid_session_date"]}
         values = [value for value in parsed if value is not None]
+        if any(value.weekday() >= 5 for value in values):
+            return {"status": "blocked", "blockers": ["non_session_date"]}
         if any(value > END for value in values):
             return {"status": "blocked", "blockers": ["individual_post_end_session"]}
         if values != sorted(values) or len(values) != len(set(values)):
@@ -45,11 +47,10 @@ def structural_preflight(metadata: Any) -> dict[str, Any]:
     sessions = sorted(value for value in common or set() if value >= START)
     if not sessions:
         return {"status": "blocked", "blockers": ["empty_common_weekly_schedule"]}
-    # The last common eligible session in each ISO week is the date-only weekly decision.
+    # All supplied dates are weekday sessions; the last session in each week is the decision.
     weekly: dict[tuple[int, int], date] = {}
     for value in sessions:
-        if value.weekday() < 5:
-            weekly[(value.isocalendar().year, value.isocalendar().week)] = value
+        weekly[(value.isocalendar().year, value.isocalendar().week)] = value
     candidates = list(weekly.values())
     positions = {value: index for index, value in enumerate(sessions)}
     selected = [value for value in candidates if positions[value] + 20 < len(sessions)]

@@ -31,7 +31,9 @@ def validate(payload: Any) -> dict[str, Any]:
     if any(payload.get(key) != value for key, value in IDENTITY.items()):
         blockers.append("e0_only_matrix")
     provenance = payload.get("provenance")
-    if not isinstance(provenance, dict) or set(provenance) != {"active_gate_id", "active_gate_sha256", "fixture_metadata_sha256"} or provenance.get("active_gate_id") != "l_3_b714_activation_contract_v1":
+    expected_gate = file_sha256(ROOT / "experiments/l_3_b714_activation_contract_v1.json")
+    expected_metadata = canonical_sha256(payload.get("synthetic_date_metadata"))
+    if not isinstance(provenance, dict) or set(provenance) != {"active_gate_id", "active_gate_sha256", "fixture_metadata_sha256"} or provenance.get("active_gate_id") != "l_3_b714_activation_contract_v1" or provenance.get("active_gate_sha256") != expected_gate or provenance.get("fixture_metadata_sha256") != expected_metadata:
         blockers.append("provenance_binding")
     if payload.get("validation_seal") != {"status": "sealed_not_accessed", "accessed": False}:
         blockers.append("validation_seal")
