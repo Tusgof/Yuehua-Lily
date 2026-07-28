@@ -584,6 +584,11 @@ def _validate_done_artifact(
     if must == "match_l3_b710_registry_mirror": return _validate_l3_b710_registry_mirror(target, order_id, artifact_path)
     if must == "match_l3_b710_text_mirror": return _validate_l3_b710_text_mirror(target, order_id, artifact_path)
     if must == "register_l3_b710_scripts": return _validate_l3_b710_script_registration(target, order_id, artifact_path)
+    if must == "validate_l3_b711_gate": return _validate_l3_b711_gate(target, order_id, artifact_path, project_root=project_root)
+    if must == "contain_l3_b711_manifest_identity": return _validate_l3_b711_manifest_identity(target, order_id, artifact_path, project_root=project_root)
+    if must == "match_l3_b711_registry_mirror": return _validate_l3_b711_registry_mirror(target, order_id, artifact_path)
+    if must == "match_l3_b711_text_mirror": return _validate_l3_b711_text_mirror(target, order_id, artifact_path)
+    if must == "register_l3_b711_scripts": return _validate_l3_b711_script_registration(target, order_id, artifact_path)
     if must == "match_l3_v2_source_binding":
         return _validate_l3_v2_source_binding(target, order_id, artifact_path, project_root=project_root)
     if must == "match_l3_registry_mirror":
@@ -2170,6 +2175,27 @@ def _validate_l3_b710_script_registration(target: Path, order_id: str, artifact_
     try:s=json.loads(target.read_text(encoding='utf-8')).get('scripts')
     except Exception:s=[]
     req=('scripts/run_l_3_corrected_rerun_v6.py','scripts/validate_l_3_corrected_rerun_activation_v6.py','scripts/validate_l_3_corrected_rerun_report_v6.py');ok=isinstance(s,list) and all(s.count(x)==1 for x in req)
+    return ([] if ok else [f"{order_id}:script_registration"],ok,False)
+
+def _validate_l3_b711_gate(target: Path, order_id: str, artifact_path: str, *, project_root: Path) -> tuple[list[str], bool, bool]:
+    run=subprocess.run([sys.executable,"scripts/validate_l_3_corrected_rerun_activation_v7.py"],cwd=project_root,text=True,capture_output=True,check=False)
+    return ([] if target.is_file() and run.returncode==0 else [f"{order_id}:gate_failed"],target.is_file() and run.returncode==0,False)
+def _validate_l3_b711_manifest_identity(target: Path, order_id: str, artifact_path: str, *, project_root: Path) -> tuple[list[str], bool, bool]:
+    try: rows=[json.loads(x) for x in target.read_text(encoding="utf-8").splitlines() if x]
+    except Exception:return [f"{order_id}:manifest_invalid"],False,False
+    rows=[x for x in rows if x.get("gate_id")=="l_3_corrected_rerun_activation_v7"];a=project_root/'experiments/l_3_corrected_rerun_activation_v7.json';v=project_root/'scripts/validate_l_3_corrected_rerun_activation_v7.py'
+    ok=len(rows)==1 and rows[0].get('supersedes_gate_id')=='l_3_corrected_rerun_activation_v6' and rows[0].get('artifact_sha256')==hashlib.sha256(a.read_bytes()).hexdigest() and rows[0].get('validator_sha256')==hashlib.sha256(v.read_bytes()).hexdigest() and bool(rows[0].get('reviewed_by'))
+    return ([] if ok else [f"{order_id}:manifest_mismatch"],ok,False)
+def _validate_l3_b711_registry_mirror(target: Path, order_id: str, artifact_path: str) -> tuple[list[str], bool, bool]:
+    try:l3=next(x for x in json.loads(target.read_text(encoding='utf-8')).get('hypotheses',[]) if x.get('id')=='L-3');text=' '.join(str(x.get('notes','')) for x in l3.get('decision_log',[]))
+    except Exception:text=''
+    ok=all(x in text for x in ('B7.10 Inspector rejection','B7.11','E0','validation sealed','edge_claim none'));return ([] if ok else [f"{order_id}:registry_mirror"],ok,False)
+def _validate_l3_b711_text_mirror(target: Path, order_id: str, artifact_path: str) -> tuple[list[str], bool, bool]:
+    return _validate_l3_text_mirror(target,order_id,artifact_path,'l3_b711_text_mirror',('B7.10 Inspector rejection','B7.11','synthetic-only','E0','validation sealed','edge_claim none'))
+def _validate_l3_b711_script_registration(target: Path, order_id: str, artifact_path: str) -> tuple[list[str], bool, bool]:
+    try:s=json.loads(target.read_text(encoding='utf-8')).get('scripts')
+    except Exception:s=[]
+    req=('scripts/run_l_3_corrected_rerun_v7.py','scripts/validate_l_3_corrected_rerun_activation_v7.py','scripts/validate_l_3_corrected_rerun_report_v7.py');ok=isinstance(s,list) and all(s.count(x)==1 for x in req)
     return ([] if ok else [f"{order_id}:script_registration"],ok,False)
 
 

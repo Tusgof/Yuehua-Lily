@@ -91,6 +91,8 @@ B7.9 is E0 synthetic-only adversarial remediation. It supersedes B7.8/v4 machine
 
 B7.10 is E0 synthetic-only decision-integrity remediation. It supersedes B7.9/v5 machinery without changing locked science: v6 recomputes locked weekly-paired UCB and MinTRL inputs, validates HHI/event/regime conservation, enforces mutually exclusive decisions, and binds only synthetic fixture identities. All fourteen access flags remain false; L-3 remains E1 scope-restricted with validation sealed and edge_claim none. A future rerun requires Inspector acceptance of B7.10 and a new explicit owner authorization.
 
+B7.10 Inspector rejection is recorded: v6 trusted reporter-authored mean/SD/autocorrelation/effective-bet summaries, accepted mismatched MinTRL, and permitted synthetic E1 decision modes. B7.11 is an E0 synthetic-only supersession that preserves every locked v6 artifact and L-3 scientific semantic. The v7 report admits only a hash-bound closed-world weekly-observation fixed vector and `synthetic_evaluation` / `not_run` / E0 / `edge_claim: none`; it independently derives paired deltas, sample SD and lags 1–5, locked inflation, SE/UCB, raw-observation MinTRL, disjoint regime vectors, HHI arithmetic, and side-effect limits. All fourteen access flags remain false, validation sealed, and no rerun is authorized. The next safe action is Inspector review; a future rerun needs Inspector acceptance and new explicit owner authorization.
+
 ### T4 / L-4 — Breadth
 
 Test whether additional countries, sleeves, and independent markets reduce single-market trend dependency after accounting for trend-state correlation and costs.
