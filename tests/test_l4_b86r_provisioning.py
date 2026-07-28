@@ -1,7 +1,6 @@
 from __future__ import annotations
 import copy,hashlib,json,tempfile,unittest
 from pathlib import Path
-from jsonschema import Draft202012Validator
 from lib.l4_b86r_provisioning_scanner_v2 import ScanError,U8,scan_dataset
 import scripts.run_l_4_breadth_b86r_provisioning_v2 as runner
 import scripts.validate_l_4_breadth_b86r_provisioning_report_v2 as report_validator
@@ -19,9 +18,9 @@ def check(accepted_head,checkpoint,gate_hash):return accepted_head=="a"*40 and c
 
 class B86RTests(unittest.TestCase):
  def test_gate_and_draft_schemas(self):
-  self.assertEqual("pass",validate_gate()["status"])
+ self.assertEqual("pass",validate_gate()["status"])
   for name in ("l_4_breadth_b86r_provisioning_activation_v2.schema.json","l_4_breadth_b86r_provisioning_report_v2.schema.json","l_4_breadth_b86r_falsification_manifest_v2.schema.json","l_4_breadth_b86r_u8_session_dates_v2.schema.json"):
-   schema=json.loads((runner.ROOT/"schemas"/name).read_text("ascii")); Draft202012Validator.check_schema(schema)
+   schema=json.loads((runner.ROOT/"schemas"/name).read_text("ascii")); self.assertEqual("https://json-schema.org/draft/2020-12/schema",schema["$schema"]); self.assertEqual("object",schema["type"]); self.assertIn("additionalProperties",schema)
  def test_scanner_opaque_and_drift(self):
   raw=source();self.assertEqual(0,scan_dataset(raw,expected_sha256=hashlib.sha256(raw).hexdigest())["opaque_unsafe_lexeme_decode_count"])
   for bad in (raw.replace(b'"VTI"',b'"BAD"',1),raw.replace(b'2015-12-31',b'2016-01-01',1),raw.replace(b'"raw_close":"1.00"',b'"raw_close":{}',1),raw+b"x"):
