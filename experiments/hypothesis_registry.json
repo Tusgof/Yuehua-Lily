@@ -555,7 +555,8 @@
       ],
       "evidence": [
         {"evidence_tier": "E0", "path": "experiments/l_4_breadth_preregistration_v1.json"},
-        {"evidence_tier": "E0", "path": "experiments/l_4_breadth_preregistration_v2.json"}
+        {"evidence_tier": "E0", "path": "experiments/l_4_breadth_preregistration_v2.json"},
+        {"evidence_tier": "E0", "path": "experiments/l_4_breadth_preregistration_v3.json"}
       ],
       "decision_log": [
         {
@@ -572,6 +573,11 @@
           "date": "2026-07-28",
           "decision": "B8_1_l4_breadth_v2_locked_E0",
           "notes": "B8.1 supersedes B8/v1 without changing it: component-risk HHI is exact, N_eff uses a trailing 52-week continuous-q correlation eigenvalue rule, all mandatory metrics have separate MinTRL and no-pooling regimes, robustness and side effects are deterministic, validation is sealed, and every authorization remains false."
+        },
+        {
+          "date": "2026-07-28",
+          "decision": "B8_2_l4_breadth_v3_locked_E0",
+          "notes": "B8.2 supersedes B8.1 without changing prior bytes: q primary sizing explicitly forbids volatility division, every metric has all three recomputed MinTRL plans, and E1/validation decisions have exhaustive mutually exclusive precedence. Validation remains sealed and every authorization is false."
         }
       ]
     }

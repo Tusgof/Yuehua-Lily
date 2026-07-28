@@ -98,6 +98,7 @@
 - **Falsification**: after `MinTRL_falsify`, broader universes fail to reduce locked dependency metrics or the apparent benefit disappears after costs/best-market removal across required regimes, followed by a mechanism autopsy.
 - **B8 preregistration**: locks U1 descriptive-only, U4 (VTI/IEF/GLD/DBC) versus ordered U8 equal-notional `q[i,t]` on identical U8-common dates, a 0.05 HHI reduction, 0.5 effective-opportunity increase, 0.10 top-dependency reduction, and at least half HHI benefit after best-market and best-episode removal. It is E0/no-data only; L-4 has no empirical result or edge claim, validation remains sealed, and a separate owner-approved activation gate is required.
 - **B8.1 v2 remediation**: supersedes B8/v1 without changing its bytes. It replaces the pseudo-independence count with trailing-52-week continuous-`q` correlation/eigenvalue `N_eff`, locks component-risk HHI, deterministic removals and side effects, separately funded per-metric MinTRL and regime matrix, and a mutually exclusive decision matrix. It is E0/no-data only; `edge_claim none`, validation sealed, and no activation is authorized.
+- **B8.2 v3 completion**: supersedes B8.1 without changing prior bytes. It restores the scoped question, data/search/claim controls, explicitly fixes primary `u=q` before downstream constraints, locks all three MinTRL plans per metric, and gives E1 and future-validation scope predicates fixed precedence. It is E0/no-data only; `edge_claim none`, validation sealed, and Inspector review is the only next action.
 
 ## Seed Status
 
