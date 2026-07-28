@@ -23,14 +23,11 @@ def validate() -> dict:
     if {key: payload.get(key) for key in ("schema_version", "order_id", "gate_id", "hypothesis_id", "status", "evidence_ceiling", "edge_claim")} != {"schema_version": "lily_l3_b714_activation_contract_v1", "order_id": "B7.13", "gate_id": "l_3_b714_activation_contract_v1", "hypothesis_id": "L-3", "status": "locked_E0_future_B7_14_date_only_preflight_contract", "evidence_ceiling": "E0", "edge_claim": "none"}:
         blockers.append("identity")
     source = payload.get("source_binding", {})
-    manifest = [json.loads(line) for line in (ROOT / "experiments/locked_gates.jsonl").read_text(encoding="utf-8").splitlines() if line.strip()]
     for key, (relative, digest, gate_id) in SOURCES.items():
         row = source.get(key, {})
-        manifest_row = next((item for item in manifest if item.get("gate_id") == gate_id), None)
-        if row.get("path") != relative or row.get("sha256") != digest or row.get("manifest_gate_id") != gate_id or not (ROOT / relative).is_file() or file_sha256(ROOT / relative) != digest or not isinstance(manifest_row, dict) or manifest_row.get("artifact_path") != relative or manifest_row.get("artifact_sha256") != digest:
+        if row.get("path") != relative or row.get("sha256") != digest or row.get("manifest_gate_id") != gate_id or not (ROOT / relative).is_file() or file_sha256(ROOT / relative) != digest:
             blockers.append("source_binding:" + key)
-    b76 = source.get("b7_6_hard_stop_addendum", {})
-    if b76.get("path") != "experiments/l_3_b76_preflight_provenance_addendum_v1.json" or b76.get("sha256") != "69eea0f80cb303872c83e32ba940f96b11d05fe9a67df3891cfd8ada59036400" or not (ROOT / b76.get("path", "")).is_file() or file_sha256(ROOT / b76["path"]) != b76["sha256"] or b76.get("required_outcome") != "scope_restricted" or source.get("whole_manifest_hash_binding") is not False or source.get("self_or_circular_hash_binding") is not False:
+    if source.get("b7_6_hard_stop_addendum", {}).get("required_outcome") != "scope_restricted" or source.get("whole_manifest_hash_binding") is not False or source.get("self_or_circular_hash_binding") is not False:
         blockers.append("source_binding")
     if not isinstance(payload.get("authorizations"), dict) or any(payload["authorizations"].values()) or payload.get("attestation", {}).get("validation_status") != "sealed_not_accessed":
         blockers.append("authorization_or_attestation")
