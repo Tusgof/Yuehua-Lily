@@ -558,7 +558,8 @@
         {"evidence_tier": "E0", "path": "experiments/l_4_breadth_preregistration_v2.json"},
         {"evidence_tier": "E0", "path": "experiments/l_4_breadth_preregistration_v3.json"},
         {"evidence_tier": "E0", "path": "experiments/l_4_breadth_preregistration_v4.json"},
-        {"evidence_tier": "E0", "path": "experiments/l_4_breadth_b85_phase_a_activation_order_v1.json"}
+        {"evidence_tier": "E0", "path": "experiments/l_4_breadth_b85_phase_a_activation_order_v1.json"},
+        {"evidence_tier": "E0", "path": "experiments/l_4_breadth_b85_phase_a_activation_order_v2.json"}
       ],
       "decision_log": [
         {
@@ -600,6 +601,11 @@
           "date": "2026-07-28",
           "decision": "B8_5_l4_phase_a_activation_order_locked_E0",
           "notes": "B8.5 Phase A source-binds accepted B8.4R2/v3, v4 science, B8.4R2 report/runner/schema/fixture, and the sealed validation boundary. It records only a future one-preflight U8 symbol/session-date contract; all 24 Phase A authorizations are false, access counts are zero, validation sealed, edge_claim none. Phase B is not executed and awaits Inspector acceptance plus exact-SHA CI success."
+        },
+        {
+          "date": "2026-07-28",
+          "decision": "B8_5R_l4_runnable_structural_contract_locked_E0",
+          "notes": "Inspector rejected immutable B8.5/v1 because its future Phase-B machinery and LILY_DATA_ROOT resolution were unlocked. B8.5R/v2 hash-binds a byte-level scanner, one-shot future runner, report schema/validator, and synthetic envelope. It resolves only LILY_DATA_ROOT plus literal references, reports observed raw manifest/payload hashes, and hard-stops before return/value decoding. Phase B is not executed; validation sealed, edge_claim none."
         }
       ]
     }
