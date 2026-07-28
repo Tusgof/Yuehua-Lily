@@ -203,27 +203,26 @@ def _is_single_line_human_approval_recovery(
 
 def _is_exact_b714r6_duplicate_recovery(current_lines: list[str], baseline: list[str]) -> bool:
     """The sole audited deletion: b2d349d's later byte-identical v7 duplicate."""
-    recovery_path = PROJECT_ROOT / "experiments/l_3_b714r6_manifest_duplicate_recovery_v1.json"
+    recovery_path = PROJECT_ROOT / "experiments/l_3_b714r6_manifest_duplicate_recovery_v2.json"
     try:
         recovery = json.loads(recovery_path.read_text(encoding="utf-8"))
     except (OSError, json.JSONDecodeError):
         return False
     expected = {
-        "schema_version": "lily_l3_b714r6_manifest_duplicate_recovery_v1",
-        "prior_commit": "b2d349d4ce3fcfb5e275664f20e69844fba4823a",
+        "schema_version": "lily_l3_b714r6_manifest_duplicate_recovery_v2",
+        "duplicated_commit": "b2d349d4ce3fcfb5e275664f20e69844fba4823a",
+        "recovery_commit": "5fb2f36969d20ad41df85efe60fec1faaefafd4e",
         "gate_id": "l_3_b714_date_only_preflight_remediation_v7",
-        "prior_count": 2,
-        "current_count": 1,
-        "recovery": "remove_only_the_later_byte_identical_v7_manifest_line",
         "access": {"data": False, "container": False, "provider": False, "research_log": False},
     }
     if recovery != expected:
         return False
     shown = subprocess.run(
-        ["git", "show", f"{expected['prior_commit']}:experiments/locked_gates.jsonl"],
-        cwd=PROJECT_ROOT, text=True, capture_output=True, check=False,
+        ["git", "show", f"{expected['duplicated_commit']}:experiments/locked_gates.jsonl"],
+        cwd=PROJECT_ROOT, capture_output=True, check=False,
     )
-    prior = [line for line in shown.stdout.splitlines() if line.strip()]
+    prior_bytes = [line for line in shown.stdout.splitlines() if line.strip()]
+    prior = [line.decode("utf-8") for line in prior_bytes]
     if shown.returncode or baseline != prior:
         return False
     marker = '"gate_id":"l_3_b714_date_only_preflight_remediation_v7"'

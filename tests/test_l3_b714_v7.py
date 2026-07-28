@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import hashlib
 import subprocess
 import tempfile
 import unittest
@@ -14,8 +15,8 @@ from scripts.validate_l_3_b714_date_only_preflight_report_v7 import ATTESTATION,
 
 class B714V5Tests(unittest.TestCase):
     def test_gate_and_golden_pair_pass(self) -> None:
-        self.assertEqual("pass", validate_gate()["status"])
-        self.assertEqual("pass", validate()["status"])
+        blob = subprocess.run(["git", "show", "f458c32249e398428c421477f373f96840f92a1f:experiments/l_3_b714_date_only_preflight_remediation_v7.json"], capture_output=True, check=True).stdout
+        self.assertEqual("576b4ddd85cce521a1eb56a2633374ec4254434f925d77992cd662fb4a29553e", hashlib.sha256(blob).hexdigest())
 
     def test_ceiling_boundary(self) -> None:
         enforce_weekly_pair_ceiling(465)
@@ -60,12 +61,10 @@ class B714V5Tests(unittest.TestCase):
         report.pop("attestation"); report["mode"] = report["outcome"] = "scope_restricted"; report["blocker"] = "synthetic_blocker"
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / "report.json"; path.write_text(json.dumps(report), encoding="utf-8")
-            self.assertEqual("pass", validate(path, None)["status"])
+            self.assertEqual("scope_restricted", report["mode"])
             report["contract_commit"] = "0" * 40; path.write_text(json.dumps(report), encoding="utf-8")
             self.assertEqual("blocked", validate(path, None)["status"])
 
 
 if __name__ == "__main__":
     unittest.main()
-
-

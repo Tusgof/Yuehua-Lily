@@ -99,7 +99,7 @@ B7.13 is E0 synthetic-only contract work. Its v3 manifest-integrity recovery res
 
 B7.14 v3 wrote its immutable scope-restricted report and hard-stopped at `unknown_structural_key`, but Inspector rejects it because a skipped timestamp lexeme was UTF-8 decoded once. B7.14R/v4 is rejected for incomplete bindings/contracts; B7.14R3/v5 is blocked because its runner failed `audit_new_script_lib_usage`. B7.14R4/v6 supersedes v5 with E0-only synthetic/no-data machinery; no container/path inspection, execution, or new real report is authorized.
 
-B7.14R5/v7 is the in-progress E0-only cross-platform remediation checkpoint. It retains all rejected v5/v6 history, source-binds their exact committed LF blobs plus the failed Exact-SHA CI through an append-only addendum, pins every new synthetic artifact to LF, and keeps validation sealed with every real-access authorization false. L-3 remains E1 `scope_restricted`; no rerun is authorized.
+B7.14R5/v7 and B7.14R6/v8 are rejected immutable history: v7 failed Exact-SHA CI and v8 introduced a duplicate-v7 manifest recovery sequence. B7.14R7/v9 is the in-progress E0-only portable remediation. It supersedes v8 once, source-binds v5 through v8 only by exact committed `git show` blobs plus portable addenda, pins all new paths to LF, and keeps all fourteen authorizations false. L-3 remains E1 `scope_restricted`, validation sealed, and no rerun is authorized.
 
 ### T4 / L-4 — Breadth
 
