@@ -4,6 +4,7 @@ import hashlib,json,subprocess,sys
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:sys.path.insert(0,str(ROOT))
+from lib.io import load_json
 import scripts.run_l_4_breadth_b86r4_provisioning_v5 as core
 GATE_RELATIVE="experiments/l_4_breadth_b86r5_provisioning_gate_v6.json";ACTIVATION_RELATIVE=Path("experiments/activation_records/l_4_breadth_b86r5_provisioning_activation_v6.json");REPORT_RELATIVE=Path("reports/experiments/l_4_breadth_b86r5_provisioning_report_v6.json");MARKER_RELATIVE=Path("reports/experiments/l_4_breadth_b86r5_provisioning_attempt_v6.json");MANIFEST_RELATIVE=Path("experiments/provisioned/l_4_breadth_b86r5_falsification_manifest_v6.json");PAYLOAD_RELATIVE=Path("experiments/provisioned/l_4_breadth_b86r5_u8_session_dates_v6.json")
 def canonical(value):return core.canonical(value)
