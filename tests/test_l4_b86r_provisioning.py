@@ -18,7 +18,7 @@ def check(accepted_head,checkpoint,gate_hash):return accepted_head=="a"*40 and c
 
 class B86RTests(unittest.TestCase):
  def test_gate_and_draft_schemas(self):
- self.assertEqual("pass",validate_gate()["status"])
+  self.assertEqual("pass",validate_gate()["status"])
   for name in ("l_4_breadth_b86r_provisioning_activation_v2.schema.json","l_4_breadth_b86r_provisioning_report_v2.schema.json","l_4_breadth_b86r_falsification_manifest_v2.schema.json","l_4_breadth_b86r_u8_session_dates_v2.schema.json"):
    schema=json.loads((runner.ROOT/"schemas"/name).read_text("ascii")); self.assertEqual("https://json-schema.org/draft/2020-12/schema",schema["$schema"]); self.assertEqual("object",schema["type"]); self.assertIn("additionalProperties",schema)
  def test_scanner_opaque_and_drift(self):
