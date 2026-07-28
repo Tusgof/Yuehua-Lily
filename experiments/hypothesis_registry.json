@@ -616,6 +616,11 @@
           "date": "2026-07-28",
           "decision": "B8_5R3_l4_phase_a_structural_contract_locked_E0",
           "notes": "B8.5/v1, B8.5R/v2, and B8.5R2/v3 remain immutable Inspector-rejected history. B8.5R3/v4 locks capacity-derived bounded reads, prefix-versus-complete provenance, preservation of the first report, a machine-readable Inspector/CI activation record, and an explicit CLI flag. Phase B and activation remain unexecuted; validation sealed, edge_claim none."
+        },
+        {
+          "date": "2026-07-29",
+          "decision": "B8_5R4_l4_phase_a_lifecycle_remediation_locked_E0",
+          "notes": "B8.5R3/v4 is immutable Inspector-rejected history for circular lifecycle and incomplete pass binding. B8.5R4/v5 locks a later tracked activation checkpoint bound to the accepted gate commit and its Exact-SHA Hermetic CI, full pass artifact/payload correlations, and ancestor blob provenance for later report commits. Phase B and activation remain unexecuted; validation sealed, edge_claim none."
         }
       ]
     }
