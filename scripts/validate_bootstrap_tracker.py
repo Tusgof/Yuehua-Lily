@@ -567,6 +567,16 @@ def _validate_done_artifact(
         return _validate_l3_b78_text_mirror(target, order_id, artifact_path)
     if must == "register_l3_b78_scripts":
         return _validate_l3_b78_script_registration(target, order_id, artifact_path)
+    if must == "validate_l3_b79_gate":
+        return _validate_l3_b79_gate(target, order_id, artifact_path, project_root=project_root)
+    if must == "contain_l3_b79_manifest_identity":
+        return _validate_l3_b79_manifest_identity(target, order_id, artifact_path, project_root=project_root)
+    if must == "match_l3_b79_registry_mirror":
+        return _validate_l3_b79_registry_mirror(target, order_id, artifact_path)
+    if must == "match_l3_b79_text_mirror":
+        return _validate_l3_b79_text_mirror(target, order_id, artifact_path)
+    if must == "register_l3_b79_scripts":
+        return _validate_l3_b79_script_registration(target, order_id, artifact_path)
     if must == "match_l3_v2_source_binding":
         return _validate_l3_v2_source_binding(target, order_id, artifact_path, project_root=project_root)
     if must == "match_l3_registry_mirror":
@@ -2089,6 +2099,50 @@ def _validate_l3_b78_script_registration(target: Path, order_id: str, artifact_p
     required = ("scripts/run_l_3_corrected_rerun_v3.py", "scripts/validate_l_3_corrected_rerun_activation_v3.py", "scripts/validate_l_3_corrected_rerun_report_v3.py")
     ok = isinstance(scripts, list) and all(scripts.count(item) == 1 for item in required)
     return ([] if ok else [f"{order_id}:l3_b78_script_registration_mismatch"], ok, False)
+
+
+def _validate_l3_b79_gate(target: Path, order_id: str, artifact_path: str, *, project_root: Path) -> tuple[list[str], bool, bool]:
+    if not target.is_file(): return [f"{order_id}:missing_artifact:{artifact_path}"], False, False
+    run = subprocess.run([sys.executable, "scripts/validate_l_3_corrected_rerun_activation_v5.py"], cwd=project_root, text=True, capture_output=True, check=False)
+    return ([] if run.returncode == 0 else [f"{order_id}:l3_b79_gate_validator_failed"], run.returncode == 0, False)
+
+
+def _validate_l3_b79_manifest_identity(target: Path, order_id: str, artifact_path: str, *, project_root: Path) -> tuple[list[str], bool, bool]:
+    if not target.is_file(): return [f"{order_id}:missing_artifact:{artifact_path}"], False, False
+    try: rows = [json.loads(line) for line in target.read_text(encoding="utf-8").splitlines() if line]
+    except json.JSONDecodeError: return [f"{order_id}:l3_b79_manifest_invalid"], False, False
+    matches = [row for row in rows if row.get("gate_id") == "l_3_corrected_rerun_activation_v5"]
+    if len(matches) != 1: return [f"{order_id}:l3_b79_manifest_entry_count:{len(matches)}"], False, False
+    row = matches[0]; artifact = project_root / "experiments/l_3_corrected_rerun_activation_v5.json"; validator = project_root / "scripts/validate_l_3_corrected_rerun_activation_v5.py"
+    bad = []
+    if row.get("supersedes_gate_id") != "l_3_corrected_rerun_activation_v4": bad.append(f"{order_id}:l3_b79_supersession_mismatch")
+    if row.get("artifact_path") != "experiments/l_3_corrected_rerun_activation_v5.json" or row.get("artifact_sha256") != hashlib.sha256(artifact.read_bytes()).hexdigest(): bad.append(f"{order_id}:l3_b79_manifest_artifact_hash_mismatch")
+    if row.get("validator_path") != "scripts/validate_l_3_corrected_rerun_activation_v5.py" or row.get("validator_sha256") != hashlib.sha256(validator.read_bytes()).hexdigest(): bad.append(f"{order_id}:l3_b79_manifest_validator_hash_mismatch")
+    if not isinstance(row.get("reviewed_by"), str) or not row["reviewed_by"].strip(): bad.append(f"{order_id}:l3_b79_reviewer_missing")
+    return bad, not bad, False
+
+
+def _validate_l3_b79_registry_mirror(target: Path, order_id: str, artifact_path: str) -> tuple[list[str], bool, bool]:
+    if not target.is_file(): return [f"{order_id}:missing_artifact:{artifact_path}"], False, False
+    try: registry = json.loads(target.read_text(encoding="utf-8"))
+    except json.JSONDecodeError: return [f"{order_id}:l3_b79_registry_invalid_json"], False, False
+    l3 = next((item for item in registry.get("hypotheses", []) if item.get("id") == "L-3"), {})
+    notes = " ".join(str(item.get("notes", "")) for item in l3.get("decision_log", []) if isinstance(item, dict))
+    ok = "B7.9" in notes and "E0" in notes and "validation sealed" in notes and "edge_claim none" in notes
+    return ([] if ok else [f"{order_id}:l3_b79_registry_mirror_missing"], ok, False)
+
+
+def _validate_l3_b79_text_mirror(target: Path, order_id: str, artifact_path: str) -> tuple[list[str], bool, bool]:
+    return _validate_l3_text_mirror(target, order_id, artifact_path, "l3_b79_text_mirror", ("B7.9", "synthetic-only", "E0", "validation sealed", "edge_claim none"))
+
+
+def _validate_l3_b79_script_registration(target: Path, order_id: str, artifact_path: str) -> tuple[list[str], bool, bool]:
+    if not target.is_file(): return [f"{order_id}:missing_artifact:{artifact_path}"], False, False
+    try: scripts = json.loads(target.read_text(encoding="utf-8")).get("scripts")
+    except json.JSONDecodeError: return [f"{order_id}:l3_b79_script_registry_invalid_json"], False, False
+    required = ("scripts/run_l_3_corrected_rerun_v5.py", "scripts/validate_l_3_corrected_rerun_activation_v5.py", "scripts/validate_l_3_corrected_rerun_report_v5.py")
+    ok = isinstance(scripts, list) and all(scripts.count(item) == 1 for item in required)
+    return ([] if ok else [f"{order_id}:l3_b79_script_registration_mismatch"], ok, False)
 
 
 def _validate_l3_registry_mirror(

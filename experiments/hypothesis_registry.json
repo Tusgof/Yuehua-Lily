@@ -484,6 +484,11 @@
           "date": "2026-07-27",
           "decision": "B7_8_synthetic_only_execution_contract_supersession_E0",
           "notes": "B7.8 supersedes defective B7.7 execution-contract machinery only. Hermetic fixtures now enforce exact eight-asset structural scanning, canonical weekly schedule boundaries, strict paired L1 side-effect derivation, and a hash-bound closed-world prospective report contract. It opens no real container, return, execution, schedule attestation, ledger, or validation path; L-3 remains E1 scope_restricted, edge_claim none, validation sealed."
+        },
+        {
+          "date": "2026-07-28",
+          "decision": "B7_9_synthetic_only_adversarial_remediation_E0",
+          "notes": "B7.9 supersedes B7.8/v4 machinery only after Inspector-required adversarial remediation. Hermetic v5 rejects every individual post-end session before intersection while accepting 2015-12-31, recomputes finite primary, realized, side-effect, funding, and exact no-pooling regime evidence, and binds only committed synthetic identity files by actual SHA-256. All fourteen authorizations remain false; no real container, return, execution, report decision, ledger, or validation path opens. L-3 remains E1 scope_restricted, edge_claim none, validation sealed; no rerun is authorized."
         }
       ]
     },

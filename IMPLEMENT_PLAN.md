@@ -87,6 +87,8 @@ B7.7 is E0 synthetic-only remediation. It preserves B7.6 as history, records tha
 
 B7.8 is E0 synthetic-only remediation. It supersedes defective B7.7 execution-contract machinery without changing locked science, binds B7.7/v2 and the sealed prior gate lineage, and verifies scanner, weekly schedule, side-effect, and prospective report contracts using hermetic fixtures only. All access flags remain false; L-3 remains E1 scope-restricted with validation sealed and edge_claim none. A future rerun requires Inspector acceptance of B7.8 and a new explicit owner authorization.
 
+B7.9 is E0 synthetic-only adversarial remediation. It supersedes B7.8/v4 machinery without changing locked science: v5 rejects each individual post-end symbol session before intersection while accepting 2015-12-31, enforces the exact report matrix, recomputes finite decision evidence, and binds only committed synthetic fixture identities by actual SHA-256. All fourteen access flags remain false; L-3 remains E1 scope-restricted with validation sealed and edge_claim none. A future rerun requires Inspector acceptance of B7.9 and a new explicit owner authorization.
+
 ### T4 / L-4 — Breadth
 
 Test whether additional countries, sleeves, and independent markets reduce single-market trend dependency after accounting for trend-state correlation and costs.
