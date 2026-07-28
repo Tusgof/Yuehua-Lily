@@ -940,6 +940,23 @@ class BootstrapTrackerValidatorTests(unittest.TestCase):
         self.assertFalse(unverified)
         self.assertIn("B4.15:ci_missing:uses: actions/checkout@v5", blockers)
 
+    def test_B714R8_done_claim_rejects_missing_gate_validator_snapshot_and_manifest(self) -> None:
+        checks = (
+            ("experiments/l_3_b714_date_only_preflight_remediation_v10.json", "validate_l3_b714r8_gate"),
+            ("scripts/validate_l_3_b714_date_only_preflight_remediation_v10.py", "validate_l3_b714r8_validator"),
+            ("experiments/l_3_b714r8_snapshot_index_v1.json", "validate_l3_b714r8_snapshots"),
+            ("experiments/locked_gates.jsonl", "contain_l3_b714r8_manifest_identity"),
+        )
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            for path, must in checks:
+                blockers, checked, unverified = self.validator._validate_done_artifact(
+                    "B7.14R8", path, must, project_root=root, verify_runtime=False, runtime_cache={}
+                )
+                self.assertFalse(checked)
+                self.assertFalse(unverified)
+                self.assertTrue(blockers)
+
 
 def _tracker_with_artifact(path: str, must: str) -> dict[str, object]:
     return {

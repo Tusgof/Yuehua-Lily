@@ -662,6 +662,26 @@ def _validate_done_artifact(
         required = ("scripts/run_l_3_b714_date_only_preflight_v6.py", "scripts/validate_l_3_b714_date_only_preflight_report_v6.py", "scripts/validate_l_3_b714_date_only_preflight_remediation_v6.py")
         ok = all(scripts.count(item) == 1 for item in required)
         return ([] if ok else [f"{order_id}:script_registration"], ok, False)
+    if must in {"validate_l3_b714r8_gate", "validate_l3_b714r8_validator", "validate_l3_b714r8_snapshots", "validate_l3_b714r8_recovery"}:
+        command = "scripts/validate_l_3_b714_date_only_preflight_remediation_v10.py" if must in {"validate_l3_b714r8_gate", "validate_l3_b714r8_validator"} else "scripts/validate_l_3_b714r8_snapshots_v1.py"
+        run = subprocess.run([sys.executable, command], cwd=project_root, text=True, capture_output=True, check=False)
+        recovery = {"schema_version": "lily_l3_b714r8_manifest_duplicate_recovery_v3", "uses": "experiments/l_3_b714r8_snapshot_index_v1.json", "mode": "snapshot_only", "access": {"data": False, "container": False, "provider": False, "research_log": False}, "result": "one_exact_v7_row_after_duplicate_removal"}
+        try:
+            recovery_ok = must != "validate_l3_b714r8_recovery" or json.loads(target.read_text(encoding="utf-8")) == recovery
+        except (OSError, json.JSONDecodeError):
+            recovery_ok = False
+        ok = target.is_file() and recovery_ok and run.returncode == 0
+        return ([] if ok else [f"{order_id}:b714r8_{must}_failed"], ok, False)
+    if must == "contain_l3_b714r8_manifest_identity":
+        try:
+            rows = [json.loads(line) for line in target.read_text(encoding="utf-8").splitlines() if line.strip()]
+            row = [item for item in rows if item.get("gate_id") == "l_3_b714_date_only_preflight_remediation_v10"]
+            gate = project_root / "experiments/l_3_b714_date_only_preflight_remediation_v10.json"
+            validator = project_root / "scripts/validate_l_3_b714_date_only_preflight_remediation_v10.py"
+            ok = len(row) == 1 and row[0].get("artifact_sha256") == hashlib.sha256(gate.read_bytes()).hexdigest() and row[0].get("validator_sha256") == hashlib.sha256(validator.read_bytes()).hexdigest()
+        except (OSError, json.JSONDecodeError):
+            ok = False
+        return ([] if ok else [f"{order_id}:b714r8_manifest_identity_failed"], ok, False)
     if must == "register_l3_b714r8_scripts":
         scripts = json.loads(target.read_text(encoding="utf-8")).get("scripts", [])
         required = ("scripts/validate_l_3_b714r8_snapshots_v1.py", "scripts/validate_l_3_b714_date_only_preflight_remediation_v10.py")
