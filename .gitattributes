@@ -5,6 +5,7 @@
 *.toml text eol=lf
 *.yaml text eol=lf
 *.yml text eol=lf
+*.b64 text eol=lf
 reports/experiments/l_3_b714_date_only_preflight_report_v3.json -text
 experiments/l_3_b714_date_only_preflight_remediation_v7.json text eol=lf
 experiments/l_3_b714r5_v7_cross_platform_addendum_v1.json text eol=lf

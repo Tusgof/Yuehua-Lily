@@ -1,0 +1,1 @@
+{"schema_version":"lily_l3_b714r8_manifest_duplicate_recovery_v3","uses":"experiments/l_3_b714r8_snapshot_index_v1.json","mode":"snapshot_only","access":{"data":false,"container":false,"provider":false,"research_log":false},"result":"one_exact_v7_row_after_duplicate_removal"}

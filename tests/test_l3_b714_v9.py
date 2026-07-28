@@ -8,7 +8,7 @@ from pathlib import Path
 
 from lib.l3_b714_date_only_scanner_v9 import ScanError, enforce_weekly_pair_ceiling, scan_synthetic_date_only, valid_utf8_bytes
 from scripts.run_l_3_b714_date_only_preflight_v9 import guard_workspace_clean, run_synthetic
-from scripts.validate_l_3_b714_date_only_preflight_remediation_v9 import validate as validate_gate
+from scripts.validate_l_3_b714r8_snapshots_v1 import validate as validate_gate
 from scripts.validate_l_3_b714_date_only_preflight_report_v9 import ATTESTATION, REPORT, validate
 
 
