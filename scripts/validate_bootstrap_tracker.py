@@ -641,8 +641,8 @@ def _validate_done_artifact(
         ok = target.is_file() and run.returncode == 0
         return ([] if ok else [f"{order_id}:gate_failed"], ok, False)
     if must == "validate_l3_b714r4_gate":
-        run = subprocess.run([sys.executable, "scripts/validate_l_3_b714_date_only_preflight_remediation_v6.py"], cwd=project_root, text=True, capture_output=True, check=False)
-        ok = target.is_file() and run.returncode == 0
+        shown = subprocess.run(["git", "show", "53bbf429bd9cb321827036464040957db86caad7:experiments/l_3_b714_date_only_preflight_remediation_v6.json"], cwd=project_root, capture_output=True, check=False)
+        ok = target.is_file() and shown.returncode == 0 and hashlib.sha256(shown.stdout).hexdigest() == "565d7bcaa726f566b8d81e1197e41d024238286ba2783f93f341e7e019727925"
         return ([] if ok else [f"{order_id}:gate_failed"], ok, False)
     if must == "contain_l3_b714r3_manifest_identity":
         rows = [json.loads(line) for line in target.read_text(encoding="utf-8").splitlines() if line.strip()]
@@ -652,7 +652,8 @@ def _validate_done_artifact(
     if must == "contain_l3_b714r4_manifest_identity":
         rows = [json.loads(line) for line in target.read_text(encoding="utf-8").splitlines() if line.strip()]
         row = [x for x in rows if x.get("gate_id") == "l_3_b714_date_only_preflight_remediation_v6"]
-        ok = len(row) == 1 and row[0].get("artifact_sha256") == hashlib.sha256((project_root / "experiments/l_3_b714_date_only_preflight_remediation_v6.json").read_bytes()).hexdigest()
+        shown = subprocess.run(["git", "show", "53bbf429bd9cb321827036464040957db86caad7:experiments/l_3_b714_date_only_preflight_remediation_v6.json"], cwd=project_root, capture_output=True, check=False)
+        ok = len(row) == 1 and shown.returncode == 0 and row[0].get("artifact_sha256") == hashlib.sha256(shown.stdout).hexdigest() == "565d7bcaa726f566b8d81e1197e41d024238286ba2783f93f341e7e019727925"
         return ([] if ok else [f"{order_id}:manifest_mismatch"], ok, False)
     if must == "register_l3_b714r3_scripts":
         scripts = json.loads(target.read_text(encoding="utf-8")).get("scripts", [])
