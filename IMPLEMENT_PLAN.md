@@ -119,6 +119,8 @@ B8.6 Phase A locks E0/no-data provisioning machinery for the literal repo-relati
 
 B8.6R Phase-A v2 is append-only Inspector remediation. It preserves B8.6 v1 and records the corrected literal-path hash addendum. The v2 one-shot has no environment dependency; activation requires an accepted gate commit, exact CI run/head, `ACCEPTED`, scope/seal, ancestor proof, and gate-blob proof. It performs only opaque structural inspection after an atomic marker claim; E0 remains `edge_claim none`.
 
+B8.6R2 Phase-A v3 preserves v1/v2 after Inspector rejection. It closes the report blocker matrix, validates JSON numeric grammar as opaque bytes, rejects nested output drift, binds canonical manifest/payload path/hash/bytes into real reports, and executes the repository's constrained Draft 2020-12 validator in hermetic tests. No activation, provisioning, or validation access is authorized; validation sealed, E0 remains `edge_claim none`.
+
 Exit: breadth reduces preregistered dependency/concentration measures, produces an explicit scope restriction, or is falsified.
 
 ## 5. Execution Orders

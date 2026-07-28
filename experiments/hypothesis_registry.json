@@ -651,6 +651,11 @@
           "date": "2026-07-29",
           "decision": "B8_6R_phase_a_v2_remediation_locked_E0",
           "notes": "B8.6 remains immutable Inspector-rejected history. B8.6R v2 corrects the literal repo-relative path, closes schemas and output validators, preserves unsafe values as opaque lexemes, and requires accepted-gate Exact-SHA ancestor/blob activation proof before one bounded read. No activation or container access occurs; validation sealed, edge_claim none."
+        },
+        {
+          "date": "2026-07-29",
+          "decision": "B8_6R2_phase_a_v3_remediation_locked_E0",
+          "notes": "B8.6R2 preserves immutable Inspector-rejected B8.6R v2 history. v3 makes every reachable structural blocker report validator-valid, parses numeric lexemes with bytes-only grammar, closes nested output semantics, binds canonical output identities, and executes hermetic Draft 2020-12 subset validation. No activation or container access occurs; validation sealed, E0, edge_claim none."
         }
       ]
     }
