@@ -114,6 +114,7 @@
 - **B8.6R2 Phase A v3**: preserves v1/v2 and repairs Inspector findings: all structural blocked reports validate with exact counters; numeric values are grammar-checked opaque bytes; outputs are closed-world and report their canonical persisted identities; schema tests execute the repository's Draft 2020-12 subset validator. E0 only, `edge_claim none`, validation sealed.
 - **B8.6R3 Phase A v4**: preserves v1-v3 and restores closed-world blocker, real provenance/consumption, summary, output-identity, and cross-binding checks. E0 only, `edge_claim none`, validation sealed.
 - **B8.6R4 Phase A v5**: preserves v1-v4 and requires the canonical activation blob at the producing commit plus exact manifest/payload coverage, date, count, total, and output cross-bindings. E0 only, `edge_claim none`, validation sealed.
+- **B8.6R5 Phase A v6**: preserves v1-v5 and adds only a fail-closed, activation-gated one-shot runner. E0 only, `edge_claim none`, validation sealed.
 
 ## Seed Status
 

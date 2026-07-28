@@ -125,6 +125,8 @@ B8.6R3 Phase-A v4 preserves v1-v3 after Inspector rejection. It defines the exac
 
 B8.6R4 Phase-A v5 preserves v1-v4 after Inspector rejection. It binds activation bytes to the producing commit and closes manifest/payload coverage, date, count, total, and cross-binding forgery. E0 only, validation sealed, `edge_claim none`.
 
+B8.6R5 Phase-A v6 preserves v1-v5 and adds only the fail-closed, activation-gated one-shot runner. E0 only, validation sealed, `edge_claim none`.
+
 Exit: breadth reduces preregistered dependency/concentration measures, produces an explicit scope restriction, or is falsified.
 
 ## 5. Execution Orders
