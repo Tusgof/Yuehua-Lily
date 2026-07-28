@@ -101,6 +101,8 @@ B7.14 v3 wrote its immutable scope-restricted report and hard-stopped at `unknow
 
 B7.14R5/v7 and B7.14R6/v8 are rejected immutable history; B7.14R7/v9 is rejected after failed Phase A. B7.14R8/v10 completed E0 snapshot-only governance at `d2a9001` with CI 30351502467 and closure `cf0fa3d` with CI 30351716462. It preserves all locked history, binds committed predecessor/recovery proof without real access, and keeps all fourteen authorizations false. L-3 remains E1 `scope_restricted` and unresolved, validation sealed, no rerun, no edge.
 
+B7.15 current-preregistration closure: L-3 remains E1 scope_restricted and unresolved, not falsified or validated; no rerun is planned under the current preregistration; validation is sealed; edge_claim none; no L-3 result may be carried forward as proof that inverse-volatility sizing passed. The next gate is L-4 preregistration/planning only.
+
 ### T4 / L-4 — Breadth
 
 Test whether additional countries, sleeves, and independent markets reduce single-market trend dependency after accounting for trend-state correlation and costs.
@@ -323,8 +325,8 @@ If MinTRL validation cost is unaffordable or undefined against the benchmark nul
 | L-0 | Scope-restricted E0; B4.6 verifies production read-only and fractional metadata; B4.11/B4.12 stop before preview; B4.13 confirms the UAT hostname is not a public access entitlement | No UAT work planned; fractional minimum, funding FX, execution quality, and realized-cost evidence remain open |
 | L-1 | Scope-restricted E1; B4.9 closes the unavailable Webull-ledger dry run without observation; B4.10 adds no L-1 evidence | Validation remains sealed; no broker-ledger or historical-correctness claim |
 | L-2 | E1 underfunded_scope_restricted | Redesign requires a new owner-approved preregistration before any L-2 data access |
-| L-3 | E1 scope_restricted; B7.4 invalidates the original ledger decision after the B7.3 sole run recorded 500 weekly observations above the 465 ceiling; B7.5 is E0 corrected no-data schedule governance | Validation sealed; a future one-run requires Inspector acceptance of B7.5 and new explicit owner authorization; no rerun yet |
-| L-4 | Proposed | universe/data integrity and preregistration |
+| L-3 | E1 scope_restricted and unresolved; B7.4 invalidates the B7.3 sole run's 500 weekly observations above the 465 ceiling, and B7.15 closes the current preregistration with no L-3 result carried forward as proof that inverse-volatility sizing passed | Validation sealed; no rerun is planned; next gate is L-4 preregistration/planning only |
+| L-4 | Proposed | L-4 preregistration/planning only |
 
 ## 11. Source Lineage
 

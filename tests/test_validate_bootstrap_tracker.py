@@ -957,6 +957,51 @@ class BootstrapTrackerValidatorTests(unittest.TestCase):
                 self.assertFalse(unverified)
                 self.assertTrue(blockers)
 
+    def test_B715_registry_closure_rejects_missing_no_rerun_statement(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            registry = root / "experiments" / "hypothesis_registry.json"
+            registry.parent.mkdir()
+            registry.write_text(
+                json.dumps({"hypotheses": [{"id": "L-3", "status": "scope_restricted", "edge_claim": "none", "decision_log": [{"date": "2026-07-28", "decision": "B7_15_current_preregistration_closure_synchronized", "notes": "L-3 remains E1 scope_restricted and unresolved, not falsified or validated; validation is sealed; edge_claim none; no L-3 result may be carried forward as proof that inverse-volatility sizing passed."}]}]}),
+                encoding="utf-8",
+            )
+            blockers, checked, unverified = self.validator._validate_done_artifact("B7.15", "experiments/hypothesis_registry.json", "match_l3_b715_closure", project_root=root, verify_runtime=False, runtime_cache={})
+        self.assertFalse(checked)
+        self.assertFalse(unverified)
+        self.assertIn("B7.15:l3_b715_registry_closure_missing:no rerun is planned under the current preregistration;", blockers)
+
+    def test_B715_human_closure_rejects_validated_claim(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            registry = root / "docs" / "HYPOTHESIS_REGISTRY.md"
+            registry.parent.mkdir()
+            registry.write_text("B7.15 current-preregistration closure: L-3 remains E1 scope_restricted and unresolved, validated; no rerun is planned under the current preregistration; validation is sealed; edge_claim none; no L-3 result may be carried forward as proof that inverse-volatility sizing passed.", encoding="utf-8")
+            blockers, checked, unverified = self.validator._validate_done_artifact("B7.15", "docs/HYPOTHESIS_REGISTRY.md", "match_l3_b715_closure", project_root=root, verify_runtime=False, runtime_cache={})
+        self.assertFalse(checked)
+        self.assertFalse(unverified)
+        self.assertIn("B7.15:l3_b715_closure_missing:and unresolved, not falsified or validated;", blockers)
+
+    def test_B715_project_brain_rejects_missing_l4_only_next_action(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            brain = root / "PROJECT_BRAIN.md"
+            brain.write_text("B7.15 current-preregistration closure: L-3 remains E1 scope_restricted and unresolved, not falsified or validated; no rerun is planned under the current preregistration; validation is sealed; edge_claim none; no L-3 result may be carried forward as proof that inverse-volatility sizing passed.", encoding="utf-8")
+            blockers, checked, unverified = self.validator._validate_done_artifact("B7.15", "PROJECT_BRAIN.md", "match_l3_b715_closure", project_root=root, verify_runtime=False, runtime_cache={})
+        self.assertFalse(checked)
+        self.assertFalse(unverified)
+        self.assertIn("B7.15:l3_b715_project_brain_next_action_missing", blockers)
+
+    def test_B715_implementation_plan_rejects_missing_l4_next_gate(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            plan = root / "IMPLEMENT_PLAN.md"
+            plan.write_text("B7.15 current-preregistration closure: L-3 remains E1 scope_restricted and unresolved, not falsified or validated; no rerun is planned under the current preregistration; validation is sealed; edge_claim none; no L-3 result may be carried forward as proof that inverse-volatility sizing passed.", encoding="utf-8")
+            blockers, checked, unverified = self.validator._validate_done_artifact("B7.15", "IMPLEMENT_PLAN.md", "match_l3_b715_closure", project_root=root, verify_runtime=False, runtime_cache={})
+        self.assertFalse(checked)
+        self.assertFalse(unverified)
+        self.assertIn("B7.15:l3_b715_implementation_plan_next_gate_missing", blockers)
+
 
 def _tracker_with_artifact(path: str, must: str) -> dict[str, object]:
     return {

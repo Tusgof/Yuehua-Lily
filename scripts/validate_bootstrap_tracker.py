@@ -45,6 +45,16 @@ PLACEHOLDER_VALUES = {"", "null", "none", "false", "true", "placeholder", "chang
 V1_STRUCTURAL_BYTE_EXCEPTION = "experiments/l_3_b714_v1_noncredential_structural_byte_local_exception_v1.json"
 V1_STRUCTURAL_BYTE_SOURCE = "lib/l3_b714_date_only_scanner_v1.py"
 V1_STRUCTURAL_BYTE_SUPERSESSION = "l_3_b714_date_only_preflight_activation_v2"
+L3_B715_CLOSURE_TERMS = (
+    "B7.15 current-preregistration closure",
+    "L-3 remains E1",
+    "scope_restricted",
+    "and unresolved, not falsified or validated;",
+    "no rerun is planned under the current preregistration;",
+    "validation is sealed;",
+    "edge_claim none;",
+    "no L-3 result may be carried forward as proof that inverse-volatility sizing passed.",
+)
 
 
 def validate_tracker(
@@ -687,6 +697,8 @@ def _validate_done_artifact(
         required = ("scripts/validate_l_3_b714r8_snapshots_v1.py", "scripts/validate_l_3_b714_date_only_preflight_remediation_v10.py")
         ok = all(scripts.count(item) == 1 for item in required)
         return ([] if ok else [f"{order_id}:script_registration"], ok, False)
+    if must == "match_l3_b715_closure":
+        return _validate_l3_b715_closure(target, order_id, artifact_path)
     if must == "contain_l3_b713_manifest_identity":
         rows = [json.loads(line) for line in target.read_text(encoding="utf-8").splitlines() if line.strip()]
         row = [x for x in rows if x.get("gate_id") == "l_3_b714_activation_contract_v3"]
@@ -2551,6 +2563,64 @@ def _validate_l3_text_mirror(
         return [f"{order_id}:missing_artifact:{artifact_path}"], False, False
     text = target.read_text(encoding="utf-8")
     blockers = [f"{order_id}:{label}_missing:{item}" for item in required if item not in text]
+    return blockers, not blockers, False
+
+
+def _validate_l3_b715_closure(
+    target: Path,
+    order_id: str,
+    artifact_path: str,
+) -> tuple[list[str], bool, bool]:
+    if not target.is_file():
+        return [f"{order_id}:missing_artifact:{artifact_path}"], False, False
+    if artifact_path == "experiments/hypothesis_registry.json":
+        try:
+            registry = json.loads(target.read_text(encoding="utf-8"))
+        except json.JSONDecodeError:
+            return [f"{order_id}:l3_b715_registry_invalid_json"], False, False
+        l3_entries = [
+            item
+            for item in registry.get("hypotheses", [])
+            if isinstance(item, dict) and item.get("id") == "L-3"
+        ]
+        if len(l3_entries) != 1:
+            return [f"{order_id}:l3_b715_registry_entry_count:{len(l3_entries)}"], False, False
+        l3 = l3_entries[0]
+        blockers: list[str] = []
+        if l3.get("status") != "scope_restricted" or l3.get("edge_claim") != "none":
+            blockers.append(f"{order_id}:l3_b715_registry_status_or_edge_claim_mismatch")
+        closure_entries = [
+            entry
+            for entry in l3.get("decision_log", [])
+            if isinstance(entry, dict)
+            and entry.get("date") == "2026-07-28"
+            and entry.get("decision") == "B7_15_current_preregistration_closure_synchronized"
+        ]
+        if len(closure_entries) != 1:
+            blockers.append(f"{order_id}:l3_b715_registry_closure_entry_count:{len(closure_entries)}")
+        else:
+            notes = str(closure_entries[0].get("notes", ""))
+            blockers.extend(
+                f"{order_id}:l3_b715_registry_closure_missing:{term}"
+                for term in L3_B715_CLOSURE_TERMS[1:]
+                if term not in notes
+            )
+        return blockers, not blockers, False
+
+    text = target.read_text(encoding="utf-8")
+    blockers = [
+        f"{order_id}:l3_b715_closure_missing:{term}"
+        for term in L3_B715_CLOSURE_TERMS
+        if term not in text
+    ]
+    if artifact_path == "PROJECT_BRAIN.md":
+        required_next_action = "The next safe action, for a later order, is L-4 preregistration/planning only; B7.15 authorizes no L-4 work."
+        if required_next_action not in text:
+            blockers.append(f"{order_id}:l3_b715_project_brain_next_action_missing")
+    if artifact_path == "IMPLEMENT_PLAN.md":
+        required_next_gate = "Validation sealed; no rerun is planned; next gate is L-4 preregistration/planning only"
+        if required_next_gate not in text:
+            blockers.append(f"{order_id}:l3_b715_implementation_plan_next_gate_missing")
     return blockers, not blockers, False
 
 

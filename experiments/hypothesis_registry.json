@@ -385,6 +385,7 @@
       "family": "position_sizing",
       "counts_toward_family_stop": false,
       "status": "scope_restricted",
+      "edge_claim": "none",
       "statement": "On the fixed L1 research_signed eight-ETF universe, q divided by volatility is tested against q under identical inherited weekly constraints for a reduction in paired portfolio component-risk concentration without unacceptable locked side effects.",
       "economic_rationale": "Equal notional allows volatile markets to dominate risk; volatility scaling should distribute risk more evenly.",
       "testable_predictions": [
@@ -501,7 +502,8 @@
         {"date":"2026-07-28","decision":"B7_14R5_v7_cross_platform_E0_checkpoint_rejected","notes":"v7 remains immutable rejected history after failed Exact-SHA CI 30348523127; it opens no data or execution path."},
         {"date":"2026-07-28","decision":"B7_14R6_v8_checkout_compatibility_E0_checkpoint_rejected","notes":"v8 remains immutable rejected history after its duplicate-v7 manifest recovery sequence; no locked artifact is edited."},
         {"date":"2026-07-28","decision":"B7_14R7_v9_rejected_after_failed_phase_a","notes":"v9 is immutable rejected history after failed Phase A; it opens no real-access path."},
-        {"date":"2026-07-28","decision":"B7_14R8_v10_snapshot_only_governance_complete_E0","notes":"v10 completed E0 snapshot-only governance at d2a9001 with Phase-A CI 30351502467 and closure cf0fa3d with CI 30351716462. All fourteen authorizations are false; L-3 remains E1 scope_restricted and unresolved, validation sealed, edge_claim none, and no rerun or real result is authorized."}
+        {"date":"2026-07-28","decision":"B7_14R8_v10_snapshot_only_governance_complete_E0","notes":"v10 completed E0 snapshot-only governance at d2a9001 with Phase-A CI 30351502467 and closure cf0fa3d with CI 30351716462. All fourteen authorizations are false; L-3 remains E1 scope_restricted and unresolved, validation sealed, edge_claim none, and no rerun or real result is authorized."},
+        {"date":"2026-07-28","decision":"B7_15_current_preregistration_closure_synchronized","notes":"Current-preregistration closure: L-3 remains E1 scope_restricted and unresolved, not falsified or validated; no rerun is planned under the current preregistration; validation is sealed; edge_claim none; no L-3 result may be carried forward as proof that inverse-volatility sizing passed. The next gate is L-4 preregistration/planning only."}
       ]
     },
     {
