@@ -8,4 +8,8 @@ class PhaseBResultTests(unittest.TestCase):
   value=json.loads(PATH.read_text(encoding="ascii"));value["command_exit_code"]=0
   with tempfile.TemporaryDirectory() as temporary:
    path=Path(temporary)/"result.json";path.write_text(json.dumps(value),encoding="ascii");self.assertEqual("blocked",validate(path)["status"])
+ def test_inspector_no_log_decision_is_bound(self):
+  value=json.loads(PATH.read_text(encoding="ascii"));value["inspector_review"]["decision"]="new_research_log"
+  with tempfile.TemporaryDirectory() as temporary:
+   path=Path(temporary)/"result.json";path.write_text(json.dumps(value),encoding="ascii");self.assertEqual("blocked",validate(path)["status"])
 if __name__=="__main__":unittest.main()

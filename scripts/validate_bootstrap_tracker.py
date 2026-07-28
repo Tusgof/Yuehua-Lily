@@ -881,7 +881,10 @@ def _validate_done_artifact(
         return _validate_l4_b84_runtime(target, order_id, "scripts/validate_l_4_breadth_b85r5_phase_b_result_v1.py", project_root)
     if must == "match_l4_b85r5_phase_b_result_mirror":
         try:
-            text=target.read_text(encoding="utf-8"); ok=all(term in text for term in ("B8.5R5", "data_root_unavailable", "Phase B", "edge_claim none", "validation sealed"))
+            text=target.read_text(encoding="utf-8").replace("`", ""); ok=all(term in text for term in ("B8.5R5", "data_root_unavailable", "Phase B", "edge_claim none", "validation sealed", "Inspector ACCEPTED", "no new research log", "one-shot cannot be retried", "separately owner-approved container-provisioning/new-gate order"))
+            if artifact_path == "experiments/hypothesis_registry.json":
+                l4=next(item for item in json.loads(text).get("hypotheses",[]) if item.get("id")=="L-4")
+                ok=ok and any(item.get("decision")=="B8_5R5_phase_b_inspector_accepted_no_research_log_E0" for item in l4.get("decision_log",[]) if isinstance(item,dict))
         except Exception: ok=False
         return ([] if ok else [f"{order_id}:l4_b85r5_phase_b_result_mirror_mismatch"],ok,False)
     if must == "match_l4_b84r2_mirror":

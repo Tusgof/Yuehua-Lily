@@ -636,6 +636,11 @@
           "date": "2026-07-29",
           "decision": "B8_5R5_phase_b_one_shot_consumed_blocked_E0",
           "notes": "The one permitted B8.5R5 Phase B CLI call exited 1 with data_root_unavailable after atomic marker claim. Report validation passed; manifest/payload reads and return/value/validation access counters are zero. This is E0 structural only, edge_claim none, validation sealed, and no retry is authorized."
+        },
+        {
+          "date": "2026-07-29",
+          "decision": "B8_5R5_phase_b_inspector_accepted_no_research_log_E0",
+          "notes": "Inspector ACCEPTED result commit edc922cff688256472ec1f452a51535e296fc744 after Exact-SHA Hermetic CI 30386988365 and decided no new research log because this E0 control-plane pre-data hard stop produced no market observation, empirical experiment, L-4 metric, or scientific decision. The one-shot cannot be retried; L-4 remains unresolved E0, edge_claim none. Further progress requires a separately owner-approved container-provisioning/new-gate order after LILY_DATA_ROOT and exact structural manifest/payload availability are resolved, without opening validation or silently reusing this attempt."
         }
       ]
     }
