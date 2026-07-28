@@ -611,6 +611,11 @@
           "date": "2026-07-28",
           "decision": "B8_5R2_l4_phase_a_structural_contract_locked_E0",
           "notes": "B8.5/v1 and B8.5R/v2 remain immutable Inspector-rejected history. B8.5R2/v3 hash-binds bounded reads, multiple strictly ordered calendar-valid session dates for each exact U8 member, atomic durable one-shot consumption, fixed repo report/attempt-marker paths, and a real-report validator. Phase B is not executed; validation sealed, edge_claim none."
+        },
+        {
+          "date": "2026-07-28",
+          "decision": "B8_5R3_l4_phase_a_structural_contract_locked_E0",
+          "notes": "B8.5/v1, B8.5R/v2, and B8.5R2/v3 remain immutable Inspector-rejected history. B8.5R3/v4 locks capacity-derived bounded reads, prefix-versus-complete provenance, preservation of the first report, a machine-readable Inspector/CI activation record, and an explicit CLI flag. Phase B and activation remain unexecuted; validation sealed, edge_claim none."
         }
       ]
     }

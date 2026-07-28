@@ -1,0 +1,26 @@
+{
+  "schema_version":"lily_l4_b85r3_phase_a_activation_order_v4",
+  "order_id":"B8.5R3",
+  "phase":"A",
+  "gate_id":"l_4_breadth_b85r3_phase_a_activation_order_v4",
+  "supersedes_gate_id":"l_4_breadth_b85r2_phase_a_activation_order_v3",
+  "activation_for_gate_id":"l_4_breadth_b84r2_activation_contract_v3",
+  "hypothesis_id":"L-4",
+  "status":"published_E0_phase_a_remediation_awaiting_inspector_acceptance_and_activation",
+  "evidence_ceiling":"E0",
+  "edge_claim":"none",
+  "source_binding":{"rejected_v3":{"gate_id":"l_4_breadth_b85r2_phase_a_activation_order_v3","artifact_sha256":"38cd4b76cab5d34df001533f245211bdb5bbc6cf8b6c5594a64df5aee4c2f0c5","rejection":"Inspector-required remediation: first-report overwrite, infeasible bound/prefix-hash semantics, unenforced preconditions, and loose blocked counters."}},
+  "implementation":{
+    "scanner":{"path":"lib/l4_b85r3_structural_scanner_v4.py","sha256":"609aa32f0b4b58eaf3dcb7baeb709745df00e88e82126674b9b69d3a16c81b63"},
+    "runner":{"path":"scripts/run_l_4_breadth_b85r3_phase_b_preflight_v4.py","sha256":"a1ed046d1ca52a219ed5909e50ee1e785413d0cbe64237d47c1891feb5ed2417"},
+    "report_schema":{"path":"schemas/l_4_breadth_b85r3_structural_preflight_report_v4.schema.json","sha256":"21db7cfc5ca9ac2b4954421e90d07011dd206b5e0ea704e2da5f03cc8a459cd0"},
+    "activation_schema":{"path":"schemas/l_4_breadth_b85r3_phase_b_activation_v4.schema.json","sha256":"eaf2ef146fb131f2d5333cd591a83cc013886a7ab7c88b54e4cf820c31bc0f8d"},
+    "report_validator":{"path":"scripts/validate_l_4_breadth_b85r3_structural_preflight_report_v4.py","sha256":"8441c93cc82f4dc8aeb5981e720bc4d3cf57d777a86b2d9955deb49c1eaec0b1"},
+    "synthetic_manifest":{"path":"tests/fixtures/l4_b85r3/structural_manifest_v4.json","sha256":"d4ffda110b1777c39ee3b64059557d95c7825936ca4d3b81a107aee9405cdbd8"},
+    "synthetic_payload":{"path":"tests/fixtures/l4_b85r3/u8_symbol_session_dates_v4.json","sha256":"459f8878b53e0d8da80c88bec9e8d904d49d5005fe98ba820138076a9ab890e7"}
+  },
+  "future_phase_b_contract":{"status":"not_executed","preconditions":["machine_readable_inspector_accepted_activation_record","exact_sha_hermetic_ci_success"],"one_shot_real_preflight_maximum":1,"storage_root_variable":"LILY_DATA_ROOT","manifest_storage_reference":"${LILY_DATA_ROOT}/sealed/l4_b85r3/l4_b85r3_structural_manifest_v4.json","payload_storage_reference":"${LILY_DATA_ROOT}/sealed/l4_b85r3/l4_b85r3_u8_symbol_session_dates_v4.json","container_identity":"lily-l4-falsification-pre2016-v4","repo_relative_report_path":"reports/experiments/l_4_breadth_b85r3_phase_b_preflight_report_v4.json","repo_relative_attempt_marker_path":"reports/experiments/l_4_breadth_b85r3_phase_b_preflight_attempt_v4.json","repo_relative_activation_record_path":"experiments/activation_records/l_4_breadth_b85r3_phase_b_activation_v4.json","max_session_dates_per_symbol":4096,"max_payload_bytes":426345,"capacity_rule":"max_payload_bytes is recomputed from the deterministic compact canonical representation of eight U8 members and 4096 YYYY-MM-DD session strings per member; all reads stop at max_payload_bytes + 1.","one_shot_rule":"Acceptance record must validate before atomic marker creation. Existing marker refuses with no report or marker mutation. Missing data root/path after marker claim persists one fail-closed report. Bare or wrong CLI flag refuses before acceptance, marker, environment, or container access."},
+  "phase_a_authorizations":{"data":false,"container":false,"path_inspection":false,"environment":false,"market":false,"return":false,"value":false,"signal":false,"position":false,"covariance":false,"regime":false,"cost":false,"pnl":false,"execution":false,"report_decision":false,"ledger":false,"validation":false,"provider":false,"network":false,"credentials":false,"broker":false,"paid":false,"paper_trade":false,"real_money":false},
+  "phase_a_access_counts":{"real_container_read":0,"environment_read":0,"market_or_return_value_decode":0,"execution":0,"validation_access":0},
+  "validation_seal":{"status":"sealed_not_accessed","accessed":false}
+}
