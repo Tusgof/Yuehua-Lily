@@ -162,7 +162,7 @@ Past reports are reproduced by checking out their recorded commit hash. Do not c
 
 ## 10. Current Verified State
 
-- **Verified date**: 2026-07-24
+- **Verified date**: 2026-07-28
 - **Bootstrap**: B0 through B4.16 complete; B5.2 and B6.4 L-2 remediation complete; B7 L-3 governance lock, B7.2 hermetic source-provenance remediation, and B7.1 locked E0 gate-only preflight complete
 - **Legacy Note status**: retired and deleted by `docs/DECISION_RECORD_002_RESEARCH_LOG_CONTRACT.md` after its research content was promoted
 - **Human research logs**: contract active; L-0 sizing and Webull capability are logs 001 and 006; L-1 baseline, remediation, validation-capacity, and Alpha Vantage corporate-action audits are logs 002 through 005 under `research_log/`
@@ -205,15 +205,15 @@ Past reports are reproduced by checking out their recorded commit hash. Do not c
 - **L-3 B7.14R7/v9 rejected; B7.14R8/v10 complete E0**: v9 failed Phase A. v10 commits snapshot-only predecessor/recovery proof at `d2a9001`, passed CI 30351502467, and closed at `cf0fa3d` with CI 30351716462. All fourteen authorizations are false; validation is sealed; L-3 remains E1 scope_restricted and unresolved, with no rerun or edge claim.
 - **L-3 B7.15 current-preregistration closure**: L-3 remains E1 scope_restricted and unresolved, not falsified or validated; no rerun is planned under the current preregistration; validation is sealed; edge_claim none; no L-3 result may be carried forward as proof that inverse-volatility sizing passed.
 - **L-4 B8/B8.1/B8.2/B8.3 preregistration**: B8.3 v4 supersedes prior gates without changing v1/v2/v3. The E0/no-data contract keeps U1 descriptive-only, fixes `u=q` (no volatility division), matched U4/U8, exact 465 weekly-paired capacity, macro sleeves, component-risk HHI/`N_eff` missingness, three-plan MinTRL, exact robustness/side-effect and regime controls, and exhaustive four-outcome validation precedence. It creates no breadth evidence; `edge_claim none`, validation sealed, and all authorizations are false.
-- **L-4 B8.4 preflight machinery**: Inspector accepted B8.3. B8.4 source-binds v4 without superseding it and permits only synthetic structural preflight fixtures. Any future real container must be structurally checked before return parsing and fail closed on date/schema/path/hash/membership ambiguity or a post-2015-12-31 session; B8.5 owner approval is required before any real-container access. E0 only, `edge_claim none`, validation sealed.
+- **L-4 B8.4 preflight machinery**: Inspector accepted B8.4R2/v3 at commit `bb9f4c1527aade97cc7ede1b19048cfa93a3cc16` after Exact-SHA CI run `30367686488` passed. B8.4 v1 and B8.4R v2 remain immutable CI-defective history; v3 source-binds v4 without superseding its science and permits only synthetic structural preflight fixtures. Any future real container must be structurally checked before return parsing and fail closed on date/schema/path/hash/membership ambiguity or a post-2015-12-31 session. E0 only, `edge_claim none`, validation sealed.
 - **Operating roles**: Lily's persistent GPT-5.6 Terra high subagent is the primary implementation Worker for sequential bounded orders. The root agent is Inspector, owns inspection and `research_log` authorship/decision, and the Worker must hand off and wait for Inspector acceptance before a next order.
 - **Databento**: `DATABENTO_API_02` passes metadata access with USD 0 spend, but relevant US-equity coverage begins in 2018 or later and no dedicated corporate-actions history was exposed; owner-reported USD 50 credit has unverified real-payment provenance
 
 ## 11. Next Safe Action
 
-Keep validation returns sealed and do not rerun B4.11, B4.12, B7.3, B7.6, or B7.14. L-3 is E1 scope_restricted and unresolved; no L-3 result may be carried forward as proof that inverse-volatility sizing passed. B8.3 is Inspector-accepted. The current next safe action is Inspector review of B8.4 synthetic preflight machinery only; no real-container discovery/read/hash/scan, data, execution, report decision, or validation access is authorized. B8.5 requires separate owner approval. No UAT work is planned: a hostname reference is not a public UAT entitlement.
+Keep validation returns sealed and do not rerun B4.11, B4.12, B7.3, B7.6, or B7.14. L-3 is E1 scope_restricted and unresolved; no L-3 result may be carried forward as proof that inverse-volatility sizing passed. B8.4R2/v3 is Inspector-accepted. The next safe action is an owner decision on whether to authorize a separately locked B8.5 real-container preflight; until then, no real-container discovery/read/hash/scan, data, execution, report decision, or validation access is authorized. No UAT work is planned: a hostname reference is not a public UAT entitlement.
 
-Historical control compatibility: B4.14 records no UAT work and requires a new locked gate for any future broker probe. The next safe action, for a later order, is L-4 preregistration/planning only; B7.15 authorizes no L-4 work. B8 E0/edge_claim none validation controls retain U1, U4, U8, and B8.1 N_eff. B8.3 was accepted after Inspector review of B8.3 only; its 465 weekly-paired, macro sleeves, four-outcome, all authorizations are false controls remain intact.
+Historical control compatibility: B4.14 records no UAT work and requires a new locked gate for any future broker probe. The next safe action, for a later order, is L-4 preregistration/planning only; B7.15 authorizes no L-4 work. B8.3 was accepted after Inspector review of B8.3 only. These are historical statements, not the current next action. B8 E0/edge_claim none validation controls retain U1, U4, U8, and B8.1 N_eff; B8.3's 465 weekly-paired, macro sleeves, four-outcome, and all-authorizations-false controls remain intact through accepted B8.4R2/v3.
 
 ## 12. Invariants
 
@@ -252,5 +252,3 @@ Always:
 - `experiments/dd_remediation_tracker.json`: evidence-backed required-artifact completion.
 
 Lily excludes all 0DTE-specific logic and replaces per-trade assumptions with persistent-position trend inference.
-
-B8.4R2: v3 zero-dependency synthetic E0 preflight is active; B8.4 v1 and B8.4R v2 are immutable CI-defective history; validation sealed, B8.5 remains unauthorized pending Inspector review.

@@ -107,7 +107,7 @@ B7.15 current-preregistration closure: L-3 remains E1 scope_restricted and unres
 
 Test whether additional countries, sleeves, and independent markets reduce single-market trend dependency after accounting for trend-state correlation and costs.
 
-B8.3 v4 is Inspector-accepted and supersedes B8.2 while preserving v1/v2/v3. B8.4 source-binds v4 without superseding its science and creates E0 synthetic-only future falsification-preflight machinery: every future per-symbol session/timestamp must be structurally checked <= 2015-12-31 before return parsing and fail closed on date/schema/path/hash/membership ambiguity. `edge_claim none`; validation remains sealed. B8.5 requires separate owner approval before any real container or L-4 data/execution.
+B8.3 v4 is Inspector-accepted and supersedes B8.2 while preserving v1/v2/v3. B8.4R2/v3 is also Inspector-accepted after Exact-SHA CI run `30367686488`; it preserves CI-defective v1/v2 history, source-binds v4 without superseding its science, and provides E0 synthetic-only future falsification-preflight machinery. Every future per-symbol session/timestamp must be structurally checked <= 2015-12-31 before return parsing and fail closed on date/schema/path/hash/membership ambiguity. `edge_claim none`; validation remains sealed. B8.5 requires separate owner approval before any real container or L-4 data/execution.
 
 Exit: breadth reduces preregistered dependency/concentration measures, produces an explicit scope restriction, or is falsified.
 
@@ -328,7 +328,7 @@ If MinTRL validation cost is unaffordable or undefined against the benchmark nul
 | L-1 | Scope-restricted E1; B4.9 closes the unavailable Webull-ledger dry run without observation; B4.10 adds no L-1 evidence | Validation remains sealed; no broker-ledger or historical-correctness claim |
 | L-2 | E1 underfunded_scope_restricted | Redesign requires a new owner-approved preregistration before any L-2 data access |
 | L-3 | E1 scope_restricted and unresolved; B7.4 invalidates the B7.3 sole run's 500 weekly observations above the 465 ceiling, and B7.15 closes the current preregistration with no L-3 result carried forward as proof that inverse-volatility sizing passed | Validation sealed; no rerun is planned; next gate is L-4 preregistration/planning only |
-| L-4 | Active planning E0; B8.3 accepted and B8.4 synthetic-only preflight source-binds v4 without superseding its science; edge_claim none | Inspector review B8.4 only; B8.5 required before real-container/data/execution/report/validation access |
+| L-4 | Active planning E0; B8.3 and B8.4R2/v3 accepted; synthetic-only preflight source-binds v4 without superseding its science; edge_claim none | Owner decision required before a separately locked B8.5 real-container preflight; no data/execution/report/validation access is authorized |
 
 Historical control compatibility: B8 E0/edge_claim none validation retains U1, U4, and U8; B8.1 retains N_eff. B8.3's 465 weekly-paired capacity, macro sleeves, four-outcome validation contract, and all authorizations are false remain intact; its former next step was Inspector review only.
 
@@ -341,5 +341,3 @@ Historical control compatibility: B8 E0/edge_claim none validation retains U1, U
 - Higanbana `experiments/dd_remediation_tracker.json`: evidence-backed order completion.
 
 Lily changes the statistical observation model for persistent trend positions and adds country/asset breadth, survivorship, futures-roll, and small-account sizing gates.
-
-B8.4R2: v3 replaces historical v1/v2 synthetic preflight machinery under E0 only; next action is Inspector review, not B8.5.
