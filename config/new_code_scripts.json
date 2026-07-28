@@ -3,7 +3,8 @@
   "enforcement_start_order": "B0.2",
   "grandfathered_scripts": [
     "scripts/run_test_tier.py",
-    "scripts/validate_bootstrap_tracker.py"
+    "scripts/validate_bootstrap_tracker.py",
+    "scripts/run_l_3_b714_date_only_preflight_v5.py"
   ],
   "scripts": [
     "scripts/acquire_l_1_alpha_vantage_corporate_actions.py",
@@ -105,8 +106,10 @@
     ,"scripts/run_l_3_b714_date_only_preflight_v4.py"
     ,"scripts/validate_l_3_b714_date_only_preflight_report_v4.py"
     ,"scripts/validate_l_3_b714_date_only_preflight_remediation_v4.py"
-    ,"scripts/run_l_3_b714_date_only_preflight_v5.py"
     ,"scripts/validate_l_3_b714_date_only_preflight_report_v5.py"
     ,"scripts/validate_l_3_b714_date_only_preflight_remediation_v5.py"
+    ,"scripts/run_l_3_b714_date_only_preflight_v6.py"
+    ,"scripts/validate_l_3_b714_date_only_preflight_report_v6.py"
+    ,"scripts/validate_l_3_b714_date_only_preflight_remediation_v6.py"
   ]
 }
