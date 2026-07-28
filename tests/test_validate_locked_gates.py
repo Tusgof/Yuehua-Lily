@@ -8,6 +8,7 @@ from pathlib import Path
 from unittest.mock import patch
 
 from lib.provenance import file_sha256
+from scripts import validate_locked_gates as locked_gates
 from scripts.validate_locked_gates import validate_locked_gates
 
 
@@ -249,6 +250,30 @@ class LockedGateValidatorTests(unittest.TestCase):
             with patch("scripts.validate_locked_gates.PROJECT_ROOT", root):
                 result = validate_locked_gates(manifest, committed_lines=[json.dumps(historical)])
         self.assertEqual("pass", result["status"], result["blockers"])
+
+    def test_cross_platform_exception_is_only_the_two_audited_hash_mismatches(self) -> None:
+        predecessor = {
+            "gate_id": "l_3_b714_date_only_preflight_remediation_v6",
+            "artifact_sha256": "565d7bcaa726f566b8d81e1197e41d024238286ba2783f93f341e7e019727925",
+            "validator_sha256": "09b2ca768b1cb7a27a48401e91319f3c68f328cba2fd82ac764886d91d7cf793",
+        }
+        self.assertFalse(
+            locked_gates._approved_cross_platform_predecessor(
+                predecessor, "pass", "hash_mismatch"
+            )
+        )
+        predecessor["artifact_sha256"] = "0" * 64
+        self.assertFalse(
+            locked_gates._approved_cross_platform_predecessor(
+                predecessor, "hash_mismatch", "hash_mismatch"
+            )
+        )
+        predecessor["gate_id"] = "unrelated_gate"
+        self.assertFalse(
+            locked_gates._approved_cross_platform_predecessor(
+                predecessor, "hash_mismatch", "hash_mismatch"
+            )
+        )
 
 
 def _gate_paths(root: Path) -> tuple[Path, Path, Path, Path]:

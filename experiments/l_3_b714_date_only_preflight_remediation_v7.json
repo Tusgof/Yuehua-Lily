@@ -1,0 +1,124 @@
+{
+    "schema_version": "lily_l3_b714_date_only_preflight_remediation_v7",
+    "order_id": "B7.14R5",
+    "gate_id": "l_3_b714_date_only_preflight_remediation_v7",
+    "supersedes_gate_id": "l_3_b714_date_only_preflight_remediation_v6",
+    "hypothesis_id": "L-3",
+    "status": "locked_E0_rejected_v6_remediation",
+    "evidence_ceiling": "E0",
+    "edge_claim": "none",
+    "source_binding": {
+        "v5": {
+            "gate_id": "l_3_b714_date_only_preflight_remediation_v5",
+            "commit": "d2a15b717d29f55ce9ee55847fb3db3787da94e2",
+            "path": "experiments/l_3_b714_date_only_preflight_remediation_v5.json",
+            "committed_lf_sha256": "a0aa4049e19e3bc2997deab4f0a4dc000650932fc213bdb0624f7ab143207130"
+        },
+        "v6": {
+            "gate_id": "l_3_b714_date_only_preflight_remediation_v6",
+            "commit": "53bbf429bd9cb321827036464040957db86caad7",
+            "path": "experiments/l_3_b714_date_only_preflight_remediation_v6.json",
+            "committed_lf_sha256": "565d7bcaa726f566b8d81e1197e41d024238286ba2783f93f341e7e019727925"
+        },
+        "b713_v3": {
+            "path": "experiments/l_3_b714_activation_contract_v3.json",
+            "sha256": "29808a30a0451a4f2d39eeca73dd053a87edf7caab4b05231e3cad5471e38032"
+        },
+        "b75": {
+            "path": "experiments/l_3_corrected_rerun_pre_return_schedule_v1.json",
+            "sha256": "1202f477bf6d890dfb0b926b3bff9c775215762209627cb53e9c55b5c18957eb"
+        },
+        "cross_platform_addendum": {
+            "path": "experiments/l_3_b714r5_v7_cross_platform_addendum_v1.json",
+            "sha256": "0d828d9b677dd89080d2988d2c8e068cf15e0f735225e3ccc3b0bac7c0d140a6"
+        },
+        "v3_checkpoint": "99e33857064e6eec76baba21ea64d9aaecea578f",
+        "v3_report": {
+            "path": "reports/experiments/l_3_b714_date_only_preflight_report_v3.json",
+            "sha256": "71727c6ee76f2af5c862da1fdc59c9a717005065c3abc0d61830dc08dd1c41dc"
+        },
+        "v3_addendum": {
+            "path": "experiments/l_3_b714_v3_timestamp_decode_violation_addendum_v1.json",
+            "sha256": "c3ae1a58a6f00da691ef4edccf54dffb98c1415dd4613b0ac9f709286923a6fa"
+        },
+        "historical_container_sha256": "6608c0ef88f4b7edaef7523738d7a172215aa4f97c8c403adeba884d6582a4dd",
+        "b73_ledger": {
+            "path": "reports/experiments/l_3_falsification_execution_ledger.jsonl",
+            "first_row_sha256": "594b8cbbdf7c27769191ab9495275803478481121372cd3bfc6f7e6d3a8a556a",
+            "event": "real_return_decision_run",
+            "run_id": "B7.3-L3-ONE",
+            "producing_git_commit": "3e3cfc773b8e327dca63bfdd8f2a1b103376173d"
+        },
+        "missing_agent_trailer": {
+            "commit": "512120f35461ecb99e607d20aa2937a056434339",
+            "required_trailer": "Agent: Codex (GPT-5.6 Terra, high)",
+            "defect": "commit_message_missing_agent_trailer"
+        }
+    },
+    "authorizations": {
+        "real_container_access": false,
+        "container_hashing": false,
+        "date_inspection": false,
+        "return_parsing": false,
+        "execution": false,
+        "research_decision": false,
+        "ledger_write": false,
+        "validation": false,
+        "provider": false,
+        "credentials": false,
+        "broker": false,
+        "paid": false,
+        "paper_trade": false,
+        "real_money": false
+    },
+    "validation_seal": {
+        "status": "sealed_not_accessed",
+        "accessed": false
+    },
+    "artifact_identities": {
+        "scanner": {
+            "path": "lib/l3_b714_date_only_scanner_v7.py",
+            "sha256": "79f0628255aaad6ba7daa04841fcfc18aa5c13542057e4243515bdc490e0c521"
+        },
+        "runner": {
+            "path": "scripts/run_l_3_b714_date_only_preflight_v7.py",
+            "sha256": "9d76efcda290ff54e477ce6deb65094165cb3e289300358fd5472a0f53cd7102"
+        },
+        "report_schema": {
+            "path": "schemas/l_3_b714_date_only_preflight_report_v7.schema.json",
+            "sha256": "f1b5ca4779914e0d6e2f4cfb84f7c828256a11e66b0e07ee127754dcca36b6bb"
+        },
+        "attestation_schema": {
+            "path": "schemas/l_3_b714_date_only_schedule_attestation_v7.schema.json",
+            "sha256": "293c6c2f8cb481a3e5f0a8f3f702a0485e326e65586c6b0a513fc45d5a483496"
+        },
+        "report_validator": {
+            "path": "scripts/validate_l_3_b714_date_only_preflight_report_v7.py",
+            "sha256": "44bd5959c90c45228338c6dd327ad5b1a27e56be068e1a36e997f9a399583ad5"
+        },
+        "gate_validator": {
+            "path": "scripts/validate_l_3_b714_date_only_preflight_remediation_v7.py",
+      "sha256": "787ee433f7ddf509dacc4c9e6b1a7b5c265352e8da72e48ffd63dddc3f29fcf8"
+        },
+        "cross_platform_addendum": {
+            "path": "experiments/l_3_b714r5_v7_cross_platform_addendum_v1.json",
+            "sha256": "0d828d9b677dd89080d2988d2c8e068cf15e0f735225e3ccc3b0bac7c0d140a6"
+        },
+        "cross_platform_addendum_validator": {
+            "path": "scripts/validate_l_3_b714r5_v7_cross_platform_addendum_v1.py",
+            "sha256": "9bd88433ac3aabefae6fe6cb46d84bc47bd38770f1f1b3d81ba6d80e3a6376fa"
+        },
+        "metadata_fixture": {
+            "path": "tests/fixtures/l3_b714_v7/metadata.json",
+            "sha256": "7ce22b6f73f4e2a9f3f97697bfb69dd74cf0bb444735b8a33ece63441a2627a5"
+        },
+        "report_fixture": {
+            "path": "tests/fixtures/l3_b714_v7/report.json",
+            "sha256": "11b9ac472956449a41e967c1c6520006c15b6b104bc50291f9a8d6e3ccd0f07c"
+        },
+        "attestation_fixture": {
+            "path": "tests/fixtures/l3_b714_v7/attestation.json",
+            "sha256": "c871223489d5ea12bfa0c416b40573a8627eb5d77e2b5956269f586bde9c771f"
+        }
+    }
+}

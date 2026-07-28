@@ -6,3 +6,12 @@
 *.yaml text eol=lf
 *.yml text eol=lf
 reports/experiments/l_3_b714_date_only_preflight_report_v3.json -text
+experiments/l_3_b714_date_only_preflight_remediation_v7.json text eol=lf
+experiments/l_3_b714r5_v7_cross_platform_addendum_v1.json text eol=lf
+scripts/validate_l_3_b714_date_only_preflight_remediation_v7.py text eol=lf
+scripts/validate_l_3_b714_date_only_preflight_report_v7.py text eol=lf
+scripts/run_l_3_b714_date_only_preflight_v7.py text eol=lf
+lib/l3_b714_date_only_scanner_v7.py text eol=lf
+schemas/l_3_b714_date_only_preflight_report_v7.schema.json text eol=lf
+schemas/l_3_b714_date_only_schedule_attestation_v7.schema.json text eol=lf
+tests/fixtures/l3_b714_v7/*.json text eol=lf
