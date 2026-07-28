@@ -1,0 +1,90 @@
+{
+  "schema_version": "lily_l4_breadth_preregistration_v1",
+  "order_id": "B8",
+  "gate_id": "l_4_breadth_v1",
+  "hypothesis_id": "L-4",
+  "status": "locked_E0_planning_only",
+  "evidence_ceiling": "E0",
+  "edge_claim": "none",
+  "owner_authorization": "Owner standing authorization to begin L-4 planning only; this B8 preregistration authorizes no data access, activation, execution, report, or research decision.",
+  "source_binding": {
+    "l1_preregistration": {"path": "experiments/l_1_baseline_preregistration.json", "sha256": "91527c2f4ec00134767df86849f36b9876b00eb44cd56dc01650d33bf938fe29"},
+    "l3_preregistration": {"path": "experiments/l_3_inverse_volatility_sizing_preregistration_v2.json", "sha256": "83a68792614ee0def3ddb96349d6d95c7f0aeb0ac8b1c984c1e3d29ed74e709e"},
+    "b715_closure": {"path": "research_log/010-lily-l3-corrected-rerun.md", "sha256": "4ab215690aefbab3e30434326ee9554d280f353363803c73e552317eb62d939d", "commit": "a30fb4425a3abac5ecb03051c8677618f34c03c8"},
+    "methodology_snapshots": [
+      {"wiki_relative_path": "wiki/concepts/global-trend-regime-diversification.md", "snapshot_path": "methodology_snapshots/l4_breadth_v1/wiki/concepts/global-trend-regime-diversification.md", "sha256": "6f1bf76c6730f1dfdde19809608f6533e7bf371830f58c132c3f47870ab4f0fb"},
+      {"wiki_relative_path": "wiki/concepts/covariance-and-correlation.md", "snapshot_path": "methodology_snapshots/l4_breadth_v1/wiki/concepts/covariance-and-correlation.md", "sha256": "27e28cb04ac1939acc6f4a1fc59e0a8208d365ee3e59872ffea9e4bb934c8828"},
+      {"wiki_relative_path": "wiki/concepts/minimum-track-record-length.md", "snapshot_path": "methodology_snapshots/l4_breadth_v1/wiki/concepts/minimum-track-record-length.md", "sha256": "ca65225740673bd363be7461b8022281da08ae32e6ff42f8887f1072eb51ad81"},
+      {"wiki_relative_path": "wiki/concepts/newey-west-validation.md", "snapshot_path": "methodology_snapshots/l4_breadth_v1/wiki/concepts/newey-west-validation.md", "sha256": "355b37f5f64d938d254337663b5df635ce008e47f8197eac041c03790643fcc5"},
+      {"wiki_relative_path": "wiki/concepts/deflated-sharpe-ratio.md", "snapshot_path": "methodology_snapshots/l4_breadth_v1/wiki/concepts/deflated-sharpe-ratio.md", "sha256": "90663b67e49dcec90bd641e801f9464e593ff8fe9091b2d70e9f4645381af556"},
+      {"wiki_relative_path": "wiki/concepts/backtest-validation-protocol.md", "snapshot_path": "methodology_snapshots/l4_breadth_v1/wiki/concepts/backtest-validation-protocol.md", "sha256": "c7f843310706d902120651e677429e66cbde9ce96ee526544de5419ee99aefa0"}
+    ]
+  },
+  "research_question": "On matched falsification dates, does expanding from four economically distinct sleeves (U4) to the full eight-ETF universe (U8) reduce single-market/sleeve dependency by a preregistered useful amount, increase genuinely independent trend opportunities, and survive best-market/best-trend removal after locked costs?",
+  "universes": {
+    "inherited_l1_order": ["VTI", "VGK", "EWJ", "VWO", "IEF", "TIP", "GLD", "DBC"],
+    "U1": {"members": ["VTI"], "role": "descriptive_only", "claim_eligible": false, "primary_effect_eligible": false, "reason": "The inherited 25% asset cap/cash constraint makes a portfolio-return comparison mechanically incomparable."},
+    "U4": {"members": ["VTI", "IEF", "GLD", "DBC"], "role": "primary_comparator"},
+    "U8": {"members": ["VTI", "VGK", "EWJ", "VWO", "IEF", "TIP", "GLD", "DBC"], "role": "primary_candidate"},
+    "eligible_date_rule": "Every primary U4/U8 comparison uses the identical U8-common eligible weekly dates. No pairwise or complete-case date selection may be made after results."
+  },
+  "sizing_isolation": {
+    "primary_raw_score": "q[i,t]",
+    "primary_rule": "Apply the same inherited L1 normalization, target-volatility scale-down, caps, cash, weekly timing, trade threshold, costs, and accounting to U4 and U8.",
+    "inverse_volatility": "One frozen non-claim-eligible sensitivity only; q / volatility cannot choose the conclusion because L-3 remains unresolved.",
+    "l3_claim_limit": "No L-3 result may be carried forward as proof that inverse-volatility sizing passed."
+  },
+  "primary_observation": {
+    "unit": "one weekly paired U4-versus-U8 portfolio dependency observation",
+    "anti_pseudoreplication": "Never multiply observations by assets, sleeves, daily rows, trades, or overlapping 20-session windows.",
+    "ex_ante_hhi": "HHI_U4 - HHI_U8 using absolute component-risk shares normalized within each portfolio; cash is reported separately and excluded from asset HHI.",
+    "minimum_useful_reduction": 0.05,
+    "missingness": "Any missing, non-finite, undefined denominator, or required input failure for either branch makes the whole paired week non-evaluable; retain and explicitly record the blocker without silent asset/date dropping."
+  },
+  "realized_confirmation": {
+    "timing": "Fixed execution-close weights measured over actual sessions t+1 through t+20.",
+    "measure": "HHI_U4 - HHI_U8 using fixed-weight realized component-risk shares from those same actual sessions.",
+    "minimum_useful_reduction": 0.05,
+    "overlap_rule": "Recompute dependence from weekly paired deltas; overlapping 20-session windows do not create extra observations."
+  },
+  "non_tautology_gates": {
+    "effective_opportunity": {"formula": "effective_independent_opportunity_count = 1 / sum_sleeves(share_sleeve^2), where sleeve share is absolute ex-ante component-risk contribution normalized across named sleeves", "useful_increase_minimum": 0.5, "tie_rule": "Equal shares retain the fixed inherited ETF order only for deterministic reporting; no tie may select a result."},
+    "top_dependency": {"formula": "top dependency = max of named-market and named-sleeve absolute ex-ante component-risk shares; reduction = U4 minus U8", "useful_reduction_minimum": 0.1, "ties": "Report every tied top market/sleeve; apply no discretionary winner selection."},
+    "trend_state": {"formula": "Use inherited L1 prior-only trend-state labels; report Pearson correlation of matched U4/U8 weekly state vectors and the effective opportunity count without treating labels as independent observations.", "gate": "A claimed breadth result requires the effective-opportunity and top-dependency gates as well as HHI."},
+    "best_market_removal": {"formula": "After observing the primary sample, remove the single market with the largest absolute cumulative U8 dependency contribution; ties remove all tied markets and make the robustness result non-evaluable unless the same fixed rule remains applicable.", "retained_hhi_benefit_minimum_fraction": 0.5},
+    "best_trend_episode_removal": {"formula": "Define a trend episode before results as each maximal consecutive weekly run of the inherited L1 aggregate trend-state label; remove the episode with the largest absolute cumulative U8 dependency contribution, with all ties removed.", "retained_hhi_benefit_minimum_fraction": 0.5},
+    "anti_tautology": "The HHI effect alone cannot pass L-4 because adding assets can mechanically lower HHI."
+  },
+  "side_effects": {
+    "comparable_exposure": "Evaluate turnover and locked costs after normalizing each branch by its comparable average gross exposure across the identical evaluable paired dates.",
+    "turnover_cost_relative_increase_maximum": 0.2,
+    "cap_cash_scale_down_frequency_increase_maximum_percentage_points": 10.0,
+    "zero_denominator": "A zero comparable average gross exposure or zero paired-date count is non-evaluable and scope_restricted, never passed by substitution."
+  },
+  "timing_and_seal": {
+    "falsification_end": "2015-12-31",
+    "validation_start": "2016-01-04",
+    "validation_end": "2026-06-30",
+    "validation_opened": false,
+    "falsification_validation_pooling": false,
+    "activation_requirement": "A future separate owner-approved L-4 activation gate is required before any data, container, market, execution, report, or research-decision action."
+  },
+  "statistics": {
+    "planning_standard_deviation_delta": 0.1,
+    "one_sided_alpha": 0.05,
+    "power": 0.8,
+    "planning_autocorrelations_lags_1_to_5": [0.25, 0.125, 0.0625, 0.03125, 0.015625],
+    "inflation_formula": "1 + 2 * sum(lag_1_to_5)",
+    "inflation": 1.96875,
+    "paired_mean_power_formula": "ceil((z_(1-alpha) + z_power)^2 * planning_standard_deviation_delta^2 / abs(alternative_mean_delta - null_mean_delta)^2 * asymptotic_autocorrelation_inflation)",
+    "falsify_plan": {"tail": "lower", "null_mean_delta": 0.05, "adverse_alternative_mean_delta": 0.0, "required_weekly_paired_observations": 49},
+    "validation_plans": {"portfolio_zero": {"tail": "upper", "null_mean_delta": 0.0, "expected_alternative_mean_delta": 0.05, "required_weekly_paired_observations": 49}, "minimum_useful": {"tail": "upper", "null_mean_delta": 0.05, "expected_alternative_mean_delta": 0.1, "required_weekly_paired_observations": 49}, "binding_required_weekly_paired_observations": 49},
+    "actual_recalculation": "Before any future decision, recompute paired-delta lags 1-5, inflation, falsify MinTRL, both validation MinTRL plans, HAC/Newey-West mean-difference inference, and the maximum binding validation requirement from actual weekly paired deltas. PSR/DSR is required only if a future performance/Sharpe ranking is used."
+  },
+  "static_capacity": {"maximum_weekly_slots_before_warmup_missingness_or_evaluable_pair_reductions": 465, "regime_pooling": "forbidden", "outcome": "planning capacity is an upper bound only; no data or inference is authorized."},
+  "data_integrity": {"inherited_limits": "Freeze L1 ETF legal inceptions, sleeves, regions, identifiers, no pre-inception backfill, corporate-action/currency/cost semantics, and fixed-universe selection limits.", "survivorship": "A fixed set of currently live ETF proxies does not prove a survivorship-free historical investable universe; missing point-in-time or delisted alternatives remain a scope restriction.", "kill_zones": ["synchronization and duplicate exposure", "correlated equity regions", "marginal cost", "backfill", "best-episode dependence"]},
+  "search_inventory": {"primary": "One U4/U8 equal-notional q comparison under the locked contract.", "sensitivity": "At most one frozen q / volatility U4/U8 sensitivity, non-claim-eligible and unable to choose the conclusion.", "forbidden": ["post-result universe selection", "post-result date selection", "unlogged parameter/filter search", "U1 primary inference"]},
+  "decision_limits": {"falsification": "Only a future funded, separately authorized E1 execution with a mechanism autopsy may falsify; non-evaluable data or gates are scope_restricted.", "validation": "Only untouched separately funded validation meeting HHI, realized confirmation, non-tautology, side-effect, and independent regime requirements may support a tested-scope E2 claim.", "current": "This B8 contract is E0 only and may prove only that the research contract is locked and hermetically validated."},
+  "authorizations": {"data": false, "container": false, "market": false, "return": false, "signal": false, "position": false, "covariance": false, "regime": false, "cost": false, "pnl": false, "validation": false, "provider": false, "network": false, "credentials": false, "broker": false, "paid": false, "paper_trade": false, "real_money": false, "activation": false, "execution": false, "report": false, "research_decision": false},
+  "hard_stops": ["No data/container/path discovery or inspection beyond named methodology sources and committed control artifacts.", "No market price, return, signal, position, covariance, regime, cost, or PnL computation or backtest.", "No validation access, provider/network acquisition, credentials/environment variables, broker, paid action, paper trade, or real money.", "No L-4 activation, execution runner, report, ledger, or B8.1.", "No L-3 closure weakening or inverse-volatility pass claim."]
+}

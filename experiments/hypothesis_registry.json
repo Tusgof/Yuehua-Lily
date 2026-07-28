@@ -510,7 +510,8 @@
       "id": "L-4",
       "family": "breadth",
       "counts_toward_family_stop": false,
-      "status": "proposed",
+      "status": "active",
+      "edge_claim": "none",
       "statement": "Adding economically distinct countries, asset sleeves, and markets reduces dependency on any single-market trend after costs.",
       "economic_rationale": "Large trends are rare and synchronized markets are not independent bets; genuine breadth should expand the opportunity set.",
       "testable_predictions": [
@@ -552,12 +553,19 @@
         "B1 data layer",
         "L-1 portfolio plumbing"
       ],
-      "evidence": [],
+      "evidence": [
+        {"evidence_tier": "E0", "path": "experiments/l_4_breadth_preregistration_v1.json"}
+      ],
       "decision_log": [
         {
           "date": "2026-07-15",
           "decision": "seeded_from_owner_hypothesis_prediction_4",
           "notes": "Global exposure uses US-listed ETFs for fractional execution but must span countries and asset classes."
+        },
+        {
+          "date": "2026-07-28",
+          "decision": "B8_breadth_preregistration_locked_E0",
+          "notes": "B8 locks E0/no-data L-4 planning: U1 is descriptive-only; U4 versus U8 uses equal-notional q on identical U8-common dates; HHI requires non-tautology opportunity, top-dependency, best-market, and best-episode gates; validation remains sealed and every authorization is false. No breadth result, edge, or L-4 execution is authorized."
         }
       ]
     }

@@ -107,6 +107,8 @@ B7.15 current-preregistration closure: L-3 remains E1 scope_restricted and unres
 
 Test whether additional countries, sleeves, and independent markets reduce single-market trend dependency after accounting for trend-state correlation and costs.
 
+B8 locks an E0/no-data preregistration: U1 is descriptive-only; primary U4/U8 uses equal-notional `q[i,t]` on identical U8-common dates; a 0.05 HHI reduction must also meet effective-opportunity, top-dependency, best-market, and best-episode gates. Validation remains sealed and a separate owner-approved activation is required before any L-4 data or execution.
+
 Exit: breadth reduces preregistered dependency/concentration measures, produces an explicit scope restriction, or is falsified.
 
 ## 5. Execution Orders
@@ -326,7 +328,7 @@ If MinTRL validation cost is unaffordable or undefined against the benchmark nul
 | L-1 | Scope-restricted E1; B4.9 closes the unavailable Webull-ledger dry run without observation; B4.10 adds no L-1 evidence | Validation remains sealed; no broker-ledger or historical-correctness claim |
 | L-2 | E1 underfunded_scope_restricted | Redesign requires a new owner-approved preregistration before any L-2 data access |
 | L-3 | E1 scope_restricted and unresolved; B7.4 invalidates the B7.3 sole run's 500 weekly observations above the 465 ceiling, and B7.15 closes the current preregistration with no L-3 result carried forward as proof that inverse-volatility sizing passed | Validation sealed; no rerun is planned; next gate is L-4 preregistration/planning only |
-| L-4 | Proposed | L-4 preregistration/planning only |
+| L-4 | Active planning E0; B8 locks the U1 descriptive-only and matched U4/U8 breadth contract with edge_claim none | Inspector review only; no activation, data, execution, report, or validation access |
 
 ## 11. Source Lineage
 

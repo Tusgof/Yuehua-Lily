@@ -1002,6 +1002,46 @@ class BootstrapTrackerValidatorTests(unittest.TestCase):
         self.assertFalse(unverified)
         self.assertIn("B7.15:l3_b715_implementation_plan_next_gate_missing", blockers)
 
+    def test_B8_registry_mirror_rejects_missing_e0_planning_contract(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            registry = root / "experiments" / "hypothesis_registry.json"
+            registry.parent.mkdir()
+            registry.write_text(json.dumps({"hypotheses": [{"id": "L-4", "status": "active", "edge_claim": "none", "evidence": [], "decision_log": []}]}), encoding="utf-8")
+            blockers, checked, unverified = self.validator._validate_done_artifact("B8", "experiments/hypothesis_registry.json", "match_l4_b8_mirror", project_root=root, verify_runtime=False, runtime_cache={})
+        self.assertFalse(checked)
+        self.assertFalse(unverified)
+        self.assertIn("B8:l4_b8_registry_mirror_mismatch", blockers)
+
+    def test_B8_manifest_claim_rejects_forged_hashes(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            experiments = root / "experiments"
+            scripts = root / "scripts"
+            experiments.mkdir()
+            scripts.mkdir()
+            (experiments / "l_4_breadth_preregistration_v1.json").write_text("{}", encoding="utf-8")
+            (scripts / "validate_l_4_breadth_preregistration_v1.py").write_text("pass\n", encoding="utf-8")
+            manifest = experiments / "locked_gates.jsonl"
+            manifest.write_text(json.dumps({"gate_id": "l_4_breadth_v1", "gate_type": "E0_no_data_preregistration", "artifact_path": "experiments/l_4_breadth_preregistration_v1.json", "artifact_sha256": "0" * 64, "validator_path": "scripts/validate_l_4_breadth_preregistration_v1.py", "validator_sha256": "0" * 64, "human_approval": "L-4 planning only"}) + "\n", encoding="utf-8")
+            blockers, checked, unverified = self.validator._validate_done_artifact("B8", "experiments/locked_gates.jsonl", "contain_l4_b8_manifest_identity", project_root=root, verify_runtime=False, runtime_cache={})
+        self.assertFalse(checked)
+        self.assertFalse(unverified)
+        self.assertIn("B8:l4_b8_manifest_identity_mismatch", blockers)
+
+    def test_B8_snapshot_claim_rejects_missing_or_forged_snapshot_contract(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            snapshots = root / "methodology_snapshots" / "l4_breadth_v1"
+            snapshots.mkdir(parents=True)
+            gate = root / "experiments" / "l_4_breadth_preregistration_v1.json"
+            gate.parent.mkdir()
+            gate.write_text(json.dumps({"source_binding": {"methodology_snapshots": []}}), encoding="utf-8")
+            blockers, checked, unverified = self.validator._validate_done_artifact("B8", "methodology_snapshots/l4_breadth_v1", "match_l4_b8_snapshots", project_root=root, verify_runtime=False, runtime_cache={})
+        self.assertFalse(checked)
+        self.assertFalse(unverified)
+        self.assertIn("B8:l4_b8_snapshot_declaration_mismatch", blockers)
+
 
 def _tracker_with_artifact(path: str, must: str) -> dict[str, object]:
     return {

@@ -89,7 +89,7 @@ Seed order:
 4. L-3 — inverse-volatility sizing versus equal notional;
 5. L-4 — breadth versus single-market dependency.
 
-Current machine status is authoritative in `experiments/hypothesis_registry.json`: L-0 is scope-restricted after E0 sizing evidence; L-1 is scope-restricted after E1 falsification-window, data-quality remediation, and validation-capacity evidence, while its validation window remains sealed; L-2 is E1 underfunded/scope-restricted; L-3 is E1 scope-restricted after its invalidated B7.3 run, with B7.5 as E0 corrected no-data governance; L-4 remains proposed.
+Current machine status is authoritative in `experiments/hypothesis_registry.json`: L-0 is scope-restricted after E0 sizing evidence; L-1 is scope-restricted after E1 falsification-window, data-quality remediation, and validation-capacity evidence, while its validation window remains sealed; L-2 is E1 underfunded/scope-restricted; L-3 is E1 scope-restricted after its invalidated B7.3 run, with B7.5 as E0 corrected no-data governance; L-4 is active planning E0 only.
 
 The family review triggers after three consecutive adequately powered falsifications of distinct edge/mechanism hypotheses. L-0 and engineering failures do not count.
 
@@ -168,7 +168,7 @@ Past reports are reproduced by checking out their recorded commit hash. Do not c
 - **Human research logs**: contract active; L-0 sizing and Webull capability are logs 001 and 006; L-1 baseline, remediation, validation-capacity, and Alpha Vantage corporate-action audits are logs 002 through 005 under `research_log/`
 - **Dashboard**: retained under `Dashboard/`, demoted from product/state owner
 - **Founding decisions**: `docs/DECISION_RECORD_001_PROJECT_REFOUNDING.md`
-- **Registry**: L-0 scope-restricted E0; L-1 scope-restricted E1; L-2 E1 underfunded_scope_restricted; L-3 E1 scope-restricted after its one-run invalidation; L-4 proposed
+- **Registry**: L-0 scope-restricted E0; L-1 scope-restricted E1; L-2 E1 underfunded_scope_restricted; L-3 E1 scope-restricted after its one-run invalidation; L-4 active planning E0 with edge_claim none
 - **L-1 falsification execution**: complete through 2015-12-31; not falsified, not validated; validation sealed
 - **L-1 data-quality remediation**: cash resolved at E1; historical fees decision-bounded; corporate actions pass the locked daily tolerance for 6/8 symbols; the later B4.6 probe resolves Webull candidate-ticker and fractional OpenAPI capability for the current ten-ETF set
 - **L-1 validation capacity**: 2,637 calendar-only sessions project to 20,376 joint independent-bet equivalents versus the binding 8,673 under locked actual dependence; planning sensitivity projects 7,604; validation remains sealed
@@ -204,12 +204,13 @@ Past reports are reproduced by checking out their recorded commit hash. Do not c
 - **L-3 B7.14 v3, B7.14R/v4, and B7.14R3/v5 rejected**: v3 decoded a skipped timestamp; v4 lacked complete bindings/contracts; v5's inert runner failed the shared-lib script audit. B7.14R4/v6 is E0 synthetic-only remediation with the runner fixed; no further container access is authorized.
 - **L-3 B7.14R7/v9 rejected; B7.14R8/v10 complete E0**: v9 failed Phase A. v10 commits snapshot-only predecessor/recovery proof at `d2a9001`, passed CI 30351502467, and closed at `cf0fa3d` with CI 30351716462. All fourteen authorizations are false; validation is sealed; L-3 remains E1 scope_restricted and unresolved, with no rerun or edge claim.
 - **L-3 B7.15 current-preregistration closure**: L-3 remains E1 scope_restricted and unresolved, not falsified or validated; no rerun is planned under the current preregistration; validation is sealed; edge_claim none; no L-3 result may be carried forward as proof that inverse-volatility sizing passed.
+- **L-4 B8 preregistration**: E0/no-data contract locks U1 descriptive-only and the matched U4/U8 equal-notional-q comparison, HHI plus non-tautology gates, 49-pair planning, source snapshots, and all-false authorizations. It creates no breadth evidence or `edge_claim none`; validation remains sealed and activation is not authorized.
 - **Operating roles**: Lily's persistent GPT-5.6 Terra high subagent is the primary implementation Worker for sequential bounded orders. The root agent is Inspector, owns inspection and `research_log` authorship/decision, and the Worker must hand off and wait for Inspector acceptance before a next order.
 - **Databento**: `DATABENTO_API_02` passes metadata access with USD 0 spend, but relevant US-equity coverage begins in 2018 or later and no dedicated corporate-actions history was exposed; owner-reported USD 50 credit has unverified real-payment provenance
 
 ## 11. Next Safe Action
 
-Keep validation returns sealed and do not rerun B4.11, B4.12, B7.3, B7.6, or B7.14. L-3 is E1 scope_restricted and unresolved; no L-3 result may be carried forward as proof that inverse-volatility sizing passed. The next safe action, for a later order, is L-4 preregistration/planning only; B7.15 authorizes no L-4 work. No UAT work is planned: a hostname reference is not a public UAT entitlement. Any future broker probe requires genuinely new official evidence or a dedicated owner-controlled test account, explicit owner approval, and a new locked gate.
+Keep validation returns sealed and do not rerun B4.11, B4.12, B7.3, B7.6, or B7.14. L-3 is E1 scope_restricted and unresolved; no L-3 result may be carried forward as proof that inverse-volatility sizing passed. B7.15 recorded: The next safe action, for a later order, is L-4 preregistration/planning only; B7.15 authorizes no L-4 work. That planning is now locked by B8; the current next safe action is Inspector review of B8, with no L-4 activation, data, execution, report, or validation access. No UAT work is planned: a hostname reference is not a public UAT entitlement. Any future broker probe requires genuinely new official evidence or a dedicated owner-controlled test account, explicit owner approval, and a new locked gate.
 
 ## 12. Invariants
 

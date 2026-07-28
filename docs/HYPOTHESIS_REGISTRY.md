@@ -87,7 +87,7 @@
 
 ## L-4 — Breadth
 
-- **Status**: proposed; depends on universe/data integrity
+- **Status**: active planning E0; `edge_claim none`; no data, execution, or validation access
 - **Statement**: Adding economically distinct countries, asset sleeves, and markets reduces dependency on any single-market trend after costs.
 - **Rationale**: Large trends are rare and synchronized markets are not independent bets; breadth should expand opportunity only when trend-state dependence is genuinely different.
 - **Predictions**:
@@ -96,6 +96,7 @@
   3. Benefits survive removal of the best market and the best trend episode.
 - **Validation**: compare nested universes with survivorship-clean membership, matched dates, costs, trend-state correlation, concentration, and independent-bet measures; meet `MinTRL_validate`.
 - **Falsification**: after `MinTRL_falsify`, broader universes fail to reduce locked dependency metrics or the apparent benefit disappears after costs/best-market removal across required regimes, followed by a mechanism autopsy.
+- **B8 preregistration**: locks U1 descriptive-only, U4 (VTI/IEF/GLD/DBC) versus ordered U8 equal-notional `q[i,t]` on identical U8-common dates, a 0.05 HHI reduction, 0.5 effective-opportunity increase, 0.10 top-dependency reduction, and at least half HHI benefit after best-market and best-episode removal. It is E0/no-data only; L-4 has no empirical result or edge claim, validation remains sealed, and a separate owner-approved activation gate is required.
 
 ## Seed Status
 
