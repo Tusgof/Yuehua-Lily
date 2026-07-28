@@ -77,5 +77,8 @@
     ,"scripts/run_l_3_corrected_rerun_v5.py"
     ,"scripts/validate_l_3_corrected_rerun_activation_v5.py"
     ,"scripts/validate_l_3_corrected_rerun_report_v5.py"
+    ,"scripts/run_l_3_corrected_rerun_v6.py"
+    ,"scripts/validate_l_3_corrected_rerun_activation_v6.py"
+    ,"scripts/validate_l_3_corrected_rerun_report_v6.py"
   ]
 }
