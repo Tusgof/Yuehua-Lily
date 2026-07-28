@@ -740,7 +740,7 @@ def _validate_done_artifact(
     if must == "contain_l4_b84_manifest":
         return _validate_l4_b84_manifest(target, order_id, project_root)
     if must == "validate_l4_b84r_gate":
-        return _validate_l4_b84_runtime(target, order_id, "scripts/validate_l_4_breadth_b84r_activation_contract_v2.py", project_root)
+        return _validate_l4_b84r_historical(target, order_id, project_root)
     if must == "validate_l4_b84r_report":
         return _validate_l4_b84r_historical(target, order_id, project_root)
     if must == "run_l4_b84r_fixture":
