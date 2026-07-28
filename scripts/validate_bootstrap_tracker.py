@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+import ast
 import hashlib
 import json
 import re
@@ -41,6 +42,9 @@ SENSITIVE_ASSIGNMENT = re.compile(
     r'''(?im)^\s*["']?([A-Z0-9_]*(?:API_KEY|APP_KEY|SECRET|TOKEN|PASSWORD|ACCOUNT_ID)[A-Z0-9_]*)["']?\s*[:=]\s*["']?([^"'# ,\s]+)'''
 )
 PLACEHOLDER_VALUES = {"", "null", "none", "false", "true", "placeholder", "changeme", "example", "not_set"}
+V1_STRUCTURAL_BYTE_EXCEPTION = "experiments/l_3_b714_v1_noncredential_structural_byte_local_exception_v1.json"
+V1_STRUCTURAL_BYTE_SOURCE = "lib/l3_b714_date_only_scanner_v1.py"
+V1_STRUCTURAL_BYTE_SUPERSESSION = "l_3_b714_date_only_preflight_activation_v2"
 
 
 def validate_tracker(
@@ -137,7 +141,8 @@ def validate_tracker(
             if was_unverified:
                 unverified.append(entry | {"reason": "runtime_checks_disabled"})
 
-    return _result("fail" if blockers else "pass", path, blockers, checked, unverified)
+    _, reviewed_exceptions = _scan_active_artifacts(project_root, include_reviewed=True)
+    return _result("fail" if blockers else "pass", path, blockers, checked, unverified, reviewed_exceptions)
 
 
 def _load_tracker(path: Path, blockers: list[str]) -> dict[str, Any] | None:
@@ -3137,8 +3142,71 @@ def _validate_synthetic_data_fixtures(
     return blockers, not blockers, False
 
 
-def _scan_active_artifacts(project_root: Path) -> list[str]:
+def _reviewed_noncredential_structural_byte_local(project_root: Path) -> dict[str, str] | None:
+    """Allow exactly the reviewed immutable-v1 byte-token local while v2 supersedes it."""
+    exception_path = project_root / V1_STRUCTURAL_BYTE_EXCEPTION
+    source_path = project_root / V1_STRUCTURAL_BYTE_SOURCE
+    manifest_path = project_root / "experiments" / "locked_gates.jsonl"
+    try:
+        exception = json.loads(exception_path.read_text(encoding="utf-8"))
+        source_bytes = source_path.read_bytes()
+        source = source_bytes.decode("utf-8")
+        gates = [json.loads(line) for line in manifest_path.read_text(encoding="utf-8").splitlines() if line]
+        tree = ast.parse(source)
+    except (OSError, json.JSONDecodeError, SyntaxError):
+        return None
+    expected = {
+        "schema_version": "lily_reviewed_noncredential_structural_byte_local_exception_v1",
+        "classification": "noncredential_structural_byte_local",
+        "reviewer": "Lily Inspector procedural-boundary remediation",
+        "path": V1_STRUCTURAL_BYTE_SOURCE,
+        "sha256": "aa6eb9c0e9984bc70677c27a1d736d2cb348cb367fa3fa169b5db2533aa6bcf6",
+        "identifier": "token",
+        "rhs_ast": "self.raw[self.pos]",
+        "occurrence_count": 1,
+        "active_supersession_gate_id": V1_STRUCTURAL_BYTE_SUPERSESSION,
+    }
+    if set(exception) != set(expected) or any(exception.get(key) != value for key, value in expected.items()):
+        return None
+    if hashlib.sha256(source_bytes).hexdigest() != expected["sha256"]:
+        return None
+    superseding_rows = [
+        row for row in gates
+        if row.get("gate_id") == V1_STRUCTURAL_BYTE_SUPERSESSION
+        and row.get("supersedes_gate_id") == "l_3_b714_date_only_preflight_activation_v1"
+    ]
+    if len(superseding_rows) != 1:
+        return None
+    assignments = [
+        node for node in ast.walk(tree)
+        if isinstance(node, ast.Assign)
+        and len(node.targets) == 1
+        and isinstance(node.targets[0], ast.Name)
+        and node.targets[0].id == "token"
+    ]
+    if len(assignments) != 1:
+        return None
+    value = assignments[0].value
+    if not (
+        isinstance(value, ast.Subscript)
+        and isinstance(value.value, ast.Attribute)
+        and value.value.attr == "raw"
+        and isinstance(value.value.value, ast.Name)
+        and value.value.value.id == "self"
+        and isinstance(value.slice, ast.Attribute)
+        and value.slice.attr == "pos"
+        and isinstance(value.slice.value, ast.Name)
+        and value.slice.value.id == "self"
+    ):
+        return None
+    return {key: str(exception[key]) for key in ("classification", "reviewer", "path", "identifier", "occurrence_count")}
+
+
+def _scan_active_artifacts(
+    project_root: Path, *, include_reviewed: bool = False
+) -> list[str] | tuple[list[str], list[dict[str, str]]]:
     blockers: list[str] = []
+    reviewed: list[dict[str, str]] = []
     for path in _candidate_files(project_root):
         relative = path.relative_to(project_root).as_posix()
         try:
@@ -3153,9 +3221,20 @@ def _scan_active_artifacts(project_root: Path) -> list[str]:
         for match in SENSITIVE_ASSIGNMENT.finditer(text):
             value = match.group(2).strip().lower()
             if value not in PLACEHOLDER_VALUES and not value.startswith("${"):
+                reviewed_exception = _reviewed_noncredential_structural_byte_local(project_root)
+                if (
+                    relative == V1_STRUCTURAL_BYTE_SOURCE
+                    and match.group(1) == "token"
+                    and reviewed_exception is not None
+                ):
+                    reviewed.append(reviewed_exception)
+                    continue
                 blockers.append(f"credential_like_assignment:{relative}:{match.group(1)}")
                 break
-    return sorted(set(blockers))
+    result = sorted(set(blockers))
+    if include_reviewed:
+        return result, reviewed
+    return result
 
 
 def _candidate_files(project_root: Path) -> list[Path]:
@@ -3189,6 +3268,7 @@ def _result(
     blockers: list[str],
     checked: list[dict[str, str]],
     unverified: list[dict[str, str]],
+    reviewed_credential_false_positive_exceptions: list[dict[str, str]] | None = None,
 ) -> dict[str, Any]:
     return {
         "status": status,
@@ -3196,6 +3276,7 @@ def _result(
         "blockers": blockers,
         "done_artifacts_checked": checked,
         "unverified": unverified,
+        "reviewed_credential_false_positive_exceptions": reviewed_credential_false_positive_exceptions or [],
     }
 
 

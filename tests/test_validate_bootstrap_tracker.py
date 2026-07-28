@@ -13,6 +13,18 @@ PROJECT_ROOT = Path(__file__).resolve().parents[1]
 SCRIPT_PATH = PROJECT_ROOT / "scripts" / "validate_bootstrap_tracker.py"
 
 
+def _reviewed_v1_exception_root(root: Path) -> tuple[Path, Path, Path]:
+    source = root / "lib" / "l3_b714_date_only_scanner_v1.py"
+    exception = root / "experiments" / "l_3_b714_v1_noncredential_structural_byte_local_exception_v1.json"
+    manifest = root / "experiments" / "locked_gates.jsonl"
+    source.parent.mkdir(parents=True)
+    exception.parent.mkdir(parents=True)
+    source.write_bytes((PROJECT_ROOT / "lib" / "l3_b714_date_only_scanner_v1.py").read_bytes())
+    exception.write_bytes((PROJECT_ROOT / "experiments" / "l_3_b714_v1_noncredential_structural_byte_local_exception_v1.json").read_bytes())
+    manifest.write_text(json.dumps({"gate_id": "l_3_b714_date_only_preflight_activation_v2", "supersedes_gate_id": "l_3_b714_date_only_preflight_activation_v1"}) + "\n", encoding="utf-8")
+    return source, exception, manifest
+
+
 def _load_validator():
     spec = importlib.util.spec_from_file_location("validate_bootstrap_tracker", SCRIPT_PATH)
     if spec is None or spec.loader is None:
@@ -331,6 +343,41 @@ class BootstrapTrackerValidatorTests(unittest.TestCase):
             blockers = self.validator._scan_active_artifacts(root)
         self.assertEqual([f"credential_like_assignment:settings.env:{key_name}"], blockers)
         self.assertNotIn(sample_value, " ".join(blockers))
+
+    def test_reviewed_v1_structural_byte_local_is_reported_separately(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            _reviewed_v1_exception_root(root)
+            blockers, reviewed = self.validator._scan_active_artifacts(root, include_reviewed=True)
+        self.assertEqual([], blockers)
+        self.assertEqual(["noncredential_structural_byte_local"], [item["classification"] for item in reviewed])
+
+    def test_reviewed_v1_exception_rejects_other_path_second_assignment_byte_mutation_and_missing_supersession(self) -> None:
+        cases = (
+            ("other_path", lambda source, exception, manifest: (source.rename(source.with_name("other.py")), None)),
+            ("second_assignment", lambda source, exception, manifest: source.write_text(source.read_text(encoding="utf-8") + "\ntoken = self.raw[self.pos]\n", encoding="utf-8")),
+            ("byte_mutation", lambda source, exception, manifest: source.write_text(source.read_text(encoding="utf-8") + "\n# byte mutation\n", encoding="utf-8")),
+            ("missing_supersession", lambda source, exception, manifest: manifest.write_text("", encoding="utf-8")),
+        )
+        for name, mutate in cases:
+            with self.subTest(name=name), tempfile.TemporaryDirectory() as tmp:
+                source, exception, manifest = _reviewed_v1_exception_root(Path(tmp))
+                mutate(source, exception, manifest)
+                blockers = self.validator._scan_active_artifacts(Path(tmp))
+                self.assertTrue(any("credential_like_assignment" in blocker for blocker in blockers), blockers)
+
+    def test_reviewed_v1_exception_rejects_tamper_and_nonstructural_rhs(self) -> None:
+        cases = (
+            ("exception_tamper", lambda source, exception: exception.write_text(exception.read_text(encoding="utf-8").replace("Lily Inspector", "Other Reviewer"), encoding="utf-8")),
+            ("string_rhs", lambda source, exception: source.write_text(source.read_text(encoding="utf-8").replace("self.raw[self.pos]", '"not-a-byte"', 1), encoding="utf-8")),
+            ("environment_rhs", lambda source, exception: source.write_text(source.read_text(encoding="utf-8").replace("self.raw[self.pos]", "os.environ['TOKEN']", 1), encoding="utf-8")),
+        )
+        for name, mutate in cases:
+            with self.subTest(name=name), tempfile.TemporaryDirectory() as tmp:
+                source, exception, _ = _reviewed_v1_exception_root(Path(tmp))
+                mutate(source, exception)
+                blockers = self.validator._scan_active_artifacts(Path(tmp))
+                self.assertTrue(any("credential_like_assignment" in blocker for blocker in blockers), blockers)
 
     def test_placeholder_values_are_allowed(self) -> None:
         key_name = "LILY_" + "API_KEY"
