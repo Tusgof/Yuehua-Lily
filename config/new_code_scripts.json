@@ -83,5 +83,8 @@
     ,"scripts/run_l_3_corrected_rerun_v7.py"
     ,"scripts/validate_l_3_corrected_rerun_activation_v7.py"
     ,"scripts/validate_l_3_corrected_rerun_report_v7.py"
+    ,"scripts/run_l_3_corrected_rerun_v8.py"
+    ,"scripts/validate_l_3_corrected_rerun_activation_v8.py"
+    ,"scripts/validate_l_3_corrected_rerun_report_v8.py"
   ]
 }
