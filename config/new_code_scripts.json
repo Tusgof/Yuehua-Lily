@@ -90,5 +90,6 @@
     ,"scripts/validate_l_3_b714_preflight_report_v1.py"
     ,"scripts/validate_l_3_b714_activation_contract_v2.py"
     ,"scripts/validate_l_3_b714_preflight_report_v2.py"
+    ,"scripts/validate_l_3_b714_activation_contract_v3.py"
   ]
 }

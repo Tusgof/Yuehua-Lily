@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import hashlib
 import tempfile
 import unittest
 from pathlib import Path
@@ -145,6 +146,110 @@ class LockedGateValidatorTests(unittest.TestCase):
                 result = validate_locked_gates(manifest, committed_lines=[])
         self.assertIn("gate-v2:immutable_predecessor_artifact_hash_mismatch", result["blockers"])
 
+    def test_only_missing_human_approval_may_have_one_direct_hash_bound_correction(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root, manifest, artifact, validator = _gate_paths(Path(tmp))
+            predecessor = _entry("gate-v1", artifact, validator)
+            predecessor.pop("human_approval")
+            successor = _corrective_successor(predecessor, artifact, validator)
+            manifest.write_text(
+                "\n".join(json.dumps(item) for item in (predecessor, successor)) + "\n",
+                encoding="utf-8",
+            )
+            with patch("scripts.validate_locked_gates.PROJECT_ROOT", root):
+                result = validate_locked_gates(manifest, committed_lines=[])
+        self.assertEqual("pass", result["status"], result["blockers"])
+
+    def test_correction_rejects_any_missing_field_besides_human_approval(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root, manifest, artifact, validator = _gate_paths(Path(tmp))
+            predecessor = _entry("gate-v1", artifact, validator)
+            predecessor.pop("human_approval")
+            predecessor.pop("locked_by")
+            successor = _corrective_successor(predecessor, artifact, validator)
+            manifest.write_text(
+                "\n".join(json.dumps(item) for item in (predecessor, successor)) + "\n",
+                encoding="utf-8",
+            )
+            with patch("scripts.validate_locked_gates.PROJECT_ROOT", root):
+                result = validate_locked_gates(manifest, committed_lines=[])
+        self.assertIn("gate-v1:missing_required_field:locked_by", result["blockers"])
+
+    def test_missing_human_approval_without_correction_is_rejected(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root, manifest, artifact, validator = _gate_paths(Path(tmp))
+            predecessor = _entry("gate-v1", artifact, validator)
+            predecessor.pop("human_approval")
+            manifest.write_text(json.dumps(predecessor) + "\n", encoding="utf-8")
+            with patch("scripts.validate_locked_gates.PROJECT_ROOT", root):
+                result = validate_locked_gates(manifest, committed_lines=[])
+        self.assertIn("gate-v1:missing_required_field:human_approval", result["blockers"])
+
+    def test_correction_rejects_wrong_hash_or_missing_field_list(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root, manifest, artifact, validator = _gate_paths(Path(tmp))
+            predecessor = _entry("gate-v1", artifact, validator)
+            predecessor.pop("human_approval")
+            successor = _corrective_successor(predecessor, artifact, validator)
+            successor["predecessor_line_sha256"] = "0" * 64
+            successor["corrects_predecessor_missing_fields"] = ["locked_by"]
+            manifest.write_text(
+                "\n".join(json.dumps(item) for item in (predecessor, successor)) + "\n",
+                encoding="utf-8",
+            )
+            with patch("scripts.validate_locked_gates.PROJECT_ROOT", root):
+                result = validate_locked_gates(manifest, committed_lines=[])
+        self.assertIn("gate-v1:missing_required_field:human_approval", result["blockers"])
+
+    def test_correction_must_be_direct_and_unique(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root, manifest, artifact, validator = _gate_paths(Path(tmp))
+            predecessor = _entry("gate-v1", artifact, validator)
+            predecessor.pop("human_approval")
+            unrelated = _entry("gate-middle", artifact, validator)
+            successor = _corrective_successor(predecessor, artifact, validator)
+            duplicate = dict(successor)
+            duplicate["gate_id"] = "gate-v3"
+            manifest.write_text(
+                "\n".join(json.dumps(item) for item in (predecessor, unrelated, successor, duplicate)) + "\n",
+                encoding="utf-8",
+            )
+            with patch("scripts.validate_locked_gates.PROJECT_ROOT", root):
+                result = validate_locked_gates(manifest, committed_lines=[])
+        self.assertIn("gate-v1:missing_required_field:human_approval", result["blockers"])
+        self.assertIn("gate-v3:predecessor_already_superseded:gate-v1", result["blockers"])
+
+    def test_correction_requires_its_own_human_approval(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root, manifest, artifact, validator = _gate_paths(Path(tmp))
+            predecessor = _entry("gate-v1", artifact, validator)
+            predecessor.pop("human_approval")
+            successor = _corrective_successor(predecessor, artifact, validator)
+            successor.pop("human_approval")
+            manifest.write_text(
+                "\n".join(json.dumps(item) for item in (predecessor, successor)) + "\n",
+                encoding="utf-8",
+            )
+            with patch("scripts.validate_locked_gates.PROJECT_ROOT", root):
+                result = validate_locked_gates(manifest, committed_lines=[])
+        self.assertIn("gate-v1:missing_required_field:human_approval", result["blockers"])
+        self.assertIn("gate-v2:missing_required_field:human_approval", result["blockers"])
+
+    def test_recovery_restores_only_the_committed_human_approval_edit(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root, manifest, artifact, validator = _gate_paths(Path(tmp))
+            predecessor = _entry("gate-v1", artifact, validator)
+            historical = dict(predecessor)
+            predecessor.pop("human_approval")
+            successor = _corrective_successor(predecessor, artifact, validator)
+            manifest.write_text(
+                "\n".join(json.dumps(item) for item in (predecessor, successor)) + "\n",
+                encoding="utf-8",
+            )
+            with patch("scripts.validate_locked_gates.PROJECT_ROOT", root):
+                result = validate_locked_gates(manifest, committed_lines=[json.dumps(historical)])
+        self.assertEqual("pass", result["status"], result["blockers"])
+
 
 def _gate_paths(root: Path) -> tuple[Path, Path, Path, Path]:
     experiments = root / "experiments"
@@ -169,6 +274,26 @@ def _entry(gate_id: str, artifact: Path, validator: Path) -> dict[str, str]:
         "locked_at": "2026-07-15T00:00:00Z",
         "locked_by": "owner",
         "human_approval": "owner approved initial lock",
+    }
+
+
+def _corrective_successor(
+    predecessor: dict[str, str], artifact: Path, validator: Path
+) -> dict[str, str | list[str]]:
+    replacement_artifact = artifact.with_name("gate_v2.json")
+    replacement_validator = validator.with_name("validate_gate_v2.py")
+    replacement_artifact.write_text('{"gate":"corrected"}\n', encoding="utf-8")
+    replacement_validator.write_text("print('validate corrected')\n", encoding="utf-8")
+    predecessor_line = json.dumps(predecessor)
+    return {
+        **_entry("gate-v2", replacement_artifact, replacement_validator),
+        "artifact_path": "experiments/gate_v2.json",
+        "validator_path": "scripts/validate_gate_v2.py",
+        "supersedes_gate_id": predecessor["gate_id"],
+        "human_approval": "owner approved correction",
+        "reviewed_by": "independent-review-agent",
+        "corrects_predecessor_missing_fields": ["human_approval"],
+        "predecessor_line_sha256": hashlib.sha256(predecessor_line.encode("utf-8")).hexdigest(),
     }
 
 

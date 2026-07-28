@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import re
 import subprocess
@@ -44,7 +45,9 @@ def validate_locked_gates(
 
     current_lines = [line for line in manifest_path.read_text(encoding="utf-8").splitlines() if line.strip()]
     baseline = _committed_manifest_lines(manifest_path) if committed_lines is None else committed_lines
-    if current_lines[: len(baseline)] != baseline:
+    if current_lines[: len(baseline)] != baseline and not _is_single_line_human_approval_recovery(
+        current_lines, baseline
+    ):
         blockers.append("locked_gate_manifest_is_not_append_only")
     try:
         entries = load_jsonl(manifest_path)
@@ -59,7 +62,10 @@ def validate_locked_gates(
             continue
         gate_id = str(entry.get("gate_id", f"entry_{index}"))
         missing = sorted(field for field in REQUIRED_FIELDS if entry.get(field) in (None, ""))
-        blockers.extend(f"{gate_id}:missing_required_field:{field}" for field in missing)
+        if not _has_valid_missing_human_approval_correction(
+            entries, current_lines, index - 1, missing
+        ):
+            blockers.extend(f"{gate_id}:missing_required_field:{field}" for field in missing)
         if gate_id in entries_by_id:
             blockers.append(f"duplicate_gate_id:{gate_id}")
 
@@ -127,6 +133,56 @@ def validate_locked_gates(
             }
         )
     return _result(manifest_path, blockers, checked, len(entries))
+
+
+def _has_valid_missing_human_approval_correction(
+    entries: list[dict[str, Any]], current_lines: list[str], index: int, missing: list[str]
+) -> bool:
+    """Allow only one immediately following, hash-bound correction for one legacy omission."""
+    if missing != ["human_approval"] or index + 1 >= len(entries):
+        return False
+    predecessor = entries[index]
+    successor = entries[index + 1]
+    if not isinstance(successor, dict) or successor.get("supersedes_gate_id") != predecessor.get("gate_id"):
+        return False
+    if successor.get("corrects_predecessor_missing_fields") != ["human_approval"]:
+        return False
+    expected_line_hash = hashlib.sha256(current_lines[index].encode("utf-8")).hexdigest()
+    if successor.get("predecessor_line_sha256") != expected_line_hash:
+        return False
+    if not isinstance(successor.get("human_approval"), str) or not successor["human_approval"].strip():
+        return False
+    if not isinstance(successor.get("reviewed_by"), str) or not successor["reviewed_by"].strip():
+        return False
+    return all(
+        successor.get(field) != predecessor.get(field)
+        for field in ("artifact_sha256", "validator_sha256")
+    )
+
+
+def _is_single_line_human_approval_recovery(
+    current_lines: list[str], baseline: list[str]
+) -> bool:
+    """Recognize one committed bad line restored verbatim and immediately superseded."""
+    if len(current_lines) != len(baseline) + 1 or not baseline:
+        return False
+    if current_lines[:-2] != baseline[:-1]:
+        return False
+    try:
+        baseline_predecessor = json.loads(baseline[-1])
+        predecessor = json.loads(current_lines[-2])
+        successor = json.loads(current_lines[-1])
+    except json.JSONDecodeError:
+        return False
+    if not all(isinstance(item, dict) for item in (baseline_predecessor, predecessor, successor)):
+        return False
+    expected_predecessor = dict(baseline_predecessor)
+    approval = expected_predecessor.pop("human_approval", None)
+    if not isinstance(approval, str) or not approval.strip() or predecessor != expected_predecessor:
+        return False
+    return _has_valid_missing_human_approval_correction(
+        [predecessor, successor], current_lines[-2:], 0, ["human_approval"]
+    )
 
 
 def _safe_relative_path(value: Any) -> bool:

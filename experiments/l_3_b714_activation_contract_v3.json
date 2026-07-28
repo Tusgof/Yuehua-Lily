@@ -1,0 +1,69 @@
+{
+  "schema_version": "lily_l3_b714_activation_contract_v3",
+  "order_id": "B7.13",
+  "gate_id": "l_3_b714_activation_contract_v3",
+  "supersedes_gate_id": "l_3_b714_activation_contract_v2",
+  "hypothesis_id": "L-3",
+  "status": "locked_E0_future_B7_14_date_only_preflight_contract_v3",
+  "evidence_ceiling": "E0",
+  "edge_claim": "none",
+  "source_binding": {
+    "b7_13_v2": {
+      "path": "experiments/l_3_b714_activation_contract_v2.json",
+      "sha256": "7a46162ae39caa9a4dd96707dc32d910cfd570370cbf851a1faf1f9e95d6f51a",
+      "manifest_identity": {
+        "gate_id": "l_3_b714_activation_contract_v2",
+        "validator_path": "scripts/validate_l_3_b714_activation_contract_v2.py",
+        "validator_sha256": "779cd7e2385024bfc85e3767473c22183775cb3cca0835195ae4783215fd2164"
+      }
+    },
+    "b7_13_v1": {
+      "path": "experiments/l_3_b714_activation_contract_v1.json",
+      "sha256": "3c7b620aa36423f1cb94804cdffcd4454256eedb205741ad3ca44a4d2f2cbc01",
+      "manifest_identity": {
+        "gate_id": "l_3_b714_activation_contract_v1",
+        "validator_path": "scripts/validate_l_3_b714_activation_contract_v1.py",
+        "validator_sha256": "f241b35f8caf47981d98ef4859e03f4f3ae442842eaeca9f9da8804c7d989031"
+      }
+    },
+    "b7_6_addendum": {
+      "path": "experiments/l_3_b76_preflight_provenance_addendum_v1.json",
+      "sha256": "69eea0f80cb303872c83e32ba940f96b11d05fe9a67df3891cfd8ada59036400",
+      "validator_path": "scripts/validate_l_3_b76_preflight_provenance_addendum_v1.py",
+      "validator_sha256": "1ed047c771b39493454a629f74373e3313116123ef69b7f3901be577e396132e"
+    }
+  },
+  "approved_synthetic_metadata": {
+    "path": "tests/fixtures/l3_b714_preflight_v1/approved_metadata_v2.json",
+    "sha256": "43602677bae676c34a92183ff23a174e194270ab2d61ee00baa796c702ebdbf0",
+    "canonical_metadata_sha256": "6fbd71019f05c59d198a83b8e7924b35aa9c18ef599561d2c1ae9832fe272ff3"
+  },
+  "authorizations": {
+    "real_container_access": false,
+    "container_hashing": false,
+    "date_column_inspection": false,
+    "return_parsing": false,
+    "execution": false,
+    "report_decision": false,
+    "validation_access": false,
+    "provider_network": false,
+    "credentials_environment": false,
+    "acquisition": false,
+    "paid_action": false,
+    "broker": false,
+    "paper_trade": false,
+    "real_money": false
+  },
+  "attestation": {
+    "real_container_read_hash_count": 0,
+    "market_returns_read_count": 0,
+    "new_schedule_attestation_count": 0,
+    "fresh_ledger_row_count": 0,
+    "validation_status": "sealed_not_accessed"
+  },
+  "hard_stops": [
+    "B7.13 v3 corrects only the immutable-manifest omission; it uses committed synthetic fixtures and exposes no real container path, hash, scan, or environment value.",
+    "B7.14 remains unauthorized: no return parsing, execution, report decision, ledger row, rerun, or validation access may occur.",
+    "Immutable B7.3/B7.4/B7.6 history and B7.12/v8 remain unchanged; L-3 is E1 scope_restricted, validation sealed, edge_claim none."
+  ]
+}
