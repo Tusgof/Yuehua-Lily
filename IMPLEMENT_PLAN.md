@@ -115,6 +115,8 @@ Inspector ACCEPTED B8.5R5/v6 at `c8d358ee23b68e11ee02bb00eec17ee7f08128dd` after
 
 The one permitted B8.5R5 Phase B CLI call is consumed and blocked with `data_root_unavailable` (exit `1`) after atomic marker claim. Its report validates; manifest/payload reads and return/value/validation access are zero. Inspector ACCEPTED result commit `edc922cff688256472ec1f452a51535e296fc744` after Exact-SHA Hermetic CI `30386988365` and decided no new research log: this E0 control-plane pre-data hard stop produced no market observation, empirical experiment, L-4 metric, or scientific decision. The one-shot cannot be retried; L-4 remains unresolved E0 with `edge_claim none`, validation sealed. Further progress requires a separately owner-approved container-provisioning/new-gate order after `LILY_DATA_ROOT` and exact structural manifest/payload availability are resolved, without opening validation or silently reusing this attempt.
 
+B8.6 Phase A locks E0/no-data provisioning machinery for the literal repo-relative normalized Yahoo container, its expected hash, full normalized schema/U8/cutoff structural scanner, and a non-circular future activation then one-shot lifecycle. The Inspector pre-gate hash-only read is recorded separately as non-evidence and does not satisfy the future gated read. No activation, provisioning, validation, empirical result, or edge claim is authorized.
+
 Exit: breadth reduces preregistered dependency/concentration measures, produces an explicit scope restriction, or is falsified.
 
 ## 5. Execution Orders

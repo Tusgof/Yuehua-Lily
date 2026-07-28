@@ -1,0 +1,1 @@
+{"$schema":"https://json-schema.org/draft/2020-12/schema","type":"object","additionalProperties":false,"required":["schema_version","gate_id","inspector_decision","scope","validation_seal"],"properties":{"schema_version":{"const":"lily_l4_b86_provisioning_activation_v1"},"gate_id":{"const":"l_4_breadth_b86_provisioning_gate_v1"},"inspector_decision":{"const":"ACCEPTED"}}}

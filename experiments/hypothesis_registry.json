@@ -641,6 +641,11 @@
           "date": "2026-07-29",
           "decision": "B8_5R5_phase_b_inspector_accepted_no_research_log_E0",
           "notes": "Inspector ACCEPTED result commit edc922cff688256472ec1f452a51535e296fc744 after Exact-SHA Hermetic CI 30386988365 and decided no new research log because this E0 control-plane pre-data hard stop produced no market observation, empirical experiment, L-4 metric, or scientific decision. The one-shot cannot be retried; L-4 remains unresolved E0, edge_claim none. Further progress requires a separately owner-approved container-provisioning/new-gate order after LILY_DATA_ROOT and exact structural manifest/payload availability are resolved, without opening validation or silently reusing this attempt."
+        },
+        {
+          "date": "2026-07-29",
+          "decision": "B8_6_phase_a_provisioning_gate_locked_E0",
+          "notes": "B8.6 locks E0/no-data provisioning machinery for the exact repo-relative normalized Yahoo container. It source-binds L-4 v4, B8.5R5's consumed no-retry result, Yahoo schema lineage, and a separately disclosed Inspector pre-gate hash-only incident. No container is opened in this order; validation sealed, edge_claim none, activation and execution remain forbidden."
         }
       ]
     }

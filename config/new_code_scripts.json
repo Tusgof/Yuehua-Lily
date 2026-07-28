@@ -154,5 +154,7 @@
     ,"scripts/run_l_4_breadth_b85r5_phase_b_preflight_v6.py"
     ,"scripts/validate_l_4_breadth_b85r5_phase_b_activation_v6.py"
     ,"scripts/validate_l_4_breadth_b85r5_phase_b_result_v1.py"
+    ,"scripts/validate_l_4_breadth_b86_provisioning_gate_v1.py"
+    ,"scripts/run_l_4_breadth_b86_provisioning_v1.py"
   ]
 }

@@ -887,6 +887,13 @@ def _validate_done_artifact(
                 ok=ok and any(item.get("decision")=="B8_5R5_phase_b_inspector_accepted_no_research_log_E0" for item in l4.get("decision_log",[]) if isinstance(item,dict))
         except Exception: ok=False
         return ([] if ok else [f"{order_id}:l4_b85r5_phase_b_result_mirror_mismatch"],ok,False)
+    if must == "validate_l4_b86_gate":
+        return _validate_l4_b84_runtime(target, order_id, "scripts/validate_l_4_breadth_b86_provisioning_gate_v1.py", project_root)
+    if must == "match_l4_b86_mirror":
+        try:
+            text=target.read_text(encoding="utf-8").replace("`", ""); ok=all(term in text for term in ("B8.6", "provisioning", "edge_claim none", "hash-only"))
+        except Exception: ok=False
+        return ([] if ok else [f"{order_id}:l4_b86_mirror_mismatch"],ok,False)
     if must == "match_l4_b84r2_mirror":
         try: ok="B8.4R2" in target.read_text(encoding="utf-8") and "B8.5" in target.read_text(encoding="utf-8")
         except OSError: ok=False
