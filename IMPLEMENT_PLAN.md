@@ -113,6 +113,8 @@ B8.5R5/v6 supersedes immutable Inspector-rejected v5 without changing it. It clo
 
 Inspector ACCEPTED B8.5R5/v6 at `c8d358ee23b68e11ee02bb00eec17ee7f08128dd` after Exact-SHA Hermetic CI `30384415559`. The B8.5R5 Phase-B activation checkpoint is created with validation sealed and `edge_claim none`; Phase B remains unexecuted until this checkpoint commit passes Exact-SHA CI. The sole next safe action is one Phase B CLI execution.
 
+The one permitted B8.5R5 Phase B CLI call is consumed and blocked with `data_root_unavailable` (exit `1`) after atomic marker claim. Its report validates; manifest/payload reads and return/value/validation access are zero. This is E0 structural only, `edge_claim none`, validation sealed; no retry or empirical breadth/edge claim is authorized.
+
 Exit: breadth reduces preregistered dependency/concentration measures, produces an explicit scope restriction, or is falsified.
 
 ## 5. Execution Orders

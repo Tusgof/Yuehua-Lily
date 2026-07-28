@@ -18,6 +18,10 @@ DEFAULT_REGISTRY = PROJECT_ROOT / "experiments" / "hypothesis_registry.json"
 DEFAULT_REPORTS_ROOT = PROJECT_ROOT / "reports"
 REJECTED_V3_REPORT = PROJECT_ROOT / "reports/experiments/l_3_b714_date_only_preflight_report_v3.json"
 REJECTED_V3_REPORT_SHA256 = "71727c6ee76f2af5c862da1fdc59c9a717005065c3abc0d61830dc08dd1c41dc"
+CONTROL_PLANE_REPORTS = {
+    PROJECT_ROOT / "reports/experiments/l_4_breadth_b85r5_phase_b_preflight_attempt_v6.json",
+    PROJECT_ROOT / "reports/experiments/l_4_breadth_b85r5_phase_b_preflight_report_v6.json",
+}
 ALLOWED_TIERS = {"E0", "E1", "E2", "E3"}
 CLAIM_FIELDS = {
     "acceptance_status",
@@ -202,7 +206,7 @@ def _research_reports(root: Path) -> list[Path]:
     for folder_name in sorted(RESEARCH_REPORT_FOLDERS):
         folder = root / folder_name
         if folder.exists():
-            paths.extend(sorted(folder.rglob("*.json")))
+            paths.extend(path for path in sorted(folder.rglob("*.json")) if path.resolve() not in CONTROL_PLANE_REPORTS)
     return paths
 
 

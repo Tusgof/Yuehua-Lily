@@ -877,6 +877,13 @@ def _validate_done_artifact(
             text=target.read_text(encoding="utf-8"); ok=all(term in text for term in ("B8.5R5", "ACCEPTED", "Phase B", "activation checkpoint", "edge_claim none"))
         except Exception: ok=False
         return ([] if ok else [f"{order_id}:l4_b85r5_activation_mirror_mismatch"],ok,False)
+    if must == "validate_l4_b85r5_phase_b_result":
+        return _validate_l4_b84_runtime(target, order_id, "scripts/validate_l_4_breadth_b85r5_phase_b_result_v1.py", project_root)
+    if must == "match_l4_b85r5_phase_b_result_mirror":
+        try:
+            text=target.read_text(encoding="utf-8"); ok=all(term in text for term in ("B8.5R5", "data_root_unavailable", "Phase B", "edge_claim none", "validation sealed"))
+        except Exception: ok=False
+        return ([] if ok else [f"{order_id}:l4_b85r5_phase_b_result_mirror_mismatch"],ok,False)
     if must == "match_l4_b84r2_mirror":
         try: ok="B8.4R2" in target.read_text(encoding="utf-8") and "B8.5" in target.read_text(encoding="utf-8")
         except OSError: ok=False

@@ -108,6 +108,7 @@
 - **B8.5R4 Phase A lifecycle remediation v5**: v4 is immutable Inspector-rejected history for circular lifecycle and incomplete pass binding. v5 requires a later tracked activation checkpoint that binds the accepted gate commit and Exact-SHA Hermetic CI, then validates full pass correlations and the activation blob at an ancestor producing commit. It remains E0; validation sealed, `edge_claim none`, and Phase B and activation are not executed.
 - **B8.5R5 Phase A blocked-report remediation v6**: v5 is immutable Inspector-rejected history because blocked reports were not closed-world and accepted-gate provenance was incomplete. v6 locks exact blocked artifact transitions, closed runner categories, and accepted-gate ancestry plus gate-blob proof. It remains E0; validation sealed, `edge_claim none`, and Phase B and activation are not executed.
 - **B8.5R5 Phase-B activation checkpoint**: Inspector `ACCEPTED` v6 at `c8d358ee23b68e11ee02bb00eec17ee7f08128dd` after Exact-SHA Hermetic CI `30384415559`. The activation checkpoint is created; validation sealed, `edge_claim none`. Phase B remains unexecuted until this checkpoint itself passes Exact-SHA CI; then the only next action is one Phase B CLI execution.
+- **B8.5R5 one-shot Phase B**: the one permitted CLI call exited `1` with `data_root_unavailable` after its atomic marker claim. The report validates; manifest/payload reads and return/value/validation access are all zero. This is E0 structural only, validation sealed, `edge_claim none`, and no retry is authorized.
 
 ## Seed Status
 

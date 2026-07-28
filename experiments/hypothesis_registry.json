@@ -631,6 +631,11 @@
           "date": "2026-07-29",
           "decision": "B8_5R5_phase_b_activation_checkpoint_created_E0",
           "notes": "Inspector ACCEPTED B8.5R5/v6 commit c8d358ee23b68e11ee02bb00eec17ee7f08128dd after Exact-SHA Hermetic CI run 30384415559. The activation checkpoint is created with validation sealed, edge_claim none; Phase B remains unexecuted pending Exact-SHA CI for this checkpoint."
+        },
+        {
+          "date": "2026-07-29",
+          "decision": "B8_5R5_phase_b_one_shot_consumed_blocked_E0",
+          "notes": "The one permitted B8.5R5 Phase B CLI call exited 1 with data_root_unavailable after atomic marker claim. Report validation passed; manifest/payload reads and return/value/validation access counters are zero. This is E0 structural only, edge_claim none, validation sealed, and no retry is authorized."
         }
       ]
     }
