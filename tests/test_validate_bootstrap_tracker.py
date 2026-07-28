@@ -1042,6 +1042,17 @@ class BootstrapTrackerValidatorTests(unittest.TestCase):
         self.assertFalse(unverified)
         self.assertIn("B8:l4_b8_snapshot_declaration_mismatch", blockers)
 
+    def test_B81_registry_mirror_requires_v2_remediation_decision(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            registry = root / "experiments" / "hypothesis_registry.json"
+            registry.parent.mkdir()
+            registry.write_text(json.dumps({"hypotheses": [{"id": "L-4", "status": "active", "edge_claim": "none", "decision_log": []}]}), encoding="utf-8")
+            blockers, checked, unverified = self.validator._validate_done_artifact("B8.1", "experiments/hypothesis_registry.json", "match_l4_b81_mirror", project_root=root, verify_runtime=False, runtime_cache={})
+        self.assertFalse(checked)
+        self.assertFalse(unverified)
+        self.assertIn("B8.1:l4_b81_registry_mirror_mismatch", blockers)
+
 
 def _tracker_with_artifact(path: str, must: str) -> dict[str, object]:
     return {

@@ -554,7 +554,8 @@
         "L-1 portfolio plumbing"
       ],
       "evidence": [
-        {"evidence_tier": "E0", "path": "experiments/l_4_breadth_preregistration_v1.json"}
+        {"evidence_tier": "E0", "path": "experiments/l_4_breadth_preregistration_v1.json"},
+        {"evidence_tier": "E0", "path": "experiments/l_4_breadth_preregistration_v2.json"}
       ],
       "decision_log": [
         {
@@ -566,6 +567,11 @@
           "date": "2026-07-28",
           "decision": "B8_breadth_preregistration_locked_E0",
           "notes": "B8 locks E0/no-data L-4 planning: U1 is descriptive-only; U4 versus U8 uses equal-notional q on identical U8-common dates; HHI requires non-tautology opportunity, top-dependency, best-market, and best-episode gates; validation remains sealed and every authorization is false. No breadth result, edge, or L-4 execution is authorized."
+        },
+        {
+          "date": "2026-07-28",
+          "decision": "B8_1_l4_breadth_v2_locked_E0",
+          "notes": "B8.1 supersedes B8/v1 without changing it: component-risk HHI is exact, N_eff uses a trailing 52-week continuous-q correlation eigenvalue rule, all mandatory metrics have separate MinTRL and no-pooling regimes, robustness and side effects are deterministic, validation is sealed, and every authorization remains false."
         }
       ]
     }
