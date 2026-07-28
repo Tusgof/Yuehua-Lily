@@ -91,5 +91,8 @@
     ,"scripts/validate_l_3_b714_activation_contract_v2.py"
     ,"scripts/validate_l_3_b714_preflight_report_v2.py"
     ,"scripts/validate_l_3_b714_activation_contract_v3.py"
+    ,"scripts/run_l_3_b714_date_only_preflight_v1.py"
+    ,"scripts/validate_l_3_b714_date_only_preflight_activation_v1.py"
+    ,"scripts/validate_l_3_b714_date_only_preflight_report_v1.py"
   ]
 }
