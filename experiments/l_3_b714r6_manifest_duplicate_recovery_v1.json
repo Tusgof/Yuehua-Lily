@@ -1,0 +1,1 @@
+{"schema_version":"lily_l3_b714r6_manifest_duplicate_recovery_v1","prior_commit":"b2d349d4ce3fcfb5e275664f20e69844fba4823a","gate_id":"l_3_b714_date_only_preflight_remediation_v7","prior_count":2,"current_count":1,"recovery":"remove_only_the_later_byte_identical_v7_manifest_line","access":{"data":false,"container":false,"provider":false,"research_log":false}}
