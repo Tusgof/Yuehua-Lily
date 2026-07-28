@@ -1,0 +1,177 @@
+{
+  "schema_version": "lily_l4_b85_phase_a_activation_order_v1",
+  "order_id": "B8.5",
+  "phase": "A",
+  "gate_id": "l_4_breadth_b85_phase_a_activation_order_v1",
+  "activation_for_gate_id": "l_4_breadth_b84r2_activation_contract_v3",
+  "hypothesis_id": "L-4",
+  "status": "published_E0_phase_a_awaiting_inspector_acceptance",
+  "evidence_ceiling": "E0",
+  "edge_claim": "none",
+  "source_binding": {
+    "accepted_b84r2_gate": {
+      "gate_id": "l_4_breadth_b84r2_activation_contract_v3",
+      "artifact_path": "experiments/l_4_breadth_b84r2_activation_contract_v3.json",
+      "artifact_sha256": "4fe9c465111a4200730b8cbc5bd64f7971c53b826b5c3a5cddee30389131a76a",
+      "validator_path": "scripts/validate_l_4_breadth_b84r2_activation_contract_v3.py",
+      "validator_sha256": "ac74067c13b1a7d72f374c6e0f08fabb37f04325690285cbf4535234d02578a3",
+      "manifest_identity": {
+        "gate_id": "l_4_breadth_b84r2_activation_contract_v3",
+        "artifact_path": "experiments/l_4_breadth_b84r2_activation_contract_v3.json",
+        "artifact_sha256": "4fe9c465111a4200730b8cbc5bd64f7971c53b826b5c3a5cddee30389131a76a",
+        "validator_path": "scripts/validate_l_4_breadth_b84r2_activation_contract_v3.py",
+        "validator_sha256": "ac74067c13b1a7d72f374c6e0f08fabb37f04325690285cbf4535234d02578a3"
+      }
+    },
+    "b84r2_preflight_implementation": {
+      "runner_path": "scripts/run_l_4_breadth_b84r2_preflight_v3.py",
+      "runner_sha256": "78167352d69b5bed70b44005b665d39480aaa854d6c84f2613cfce61fa9f93d8",
+      "report_validator_path": "scripts/validate_l_4_breadth_b84r2_preflight_report_v3.py",
+      "report_validator_sha256": "684476401fd05c9f492137eb98d3c05703852cbf58f389c26ac38bafea086dae",
+      "report_schema_path": "schemas/l_4_breadth_b84r2_preflight_report_v3.schema.json",
+      "report_schema_sha256": "947911d0409cd09606cb5201663409be635705b63a4954181e26285d1619b992",
+      "synthetic_fixture_path": "tests/fixtures/l4_b84/synthetic_preflight_report_v3.json",
+      "synthetic_fixture_sha256": "23c1ede2b8735f0d8b73bcd221a6d12a0b22d2c7489de3443e910916104473bb"
+    },
+    "accepted_v4_science": {
+      "gate_id": "l_4_breadth_v4",
+      "artifact_path": "experiments/l_4_breadth_preregistration_v4.json",
+      "artifact_sha256": "648b480aed523074e8c99646b313c70b074ca6bde95c2a30fb88a128d150ffcb",
+      "validator_path": "scripts/validate_l_4_breadth_preregistration_v4.py",
+      "validator_sha256": "78bd4553ca0145d78f2408b0a325fe630897cc717495c6a60766fd72b9a42a42",
+      "manifest_identity": {
+        "gate_id": "l_4_breadth_v4",
+        "artifact_path": "experiments/l_4_breadth_preregistration_v4.json",
+        "artifact_sha256": "648b480aed523074e8c99646b313c70b074ca6bde95c2a30fb88a128d150ffcb",
+        "validator_path": "scripts/validate_l_4_breadth_preregistration_v4.py",
+        "validator_sha256": "78bd4553ca0145d78f2408b0a325fe630897cc717495c6a60766fd72b9a42a42"
+      }
+    },
+    "sealed_validation_boundary": {
+      "falsification_end": "2015-12-31",
+      "validation_start": "2016-01-04",
+      "validation_opened": false,
+      "edge_claim": "none"
+    }
+  },
+  "phase_b_contract": {
+    "status": "not_executed",
+    "owner_preapproval": "Phase B is owner-preapproved only after Inspector acceptance of this Phase A artifact and exact-SHA Hermetic CI success.",
+    "required_preconditions": [
+      "inspector_acceptance_recorded",
+      "exact_sha_hermetic_ci_success"
+    ],
+    "real_preflight_limit": {
+      "maximum": 1,
+      "used": 0
+    },
+    "exact_environment": {
+      "container_id_environment_variable": "LILY_L4_B85_CONTAINER_ID",
+      "required_container_identity": "lily-l4-falsification-pre2016-v1",
+      "environment_read_forbidden_in_phase_a": true
+    },
+    "structural_metadata_only": {
+      "container_relative_manifest_path": "lily/l4/b85/structural_manifest_v1.json",
+      "container_relative_payload_path": "lily/l4/b85/u8_symbol_session_dates_v1.json",
+      "manifest_required_keys": [
+        "schema_version",
+        "container_identity",
+        "metadata_path",
+        "metadata_sha256"
+      ],
+      "manifest_schema_version": "lily_l4_b85_structural_manifest_v1",
+      "payload_schema_version": "lily_l4_b85_u8_symbol_session_dates_v1",
+      "payload_allowed_fields": [
+        "schema_version",
+        "symbol_sessions"
+      ],
+      "symbol_session_allowed_fields": [
+        "symbol",
+        "session_date"
+      ],
+      "required_u8_members_in_order": [
+        "VTI",
+        "VGK",
+        "EWJ",
+        "VWO",
+        "IEF",
+        "TIP",
+        "GLD",
+        "DBC"
+      ],
+      "session_date_format": "YYYY-MM-DD",
+      "latest_permitted_session_date": "2015-12-31",
+      "required_check_order": [
+        "container_identity",
+        "manifest_schema",
+        "manifest_path",
+        "manifest_hash",
+        "payload_schema",
+        "exact_u8_membership",
+        "each_symbol_session_date_at_or_before_cutoff",
+        "stop_before_return_or_value_decoding"
+      ],
+      "rejection_conditions": [
+        "missing_u8_member",
+        "duplicate_or_ambiguous_u8_member",
+        "schema_mismatch",
+        "path_mismatch",
+        "hash_mismatch",
+        "post_cutoff_session",
+        "non_structural_field",
+        "return_or_value_decode_attempt"
+      ]
+    },
+    "hard_stops": [
+      "Phase B may inspect only the declared U8 symbol/session-date structural metadata after its preconditions pass.",
+      "Reject before any return, price, value, signal, position, covariance, regime, cost, PnL, execution, report decision, ledger, or validation access.",
+      "Provider, network, credentials, broker, paid, paper-trade, and real-money access are forbidden.",
+      "No second real preflight is permitted for any result, error, or ambiguity."
+    ]
+  },
+  "phase_a_authorizations": {
+    "data": false,
+    "container": false,
+    "path_inspection": false,
+    "market": false,
+    "return": false,
+    "value": false,
+    "signal": false,
+    "position": false,
+    "covariance": false,
+    "regime": false,
+    "cost": false,
+    "pnl": false,
+    "execution": false,
+    "report_decision": false,
+    "ledger": false,
+    "validation": false,
+    "provider": false,
+    "network": false,
+    "credentials": false,
+    "broker": false,
+    "paid": false,
+    "paper_trade": false,
+    "real_money": false,
+    "environment": false
+  },
+  "phase_a_access_counts": {
+    "real_container_discovery": 0,
+    "real_container_read": 0,
+    "real_container_hash": 0,
+    "real_container_scan": 0,
+    "real_path_inspection": 0,
+    "environment_read": 0,
+    "market_or_return_value_decode": 0,
+    "research_computation": 0,
+    "execution": 0,
+    "report_decision": 0,
+    "ledger_write": 0,
+    "validation_access": 0,
+    "provider_network_credentials_broker_paid_paper_real_money_access": 0
+  },
+  "validation_seal": {
+    "status": "sealed_not_accessed",
+    "accessed": false
+  }
+}

@@ -557,7 +557,8 @@
         {"evidence_tier": "E0", "path": "experiments/l_4_breadth_preregistration_v1.json"},
         {"evidence_tier": "E0", "path": "experiments/l_4_breadth_preregistration_v2.json"},
         {"evidence_tier": "E0", "path": "experiments/l_4_breadth_preregistration_v3.json"},
-        {"evidence_tier": "E0", "path": "experiments/l_4_breadth_preregistration_v4.json"}
+        {"evidence_tier": "E0", "path": "experiments/l_4_breadth_preregistration_v4.json"},
+        {"evidence_tier": "E0", "path": "experiments/l_4_breadth_b85_phase_a_activation_order_v1.json"}
       ],
       "decision_log": [
         {
@@ -594,6 +595,11 @@
           "date": "2026-07-28",
           "decision": "B8_4R2_l4_hermetic_preflight_v3_locked_E0",
           "notes": "B8.4 v1 and B8.4R v2 remain immutable CI-defective history; B8.4R2 v3 is zero-dependency synthetic E0 machinery, validation sealed, edge_claim none, and B8.5 remains unauthorized pending Inspector review."
+        },
+        {
+          "date": "2026-07-28",
+          "decision": "B8_5_l4_phase_a_activation_order_locked_E0",
+          "notes": "B8.5 Phase A source-binds accepted B8.4R2/v3, v4 science, B8.4R2 report/runner/schema/fixture, and the sealed validation boundary. It records only a future one-preflight U8 symbol/session-date contract; all 24 Phase A authorizations are false, access counts are zero, validation sealed, edge_claim none. Phase B is not executed and awaits Inspector acceptance plus exact-SHA CI success."
         }
       ]
     }

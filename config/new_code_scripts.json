@@ -136,5 +136,6 @@
     ,"scripts/validate_l_4_breadth_b84r2_activation_contract_v3.py"
     ,"scripts/validate_l_4_breadth_b84r2_preflight_report_v3.py"
     ,"scripts/run_l_4_breadth_b84r2_preflight_v3.py"
+    ,"scripts/validate_l_4_breadth_b85_phase_a_activation_order_v1.py"
   ]
 }

@@ -1129,6 +1129,16 @@ class BootstrapTrackerValidatorTests(unittest.TestCase):
             blockers, checked, _ = self.validator._validate_done_artifact("B8.4R2", "PROJECT_BRAIN.md", "match_l4_b84r2_mirror", project_root=root, verify_runtime=False, runtime_cache={})
             self.assertFalse(checked); self.assertIn("B8.4R2:l4_b84r2_mirror_mismatch", blockers)
 
+    def test_B85_phase_a_registration_and_mirror_drift_block_done(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp); target = root / "config/new_code_scripts.json"; target.parent.mkdir()
+            target.write_text(json.dumps({"scripts": []}), encoding="utf-8")
+            blockers, checked, _ = self.validator._validate_done_artifact("B8.5", "config/new_code_scripts.json", "register_l4_b85_phase_a_script", project_root=root, verify_runtime=False, runtime_cache={})
+            self.assertFalse(checked); self.assertIn("B8.5:l4_b85_phase_a_script_registration_mismatch", blockers)
+            mirror = root / "PROJECT_BRAIN.md"; mirror.write_text("B8.5 Phase A", encoding="utf-8")
+            blockers, checked, _ = self.validator._validate_done_artifact("B8.5", "PROJECT_BRAIN.md", "match_l4_b85_phase_a_mirror", project_root=root, verify_runtime=False, runtime_cache={})
+            self.assertFalse(checked); self.assertIn("B8.5:l4_b85_phase_a_mirror_mismatch", blockers)
+
 
 def _tracker_with_artifact(path: str, must: str) -> dict[str, object]:
     return {

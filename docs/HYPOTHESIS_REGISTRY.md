@@ -101,6 +101,7 @@
 - **B8.2 v3 completion**: supersedes B8.1 without changing prior bytes. It restores the scoped question, data/search/claim controls, explicitly fixes primary `u=q` before downstream constraints, locks all three MinTRL plans per metric, and gives E1 and future-validation scope predicates fixed precedence. It is E0/no-data only; `edge_claim none`, validation sealed, and Inspector review is the only next action.
 - **B8.3 v4 exact-preservation remediation**: supersedes B8.2 without changing v1/v2/v3. It restores the exact 465 weekly-paired capacity, fixed macro sleeves, best-market and neutral-bridge/end/tie/removal best-trend-episode rules, complete regime states/dates, `N_eff` and component-risk missingness, side-effect limits, and four-outcome future-validation precedence. It is E0/no-data only; `edge_claim none`, validation sealed, all authorizations false, and Inspector review is the only next action.
 - **B8.4 synthetic future-preflight machinery**: Inspector accepted B8.3. B8.4 source-binds v4 without superseding its scientific preregistration, accepts only committed synthetic fixtures, and hard-stops date/schema/path/hash/membership ambiguity or any post-2015-12-31 session before return parsing. It is E0 only; `edge_claim none`, validation sealed, and B8.5 owner approval is required before any real-container access.
+- **B8.5 Phase A activation/order lock**: source-binds accepted B8.4R2/v3, v4 science, and the B8.4R2 report/runner/schema/fixture. It records a future single structural U8 symbol/session-date preflight only: missing/ambiguous U8, schema/path/hash mismatch, or any session after 2015-12-31 must stop before return or value decoding. It is E0; all 24 Phase A authorizations are false, validation sealed, `edge_claim none`. Phase B is not executed and awaits Inspector acceptance plus exact-SHA CI success.
 
 ## Seed Status
 
@@ -110,4 +111,4 @@ L-0 has E0 sizing and production Webull capability evidence and remains scope-re
 
 The registry format, evidence tiers, dual MinTRL, and kill/resurrection rules adapt `Yuehua-Higanbana/docs/FABLE5_UPGRADE_PROPOSAL.md`. Lily changes the observation model from dense 0DTE trades to persistent, overlapping trend positions and adds independent-bet, survivorship, country breadth, and futures-roll requirements.
 
-B8.4R2: L-4 remains edge_claim none; v3 synthetic E0 preflight active, validation sealed, B8.5 unauthorized.
+B8.4R2: L-4 remains edge_claim none; v3 synthetic E0 preflight active, validation sealed. B8.5 Phase A is published; Phase B is not executed and awaits Inspector acceptance plus exact-SHA CI success.

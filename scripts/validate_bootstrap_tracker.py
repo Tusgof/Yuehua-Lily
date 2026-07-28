@@ -759,6 +759,23 @@ def _validate_done_artifact(
         try: ok=all(item in json.loads(target.read_text(encoding="utf-8")).get("scripts",[]) for item in ("scripts/validate_l_4_breadth_b84r2_activation_contract_v3.py","scripts/validate_l_4_breadth_b84r2_preflight_report_v3.py","scripts/run_l_4_breadth_b84r2_preflight_v3.py"))
         except Exception: ok=False
         return ([] if ok else [f"{order_id}:l4_b84r2_script_registration_mismatch"],ok,False)
+    if must == "validate_l4_b85_phase_a_gate":
+        return _validate_l4_b84_runtime(target, order_id, "scripts/validate_l_4_breadth_b85_phase_a_activation_order_v1.py", project_root)
+    if must == "contain_l4_b85_phase_a_manifest":
+        return _validate_l4_b85_phase_a_manifest(target, order_id, project_root)
+    if must == "register_l4_b85_phase_a_script":
+        try: ok="scripts/validate_l_4_breadth_b85_phase_a_activation_order_v1.py" in json.loads(target.read_text(encoding="utf-8")).get("scripts",[])
+        except Exception: ok=False
+        return ([] if ok else [f"{order_id}:l4_b85_phase_a_script_registration_mismatch"],ok,False)
+    if must == "match_l4_b85_phase_a_mirror":
+        try:
+            text=target.read_text(encoding="utf-8")
+            ok=all(term in text for term in ("B8.5", "Phase A", "Phase B", "Inspector", "validation sealed", "edge_claim none"))
+            if artifact_path == "experiments/hypothesis_registry.json":
+                l4=next(item for item in json.loads(text).get("hypotheses",[]) if item.get("id")=="L-4")
+                ok=ok and any(item.get("decision")=="B8_5_l4_phase_a_activation_order_locked_E0" for item in l4.get("decision_log",[]) if isinstance(item,dict))
+        except Exception: ok=False
+        return ([] if ok else [f"{order_id}:l4_b85_phase_a_mirror_mismatch"],ok,False)
     if must == "match_l4_b84r2_mirror":
         try: ok="B8.4R2" in target.read_text(encoding="utf-8") and "B8.5" in target.read_text(encoding="utf-8")
         except OSError: ok=False
@@ -3747,6 +3764,17 @@ def _validate_l4_b84r2_manifest(target, order_id, project_root):
         row=next(json.loads(x) for x in target.read_text(encoding="utf-8").splitlines() if "l_4_breadth_b84r2_activation_contract_v3" in x); gate=project_root/"experiments/l_4_breadth_b84r2_activation_contract_v3.json"; validator=project_root/"scripts/validate_l_4_breadth_b84r2_activation_contract_v3.py"; ok=row.get("supersedes_gate_id")=="l_4_breadth_b84r_activation_contract_v2" and row.get("artifact_sha256")==hashlib.sha256(gate.read_bytes()).hexdigest() and row.get("validator_sha256")==hashlib.sha256(validator.read_bytes()).hexdigest()
     except Exception: ok=False
     return ([] if ok else [f"{order_id}:l4_b84r2_manifest_mismatch"],ok,False)
+
+
+def _validate_l4_b85_phase_a_manifest(target, order_id, project_root):
+    try:
+        rows=[json.loads(line) for line in target.read_text(encoding="utf-8").splitlines() if line]
+        matches=[row for row in rows if row.get("gate_id")=="l_4_breadth_b85_phase_a_activation_order_v1"]
+        gate=project_root/"experiments/l_4_breadth_b85_phase_a_activation_order_v1.json"
+        validator=project_root/"scripts/validate_l_4_breadth_b85_phase_a_activation_order_v1.py"
+        ok=len(matches)==1 and matches[0].get("activation_for_gate_id")=="l_4_breadth_b84r2_activation_contract_v3" and matches[0].get("artifact_sha256")==hashlib.sha256(gate.read_bytes()).hexdigest() and matches[0].get("validator_sha256")==hashlib.sha256(validator.read_bytes()).hexdigest() and "Phase B is not executed" in matches[0].get("notes","")
+    except Exception: ok=False
+    return ([] if ok else [f"{order_id}:l4_b85_phase_a_manifest_mismatch"],ok,False)
 
 if __name__ == "__main__":
     raise SystemExit(main())
