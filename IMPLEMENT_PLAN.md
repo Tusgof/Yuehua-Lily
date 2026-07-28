@@ -107,7 +107,7 @@ B7.15 current-preregistration closure: L-3 remains E1 scope_restricted and unres
 
 Test whether additional countries, sleeves, and independent markets reduce single-market trend dependency after accounting for trend-state correlation and costs.
 
-B8.3 v4 supersedes B8.2 and preserves B8.1 without changing v1/v2/v3: U1 is descriptive-only and primary U4/U8 sizing fixes `u[i,t]=q[i,t]` without volatility division, then locks exact 465 weekly-paired capacity, macro sleeves, component-risk HHI/`N_eff` missingness, all three MinTRL plans per metric, exact deterministic controls, and exhaustive four-outcome validation precedence. It remains E0/no-data with `edge_claim none`; validation is sealed, all authorizations are false, and a separate owner-approved activation is required before any L-4 data or execution.
+B8.3 v4 is Inspector-accepted and supersedes B8.2 while preserving v1/v2/v3. B8.4 source-binds v4 without superseding its science and creates E0 synthetic-only future falsification-preflight machinery: every future per-symbol session/timestamp must be structurally checked <= 2015-12-31 before return parsing and fail closed on date/schema/path/hash/membership ambiguity. `edge_claim none`; validation remains sealed. B8.5 requires separate owner approval before any real container or L-4 data/execution.
 
 Exit: breadth reduces preregistered dependency/concentration measures, produces an explicit scope restriction, or is falsified.
 
@@ -328,7 +328,9 @@ If MinTRL validation cost is unaffordable or undefined against the benchmark nul
 | L-1 | Scope-restricted E1; B4.9 closes the unavailable Webull-ledger dry run without observation; B4.10 adds no L-1 evidence | Validation remains sealed; no broker-ledger or historical-correctness claim |
 | L-2 | E1 underfunded_scope_restricted | Redesign requires a new owner-approved preregistration before any L-2 data access |
 | L-3 | E1 scope_restricted and unresolved; B7.4 invalidates the B7.3 sole run's 500 weekly observations above the 465 ceiling, and B7.15 closes the current preregistration with no L-3 result carried forward as proof that inverse-volatility sizing passed | Validation sealed; no rerun is planned; next gate is L-4 preregistration/planning only |
-| L-4 | Active planning E0; B8.3 v4 supersedes prior gates with exact capacity, macro, robustness, regime, missingness, side-effect, and decision/MinTRL controls; edge_claim none | Inspector review only; no activation, data, execution, report, or validation access |
+| L-4 | Active planning E0; B8.3 accepted and B8.4 synthetic-only preflight source-binds v4 without superseding its science; edge_claim none | Inspector review B8.4 only; B8.5 required before real-container/data/execution/report/validation access |
+
+Historical control compatibility: B8 E0/edge_claim none validation retains U1, U4, and U8; B8.1 retains N_eff. B8.3's 465 weekly-paired capacity, macro sleeves, four-outcome validation contract, and all authorizations are false remain intact; its former next step was Inspector review only.
 
 ## 11. Source Lineage
 

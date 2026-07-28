@@ -127,5 +127,8 @@
     ,"scripts/validate_l_4_breadth_preregistration_v2.py"
     ,"scripts/validate_l_4_breadth_preregistration_v3.py"
     ,"scripts/validate_l_4_breadth_preregistration_v4.py"
+    ,"scripts/validate_l_4_breadth_b84_activation_contract_v1.py"
+    ,"scripts/validate_l_4_breadth_b84_preflight_report_v1.py"
+    ,"scripts/run_l_4_breadth_b84_preflight_v1.py"
   ]
 }

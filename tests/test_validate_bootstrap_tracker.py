@@ -1101,6 +1101,24 @@ class BootstrapTrackerValidatorTests(unittest.TestCase):
             self.assertFalse(checked)
             self.assertIn("B8.3:l4_b83_script_registration_mismatch", blockers)
 
+    def test_B84_manifest_drift_blocks_done(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp); (root / "experiments").mkdir(); (root / "scripts").mkdir()
+            (root / "experiments/l_4_breadth_b84_activation_contract_v1.json").write_text("{}", encoding="utf-8")
+            (root / "scripts/validate_l_4_breadth_b84_activation_contract_v1.py").write_text("pass\n", encoding="utf-8")
+            (root / "experiments/locked_gates.jsonl").write_text(json.dumps({"gate_id": "l_4_breadth_b84_activation_contract_v1", "activation_for_gate_id": "l_4_breadth_v4", "artifact_sha256": "0" * 64, "validator_sha256": "0" * 64}) + "\n", encoding="utf-8")
+            blockers, checked, _ = self.validator._validate_done_artifact("B8.4", "experiments/locked_gates.jsonl", "contain_l4_b84_manifest", project_root=root, verify_runtime=False, runtime_cache={})
+            self.assertFalse(checked)
+            self.assertIn("B8.4:l4_b84_manifest_mismatch", blockers)
+
+    def test_B84_script_registration_drift_blocks_done(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp); target = root / "config/new_code_scripts.json"; target.parent.mkdir()
+            target.write_text(json.dumps({"scripts": []}), encoding="utf-8")
+            blockers, checked, _ = self.validator._validate_done_artifact("B8.4", "config/new_code_scripts.json", "register_l4_b84_scripts", project_root=root, verify_runtime=False, runtime_cache={})
+            self.assertFalse(checked)
+            self.assertIn("B8.4:l4_b84_script_registration_mismatch", blockers)
+
 
 def _tracker_with_artifact(path: str, must: str) -> dict[str, object]:
     return {

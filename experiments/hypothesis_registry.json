@@ -584,6 +584,11 @@
           "date": "2026-07-28",
           "decision": "B8_3_l4_breadth_v4_locked_E0",
           "notes": "B8.3 supersedes B8.2 without changing v1/v2/v3: it restores exact 465 weekly-paired capacity, fixed macro sleeves, best-market and neutral-bridge/end/tie/removal best-trend-episode controls, complete regime states and dates, n_eff/component-risk missingness, and side-effect limits. Validation remains sealed, edge_claim none, and every authorization is false; Inspector review only."
+        },
+        {
+          "date": "2026-07-28",
+          "decision": "B8_4_l4_synthetic_preflight_locked_E0",
+          "notes": "Inspector accepted B8.3. B8.4 source-binds v4 without superseding its science and adds E0 synthetic-only future falsification-preflight machinery. It accepts no real container path or data, hard-stops ambiguity/post-2015-12-31 sessions before return parsing, keeps validation sealed and edge_claim none, and requires separate owner-approved B8.5 for real-container access. Inspector review only."
         }
       ]
     }
