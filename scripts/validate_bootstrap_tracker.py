@@ -866,6 +866,17 @@ def _validate_done_artifact(
                 ok=ok and any(item.get("decision")=="B8_5R5_l4_blocked_report_remediation_locked_E0" for item in l4.get("decision_log",[]) if isinstance(item,dict))
         except Exception: ok=False
         return ([] if ok else [f"{order_id}:l4_b85r5_mirror_mismatch"],ok,False)
+    if must == "validate_l4_b85r5_activation":
+        return _validate_l4_b84_runtime(target, order_id, "scripts/validate_l_4_breadth_b85r5_phase_b_activation_v6.py", project_root)
+    if must == "register_l4_b85r5_activation_script":
+        try: ok="scripts/validate_l_4_breadth_b85r5_phase_b_activation_v6.py" in json.loads(target.read_text(encoding="utf-8")).get("scripts",[])
+        except Exception: ok=False
+        return ([] if ok else [f"{order_id}:l4_b85r5_activation_script_registration_mismatch"],ok,False)
+    if must == "match_l4_b85r5_activation_mirror":
+        try:
+            text=target.read_text(encoding="utf-8"); ok=all(term in text for term in ("B8.5R5", "ACCEPTED", "Phase B", "activation checkpoint", "edge_claim none"))
+        except Exception: ok=False
+        return ([] if ok else [f"{order_id}:l4_b85r5_activation_mirror_mismatch"],ok,False)
     if must == "match_l4_b84r2_mirror":
         try: ok="B8.4R2" in target.read_text(encoding="utf-8") and "B8.5" in target.read_text(encoding="utf-8")
         except OSError: ok=False

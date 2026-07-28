@@ -111,6 +111,8 @@ B8.3 v4 is Inspector-accepted and supersedes B8.2 while preserving v1/v2/v3. B8.
 
 B8.5R5/v6 supersedes immutable Inspector-rejected v5 without changing it. It closes blocked-report integrity with exact artifact state transitions and closed categories, and requires the accepted gate commit to be an activation-checkpoint ancestor whose gate blob hashes to the v6 gate. Phase B and activation remain not executed; `edge_claim none`; validation sealed.
 
+Inspector ACCEPTED B8.5R5/v6 at `c8d358ee23b68e11ee02bb00eec17ee7f08128dd` after Exact-SHA Hermetic CI `30384415559`. The B8.5R5 Phase-B activation checkpoint is created with validation sealed and `edge_claim none`; Phase B remains unexecuted until this checkpoint commit passes Exact-SHA CI. The sole next safe action is one Phase B CLI execution.
+
 Exit: breadth reduces preregistered dependency/concentration measures, produces an explicit scope restriction, or is falsified.
 
 ## 5. Execution Orders

@@ -626,6 +626,11 @@
           "date": "2026-07-29",
           "decision": "B8_5R5_l4_blocked_report_remediation_locked_E0",
           "notes": "B8.5R4/v5 is immutable Inspector-rejected history because blocked reports were not closed-world and accepted gate provenance lacked ancestor/blob proof. B8.5R5/v6 locks exact blocked artifact transitions and runner categories, plus accepted-gate ancestry and gate-blob proof. Phase B and activation remain unexecuted; validation sealed, edge_claim none."
+        },
+        {
+          "date": "2026-07-29",
+          "decision": "B8_5R5_phase_b_activation_checkpoint_created_E0",
+          "notes": "Inspector ACCEPTED B8.5R5/v6 commit c8d358ee23b68e11ee02bb00eec17ee7f08128dd after Exact-SHA Hermetic CI run 30384415559. The activation checkpoint is created with validation sealed, edge_claim none; Phase B remains unexecuted pending Exact-SHA CI for this checkpoint."
         }
       ]
     }
