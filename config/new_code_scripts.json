@@ -98,5 +98,8 @@
     ,"scripts/validate_l_3_b714_date_only_preflight_activation_v2.py"
     ,"scripts/validate_l_3_b714_date_only_preflight_report_v2.py"
     ,"scripts/validate_l_3_b714_pre_checkpoint_filesystem_metadata_incident_v1.py"
+    ,"scripts/run_l_3_b714_date_only_preflight_v3.py"
+    ,"scripts/validate_l_3_b714_date_only_preflight_activation_v3.py"
+    ,"scripts/validate_l_3_b714_date_only_preflight_report_v3.py"
   ]
 }
