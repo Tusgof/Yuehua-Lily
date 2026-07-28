@@ -109,3 +109,5 @@ L-0 has E0 sizing and production Webull capability evidence and remains scope-re
 ## Source Adaptation
 
 The registry format, evidence tiers, dual MinTRL, and kill/resurrection rules adapt `Yuehua-Higanbana/docs/FABLE5_UPGRADE_PROPOSAL.md`. Lily changes the observation model from dense 0DTE trades to persistent, overlapping trend positions and adds independent-bet, survivorship, country breadth, and futures-roll requirements.
+
+B8.4R2: L-4 remains edge_claim none; v3 synthetic E0 preflight active, validation sealed, B8.5 unauthorized.

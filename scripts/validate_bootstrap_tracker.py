@@ -742,11 +742,27 @@ def _validate_done_artifact(
     if must == "validate_l4_b84r_gate":
         return _validate_l4_b84_runtime(target, order_id, "scripts/validate_l_4_breadth_b84r_activation_contract_v2.py", project_root)
     if must == "validate_l4_b84r_report":
-        return _validate_l4_b84_runtime(target, order_id, "scripts/validate_l_4_breadth_b84r_preflight_report_v2.py", project_root, "tests/fixtures/l4_b84/synthetic_preflight_report_v2.json")
+        return _validate_l4_b84r_historical(target, order_id, project_root)
     if must == "run_l4_b84r_fixture":
-        return _validate_l4_b84_runtime(target, order_id, "scripts/run_l_4_breadth_b84r_preflight_v2.py", project_root, "--synthetic-report", "tests/fixtures/l4_b84/synthetic_preflight_report_v2.json")
+        return _validate_l4_b84r_historical(target, order_id, project_root)
     if must == "contain_l4_b84r_manifest":
         return _validate_l4_b84r_manifest(target, order_id, project_root)
+    if must == "validate_l4_b84r2_gate":
+        return _validate_l4_b84_runtime(target, order_id, "scripts/validate_l_4_breadth_b84r2_activation_contract_v3.py", project_root)
+    if must == "validate_l4_b84r2_report":
+        return _validate_l4_b84_runtime(target, order_id, "scripts/validate_l_4_breadth_b84r2_preflight_report_v3.py", project_root, "tests/fixtures/l4_b84/synthetic_preflight_report_v3.json")
+    if must == "run_l4_b84r2_fixture":
+        return _validate_l4_b84_runtime(target, order_id, "scripts/run_l_4_breadth_b84r2_preflight_v3.py", project_root, "--synthetic-report", "tests/fixtures/l4_b84/synthetic_preflight_report_v3.json")
+    if must == "contain_l4_b84r2_manifest":
+        return _validate_l4_b84r2_manifest(target, order_id, project_root)
+    if must == "register_l4_b84r2_scripts":
+        try: ok=all(item in json.loads(target.read_text(encoding="utf-8")).get("scripts",[]) for item in ("scripts/validate_l_4_breadth_b84r2_activation_contract_v3.py","scripts/validate_l_4_breadth_b84r2_preflight_report_v3.py","scripts/run_l_4_breadth_b84r2_preflight_v3.py"))
+        except Exception: ok=False
+        return ([] if ok else [f"{order_id}:l4_b84r2_script_registration_mismatch"],ok,False)
+    if must == "match_l4_b84r2_mirror":
+        try: ok="B8.4R2" in target.read_text(encoding="utf-8") and "B8.5" in target.read_text(encoding="utf-8")
+        except OSError: ok=False
+        return ([] if ok else [f"{order_id}:l4_b84r2_mirror_mismatch"],ok,False)
     if must == "match_l4_b84_mirror":
         return _validate_l4_b84_mirror(target, order_id, artifact_path)
     if must == "register_l4_b84_scripts":
@@ -2887,6 +2903,14 @@ def _validate_l4_b84_manifest(target: Path, order_id: str, project_root: Path) -
     return ([] if ok else [f"{order_id}:l4_b84_manifest_mismatch"], ok, False)
 
 
+
+def _validate_l4_b84r_historical(target, order_id, project_root):
+    paths=("experiments/l_4_breadth_b84r_activation_contract_v2.json","scripts/run_l_4_breadth_b84r_preflight_v2.py","schemas/l_4_breadth_b84r_preflight_report_v2.schema.json")
+    try:
+        ok=all((project_root/p).read_bytes()==subprocess.run(["git","show",f"49d07ce:{p}"],cwd=project_root,capture_output=True,check=True).stdout for p in paths)
+    except Exception: ok=False
+    return ([] if ok else [f"{order_id}:l4_b84r_historical_audit_failed"],ok,False)
+
 def _validate_l4_b84r_manifest(target: Path, order_id: str, project_root: Path) -> tuple[list[str], bool, bool]:
     try:
         rows = [json.loads(line) for line in target.read_text(encoding="utf-8").splitlines() if line]
@@ -3716,6 +3740,13 @@ def main() -> int:
     print(json.dumps(result, ensure_ascii=False, indent=2, sort_keys=True))
     return 0 if result["status"] == "pass" else 1
 
+
+
+def _validate_l4_b84r2_manifest(target, order_id, project_root):
+    try:
+        row=next(json.loads(x) for x in target.read_text(encoding="utf-8").splitlines() if "l_4_breadth_b84r2_activation_contract_v3" in x); gate=project_root/"experiments/l_4_breadth_b84r2_activation_contract_v3.json"; validator=project_root/"scripts/validate_l_4_breadth_b84r2_activation_contract_v3.py"; ok=row.get("supersedes_gate_id")=="l_4_breadth_b84r_activation_contract_v2" and row.get("artifact_sha256")==hashlib.sha256(gate.read_bytes()).hexdigest() and row.get("validator_sha256")==hashlib.sha256(validator.read_bytes()).hexdigest()
+    except Exception: ok=False
+    return ([] if ok else [f"{order_id}:l4_b84r2_manifest_mismatch"],ok,False)
 
 if __name__ == "__main__":
     raise SystemExit(main())

@@ -589,6 +589,11 @@
           "date": "2026-07-28",
           "decision": "B8_4_l4_synthetic_preflight_locked_E0",
           "notes": "Inspector accepted B8.3. B8.4 source-binds v4 without superseding its science and adds E0 synthetic-only future falsification-preflight machinery. It accepts no real container path or data, hard-stops ambiguity/post-2015-12-31 sessions before return parsing, keeps validation sealed and edge_claim none, and requires separate owner-approved B8.5 for real-container access. Inspector review only."
+        },
+        {
+          "date": "2026-07-28",
+          "decision": "B8_4R2_l4_hermetic_preflight_v3_locked_E0",
+          "notes": "B8.4 v1 and B8.4R v2 remain immutable CI-defective history; B8.4R2 v3 is zero-dependency synthetic E0 machinery, validation sealed, edge_claim none, and B8.5 remains unauthorized pending Inspector review."
         }
       ]
     }

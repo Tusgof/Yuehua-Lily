@@ -252,3 +252,5 @@ Always:
 - `experiments/dd_remediation_tracker.json`: evidence-backed required-artifact completion.
 
 Lily excludes all 0DTE-specific logic and replaces per-trade assumptions with persistent-position trend inference.
+
+B8.4R2: v3 zero-dependency synthetic E0 preflight is active; B8.4 v1 and B8.4R v2 are immutable CI-defective history; validation sealed, B8.5 remains unauthorized pending Inspector review.

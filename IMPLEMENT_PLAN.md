@@ -341,3 +341,5 @@ Historical control compatibility: B8 E0/edge_claim none validation retains U1, U
 - Higanbana `experiments/dd_remediation_tracker.json`: evidence-backed order completion.
 
 Lily changes the statistical observation model for persistent trend positions and adds country/asset breadth, survivorship, futures-roll, and small-account sizing gates.
+
+B8.4R2: v3 replaces historical v1/v2 synthetic preflight machinery under E0 only; next action is Inspector review, not B8.5.
