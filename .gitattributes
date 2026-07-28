@@ -5,3 +5,4 @@
 *.toml text eol=lf
 *.yaml text eol=lf
 *.yml text eol=lf
+reports/experiments/l_3_b714_date_only_preflight_report_v3.json -text
