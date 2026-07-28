@@ -556,7 +556,8 @@
       "evidence": [
         {"evidence_tier": "E0", "path": "experiments/l_4_breadth_preregistration_v1.json"},
         {"evidence_tier": "E0", "path": "experiments/l_4_breadth_preregistration_v2.json"},
-        {"evidence_tier": "E0", "path": "experiments/l_4_breadth_preregistration_v3.json"}
+        {"evidence_tier": "E0", "path": "experiments/l_4_breadth_preregistration_v3.json"},
+        {"evidence_tier": "E0", "path": "experiments/l_4_breadth_preregistration_v4.json"}
       ],
       "decision_log": [
         {
@@ -578,6 +579,11 @@
           "date": "2026-07-28",
           "decision": "B8_2_l4_breadth_v3_locked_E0",
           "notes": "B8.2 supersedes B8.1 without changing prior bytes: q primary sizing explicitly forbids volatility division, every metric has all three recomputed MinTRL plans, and E1/validation decisions have exhaustive mutually exclusive precedence. Validation remains sealed and every authorization is false."
+        },
+        {
+          "date": "2026-07-28",
+          "decision": "B8_3_l4_breadth_v4_locked_E0",
+          "notes": "B8.3 supersedes B8.2 without changing v1/v2/v3: it restores exact 465 weekly-paired capacity, fixed macro sleeves, best-market and neutral-bridge/end/tie/removal best-trend-episode controls, complete regime states and dates, n_eff/component-risk missingness, and side-effect limits. Validation remains sealed, edge_claim none, and every authorization is false; Inspector review only."
         }
       ]
     }

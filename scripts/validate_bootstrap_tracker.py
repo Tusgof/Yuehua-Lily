@@ -717,6 +717,20 @@ def _validate_done_artifact(
         return _validate_l4_b81_mirror(target, order_id, artifact_path)
     if must == "register_l4_b81_validator":
         return _validate_l4_b81_validator_registration(target, order_id, artifact_path)
+    if must == "validate_l4_b83_gate":
+        return _validate_l4_b83_gate(target, order_id, artifact_path, project_root=project_root)
+    if must == "contain_l4_b83_manifest_identity":
+        return _validate_l4_b83_manifest_identity(target, order_id, artifact_path, project_root=project_root)
+    if must == "match_l4_b83_registry_mirror":
+        return _validate_l4_b83_registry_mirror(target, order_id, artifact_path)
+    if must == "match_l4_b83_human_registry_mirror":
+        return _validate_l4_b83_human_registry_mirror(target, order_id, artifact_path)
+    if must == "match_l4_b83_project_brain":
+        return _validate_l4_b83_project_brain(target, order_id, artifact_path)
+    if must == "match_l4_b83_implement_plan":
+        return _validate_l4_b83_implement_plan(target, order_id, artifact_path)
+    if must == "register_l4_b83_validator":
+        return _validate_l4_b83_validator_registration(target, order_id, artifact_path)
     if must == "contain_l3_b713_manifest_identity":
         rows = [json.loads(line) for line in target.read_text(encoding="utf-8").splitlines() if line.strip()]
         row = [x for x in rows if x.get("gate_id") == "l_3_b714_activation_contract_v3"]
@@ -2758,6 +2772,70 @@ def _validate_l4_b81_validator_registration(target: Path, order_id: str, artifac
         return [f"{order_id}:l4_b81_script_registry_unreadable"], False, False
     ok = isinstance(scripts, list) and scripts.count("scripts/validate_l_4_breadth_preregistration_v2.py") == 1
     return ([] if ok else [f"{order_id}:l4_b81_script_registration_mismatch"], ok, False)
+
+
+def _validate_l4_b83_gate(target: Path, order_id: str, artifact_path: str, *, project_root: Path) -> tuple[list[str], bool, bool]:
+    completed = subprocess.run([sys.executable, "scripts/validate_l_4_breadth_preregistration_v4.py", "--gate", str(target)], cwd=project_root, text=True, capture_output=True, check=False)
+    ok = target.is_file() and completed.returncode == 0
+    return ([] if ok else [f"{order_id}:l4_b83_gate_validator_failed"], ok, False)
+
+
+def _validate_l4_b83_manifest_identity(target: Path, order_id: str, artifact_path: str, *, project_root: Path) -> tuple[list[str], bool, bool]:
+    try:
+        rows = [json.loads(line) for line in target.read_text(encoding="utf-8").splitlines() if line]
+        gate = project_root / "experiments/l_4_breadth_preregistration_v4.json"
+        validator = project_root / "scripts/validate_l_4_breadth_preregistration_v4.py"
+    except (OSError, json.JSONDecodeError):
+        return [f"{order_id}:l4_b83_manifest_unreadable"], False, False
+    matches = [row for row in rows if row.get("gate_id") == "l_4_breadth_v4"]
+    expected = {"supersedes_gate_id": "l_4_breadth_v3", "gate_type": "E0_no_data_exact_preservation_remediation", "artifact_path": "experiments/l_4_breadth_preregistration_v4.json", "artifact_sha256": hashlib.sha256(gate.read_bytes()).hexdigest(), "validator_path": "scripts/validate_l_4_breadth_preregistration_v4.py", "validator_sha256": hashlib.sha256(validator.read_bytes()).hexdigest()}
+    ok = len(matches) == 1 and all(matches[0].get(key) == value for key, value in expected.items()) and "B8.3 E0/no-data" in str(matches[0].get("human_approval", ""))
+    return ([] if ok else [f"{order_id}:l4_b83_manifest_identity_mismatch"], ok, False)
+
+
+def _validate_l4_b83_registry_mirror(target: Path, order_id: str, artifact_path: str) -> tuple[list[str], bool, bool]:
+    try:
+        entries = [item for item in json.loads(target.read_text(encoding="utf-8")).get("hypotheses", []) if isinstance(item, dict) and item.get("id") == "L-4"]
+    except (OSError, json.JSONDecodeError):
+        entries = []
+    if len(entries) != 1:
+        return [f"{order_id}:l4_b83_registry_entry_count:{len(entries)}"], False, False
+    l4 = entries[0]
+    decisions = [item for item in l4.get("decision_log", []) if isinstance(item, dict) and item.get("decision") == "B8_3_l4_breadth_v4_locked_E0"]
+    notes = str(decisions[0].get("notes", "")) if len(decisions) == 1 else ""
+    paths = {item.get("path") for item in l4.get("evidence", []) if isinstance(item, dict)}
+    ok = l4.get("status") == "active" and l4.get("edge_claim") == "none" and "experiments/l_4_breadth_preregistration_v4.json" in paths and len(decisions) == 1 and all(term in notes for term in ("465", "macro sleeves", "Validation remains sealed", "every authorization is false", "Inspector review only"))
+    return ([] if ok else [f"{order_id}:l4_b83_registry_mirror_mismatch"], ok, False)
+
+
+def _validate_l4_b83_human_registry_mirror(target: Path, order_id: str, artifact_path: str) -> tuple[list[str], bool, bool]:
+    return _validate_l4_b83_text(target, order_id, ("B8.3 v4", "465 weekly-paired", "macro sleeves", "four-outcome", "edge_claim none", "validation sealed", "all authorizations false", "Inspector review"), "human_registry")
+
+
+def _validate_l4_b83_project_brain(target: Path, order_id: str, artifact_path: str) -> tuple[list[str], bool, bool]:
+    return _validate_l4_b83_text(target, order_id, ("B8.3 v4", "465 weekly-paired", "macro sleeves", "four-outcome", "edge_claim none", "validation sealed", "all authorizations are false", "Inspector review of B8.3 only"), "project_brain")
+
+
+def _validate_l4_b83_implement_plan(target: Path, order_id: str, artifact_path: str) -> tuple[list[str], bool, bool]:
+    return _validate_l4_b83_text(target, order_id, ("B8.3 v4", "465 weekly-paired", "macro sleeves", "four-outcome", "edge_claim none", "validation is sealed", "all authorizations are false", "Inspector review only"), "implement_plan")
+
+
+def _validate_l4_b83_text(target: Path, order_id: str, terms: tuple[str, ...], label: str) -> tuple[list[str], bool, bool]:
+    try:
+        text = target.read_text(encoding="utf-8")
+    except OSError:
+        return [f"{order_id}:l4_b83_{label}_unreadable"], False, False
+    missing = [term for term in terms if term not in text]
+    return ([f"{order_id}:l4_b83_{label}_missing:{term}" for term in missing], not missing, False)
+
+
+def _validate_l4_b83_validator_registration(target: Path, order_id: str, artifact_path: str) -> tuple[list[str], bool, bool]:
+    try:
+        scripts = json.loads(target.read_text(encoding="utf-8")).get("scripts", [])
+    except (OSError, json.JSONDecodeError):
+        return [f"{order_id}:l4_b83_script_registry_unreadable"], False, False
+    ok = isinstance(scripts, list) and scripts.count("scripts/validate_l_4_breadth_preregistration_v4.py") == 1
+    return ([] if ok else [f"{order_id}:l4_b83_script_registration_mismatch"], ok, False)
 
 
 def _validate_l3_validator_registration(

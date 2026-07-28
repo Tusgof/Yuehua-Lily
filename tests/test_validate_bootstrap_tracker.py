@@ -1053,6 +1053,54 @@ class BootstrapTrackerValidatorTests(unittest.TestCase):
         self.assertFalse(unverified)
         self.assertIn("B8.1:l4_b81_registry_mirror_mismatch", blockers)
 
+    def test_B83_gate_drift_blocks_done(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            gate = root / "experiments/l_4_breadth_preregistration_v4.json"
+            gate.parent.mkdir()
+            payload = json.loads((PROJECT_ROOT / "experiments/l_4_breadth_preregistration_v4.json").read_text(encoding="utf-8"))
+            payload["authorizations"]["data"] = True
+            gate.write_text(json.dumps(payload), encoding="utf-8")
+            blockers, checked, _ = self.validator._validate_l4_b83_gate(gate, "B8.3", "experiments/l_4_breadth_preregistration_v4.json", project_root=PROJECT_ROOT)
+            self.assertFalse(checked)
+            self.assertIn("B8.3:l4_b83_gate_validator_failed", blockers)
+
+    def test_B83_manifest_drift_blocks_done(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            (root / "experiments").mkdir(); (root / "scripts").mkdir()
+            (root / "experiments/l_4_breadth_preregistration_v4.json").write_text("{}", encoding="utf-8")
+            (root / "scripts/validate_l_4_breadth_preregistration_v4.py").write_text("pass\n", encoding="utf-8")
+            (root / "experiments/locked_gates.jsonl").write_text(json.dumps({"gate_id": "l_4_breadth_v4", "artifact_sha256": "0" * 64}) + "\n", encoding="utf-8")
+            blockers, checked, _ = self.validator._validate_done_artifact("B8.3", "experiments/locked_gates.jsonl", "contain_l4_b83_manifest_identity", project_root=root, verify_runtime=False, runtime_cache={})
+            self.assertFalse(checked)
+            self.assertIn("B8.3:l4_b83_manifest_identity_mismatch", blockers)
+
+    def test_B83_registry_drift_blocks_done(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp); target = root / "experiments/hypothesis_registry.json"; target.parent.mkdir()
+            target.write_text(json.dumps({"hypotheses": [{"id": "L-4", "status": "active", "edge_claim": "none", "evidence": [], "decision_log": []}]}), encoding="utf-8")
+            blockers, checked, _ = self.validator._validate_done_artifact("B8.3", "experiments/hypothesis_registry.json", "match_l4_b83_registry_mirror", project_root=root, verify_runtime=False, runtime_cache={})
+            self.assertFalse(checked)
+            self.assertIn("B8.3:l4_b83_registry_mirror_mismatch", blockers)
+
+    def test_B83_human_registry_brain_and_plan_drift_block_done(self) -> None:
+        cases = (("docs/HYPOTHESIS_REGISTRY.md", "match_l4_b83_human_registry_mirror", "human_registry"), ("PROJECT_BRAIN.md", "match_l4_b83_project_brain", "project_brain"), ("IMPLEMENT_PLAN.md", "match_l4_b83_implement_plan", "implement_plan"))
+        for path, must, label in cases:
+            with self.subTest(path=path), tempfile.TemporaryDirectory() as tmp:
+                root = Path(tmp); target = root / path; target.parent.mkdir(parents=True, exist_ok=True); target.write_text("B8.3 v4", encoding="utf-8")
+                blockers, checked, _ = self.validator._validate_done_artifact("B8.3", path, must, project_root=root, verify_runtime=False, runtime_cache={})
+                self.assertFalse(checked)
+                self.assertTrue(any(f"B8.3:l4_b83_{label}_missing:" in blocker for blocker in blockers))
+
+    def test_B83_script_registration_drift_blocks_done(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp); target = root / "config/new_code_scripts.json"; target.parent.mkdir()
+            target.write_text(json.dumps({"scripts": []}), encoding="utf-8")
+            blockers, checked, _ = self.validator._validate_done_artifact("B8.3", "config/new_code_scripts.json", "register_l4_b83_validator", project_root=root, verify_runtime=False, runtime_cache={})
+            self.assertFalse(checked)
+            self.assertIn("B8.3:l4_b83_script_registration_mismatch", blockers)
+
 
 def _tracker_with_artifact(path: str, must: str) -> dict[str, object]:
     return {
