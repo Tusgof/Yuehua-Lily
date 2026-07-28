@@ -109,6 +109,8 @@ Test whether additional countries, sleeves, and independent markets reduce singl
 
 B8.3 v4 is Inspector-accepted and supersedes B8.2 while preserving v1/v2/v3. B8.4R2/v3 is also Inspector-accepted after Exact-SHA CI run `30367686488`; it preserves CI-defective v1/v2 history, source-binds v4 without superseding its science, and provides E0 synthetic-only future falsification-preflight machinery. B8.5/v1, B8.5R/v2, B8.5R2/v3, and B8.5R3/v4 are immutable Inspector-rejected history. B8.5R4/v5 locks a later tracked activation checkpoint bound to the accepted gate commit and Exact-SHA Hermetic CI, full pass bindings, and ancestor activation-blob provenance; future Phase B resolves only `LILY_DATA_ROOT` plus literal references. Phase B and activation are not executed. Every individual session must be structurally checked <= 2015-12-31 before return/value decoding and fail closed on missing/ambiguous U8 or date/schema/path/hash mismatch. `edge_claim none`; validation remains sealed.
 
+B8.5R5/v6 supersedes immutable Inspector-rejected v5 without changing it. It closes blocked-report integrity with exact artifact state transitions and closed categories, and requires the accepted gate commit to be an activation-checkpoint ancestor whose gate blob hashes to the v6 gate. Phase B and activation remain not executed; `edge_claim none`; validation sealed.
+
 Exit: breadth reduces preregistered dependency/concentration measures, produces an explicit scope restriction, or is falsified.
 
 ## 5. Execution Orders
