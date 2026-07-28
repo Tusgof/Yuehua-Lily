@@ -1,0 +1,41 @@
+{
+  "schema_version": "lily_l4_b85r2_phase_a_activation_order_v3",
+  "order_id": "B8.5R2",
+  "phase": "A",
+  "gate_id": "l_4_breadth_b85r2_phase_a_activation_order_v3",
+  "supersedes_gate_id": "l_4_breadth_b85_phase_a_activation_order_v2",
+  "activation_for_gate_id": "l_4_breadth_b84r2_activation_contract_v3",
+  "hypothesis_id": "L-4",
+  "status": "published_E0_phase_a_remediation_awaiting_inspector_acceptance",
+  "evidence_ceiling": "E0",
+  "edge_claim": "none",
+  "source_binding": {
+    "rejected_v1": {"gate_id":"l_4_breadth_b85_phase_a_activation_order_v1","artifact_path":"experiments/l_4_breadth_b85_phase_a_activation_order_v1.json","artifact_sha256":"d8887c5851a06605895ac287676d7912bedca4869bae73ccabf57317936ba962","validator_path":"scripts/validate_l_4_breadth_b85_phase_a_activation_order_v1.py","validator_sha256":"6e6e3b65c82b02ffdc51727ef52124667ec3235f80d1aba5f8e2538f5d72d1bd"},
+    "rejected_v2": {"gate_id":"l_4_breadth_b85_phase_a_activation_order_v2","artifact_path":"experiments/l_4_breadth_b85_phase_a_activation_order_v2.json","artifact_sha256":"d8e03f932f0aea861a6611d578ea19903b9b722872bc2866cb21573c2fea3f89","validator_path":"scripts/validate_l_4_breadth_b85_phase_a_activation_order_v2.py","validator_sha256":"7e9c2fafcbaab0ac627f83a66e2c2d7e8bf28dc8aef9f2bf172d265ac40c9b74"}
+  },
+  "implementation": {
+    "scanner":{"path":"lib/l4_b85r2_structural_scanner_v3.py","sha256":"01063a3ca029e2ba5e1358677a2e3930676c8a665447cecf698b9c89ff8e26e9"},
+    "runner":{"path":"scripts/run_l_4_breadth_b85r2_phase_b_preflight_v3.py","sha256":"51c342f735ac603040102ec3de7f4d1ae1da21bc6767e7e2a15e69af698e1eb1"},
+    "report_schema":{"path":"schemas/l_4_breadth_b85r2_structural_preflight_report_v3.schema.json","sha256":"bafa818acee13981e5c5355000a04812bec6a3b69e37c183272e7bf3574e2cff"},
+    "report_validator":{"path":"scripts/validate_l_4_breadth_b85r2_structural_preflight_report_v3.py","sha256":"43b5c414189c9d534ea02df50ef4b9e570c3f08101681b942401b5b105d01fc6"},
+    "synthetic_manifest":{"path":"tests/fixtures/l4_b85r2/structural_manifest_v3.json","sha256":"a9234bcbcdb20cc6c46916009ba68ad79c60cc0831de82244fb7368fcd9523de"},
+    "synthetic_payload":{"path":"tests/fixtures/l4_b85r2/u8_symbol_session_dates_v3.json","sha256":"7599e129c949ea4296b1cb4315b842d13ba4b22fb2b2ae4054e460d15af5c6f2"}
+  },
+  "future_phase_b_contract": {
+    "status":"not_executed",
+    "preconditions":["inspector_acceptance_recorded","exact_sha_hermetic_ci_success"],
+    "one_shot_real_preflight_maximum":1,
+    "storage_root_variable":"LILY_DATA_ROOT",
+    "manifest_storage_reference":"${LILY_DATA_ROOT}/sealed/l4_b85r2/l4_b85r2_structural_manifest_v3.json",
+    "payload_storage_reference":"${LILY_DATA_ROOT}/sealed/l4_b85r2/l4_b85r2_u8_symbol_session_dates_v3.json",
+    "container_identity":"lily-l4-falsification-pre2016-v3",
+    "repo_relative_report_path":"reports/experiments/l_4_breadth_b85r2_phase_b_preflight_report_v3.json",
+    "repo_relative_attempt_marker_path":"reports/experiments/l_4_breadth_b85r2_phase_b_preflight_attempt_v3.json",
+    "resolution_rule":"Resolve only LILY_DATA_ROOT plus these literal relative paths; no alternate root, no fallback, no glob, no directory listing, provider, network, or alternate path.",
+    "consumption_rule":"Atomically and durably create the fixed attempt marker before environment or container access. Missing root, path, or read error consumes the attempt and persistently records a fail-closed report. A second attempt fails before environment access.",
+    "scanner_rule":"Bounded raw bytes first at MAX_BYTES + 1. Reject BOM, escapes, unknown fields, duplicate symbol/session, malformed or trailing bytes, over-limit input, invalid calendar dates, non-strict ordering, and every individual post-cutoff session before any return or value decode."
+  },
+  "phase_a_authorizations": {"data":false,"container":false,"path_inspection":false,"environment":false,"market":false,"return":false,"value":false,"signal":false,"position":false,"covariance":false,"regime":false,"cost":false,"pnl":false,"execution":false,"report_decision":false,"ledger":false,"validation":false,"provider":false,"network":false,"credentials":false,"broker":false,"paid":false,"paper_trade":false,"real_money":false},
+  "phase_a_access_counts": {"real_container_read":0,"environment_read":0,"market_or_return_value_decode":0,"execution":0,"validation_access":0},
+  "validation_seal": {"status":"sealed_not_accessed","accessed":false}
+}
