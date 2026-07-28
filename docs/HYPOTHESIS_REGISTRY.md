@@ -115,6 +115,8 @@
 - **B8.6R3 Phase A v4**: preserves v1-v3 and restores closed-world blocker, real provenance/consumption, summary, output-identity, and cross-binding checks. E0 only, `edge_claim none`, validation sealed.
 - **B8.6R4 Phase A v5**: preserves v1-v4 and requires the canonical activation blob at the producing commit plus exact manifest/payload coverage, date, count, total, and output cross-bindings. E0 only, `edge_claim none`, validation sealed.
 - **B8.6R5 Phase A v6**: preserves v1-v5 and adds only a fail-closed, activation-gated one-shot runner. E0 only, `edge_claim none`, validation sealed.
+- **B8.6R6 Phase A v8**: preserves v1-v7 as history and locks a cohesive v8 identity contract. E0 synthetic-only, validation sealed, `edge_claim none`.
+- **Locked-gate manifest rotation**: v1 is sealed below the B8.5R2 65,536-byte compatibility limit. New rows append only to v2, with v6/v7 migrated byte-identically and the two-segment chain pinned by `locked_gate_segments.json`.
 
 ## Seed Status
 

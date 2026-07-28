@@ -4,7 +4,10 @@
   "grandfathered_scripts": [
     "scripts/run_test_tier.py",
     "scripts/validate_bootstrap_tracker.py",
-    "scripts/run_l_3_b714_date_only_preflight_v5.py"
+    "scripts/run_l_3_b714_date_only_preflight_v5.py",
+    "scripts/run_l_4_breadth_b86r5_provisioning_v6.py",
+    "scripts/validate_l_4_breadth_b86r5_provisioning_gate_v6.py",
+    "scripts/validate_l_4_breadth_b86r5_provisioning_gate_v7.py"
   ],
   "scripts": [
     "scripts/acquire_l_1_alpha_vantage_corporate_actions.py",
@@ -173,7 +176,8 @@
     ,"scripts/validate_l_4_breadth_b86r4_provisioning_gate_v5.py"
     ,"scripts/validate_l_4_breadth_b86r4_provisioning_report_v5.py"
     ,"scripts/validate_l_4_breadth_b86r4_falsification_outputs_v5.py"
-    ,"scripts/run_l_4_breadth_b86r5_provisioning_v6.py"
-    ,"scripts/validate_l_4_breadth_b86r5_provisioning_gate_v6.py"
+    ,"scripts/run_l_4_breadth_b86r6_provisioning_v8.py"
+    ,"scripts/validate_l_4_breadth_b86r6_provisioning_gate_v8.py"
+    ,"scripts/validate_l_4_breadth_b86r6_provisioning_report_v8.py"
   ]
 }

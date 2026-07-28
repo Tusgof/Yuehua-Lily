@@ -126,6 +126,8 @@ B8.6R3 Phase-A v4 preserves v1-v3 after Inspector rejection. It defines the exac
 B8.6R4 Phase-A v5 preserves v1-v4 after Inspector rejection. It binds activation bytes to the producing commit and closes manifest/payload coverage, date, count, total, and cross-binding forgery. E0 only, validation sealed, `edge_claim none`.
 
 B8.6R5 Phase-A v6 preserves v1-v5 and adds only the fail-closed, activation-gated one-shot runner. E0 only, validation sealed, `edge_claim none`.
+B8.6R6 Phase-A v8 replaces rejected v5/v7 recovery machinery with a cohesive v8 identity contract. Synthetic E0 only; no data access, activation, execution, or validation access occurred.
+The legacy locked-gate manifest is sealed as v1 below B8.5R2's 65,536-byte bounded-read limit. All future locked rows must be appended to `experiments/locked_gates_v2.jsonl` under the segment registry; this is control-plane compatibility only, not research evidence.
 
 Exit: breadth reduces preregistered dependency/concentration measures, produces an explicit scope restriction, or is falsified.
 
@@ -346,7 +348,7 @@ If MinTRL validation cost is unaffordable or undefined against the benchmark nul
 | L-1 | Scope-restricted E1; B4.9 closes the unavailable Webull-ledger dry run without observation; B4.10 adds no L-1 evidence | Validation remains sealed; no broker-ledger or historical-correctness claim |
 | L-2 | E1 underfunded_scope_restricted | Redesign requires a new owner-approved preregistration before any L-2 data access |
 | L-3 | E1 scope_restricted and unresolved; B7.4 invalidates the B7.3 sole run's 500 weekly observations above the 465 ceiling, and B7.15 closes the current preregistration with no L-3 result carried forward as proof that inverse-volatility sizing passed | Validation sealed; no rerun is planned; next gate is L-4 preregistration/planning only |
-| L-4 | Unresolved E0; B8.5R5 Phase B one-shot is consumed and blocked at `data_root_unavailable`, with Inspector acceptance and no new research log; `edge_claim none` | A separately owner-approved container-provisioning/new-gate order is required after `LILY_DATA_ROOT` and exact structural manifest/payload availability are resolved; do not open validation or reuse the consumed attempt |
+| L-4 | Unresolved E0; consumed B8.5R5 remains no-retry, and B8.6R6/v8 is a synthetic cohesive recovery contract; `edge_claim none` | Inspector review, then a separately approved v8 activation checkpoint before one bounded provisioning attempt; validation remains sealed |
 
 Historical control compatibility: B8 E0/edge_claim none validation retains U1, U4, and U8; B8.1 retains N_eff. B8.3's 465 weekly-paired capacity, macro sleeves, four-outcome validation contract, and all authorizations are false remain intact; its former next step was Inspector review only.
 

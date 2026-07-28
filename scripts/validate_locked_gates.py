@@ -31,6 +31,7 @@ _REJECTED_CROSS_PLATFORM_PREDECESSORS = {
 
 
 DEFAULT_MANIFEST = PROJECT_ROOT / "experiments" / "locked_gates.jsonl"
+SEGMENT_REGISTRY = PROJECT_ROOT / "experiments" / "locked_gate_segments.json"
 HASH_PATTERN = re.compile(r"^[0-9a-f]{64}$")
 REQUIRED_FIELDS = {
     "gate_id",
@@ -45,6 +46,43 @@ REQUIRED_FIELDS = {
 }
 
 
+def _segmented_manifest(*, blockers: list[str], committed_lines: list[str] | None) -> tuple[list[str], list[dict[str, Any]]]:
+    """Load the sealed legacy segment and the active append-only segment."""
+    try:
+        registry = json.loads(SEGMENT_REGISTRY.read_text(encoding="utf-8"))
+        segments = registry["segments"]
+    except (OSError, ValueError, KeyError, TypeError):
+        blockers.append("locked_gate_segment_registry_invalid")
+        return [], []
+    if registry.get("schema_version") != "lily_locked_gate_segments_v1" or len(segments) != 2:
+        blockers.append("locked_gate_segment_registry_shape")
+        return [], []
+    legacy, active = segments
+    expected_legacy = {"id": "v1", "path": "experiments/locked_gates.jsonl", "sealed": True, "terminal_gate_id": "l_4_breadth_b86r4_provisioning_gate_v5"}
+    if any(legacy.get(key) != value for key, value in expected_legacy.items()): blockers.append("locked_gate_segment_v1_identity")
+    legacy_path = PROJECT_ROOT / str(legacy.get("path", "")); active_path = PROJECT_ROOT / str(active.get("path", ""))
+    if not legacy_path.is_file() or file_sha256(legacy_path) != legacy.get("sha256") or legacy_path.stat().st_size != legacy.get("byte_count"):
+        blockers.append("locked_gate_segment_v1_not_sealed")
+    if active.get("id") != "v2" or active.get("path") != "experiments/locked_gates_v2.jsonl" or active.get("starts_with_gate_id") != "l_4_breadth_b86r5_provisioning_gate_v6" or active.get("active_for_new_rows") is not True:
+        blockers.append("locked_gate_segment_v2_identity")
+    try:
+        legacy_lines = [line for line in legacy_path.read_text(encoding="utf-8").splitlines() if line.strip()]
+        active_lines = [line for line in active_path.read_text(encoding="utf-8").splitlines() if line.strip()]
+        source = subprocess.run(["git", "show", f"{registry['migration_source_commit']}:experiments/locked_gates.jsonl"], cwd=PROJECT_ROOT, capture_output=True, text=True, check=False)
+        source_rows = [line for line in source.stdout.splitlines() if line.strip()]
+        migrated_ids = active.get("required_migrated_gate_ids")
+        source_migrated = [line for line in source_rows if json.loads(line).get("gate_id") in migrated_ids]
+        if source.returncode or active_lines[:2] != source_migrated or [json.loads(line).get("gate_id") for line in active_lines[:2]] != migrated_ids:
+            blockers.append("locked_gate_segment_v2_migration_not_byte_identical")
+        baseline = _committed_manifest_lines(active_path) if committed_lines is None else committed_lines
+        if active_lines[:len(baseline)] != baseline: blockers.append("locked_gate_segment_v2_not_append_only")
+        entries = [json.loads(line) for line in legacy_lines + active_lines]
+    except (OSError, ValueError, KeyError, TypeError, json.JSONDecodeError):
+        blockers.append("locked_gate_segment_rows_invalid")
+        return [], []
+    return legacy_lines + active_lines, entries
+
+
 def validate_locked_gates(
     manifest_path: Path = DEFAULT_MANIFEST,
     *,
@@ -54,17 +92,15 @@ def validate_locked_gates(
     checked: list[dict[str, Any]] = []
     if not manifest_path.is_file():
         return _result(manifest_path, ["locked_gate_manifest_missing"], checked, 0)
-
-    current_lines = [line for line in manifest_path.read_text(encoding="utf-8").splitlines() if line.strip()]
-    baseline = _committed_manifest_lines(manifest_path) if committed_lines is None else committed_lines
-    if current_lines[: len(baseline)] != baseline and not _is_single_line_human_approval_recovery(
-        current_lines, baseline
-    ) and not _is_exact_b714r6_duplicate_recovery(current_lines, baseline):
-        blockers.append("locked_gate_manifest_is_not_append_only")
-    try:
-        entries = load_jsonl(manifest_path)
-    except ValueError:
-        return _result(manifest_path, blockers + ["locked_gate_manifest_invalid_jsonl"], checked, 0)
+    if manifest_path == DEFAULT_MANIFEST and SEGMENT_REGISTRY.exists():
+        current_lines, entries = _segmented_manifest(blockers=blockers, committed_lines=committed_lines)
+        if not entries: return _result(manifest_path, blockers, checked, 0)
+    else:
+        current_lines = [line for line in manifest_path.read_text(encoding="utf-8").splitlines() if line.strip()]
+        baseline = _committed_manifest_lines(manifest_path) if committed_lines is None else committed_lines
+        if current_lines[: len(baseline)] != baseline and not _is_single_line_human_approval_recovery(current_lines, baseline) and not _is_exact_b714r6_duplicate_recovery(current_lines, baseline): blockers.append("locked_gate_manifest_is_not_append_only")
+        try: entries = load_jsonl(manifest_path)
+        except ValueError: return _result(manifest_path, blockers + ["locked_gate_manifest_invalid_jsonl"], checked, 0)
 
     entries_by_id: dict[str, dict[str, Any]] = {}
     superseded_by: dict[str, str] = {}
