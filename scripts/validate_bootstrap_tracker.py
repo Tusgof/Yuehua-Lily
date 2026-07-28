@@ -734,11 +734,19 @@ def _validate_done_artifact(
     if must == "validate_l4_b84_gate":
         return _validate_l4_b84_runtime(target, order_id, "scripts/validate_l_4_breadth_b84_activation_contract_v1.py", project_root)
     if must == "validate_l4_b84_report":
-        return _validate_l4_b84_runtime(target, order_id, "scripts/validate_l_4_breadth_b84_preflight_report_v1.py", project_root, "tests/fixtures/l4_b84/synthetic_preflight_report.json")
+        return _validate_l4_b84_historical_defect(target, order_id, project_root)
     if must == "run_l4_b84_fixture":
-        return _validate_l4_b84_runtime(target, order_id, "scripts/run_l_4_breadth_b84_preflight_v1.py", project_root, "--synthetic-report", "tests/fixtures/l4_b84/synthetic_preflight_report.json")
+        return _validate_l4_b84_historical_defect(target, order_id, project_root)
     if must == "contain_l4_b84_manifest":
         return _validate_l4_b84_manifest(target, order_id, project_root)
+    if must == "validate_l4_b84r_gate":
+        return _validate_l4_b84_runtime(target, order_id, "scripts/validate_l_4_breadth_b84r_activation_contract_v2.py", project_root)
+    if must == "validate_l4_b84r_report":
+        return _validate_l4_b84_runtime(target, order_id, "scripts/validate_l_4_breadth_b84r_preflight_report_v2.py", project_root, "tests/fixtures/l4_b84/synthetic_preflight_report_v2.json")
+    if must == "run_l4_b84r_fixture":
+        return _validate_l4_b84_runtime(target, order_id, "scripts/run_l_4_breadth_b84r_preflight_v2.py", project_root, "--synthetic-report", "tests/fixtures/l4_b84/synthetic_preflight_report_v2.json")
+    if must == "contain_l4_b84r_manifest":
+        return _validate_l4_b84r_manifest(target, order_id, project_root)
     if must == "match_l4_b84_mirror":
         return _validate_l4_b84_mirror(target, order_id, artifact_path)
     if must == "register_l4_b84_scripts":
@@ -2856,6 +2864,17 @@ def _validate_l4_b84_runtime(target: Path, order_id: str, script: str, project_r
     return ([] if ok else [f"{order_id}:l4_b84_runtime_failed:{Path(script).name}"], ok, False)
 
 
+def _validate_l4_b84_historical_defect(target: Path, order_id: str, project_root: Path) -> tuple[list[str], bool, bool]:
+    paths = ("experiments/l_4_breadth_b84_activation_contract_v1.json", "scripts/validate_l_4_breadth_b84_preflight_report_v1.py", "tests/fixtures/l4_b84/synthetic_preflight_report.json")
+    try:
+        ok = all((project_root / path).read_bytes() == subprocess.run(["git", "show", f"8fea0bf:{path}"], cwd=project_root, capture_output=True, check=True).stdout for path in paths)
+        gate = (project_root / "experiments/l_4_breadth_b84r_activation_contract_v2.json").read_text(encoding="utf-8")
+        ok = ok and "30363935144" in gate and "jsonschema" in gate
+    except (OSError, subprocess.CalledProcessError):
+        ok = False
+    return ([] if ok else [f"{order_id}:l4_b84_historical_defect_audit_failed"], ok, False)
+
+
 def _validate_l4_b84_manifest(target: Path, order_id: str, project_root: Path) -> tuple[list[str], bool, bool]:
     try:
         rows = [json.loads(line) for line in target.read_text(encoding="utf-8").splitlines() if line]
@@ -2866,6 +2885,18 @@ def _validate_l4_b84_manifest(target: Path, order_id: str, project_root: Path) -
     except (OSError, json.JSONDecodeError):
         ok = False
     return ([] if ok else [f"{order_id}:l4_b84_manifest_mismatch"], ok, False)
+
+
+def _validate_l4_b84r_manifest(target: Path, order_id: str, project_root: Path) -> tuple[list[str], bool, bool]:
+    try:
+        rows = [json.loads(line) for line in target.read_text(encoding="utf-8").splitlines() if line]
+        row = next(item for item in rows if item.get("gate_id") == "l_4_breadth_b84r_activation_contract_v2")
+        gate = project_root / "experiments/l_4_breadth_b84r_activation_contract_v2.json"
+        validator = project_root / "scripts/validate_l_4_breadth_b84r_activation_contract_v2.py"
+        ok = row.get("supersedes_gate_id") == "l_4_breadth_b84_activation_contract_v1" and row.get("artifact_sha256") == hashlib.sha256(gate.read_bytes()).hexdigest() and row.get("validator_sha256") == hashlib.sha256(validator.read_bytes()).hexdigest()
+    except (OSError, StopIteration, json.JSONDecodeError):
+        ok = False
+    return ([] if ok else [f"{order_id}:l4_b84r_manifest_mismatch"], ok, False)
 
 
 def _validate_l4_b84_mirror(target: Path, order_id: str, artifact_path: str) -> tuple[list[str], bool, bool]:
