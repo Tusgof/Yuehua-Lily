@@ -656,6 +656,11 @@
           "date": "2026-07-29",
           "decision": "B8_6R2_phase_a_v3_remediation_locked_E0",
           "notes": "B8.6R2 preserves immutable Inspector-rejected B8.6R v2 history. v3 makes every reachable structural blocker report validator-valid, parses numeric lexemes with bytes-only grammar, closes nested output semantics, binds canonical output identities, and executes hermetic Draft 2020-12 subset validation. No activation or container access occurs; validation sealed, E0, edge_claim none."
+        },
+        {
+          "date": "2026-07-29",
+          "decision": "B8_6R3_phase_a_v4_remediation_locked_E0",
+          "notes": "B8.6R3 preserves Inspector-rejected v1-v3 history and locks the complete reachable blocker matrix, canonical activation provenance, atomic one-shot consumption, commit and summary binding, output identities, and cross-bindings. It is E0 only: no activation, container access, provisioning execution, or validation access occurred; validation sealed, edge_claim none."
         }
       ]
     }

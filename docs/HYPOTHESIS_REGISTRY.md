@@ -112,6 +112,7 @@
 - **B8.6 Phase A provisioning gate**: locks synthetic-only E0 machinery for the exact `data/normalized/l1_yahoo_daily_v1.json` container, its expected hash, schema/U8/cutoff structural scanner, and one-shot future lifecycle. The Inspector's prior hash-only read is disclosed as non-evidence and does not satisfy the future gated read. No container access, activation, execution, validation, or edge claim occurs.
 - **B8.6R Phase A v2**: preserves B8.6 and adds Inspector-required synthetic-only machinery. Its future runner references only the literal repo-relative path, claims the marker before any dataset access, reads at most `MAX_BYTES + 1`, and requires a later accepted-gate/Exact-SHA/ancestor/blob-proven activation. E0 only, `edge_claim none`, validation sealed.
 - **B8.6R2 Phase A v3**: preserves v1/v2 and repairs Inspector findings: all structural blocked reports validate with exact counters; numeric values are grammar-checked opaque bytes; outputs are closed-world and report their canonical persisted identities; schema tests execute the repository's Draft 2020-12 subset validator. E0 only, `edge_claim none`, validation sealed.
+- **B8.6R3 Phase A v4**: preserves v1-v3 and restores closed-world blocker, real provenance/consumption, summary, output-identity, and cross-binding checks. E0 only, `edge_claim none`, validation sealed.
 
 ## Seed Status
 

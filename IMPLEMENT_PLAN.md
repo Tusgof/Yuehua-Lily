@@ -121,6 +121,8 @@ B8.6R Phase-A v2 is append-only Inspector remediation. It preserves B8.6 v1 and 
 
 B8.6R2 Phase-A v3 preserves v1/v2 after Inspector rejection. It closes the report blocker matrix, validates JSON numeric grammar as opaque bytes, rejects nested output drift, binds canonical manifest/payload path/hash/bytes into real reports, and executes the repository's constrained Draft 2020-12 validator in hermetic tests. No activation, provisioning, or validation access is authorized; validation sealed, E0 remains `edge_claim none`.
 
+B8.6R3 Phase-A v4 preserves v1-v3 after Inspector rejection. It defines the exact reachable blocker matrix and restores real-report activation provenance, consumption, commit, summary, output identity, and cross-binding checks. E0 only, validation sealed, `edge_claim none`.
+
 Exit: breadth reduces preregistered dependency/concentration measures, produces an explicit scope restriction, or is falsified.
 
 ## 5. Execution Orders

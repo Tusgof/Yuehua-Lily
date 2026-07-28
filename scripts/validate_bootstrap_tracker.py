@@ -893,6 +893,23 @@ def _validate_done_artifact(
         return _validate_l4_b84_runtime(target, order_id, "scripts/validate_l_4_breadth_b86r_provisioning_gate_v2.py", project_root)
     if must == "validate_l4_b86r2_gate":
         return _validate_l4_b84_runtime(target, order_id, "scripts/validate_l_4_breadth_b86r2_provisioning_gate_v3.py", project_root)
+    if must == "validate_l4_b86r3_gate":
+        return _validate_l4_b84_runtime(target, order_id, "scripts/validate_l_4_breadth_b86r3_provisioning_gate_v4.py", project_root)
+    if must == "contain_l4_b86r3_manifest":
+        try: ok=any(json.loads(x).get("gate_id")=="l_4_breadth_b86r3_provisioning_gate_v4" for x in target.read_text(encoding="utf-8").splitlines() if x)
+        except Exception: ok=False
+        return ([] if ok else [f"{order_id}:l4_b86r3_manifest_mismatch"],ok,False)
+    if must == "register_l4_b86r3_scripts":
+        try: ok=all(x in json.loads(target.read_text(encoding="utf-8")).get("scripts",[]) for x in ("scripts/validate_l_4_breadth_b86r3_provisioning_gate_v4.py","scripts/run_l_4_breadth_b86r3_provisioning_v4.py","scripts/validate_l_4_breadth_b86r3_provisioning_report_v4.py"))
+        except Exception:ok=False
+        return ([] if ok else [f"{order_id}:l4_b86r3_registration_mismatch"],ok,False)
+    if must == "match_l4_b86r3_mirror":
+        try:
+            text=target.read_text(encoding="utf-8").replace("`", "");ok=all(x in text for x in ("B8.6R3","E0","edge_claim none","validation sealed"))
+            if artifact_path=="experiments/hypothesis_registry.json":
+                l4=next(x for x in json.loads(text)["hypotheses"] if x.get("id")=="L-4");ok=ok and any(x.get("decision")=="B8_6R3_phase_a_v4_remediation_locked_E0" for x in l4["decision_log"])
+        except Exception:ok=False
+        return ([] if ok else [f"{order_id}:l4_b86r3_mirror_mismatch"],ok,False)
     if must == "contain_l4_b86r2_manifest":
         try: ok=any(json.loads(x).get("gate_id")=="l_4_breadth_b86r2_provisioning_gate_v3" for x in target.read_text(encoding="utf-8").splitlines() if x)
         except Exception: ok=False
