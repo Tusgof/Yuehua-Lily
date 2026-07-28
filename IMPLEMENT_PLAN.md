@@ -123,6 +123,8 @@ B8.6R2 Phase-A v3 preserves v1/v2 after Inspector rejection. It closes the repor
 
 B8.6R3 Phase-A v4 preserves v1-v3 after Inspector rejection. It defines the exact reachable blocker matrix and restores real-report activation provenance, consumption, commit, summary, output identity, and cross-binding checks. E0 only, validation sealed, `edge_claim none`.
 
+B8.6R4 Phase-A v5 preserves v1-v4 after Inspector rejection. It binds activation bytes to the producing commit and closes manifest/payload coverage, date, count, total, and cross-binding forgery. E0 only, validation sealed, `edge_claim none`.
+
 Exit: breadth reduces preregistered dependency/concentration measures, produces an explicit scope restriction, or is falsified.
 
 ## 5. Execution Orders
