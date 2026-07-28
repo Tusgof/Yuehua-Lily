@@ -646,6 +646,11 @@
           "date": "2026-07-29",
           "decision": "B8_6_phase_a_provisioning_gate_locked_E0",
           "notes": "B8.6 locks E0/no-data provisioning machinery for the exact repo-relative normalized Yahoo container. It source-binds L-4 v4, B8.5R5's consumed no-retry result, Yahoo schema lineage, and a separately disclosed Inspector pre-gate hash-only incident. No container is opened in this order; validation sealed, edge_claim none, activation and execution remain forbidden."
+        },
+        {
+          "date": "2026-07-29",
+          "decision": "B8_6R_phase_a_v2_remediation_locked_E0",
+          "notes": "B8.6 remains immutable Inspector-rejected history. B8.6R v2 corrects the literal repo-relative path, closes schemas and output validators, preserves unsafe values as opaque lexemes, and requires accepted-gate Exact-SHA ancestor/blob activation proof before one bounded read. No activation or container access occurs; validation sealed, edge_claim none."
         }
       ]
     }

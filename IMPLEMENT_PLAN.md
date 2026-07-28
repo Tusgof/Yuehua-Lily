@@ -117,6 +117,8 @@ The one permitted B8.5R5 Phase B CLI call is consumed and blocked with `data_roo
 
 B8.6 Phase A locks E0/no-data provisioning machinery for the literal repo-relative normalized Yahoo container, its expected hash, full normalized schema/U8/cutoff structural scanner, and a non-circular future activation then one-shot lifecycle. The Inspector pre-gate hash-only read is recorded separately as non-evidence and does not satisfy the future gated read. No activation, provisioning, validation, empirical result, or edge claim is authorized.
 
+B8.6R Phase-A v2 is append-only Inspector remediation. It preserves B8.6 v1 and records the corrected literal-path hash addendum. The v2 one-shot has no environment dependency; activation requires an accepted gate commit, exact CI run/head, `ACCEPTED`, scope/seal, ancestor proof, and gate-blob proof. It performs only opaque structural inspection after an atomic marker claim; E0 remains `edge_claim none`.
+
 Exit: breadth reduces preregistered dependency/concentration measures, produces an explicit scope restriction, or is falsified.
 
 ## 5. Execution Orders
