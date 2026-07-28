@@ -97,7 +97,7 @@ B7.12 is an E0 synthetic-only supersession of immutable v7 after Inspector ident
 
 B7.13 is E0 synthetic-only contract work. Its v3 manifest-integrity recovery restores the immutable v2 row byte-for-byte and directly supersedes only its missing `human_approval` with a new gate and validator, preserving the active L-3 v2, B7.5, B7.6 hard-stop addendum, accepted B7.12/v8, and approved synthetic-metadata bindings. It defines only a future B7.14 date-only preflight. A future approved falsification-only container must bind its environment/manfiest identity, exact hash, schema, active gate, and schedule; it may inspect only symbol/session_date, rejects each individual post-end session before intersection, and fails before returns, execution, ledger, or decision. L-3 remains E1 scope_restricted, validation sealed, edge_claim none, and B7.14 is unauthorized.
 
-B7.14 v3 wrote its immutable scope-restricted report and hard-stopped at `unknown_structural_key`, but Inspector rejects it because a skipped timestamp lexeme was UTF-8 decoded once. B7.14R/v4 is E0 synthetic remediation only: no container/path inspection, execution, or new report is authorized.
+B7.14 v3 wrote its immutable scope-restricted report and hard-stopped at `unknown_structural_key`, but Inspector rejects it because a skipped timestamp lexeme was UTF-8 decoded once. B7.14R/v4 is rejected: it binds paths rather than hashes, leaves nested contracts open, omits `scope_restricted`, and does not prove the B7.3 ledger bytes. B7.14R3/v5 supersedes it with E0-only synthetic/no-data machinery; no container/path inspection, execution, or new real report is authorized.
 
 ### T4 / L-4 — Breadth
 

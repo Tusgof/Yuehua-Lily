@@ -105,5 +105,8 @@
     ,"scripts/run_l_3_b714_date_only_preflight_v4.py"
     ,"scripts/validate_l_3_b714_date_only_preflight_report_v4.py"
     ,"scripts/validate_l_3_b714_date_only_preflight_remediation_v4.py"
+    ,"scripts/run_l_3_b714_date_only_preflight_v5.py"
+    ,"scripts/validate_l_3_b714_date_only_preflight_report_v5.py"
+    ,"scripts/validate_l_3_b714_date_only_preflight_remediation_v5.py"
   ]
 }

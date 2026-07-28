@@ -636,6 +636,20 @@ def _validate_done_artifact(
     if must == "validate_l3_b713_gate":
         run = subprocess.run([sys.executable, "scripts/validate_l_3_b714_activation_contract_v3.py"], cwd=project_root, text=True, capture_output=True, check=False)
         return ([] if target.is_file() and run.returncode == 0 else [f"{order_id}:gate_failed"], target.is_file() and run.returncode == 0, False)
+    if must == "validate_l3_b714r3_gate":
+        run = subprocess.run([sys.executable, "scripts/validate_l_3_b714_date_only_preflight_remediation_v5.py"], cwd=project_root, text=True, capture_output=True, check=False)
+        ok = target.is_file() and run.returncode == 0
+        return ([] if ok else [f"{order_id}:gate_failed"], ok, False)
+    if must == "contain_l3_b714r3_manifest_identity":
+        rows = [json.loads(line) for line in target.read_text(encoding="utf-8").splitlines() if line.strip()]
+        row = [x for x in rows if x.get("gate_id") == "l_3_b714_date_only_preflight_remediation_v5"]
+        ok = len(row) == 1 and row[0].get("artifact_sha256") == hashlib.sha256((project_root / "experiments/l_3_b714_date_only_preflight_remediation_v5.json").read_bytes()).hexdigest()
+        return ([] if ok else [f"{order_id}:manifest_mismatch"], ok, False)
+    if must == "register_l3_b714r3_scripts":
+        scripts = json.loads(target.read_text(encoding="utf-8")).get("scripts", [])
+        required = ("scripts/run_l_3_b714_date_only_preflight_v5.py", "scripts/validate_l_3_b714_date_only_preflight_report_v5.py", "scripts/validate_l_3_b714_date_only_preflight_remediation_v5.py")
+        ok = all(scripts.count(item) == 1 for item in required)
+        return ([] if ok else [f"{order_id}:script_registration"], ok, False)
     if must == "contain_l3_b713_manifest_identity":
         rows = [json.loads(line) for line in target.read_text(encoding="utf-8").splitlines() if line.strip()]
         row = [x for x in rows if x.get("gate_id") == "l_3_b714_activation_contract_v3"]
