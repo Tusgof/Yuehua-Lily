@@ -1,0 +1,1 @@
+{"$schema":"https://json-schema.org/draft/2020-12/schema","type":"object","additionalProperties":false,"required":["schema_version","dataset_reference","dataset_sha256","dataset_byte_count","u8_members_in_order","coverage_by_symbol","session_count","max_session_date","validation_seal"],"properties":{"schema_version":{"const":"lily_l4_b86r11_falsification_manifest_v13"}}}

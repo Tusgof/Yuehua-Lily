@@ -13,7 +13,9 @@
     "scripts/run_l_4_breadth_b86r9_committed_bootstrap_v11.py",
     "scripts/validate_l_4_breadth_b86r9_provisioning_gate_v11.py",
     "scripts/run_l_4_breadth_b86r10_committed_bootstrap_v12.py",
-    "scripts/validate_l_4_breadth_b86r10_provisioning_gate_v12.py"
+    "scripts/validate_l_4_breadth_b86r10_provisioning_gate_v12.py",
+    "scripts/run_l_4_breadth_b86r11_committed_bootstrap_v13.py",
+    "scripts/validate_l_4_breadth_b86r11_provisioning_gate_v13.py"
   ],
   "scripts": [
     "scripts/acquire_l_1_alpha_vantage_corporate_actions.py",
@@ -199,5 +201,9 @@
     ,"scripts/run_l_4_breadth_b86r10_provisioning_v12.py"
     ,"scripts/validate_l_4_breadth_b86r10_provisioning_gate_v12.py"
     ,"scripts/validate_l_4_breadth_b86r10_provisioning_report_v12.py"
+    ,"scripts/run_l_4_breadth_b86r11_committed_bootstrap_v13.py"
+    ,"scripts/run_l_4_breadth_b86r11_provisioning_v13.py"
+    ,"scripts/validate_l_4_breadth_b86r11_provisioning_gate_v13.py"
+    ,"scripts/validate_l_4_breadth_b86r11_provisioning_report_v13.py"
   ]
 }

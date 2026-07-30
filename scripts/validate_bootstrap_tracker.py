@@ -918,6 +918,36 @@ def _validate_done_artifact(
         return ([] if ok else [f"{order_id}:l4_b86r8_mirror_mismatch"],ok,False)
     if must == "validate_l4_b86r9_gate":
         return _validate_l4_b84_runtime(target, order_id, "scripts/validate_l_4_breadth_b86r9_provisioning_gate_v11.py", project_root)
+    if must == "validate_l4_b86r11_gate_and_report":
+        fixture = project_root / "tests/fixtures/l4_b86r11/synthetic_blocked_report_v13.json"
+        if not target.is_file() or not fixture.is_file():
+            return [f"{order_id}:l4_b86r11_validator_fixture_missing"], False, False
+        if not verify_runtime:
+            return [], False, True
+        commands = (
+            [sys.executable, "scripts/validate_l_4_breadth_b86r11_provisioning_gate_v13.py"],
+            [sys.executable, "scripts/validate_l_4_breadth_b86r11_provisioning_report_v13.py", str(fixture)],
+        )
+        ok = all(subprocess.run(command, cwd=project_root, text=True, capture_output=True, check=False).returncode == 0 for command in commands)
+        return ([] if ok else [f"{order_id}:l4_b86r11_validator_invocation_failed"], ok, False)
+    if must == "contain_l4_b86r11_manifest":
+        try: ok = any(json.loads(line).get("gate_id") == "l_4_breadth_b86r11_provisioning_gate_v13" for line in target.read_text(encoding="utf-8").splitlines() if line.strip())
+        except Exception: ok = False
+        return ([] if ok else [f"{order_id}:l4_b86r11_manifest_mismatch"], ok, False)
+    if must == "register_l4_b86r11_scripts":
+        required = ("scripts/run_l_4_breadth_b86r11_committed_bootstrap_v13.py", "scripts/run_l_4_breadth_b86r11_provisioning_v13.py", "scripts/validate_l_4_breadth_b86r11_provisioning_gate_v13.py", "scripts/validate_l_4_breadth_b86r11_provisioning_report_v13.py")
+        try: ok = all(item in json.loads(target.read_text(encoding="utf-8")).get("scripts", []) for item in required)
+        except Exception: ok = False
+        return ([] if ok else [f"{order_id}:l4_b86r11_script_registration_mismatch"], ok, False)
+    if must == "match_l4_b86r11_mirror":
+        try:
+            text = target.read_text(encoding="utf-8").replace("`", "")
+            ok = all(item in text for item in ("B8.6R11", "v13", "E0", "edge_claim none", "validation sealed", "2509213", "incomplete"))
+            if artifact_path == "experiments/hypothesis_registry.json":
+                l4 = next(item for item in json.loads(text).get("hypotheses", []) if item.get("id") == "L-4")
+                ok = ok and any(item.get("decision") == "B8_6R11_phase_a_v13_closed_world_remediation_pending_inspector_review_E0" for item in l4.get("decision_log", []) if isinstance(item, dict))
+        except Exception: ok = False
+        return ([] if ok else [f"{order_id}:l4_b86r11_mirror_mismatch"], ok, False)
     if must == "contain_l4_b86r9_manifest":
         try: ok=any(json.loads(line).get("gate_id")=="l_4_breadth_b86r9_provisioning_gate_v11" for line in target.read_text(encoding="utf-8").splitlines() if line.strip())
         except Exception: ok=False

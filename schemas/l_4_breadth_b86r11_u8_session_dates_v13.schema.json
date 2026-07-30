@@ -1,0 +1,1 @@
+{"$schema":"https://json-schema.org/draft/2020-12/schema","type":"object","additionalProperties":false,"required":["schema_version","dataset_sha256","u8_members_in_order","session_dates_by_symbol"],"properties":{"schema_version":{"const":"lily_l4_b86r11_u8_session_dates_v13"}}}

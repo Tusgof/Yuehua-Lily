@@ -703,6 +703,11 @@
           "notes": "B8.6R8/v10 is immutable Inspector-rejected history because imports preceded provenance verification. B8.6R9/v11 is E0-only committed-bootstrap machinery pending Inspector review: its only future production entry is a git-show-sourced stdlib bootstrap, which verifies all declared runtime bytes against the producing commit and locked gate before project imports, marker claim, or dataset access. All authorizations and access counts remain zero; validation sealed, edge_claim none."
         },
         {
+          "date": "2026-07-30",
+          "decision": "B8_6R11_phase_a_v13_closed_world_remediation_pending_inspector_review_E0",
+          "notes": "Checkpoint 2509213/B8.6R10 v12 is incomplete immutable history because its semantic report validator accepted an unknown top-level field. B8.6R11/v13 supersedes only that future machinery: exact allowed report fields are enforced for every mode/outcome and every important nested object, while committed-bootstrap dependency provenance, activation ancestry/blob, output identities, U8/date/hash limits, validation seal, and edge_claim none remain unchanged. No activation, container/data, return, validation, provider, broker, credential, paid, paper, or real-money access occurred."
+        },
+        {
           "date": "2026-07-29",
           "decision": "locked_gate_manifest_two_segment_compatibility_rotation",
           "notes": "The legacy v1 locked-gate manifest is sealed below B8.5R2's 65536-byte bounded-read limit. v2 begins with byte-identical migrated v6/v7 rows and carries all future rows under the segment registry. This is control-plane compatibility only: no L-4 data, experiment, validation, or edge evidence was created."
