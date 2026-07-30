@@ -948,6 +948,15 @@ def _validate_done_artifact(
                 ok = ok and any(item.get("decision") == "B8_6R11_phase_a_v13_closed_world_remediation_pending_inspector_review_E0" for item in l4.get("decision_log", []) if isinstance(item, dict))
         except Exception: ok = False
         return ([] if ok else [f"{order_id}:l4_b86r11_mirror_mismatch"], ok, False)
+    if must == "match_l4_b86r11a_activation_mirror":
+        try:
+            text = target.read_text(encoding="utf-8").replace("`", "")
+            ok = all(item in text for item in ("B8.6R11A", "activation checkpoint", "4387081407b92f50df6003f9435b19b885135daf", "30523998233", "E0", "edge_claim none", "validation sealed", "not provisioning"))
+            if artifact_path == "experiments/hypothesis_registry.json":
+                l4 = next(item for item in json.loads(text).get("hypotheses", []) if item.get("id") == "L-4")
+                ok = ok and any(item.get("decision") == "B8_6R11A_activation_checkpoint_ready_E0" for item in l4.get("decision_log", []) if isinstance(item, dict))
+        except Exception: ok = False
+        return ([] if ok else [f"{order_id}:l4_b86r11a_activation_mirror_mismatch"], ok, False)
     if must == "contain_l4_b86r9_manifest":
         try: ok=any(json.loads(line).get("gate_id")=="l_4_breadth_b86r9_provisioning_gate_v11" for line in target.read_text(encoding="utf-8").splitlines() if line.strip())
         except Exception: ok=False

@@ -708,6 +708,11 @@
           "notes": "Checkpoint 2509213/B8.6R10 v12 is incomplete immutable history because its semantic report validator accepted an unknown top-level field. B8.6R11/v13 supersedes only that future machinery: exact allowed report fields are enforced for every mode/outcome and every important nested object, while committed-bootstrap dependency provenance, activation ancestry/blob, output identities, U8/date/hash limits, validation seal, and edge_claim none remain unchanged. No activation, container/data, return, validation, provider, broker, credential, paid, paper, or real-money access occurred."
         },
         {
+          "date": "2026-07-30",
+          "decision": "B8_6R11A_activation_checkpoint_ready_E0",
+          "notes": "Inspector accepted B8.6R11/v13 at 4387081407b92f50df6003f9435b19b885135daf after Exact-SHA Hermetic CI 30523998233. This B8.6R11A canonical activation checkpoint records that acceptance only. It is E0, edge_claim none, validation sealed, and not provisioning: no committed bootstrap, runtime, marker, container/data access, return decode, validation, provider, broker, credential, paid, paper, or real-money action occurred or is authorized by this checkpoint."
+        },
+        {
           "date": "2026-07-29",
           "decision": "locked_gate_manifest_two_segment_compatibility_rotation",
           "notes": "The legacy v1 locked-gate manifest is sealed below B8.5R2's 65536-byte bounded-read limit. v2 begins with byte-identical migrated v6/v7 rows and carries all future rows under the segment registry. This is control-plane compatibility only: no L-4 data, experiment, validation, or edge evidence was created."
