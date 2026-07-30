@@ -117,6 +117,7 @@
 - **B8.6R5 Phase A v6**: preserves v1-v5 and adds only a fail-closed, activation-gated one-shot runner. E0 only, `edge_claim none`, validation sealed.
 - **B8.6R6 Phase A v8**: preserves v1-v7 as history and locks a cohesive v8 identity contract. E0 synthetic-only, validation sealed, `edge_claim none`.
 - **B8.6R7 Phase A v9**: v8 is Inspector-rejected because a coherent forged synthetic success could be accepted. v9 is E0-only remediation pending Inspector review: activation provenance is exact and hash-bound, while production outputs require exact positive bounded counters, hashes, U8 coverage, pre-cutoff dates, and persisted identities. No data or validation access occurred; validation sealed, `edge_claim none`.
+- **B8.6R8 Phase A v10**: v9 is Inspector-rejected because dirty pre-read implementation bytes were not bound to `producing_git_commit`. v10 is E0-only remediation pending Inspector review: each declared execution dependency, including the scanner, must match its Git blob and gate source-binding identity before marker or dataset access; the report validator repeats that proof. No data or validation access occurred; validation sealed, `edge_claim none`.
 - **Locked-gate manifest rotation**: v1 is sealed below the B8.5R2 65,536-byte compatibility limit. New rows append only to v2, with v6/v7 migrated byte-identically and the two-segment chain pinned by `locked_gate_segments.json`.
 
 ## Seed Status
