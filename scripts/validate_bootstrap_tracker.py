@@ -957,6 +957,8 @@ def _validate_done_artifact(
                 ok = ok and any(item.get("decision") == "B8_6R11A_activation_checkpoint_ready_E0" for item in l4.get("decision_log", []) if isinstance(item, dict))
         except Exception: ok = False
         return ([] if ok else [f"{order_id}:l4_b86r11a_activation_mirror_mismatch"], ok, False)
+    if must == "validate_l4_b86r11_activation":
+        return _validate_l4_b84_runtime(target, order_id, "scripts/validate_l_4_breadth_b86r11_provisioning_activation_v13.py", project_root)
     if must == "contain_l4_b86r9_manifest":
         try: ok=any(json.loads(line).get("gate_id")=="l_4_breadth_b86r9_provisioning_gate_v11" for line in target.read_text(encoding="utf-8").splitlines() if line.strip())
         except Exception: ok=False
