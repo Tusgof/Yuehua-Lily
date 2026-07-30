@@ -179,5 +179,8 @@
     ,"scripts/run_l_4_breadth_b86r6_provisioning_v8.py"
     ,"scripts/validate_l_4_breadth_b86r6_provisioning_gate_v8.py"
     ,"scripts/validate_l_4_breadth_b86r6_provisioning_report_v8.py"
+    ,"scripts/run_l_4_breadth_b86r7_provisioning_v9.py"
+    ,"scripts/validate_l_4_breadth_b86r7_provisioning_gate_v9.py"
+    ,"scripts/validate_l_4_breadth_b86r7_provisioning_report_v9.py"
   ]
 }

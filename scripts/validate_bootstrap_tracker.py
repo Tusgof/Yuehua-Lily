@@ -897,6 +897,25 @@ def _validate_done_artifact(
         return _validate_l4_b84_runtime(target, order_id, "scripts/validate_l_4_breadth_b86r3_provisioning_gate_v4.py", project_root)
     if must == "validate_l4_b86r4_gate":
         return _validate_l4_b84_runtime(target, order_id, "scripts/validate_l_4_breadth_b86r4_provisioning_gate_v5.py", project_root)
+    if must == "validate_l4_b86r7_gate":
+        return _validate_l4_b84_runtime(target, order_id, "scripts/validate_l_4_breadth_b86r7_provisioning_gate_v9.py", project_root)
+    if must == "contain_l4_b86r7_manifest":
+        try: ok=any(json.loads(line).get("gate_id")=="l_4_breadth_b86r7_provisioning_gate_v9" for line in target.read_text(encoding="utf-8").splitlines() if line.strip())
+        except Exception: ok=False
+        return ([] if ok else [f"{order_id}:l4_b86r7_manifest_mismatch"],ok,False)
+    if must == "register_l4_b86r7_scripts":
+        try: ok=all(item in json.loads(target.read_text(encoding="utf-8")).get("scripts",[]) for item in ("scripts/run_l_4_breadth_b86r7_provisioning_v9.py","scripts/validate_l_4_breadth_b86r7_provisioning_gate_v9.py","scripts/validate_l_4_breadth_b86r7_provisioning_report_v9.py"))
+        except Exception: ok=False
+        return ([] if ok else [f"{order_id}:l4_b86r7_script_registration_mismatch"],ok,False)
+    if must == "match_l4_b86r7_mirror":
+        try:
+            text=target.read_text(encoding="utf-8").replace("`", "")
+            ok=all(item in text for item in ("B8.6R7", "v9", "E0", "edge_claim none", "validation sealed"))
+            if artifact_path == "experiments/hypothesis_registry.json":
+                l4=next(item for item in json.loads(text).get("hypotheses",[]) if item.get("id")=="L-4")
+                ok=ok and any(item.get("decision")=="B8_6R7_phase_a_v9_remediation_pending_inspector_review_E0" for item in l4.get("decision_log",[]) if isinstance(item,dict))
+        except Exception: ok=False
+        return ([] if ok else [f"{order_id}:l4_b86r7_mirror_mismatch"],ok,False)
     if must == "contain_l4_b86r4_manifest":
         try: ok=any(json.loads(x).get("gate_id")=="l_4_breadth_b86r4_provisioning_gate_v5" for x in target.read_text(encoding="utf-8").splitlines() if x)
         except Exception: ok=False
