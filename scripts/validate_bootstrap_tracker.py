@@ -918,6 +918,8 @@ def _validate_done_artifact(
         return ([] if ok else [f"{order_id}:l4_b86r8_mirror_mismatch"],ok,False)
     if must == "validate_l4_b86r9_gate":
         return _validate_l4_b84_runtime(target, order_id, "scripts/validate_l_4_breadth_b86r9_provisioning_gate_v11.py", project_root)
+    if must == "validate_l4_b86r13_gate":
+        return _validate_l4_b84_runtime(target, order_id, "scripts/validate_l_4_breadth_b86r13_provisioning_gate_v15.py", project_root)
     if must == "validate_l4_b86r11_gate_and_report":
         fixture = project_root / "tests/fixtures/l4_b86r11/synthetic_blocked_report_v13.json"
         if not target.is_file() or not fixture.is_file():

@@ -1013,6 +1013,19 @@ class BootstrapTrackerValidatorTests(unittest.TestCase):
         self.assertFalse(unverified)
         self.assertIn("B8:l4_b8_registry_mirror_mismatch", blockers)
 
+    def test_B86R13_gate_dispatch_uses_validator_not_json_as_python(self) -> None:
+        blockers, checked, unverified = self.validator._validate_done_artifact(
+            "B8.6R13",
+            "experiments/l_4_breadth_b86r13_provisioning_gate_v15.json",
+            "validate_l4_b86r13_gate",
+            project_root=PROJECT_ROOT,
+            verify_runtime=True,
+            runtime_cache={},
+        )
+        self.assertEqual([], blockers)
+        self.assertTrue(checked)
+        self.assertFalse(unverified)
+
     def test_B8_manifest_claim_rejects_forged_hashes(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
