@@ -916,6 +916,18 @@ def _validate_done_artifact(
                 l4=next(item for item in json.loads(text).get("hypotheses",[]) if item.get("id")=="L-4"); ok=ok and any(item.get("decision")=="B8_6R8_phase_a_v10_pre_read_provenance_remediation_pending_inspector_review_E0" for item in l4.get("decision_log",[]) if isinstance(item,dict))
         except Exception: ok=False
         return ([] if ok else [f"{order_id}:l4_b86r8_mirror_mismatch"],ok,False)
+    if must == "validate_l4_b86r9_gate":
+        return _validate_l4_b84_runtime(target, order_id, "scripts/validate_l_4_breadth_b86r9_provisioning_gate_v11.py", project_root)
+    if must == "contain_l4_b86r9_manifest":
+        try: ok=any(json.loads(line).get("gate_id")=="l_4_breadth_b86r9_provisioning_gate_v11" for line in target.read_text(encoding="utf-8").splitlines() if line.strip())
+        except Exception: ok=False
+        return ([] if ok else [f"{order_id}:l4_b86r9_manifest_mismatch"],ok,False)
+    if must == "refuse_direct_worktree_execution":
+        try:
+            result=subprocess.run([sys.executable,str(project_root / target),"--execute-one-shot"],cwd=project_root,capture_output=True,check=False)
+            ok=result.returncode==2
+        except Exception: ok=False
+        return ([] if ok else [f"{order_id}:l4_b86r9_direct_execution_not_refused"],ok,False)
     if must == "contain_l4_b86r7_manifest":
         try: ok=any(json.loads(line).get("gate_id")=="l_4_breadth_b86r7_provisioning_gate_v9" for line in target.read_text(encoding="utf-8").splitlines() if line.strip())
         except Exception: ok=False

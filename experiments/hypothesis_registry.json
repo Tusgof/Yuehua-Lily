@@ -695,7 +695,12 @@
         {
           "date": "2026-07-30",
           "decision": "B8_6R8_phase_a_v10_pre_read_provenance_remediation_pending_inspector_review_E0",
-          "notes": "B8.6R8/v10 is E0-only machinery pending Inspector review. Before marker or dataset access, the runner requires each declared execution dependency to equal its producing Git blob and gate source binding; report validation independently repeats the same proof. All authorizations and access counts remain zero; validation sealed, edge_claim none."
+          "notes": "B8.6R8/v10 was E0-only machinery pending Inspector review. It required each declared execution dependency to equal its producing Git blob and gate source binding before marker or dataset access. All authorizations and access counts remained zero; validation sealed, edge_claim none."
+        },
+        {
+          "date": "2026-07-30",
+          "decision": "B8_6R9_phase_a_v11_committed_bootstrap_remediation_pending_inspector_review_E0",
+          "notes": "B8.6R8/v10 is immutable Inspector-rejected history because imports preceded provenance verification. B8.6R9/v11 is E0-only committed-bootstrap machinery pending Inspector review: its only future production entry is a git-show-sourced stdlib bootstrap, which verifies all declared runtime bytes against the producing commit and locked gate before project imports, marker claim, or dataset access. All authorizations and access counts remain zero; validation sealed, edge_claim none."
         },
         {
           "date": "2026-07-29",

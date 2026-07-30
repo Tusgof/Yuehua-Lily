@@ -53,6 +53,7 @@ def audit_new_script_lib_usage(
     config = load_json(config_path)
     registered = set(config.get("scripts", []))
     grandfathered = set(config.get("grandfathered_scripts", []))
+    stdlib_only = set(config.get("stdlib_only_scripts", []))
     tracked_scripts = {
         path.relative_to(project_root).as_posix()
         for path in (project_root / "scripts").glob("*.py")
@@ -63,7 +64,7 @@ def audit_new_script_lib_usage(
 
     for relative in sorted(tracked_scripts - registered - grandfathered):
         blockers.append(f"unregistered_new_script:{relative}")
-    for relative in sorted((registered | grandfathered) - tracked_scripts):
+    for relative in sorted((registered | grandfathered | stdlib_only) - tracked_scripts):
         blockers.append(f"registered_script_missing:{relative}")
 
     for relative in sorted(registered):
@@ -75,7 +76,7 @@ def audit_new_script_lib_usage(
         except SyntaxError as exc:
             blockers.append(f"script_syntax_error:{relative}:{exc.lineno}")
             continue
-        if not imports_lib:
+        if not imports_lib and relative not in stdlib_only:
             blockers.append(f"blocked_no_lib_import:{relative}")
         if copied_helpers:
             blockers.append(f"copied_shared_helper:{relative}:{','.join(copied_helpers)}")
