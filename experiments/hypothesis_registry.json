@@ -623,6 +623,11 @@
           "notes": "B8.6R12/v14 preserves the consumed B8.6R11B/v13 no-retry incident. Its gate is the authority for activation_schema_version; committed bootstrap preflight, activation validator, report validator, schema verification, and future activation generation bind it. Temporary-Git adversarial tests prove matching readiness and reject one-character schema drift and dirty dependencies before runtime. No activation, provisioning, data, return, validation, provider, broker, credential, paid, paper, or real-money access occurred; E0, edge_claim none, validation sealed."
         },
         {
+          "date": "2026-07-31",
+          "decision": "B8_6R13_phase_a_v15_gate_owned_owner_authorization_remediation_E0",
+          "notes": "B8.6R13/v15 preserves v14 as immutable Inspector-rejected history because v14 allowed a caller-controlled owner authorization reference. The v15 gate now owns both activation_schema_version and the exact required owner authorization; activation construction, the committed-bootstrap preflight, the activation validator, and the schema bind both values. The closed-world report/output validator retains the exact dataset hash, U8 order, pre-2016 ISO-date cutoff, coverage/count, disk-identity, provenance, and validation-seal checks. Temporary-Git adversarial tests reject schema/owner drift, dirty activation/dependencies, forged success, and unknown fields. No activation, provisioning, data, return, validation, provider, broker, credential, paid, paper, or real-money access occurred; E0, edge_claim none, validation sealed."
+        },
+        {
           "date": "2026-07-29",
           "decision": "B8_5R4_l4_phase_a_lifecycle_remediation_locked_E0",
           "notes": "B8.5R3/v4 is immutable Inspector-rejected history for circular lifecycle and incomplete pass binding. B8.5R4/v5 locks a later tracked activation checkpoint bound to the accepted gate commit and its Exact-SHA Hermetic CI, full pass artifact/payload correlations, and ancestor blob provenance for later report commits. Phase B and activation remain unexecuted; validation sealed, edge_claim none."
