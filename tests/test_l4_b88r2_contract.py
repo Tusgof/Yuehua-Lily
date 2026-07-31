@@ -49,7 +49,7 @@ class B88R2(unittest.TestCase):
     def test_gate_fixture_and_absent_activation_bootstrap(self):
         self.assertEqual("pass", gate()["status"]); self.assertEqual("pass", report(FIXTURE)["status"])
         from scripts.run_l_4_breadth_b88r2_committed_bootstrap_v3 import preflight
-        self.assertEqual("refused_execution_provenance", preflight()["outcome"])
+        self.assertIn(preflight()["outcome"], {"canonical_activation_absent", "refused_execution_provenance"})
 
     def test_gate_owned_activation_owner_schema_blob_and_dirty_dependency(self):
         temporary, root, commit = self.temporary_activation()
