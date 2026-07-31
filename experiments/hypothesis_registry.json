@@ -753,6 +753,7 @@
           "notes": "The legacy v1 locked-gate manifest is sealed below B8.5R2's 65536-byte bounded-read limit. v2 begins with byte-identical migrated v6/v7 rows and carries all future rows under the segment registry. This is control-plane compatibility only: no L-4 data, experiment, validation, or edge evidence was created."
         },
         {"date":"2026-07-31","decision":"B8_8_phase_a_synthetic_scientific_execution_machinery_E0","notes":"B8.8 source-binds v4, B8.7, B8.6R13B, and inherited L1/L3 semantic sources. Its synthetic-only computation/report contract enforces matched U4/U8 weekly timing, u=q, inherited portfolio/cost mechanics, four mandatory metrics, separate actual paired-week MinTRL/HAC plans, deterministic robustness/side effects/regimes, and decision precedence. It creates no activation record, production execution/report/ledger, real container access, return parsing, validation access, or E1 conclusion; edge_claim none and validation sealed."}
+      ,{"date":"2026-07-31","decision":"B8_8R_phase_a_synthetic_scientific_remediation_v2_E0","notes":"Inspector rejected immutable B8.8/v1 for strict timing, validation equality, end-to-end, report, and bootstrap deficiencies. B8.8R/v2 is synthetic-only machinery with all access counts zero, edge_claim none, validation sealed, and a normal-push/no-history-rewrite closure rule."}
       ]
     }
   ]

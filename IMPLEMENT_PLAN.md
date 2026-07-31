@@ -371,4 +371,6 @@ Historical control compatibility: B8 E0/edge_claim none validation retains U1, U
 
 Lily changes the statistical observation model for persistent trend positions and adds country/asset breadth, survivorship, futures-roll, and small-account sizing gates.
 
+B8.8R/v2 supersedes B8.8/v1 as Inspector-required E0 synthetic remediation. v1 remains immutable rejected history. v2 strengthens strict t+1..t+20 timing, validation equality precedence, in-memory daily mechanics, future report derivation, and deny-only committed-bootstrap lifecycle. The earlier B8.8 force-with-lease rewrite is recorded as a provenance warning; B8.8R forbids amend/reset/rebase/force push and requires a normal push.
+
 B8.8 Phase A adds only E0 synthetic/no-real-data scientific falsification machinery. It source-binds v4, B8.7, B8.6R13B, and inherited L1/L3 controls; locks closed-world synthetic reporting, zero access counts, and a deny-only committed-bootstrap preflight. It does not authorize activation, execution, a real container read/hash/scan, return parsing, validation, or an E1 conclusion; `edge_claim none` and validation remain sealed.
