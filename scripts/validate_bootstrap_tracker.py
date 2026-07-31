@@ -929,6 +929,23 @@ def _validate_done_artifact(
             return [], False, True
         completed = subprocess.run([sys.executable, "scripts/validate_l_4_breadth_b86r13_provisioning_report_v15.py", str(target)], cwd=project_root, text=True, capture_output=True, check=False)
         return ([] if completed.returncode == 0 else [f"{order_id}:l4_b86r13_report_validator_failed"], completed.returncode == 0, False)
+    if must == "validate_l4_b87_gate":
+        return _validate_l4_b84_runtime(target, order_id, "scripts/validate_l_4_breadth_b87_phase_a_capacity_gate_v1.py", project_root)
+    if must == "validate_l4_b87_report":
+        if not target.is_file():
+            return [f"{order_id}:missing_artifact:{artifact_path}"], False, False
+        if not verify_runtime:
+            return [], False, True
+        completed = subprocess.run([sys.executable, "scripts/validate_l_4_breadth_b87_capacity_report_v1.py"], cwd=project_root, text=True, capture_output=True, check=False)
+        return ([] if completed.returncode == 0 else [f"{order_id}:l4_b87_report_validator_failed"], completed.returncode == 0, False)
+    if must == "contain_l4_b87_manifest":
+        try: ok = any(json.loads(line).get("gate_id") == "l_4_breadth_b87_phase_a_capacity_gate_v1" for line in target.read_text(encoding="utf-8").splitlines() if line.strip())
+        except Exception: ok = False
+        return ([] if ok else [f"{order_id}:l4_b87_manifest_mismatch"], ok, False)
+    if must == "register_l4_b87_scripts":
+        try: ok = all(item in json.loads(target.read_text(encoding="utf-8")).get("scripts", []) for item in ("scripts/run_l_4_breadth_b87_scientific_execution_preflight_v1.py", "scripts/validate_l_4_breadth_b87_phase_a_capacity_gate_v1.py", "scripts/validate_l_4_breadth_b87_capacity_report_v1.py"))
+        except Exception: ok = False
+        return ([] if ok else [f"{order_id}:l4_b87_script_registration_mismatch"], ok, False)
     if must == "validate_l4_b86r11_gate_and_report":
         fixture = project_root / "tests/fixtures/l4_b86r11/synthetic_blocked_report_v13.json"
         if not target.is_file() or not fixture.is_file():

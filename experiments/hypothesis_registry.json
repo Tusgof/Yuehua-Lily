@@ -643,6 +643,11 @@
           "notes": "The exact authorized v15 git-show committed-bootstrap command at d06001b54a80321b9b7be356ef808670b17dfba6 exited 0 once. It made one bounded read of the repo-relative container, matched the locked complete SHA-256 6608c0ef88f4b7edaef7523738d7a172215aa4f97c8c403adeba884d6582a4dd, and produced canonical marker, report, manifest, and U8 session-date payload. The report validator passed: exact U8 membership/order, maximum session date 2015-12-31, return-value decode count zero, validation-access count zero, and validation seal intact. This is E0 structural provenance only, not a breadth result; edge_claim none. The one-shot must not be retried. A new separately approved scientific execution gate is required before any L-4 falsification calculation."
         },
         {
+          "date": "2026-07-31",
+          "decision": "B8_7_phase_a_no_return_capacity_funded_execution_forbidden_E0",
+          "notes": "B8.7 reads only the committed B8.6R13B structural manifest and U8 session-date payload, binds v4 science and exact source hashes, and derives 465 U8-common weekly paired slots from 2007-02-05 through 2015-12-31. Each mandatory metric (ex-ante HHI delta, realized HHI delta, top-dependency delta, and N_eff delta) separately has planning MinTRL_falsify 49, so capacity funds all four planning plans. This is E0 capacity only: actual weekly paired MinTRL recalculation remains required before any E1 decision; no price, return, signal, position, covariance, regime, cost, PnL, validation, activation, or execution access occurred or is authorized. edge_claim none; validation sealed."
+        },
+        {
           "date": "2026-07-29",
           "decision": "B8_5R4_l4_phase_a_lifecycle_remediation_locked_E0",
           "notes": "B8.5R3/v4 is immutable Inspector-rejected history for circular lifecycle and incomplete pass binding. B8.5R4/v5 locks a later tracked activation checkpoint bound to the accepted gate commit and its Exact-SHA Hermetic CI, full pass artifact/payload correlations, and ancestor blob provenance for later report commits. Phase B and activation remain unexecuted; validation sealed, edge_claim none."

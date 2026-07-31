@@ -10,6 +10,7 @@ from pathlib import Path
 
 from lib.l4_b87_capacity_contract_v1 import derive, load_structural_payload
 from scripts.validate_l_4_breadth_b87_phase_a_capacity_gate_v1 import GATE, ROOT, validate
+from scripts.validate_l_4_breadth_b87_capacity_report_v1 import REPORT, validate as validate_report
 
 
 class B87CapacityTests(unittest.TestCase):
@@ -59,6 +60,17 @@ class B87CapacityTests(unittest.TestCase):
         result = subprocess.run([sys.executable, "scripts/run_l_4_breadth_b87_scientific_execution_preflight_v1.py"], cwd=ROOT, capture_output=True, text=True, check=False)
         self.assertEqual(1, result.returncode)
         self.assertEqual("activation_and_execution_not_authorized_in_B8_7_phase_A", json.loads(result.stdout)["blocker"])
+
+    def test_report_rejects_unknown_fields_and_forbidden_access(self):
+        report = json.loads(REPORT.read_text("ascii")) if REPORT.exists() else None
+        if report is None:
+            self.skipTest("report is committed in the Phase-A result commit")
+        self.assertEqual("pass", validate_report()["status"])
+        for mutate, blocker in ((lambda value: value.update(extra=True), "closed_world"), (lambda value: value["access_counts"].update(execution_count=1), "access_counts")):
+            value = copy.deepcopy(report); mutate(value)
+            with tempfile.TemporaryDirectory() as tmp:
+                path = Path(tmp) / "report.json"; path.write_text(json.dumps(value), encoding="ascii")
+                self.assertIn(blocker, validate_report(path)["blockers"])
 
 
 if __name__ == "__main__":
