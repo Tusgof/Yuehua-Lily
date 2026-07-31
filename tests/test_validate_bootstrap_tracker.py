@@ -1178,6 +1178,14 @@ class BootstrapTrackerValidatorTests(unittest.TestCase):
             blockers, checked, _ = self.validator._validate_done_artifact("B8.5", "PROJECT_BRAIN.md", "match_l4_b85_phase_a_mirror", project_root=root, verify_runtime=False, runtime_cache={})
             self.assertFalse(checked); self.assertIn("B8.5:l4_b85_phase_a_mirror_mismatch", blockers)
 
+    def test_B88R2_bootstrap_wrong_absent_activation_output_blocks_done(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp); target = root / "scripts/run_l_4_breadth_b88r2_committed_bootstrap_v3.py"; target.parent.mkdir()
+            target.write_text("import json\nprint(json.dumps({'status':'blocked','outcome':'wrong','real_accessed':False}))\nraise SystemExit(1)\n", encoding="utf-8")
+            blockers, checked, _ = self.validator._validate_done_artifact("B8.8R2", str(target.relative_to(root)).replace("\\", "/"), "deny_l4_b88r2_without_activation", project_root=root, verify_runtime=True, runtime_cache={})
+            self.assertFalse(checked)
+            self.assertIn("B8.8R2:l4_b88r2_bootstrap_not_deny_only", blockers)
+
 
 def _tracker_with_artifact(path: str, must: str) -> dict[str, object]:
     return {

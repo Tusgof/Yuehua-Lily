@@ -951,12 +951,20 @@ def _validate_done_artifact(
         return ([] if ok else [f"{order_id}:l4_b87_script_registration_mismatch"], ok, False)
     if must == "validate_l4_b88_gate":
         return _validate_l4_b84_runtime(target, order_id, "scripts/validate_l_4_breadth_b88_phase_a_execution_contract_v1.py", project_root)
+    if must == "validate_l4_b88r2_gate":
+        return _validate_l4_b84_runtime(target, order_id, "scripts/validate_l_4_breadth_b88r2_phase_a_execution_contract_v3.py", project_root)
     if must == "deny_without_activation":
         if not target.is_file(): return [f"{order_id}:missing_artifact:{artifact_path}"], False, False
         if not verify_runtime: return [], False, True
         completed = subprocess.run([sys.executable, str(target)], cwd=project_root, text=True, capture_output=True, check=False)
         ok = completed.returncode == 1 and "future_canonical_activation_required" in completed.stdout and "data_accessed\": false" in completed.stdout
         return ([] if ok else [f"{order_id}:l4_b88_bootstrap_not_deny_only"], ok, False)
+    if must == "deny_l4_b88r2_without_activation":
+        if not target.is_file(): return [f"{order_id}:missing_artifact:{artifact_path}"], False, False
+        if not verify_runtime: return [], False, True
+        completed = subprocess.run([sys.executable, str(target)], cwd=project_root, text=True, capture_output=True, check=False)
+        ok = completed.returncode == 1 and '"status": "blocked"' in completed.stdout and '"outcome": "canonical_activation_absent"' in completed.stdout and '"real_accessed": false' in completed.stdout
+        return ([] if ok else [f"{order_id}:l4_b88r2_bootstrap_not_deny_only"], ok, False)
     if must == "contain_l4_b88_manifest":
         try: ok = any(json.loads(line).get("gate_id") == "l_4_breadth_b88_phase_a_execution_contract_v1" for line in target.read_text(encoding="utf-8").splitlines() if line.strip())
         except Exception: ok = False
