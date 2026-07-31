@@ -277,3 +277,5 @@ Always:
 - `experiments/dd_remediation_tracker.json`: evidence-backed required-artifact completion.
 
 Lily excludes all 0DTE-specific logic and replaces per-trade assumptions with persistent-position trend inference.
+
+- **L-4 B8.8 Phase A machinery**: E0 synthetic-only contract binds v4/B8.7/B8.6R13B/L1/L3 and implements the later matched U4/U8 computation/report path with actual per-metric paired-week MinTRL/HAC checks, deterministic robustness/regime/decision controls, and a closed-world lifecycle. All B8.8 access counts remain zero; activation and execution are forbidden pending Inspector review and a future separate canonical gate.

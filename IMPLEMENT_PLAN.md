@@ -370,3 +370,5 @@ Historical control compatibility: B8 E0/edge_claim none validation retains U1, U
 - Higanbana `experiments/dd_remediation_tracker.json`: evidence-backed order completion.
 
 Lily changes the statistical observation model for persistent trend positions and adds country/asset breadth, survivorship, futures-roll, and small-account sizing gates.
+
+B8.8 Phase A adds only E0 synthetic/no-real-data scientific falsification machinery. It source-binds v4, B8.7, B8.6R13B, and inherited L1/L3 controls; locks closed-world synthetic reporting, zero access counts, and a deny-only committed-bootstrap preflight. It does not authorize activation, execution, a real container read/hash/scan, return parsing, validation, or an E1 conclusion; `edge_claim none` and validation remain sealed.
