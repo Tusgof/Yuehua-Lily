@@ -633,6 +633,11 @@
           "notes": "Inspector accepted B8.6R13/v15 at 42bfe3da3c58103317a71edb33bcd0d280b3017c after Hermetic CI 30591744500. B8.6R13A creates only the canonical no-LF activation record derived by the v15 builder from that accepted gate and CI identity. It is not provisioning: no committed bootstrap, marker, container/data access, return decoding, validation, provider, broker, credential, paid, paper, or real-money action is authorized or performed. The checkpoint must be committed before its actual preflight verification; E0, edge_claim none, validation sealed."
         },
         {
+          "date": "2026-07-31",
+          "decision": "B8_6R13A_committed_activation_preflight_passed_E0",
+          "notes": "At checkpoint commit ddbd096cf960f1702f75687d285b0b899a2670de, the activation validator invoked the actual v15 bootstrap preflight and returned pass/ready. The worktree activation bytes equal that producing-commit blob and the gate accepted ancestry/blob, canonical schema, exact owner authorization, CI identity, and seal all bind. This verifies the activation checkpoint only; it does not invoke committed bootstrap production/run or authorize provisioning, marker, data, return, validation, provider, broker, credential, paid, paper, or real-money action. E0, edge_claim none, validation sealed."
+        },
+        {
           "date": "2026-07-29",
           "decision": "B8_5R4_l4_phase_a_lifecycle_remediation_locked_E0",
           "notes": "B8.5R3/v4 is immutable Inspector-rejected history for circular lifecycle and incomplete pass binding. B8.5R4/v5 locks a later tracked activation checkpoint bound to the accepted gate commit and its Exact-SHA Hermetic CI, full pass artifact/payload correlations, and ancestor blob provenance for later report commits. Phase B and activation remain unexecuted; validation sealed, edge_claim none."
