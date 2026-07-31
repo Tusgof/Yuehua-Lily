@@ -35,21 +35,25 @@ def raw_week(week: int) -> dict:
 
 
 class B88R2(unittest.TestCase):
-    def temporary_activation(self, mutate=None):
+    def temporary_checkout(self):
         temporary = tempfile.TemporaryDirectory(); root = Path(temporary.name) / "repo"; root.mkdir()
         for relative in DEPENDENCIES:
             target = root / relative; target.parent.mkdir(parents=True, exist_ok=True); shutil.copy2(ROOT / relative, target)
         for args in (("git", "init", "-q"), ("git", "config", "user.email", "lily-test@example.invalid"), ("git", "config", "user.name", "Lily Test"), ("git", "add", "."), ("git", "commit", "-qm", "gate")):
             subprocess.run(args, cwd=root, check=True)
-        accepted = subprocess.check_output(("git", "rev-parse", "HEAD"), cwd=root, text=True).strip(); raw = (root / GATE).read_bytes(); value = build_activation(gate=json.loads(raw), gate_raw=raw, accepted_gate_head_sha=accepted, hermetic_ci_run_id=1)
+        return temporary, root, subprocess.check_output(("git", "rev-parse", "HEAD"), cwd=root, text=True).strip()
+
+    def temporary_activation(self, mutate=None):
+        temporary, root, accepted = self.temporary_checkout()
+        raw = (root / GATE).read_bytes(); value = build_activation(gate=json.loads(raw), gate_raw=raw, accepted_gate_head_sha=accepted, hermetic_ci_run_id=1)
         if mutate: mutate(value)
         target = root / ACTIVATION; target.parent.mkdir(parents=True, exist_ok=True); target.write_bytes(canonical(value)); subprocess.run(("git", "add", ACTIVATION), cwd=root, check=True); subprocess.run(("git", "commit", "-qm", "activation"), cwd=root, check=True)
         return temporary, root, subprocess.check_output(("git", "rev-parse", "HEAD"), cwd=root, text=True).strip()
 
     def test_gate_fixture_and_absent_activation_bootstrap(self):
         self.assertEqual("pass", gate()["status"]); self.assertEqual("pass", report(FIXTURE)["status"])
-        from scripts.run_l_4_breadth_b88r2_committed_bootstrap_v3 import preflight
-        self.assertIn(preflight()["outcome"], {"canonical_activation_absent", "refused_execution_provenance"})
+        temporary, root, commit = self.temporary_checkout()
+        with temporary: self.assertEqual("canonical_activation_absent", bootstrap_module(root).preflight(root, commit)["outcome"])
 
     def test_gate_owned_activation_owner_schema_blob_and_dirty_dependency(self):
         temporary, root, commit = self.temporary_activation()
