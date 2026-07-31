@@ -373,4 +373,6 @@ Lily changes the statistical observation model for persistent trend positions an
 
 B8.8R/v2 supersedes B8.8/v1 as Inspector-required E0 synthetic remediation. v1 remains immutable rejected history. v2 strengthens strict t+1..t+20 timing, validation equality precedence, in-memory daily mechanics, future report derivation, and deny-only committed-bootstrap lifecycle. The earlier B8.8 force-with-lease rewrite is recorded as a provenance warning; B8.8R forbids amend/reset/rebase/force push and requires a normal push.
 
+B8.8R2/v3 preserves v1/v2 bytes as Inspector-rejected history and adds dedicated activation/report schemas plus future gate-derived activation, pre-import git-show/blob/dirty checks, one-shot marker, and validator-derived E1 evidence shape. It remains E0 synthetic-only and does not open activation, execution, real data, or validation.
+
 B8.8 Phase A adds only E0 synthetic/no-real-data scientific falsification machinery. It source-binds v4, B8.7, B8.6R13B, and inherited L1/L3 controls; locks closed-world synthetic reporting, zero access counts, and a deny-only committed-bootstrap preflight. It does not authorize activation, execution, a real container read/hash/scan, return parsing, validation, or an E1 conclusion; `edge_claim none` and validation remain sealed.

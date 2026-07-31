@@ -28,6 +28,9 @@
     ,"scripts/run_l_4_breadth_b87_scientific_execution_preflight_v1.py"
     ,"scripts/run_l_4_breadth_b88_committed_bootstrap_v1.py"
     ,"scripts/run_l_4_breadth_b88r_committed_bootstrap_v2.py"
+    ,"scripts/run_l_4_breadth_b88r2_committed_bootstrap_v3.py"
+    ,"scripts/run_l_4_breadth_b88r2_scientific_execution_v3.py"
+    ,"scripts/validate_l_4_breadth_b88r2_activation_v3.py"
   ],
   "scripts": [
     "scripts/acquire_l_1_alpha_vantage_corporate_actions.py",
@@ -231,11 +234,16 @@
     ,"scripts/run_l_4_breadth_b87_scientific_execution_preflight_v1.py"
     ,"scripts/run_l_4_breadth_b88_committed_bootstrap_v1.py"
     ,"scripts/run_l_4_breadth_b88r_committed_bootstrap_v2.py"
+    ,"scripts/run_l_4_breadth_b88r2_committed_bootstrap_v3.py"
+    ,"scripts/run_l_4_breadth_b88r2_scientific_execution_v3.py"
     ,"scripts/validate_l_4_breadth_b87_phase_a_capacity_gate_v1.py"
     ,"scripts/validate_l_4_breadth_b87_capacity_report_v1.py"
     ,"scripts/validate_l_4_breadth_b88_phase_a_execution_contract_v1.py"
     ,"scripts/validate_l_4_breadth_b88_scientific_report_v1.py"
     ,"scripts/validate_l_4_breadth_b88r_phase_a_execution_contract_v2.py"
     ,"scripts/validate_l_4_breadth_b88r_scientific_report_v2.py"
+    ,"scripts/validate_l_4_breadth_b88r2_phase_a_execution_contract_v3.py"
+    ,"scripts/validate_l_4_breadth_b88r2_scientific_report_v3.py"
+    ,"scripts/validate_l_4_breadth_b88r2_activation_v3.py"
   ]
 }

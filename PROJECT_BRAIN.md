@@ -280,4 +280,6 @@ Lily excludes all 0DTE-specific logic and replaces per-trade assumptions with pe
 
 - **L-4 B8.8R v2 remediation**: Inspector rejected immutable B8.8/v1 for timing, equality, end-to-end, report, and bootstrap deficiencies. v2 remains E0 synthetic-only with every access count zero; its order forbids amend/reset/rebase/force push after the prior B8.8 force-with-lease incident. Validation stays sealed and activation/execution remain forbidden.
 
+- **L-4 B8.8R2 v3 remediation**: B8.8R/v2 is immutable Inspector-rejected incomplete history. v3 adds gate-owned activation/report schemas, future provenance/one-shot lifecycle primitives, and closed-world future E1 evidence derivation requirements, while performing no activation, execution, or real access.
+
 - **L-4 B8.8 Phase A machinery**: E0 synthetic-only contract binds v4/B8.7/B8.6R13B/L1/L3 and implements the later matched U4/U8 computation/report path with actual per-metric paired-week MinTRL/HAC checks, deterministic robustness/regime/decision controls, and a closed-world lifecycle. All B8.8 access counts remain zero; activation and execution are forbidden pending Inspector review and a future separate canonical gate.
