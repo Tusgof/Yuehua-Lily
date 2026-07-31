@@ -1039,6 +1039,19 @@ class BootstrapTrackerValidatorTests(unittest.TestCase):
         self.assertTrue(checked)
         self.assertFalse(unverified)
 
+    def test_B86R13_report_dispatch_uses_report_validator(self) -> None:
+        blockers, checked, unverified = self.validator._validate_done_artifact(
+            "B8.6R13B",
+            "reports/experiments/l_4_breadth_b86r13_provisioning_report_v15.json",
+            "validate_l4_b86r13_report",
+            project_root=PROJECT_ROOT,
+            verify_runtime=True,
+            runtime_cache={},
+        )
+        self.assertEqual([], blockers)
+        self.assertTrue(checked)
+        self.assertFalse(unverified)
+
     def test_B8_manifest_claim_rejects_forged_hashes(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)

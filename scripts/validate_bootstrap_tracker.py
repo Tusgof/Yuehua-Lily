@@ -922,6 +922,13 @@ def _validate_done_artifact(
         return _validate_l4_b84_runtime(target, order_id, "scripts/validate_l_4_breadth_b86r13_provisioning_gate_v15.py", project_root)
     if must == "validate_l4_b86r13_activation":
         return _validate_l4_b84_runtime(target, order_id, "scripts/validate_l_4_breadth_b86r13_provisioning_activation_v15.py", project_root)
+    if must == "validate_l4_b86r13_report":
+        if not target.is_file():
+            return [f"{order_id}:missing_artifact:{artifact_path}"], False, False
+        if not verify_runtime:
+            return [], False, True
+        completed = subprocess.run([sys.executable, "scripts/validate_l_4_breadth_b86r13_provisioning_report_v15.py", str(target)], cwd=project_root, text=True, capture_output=True, check=False)
+        return ([] if completed.returncode == 0 else [f"{order_id}:l4_b86r13_report_validator_failed"], completed.returncode == 0, False)
     if must == "validate_l4_b86r11_gate_and_report":
         fixture = project_root / "tests/fixtures/l4_b86r11/synthetic_blocked_report_v13.json"
         if not target.is_file() or not fixture.is_file():
