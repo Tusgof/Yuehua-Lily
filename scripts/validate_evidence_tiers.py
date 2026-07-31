@@ -21,6 +21,8 @@ REJECTED_V3_REPORT_SHA256 = "71727c6ee76f2af5c862da1fdc59c9a717005065c3abc0d6183
 CONTROL_PLANE_REPORTS = {
     PROJECT_ROOT / "reports/experiments/l_4_breadth_b85r5_phase_b_preflight_attempt_v6.json",
     PROJECT_ROOT / "reports/experiments/l_4_breadth_b85r5_phase_b_preflight_report_v6.json",
+    PROJECT_ROOT / "reports/experiments/l_4_breadth_b86r13_provisioning_attempt_v15.json",
+    PROJECT_ROOT / "reports/experiments/l_4_breadth_b86r13_provisioning_report_v15.json",
 }
 ALLOWED_TIERS = {"E0", "E1", "E2", "E3"}
 CLAIM_FIELDS = {

@@ -2,13 +2,30 @@ from __future__ import annotations
 
 import unittest
 
-from scripts.validate_evidence_tiers import validate_evidence_tiers, validate_report_payload
+from scripts.validate_evidence_tiers import (
+    PROJECT_ROOT,
+    _research_reports,
+    validate_evidence_tiers,
+    validate_report_payload,
+)
 
 
 class EvidenceTierValidatorTests(unittest.TestCase):
     def test_current_research_report_set_passes(self) -> None:
         result = validate_evidence_tiers()
         self.assertEqual("pass", result["status"], result["blockers"])
+
+    def test_v15_provisioning_control_plane_artifacts_are_excluded_but_research_reports_remain_audited(self) -> None:
+        paths = {path.resolve() for path in _research_reports(PROJECT_ROOT / "reports")}
+        self.assertNotIn(
+            (PROJECT_ROOT / "reports/experiments/l_4_breadth_b86r13_provisioning_attempt_v15.json").resolve(),
+            paths,
+        )
+        self.assertNotIn(
+            (PROJECT_ROOT / "reports/experiments/l_4_breadth_b86r13_provisioning_report_v15.json").resolve(),
+            paths,
+        )
+        self.assertIn((PROJECT_ROOT / "reports/experiments/l_1_baseline_summary.json").resolve(), paths)
 
     def test_E1_pass_or_edge_claim_is_rejected(self) -> None:
         payload = {
