@@ -25,6 +25,7 @@
     ,"scripts/validate_l_4_breadth_b86r13_provisioning_activation_v15.py"
     ,"scripts/run_l_4_breadth_b86r13_provisioning_v15.py"
     ,"scripts/validate_l_4_breadth_b86r13_provisioning_report_v15.py"
+    ,"scripts/run_l_4_breadth_b87_scientific_execution_preflight_v1.py"
   ],
   "scripts": [
     "scripts/acquire_l_1_alpha_vantage_corporate_actions.py",
@@ -225,5 +226,7 @@
     ,"scripts/validate_l_4_breadth_b86r13_provisioning_activation_v15.py"
     ,"scripts/run_l_4_breadth_b86r13_provisioning_v15.py"
     ,"scripts/validate_l_4_breadth_b86r13_provisioning_report_v15.py"
+    ,"scripts/run_l_4_breadth_b87_scientific_execution_preflight_v1.py"
+    ,"scripts/validate_l_4_breadth_b87_phase_a_capacity_gate_v1.py"
   ]
 }
