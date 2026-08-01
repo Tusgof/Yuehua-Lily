@@ -113,7 +113,7 @@ class B88R4V5(unittest.TestCase):
         spec=importlib.util.spec_from_file_location("bootstrap",ROOT/"scripts/run_l_4_breadth_b88r4_committed_bootstrap_v5.py")
         module=importlib.util.module_from_spec(spec); spec.loader.exec_module(module)
         checked=module.preflight(ROOT, __import__("subprocess").check_output(["git","rev-parse","HEAD"],cwd=ROOT,text=True).strip())
-        self.assertIn(checked["outcome"], {"canonical_activation_absent", "dirty_checkout", "refused_execution_provenance"})
+        self.assertIn(checked["outcome"], {"canonical_activation_absent", "dirty_checkout", "refused_activation", "refused_execution_provenance"})
         self.assertFalse((ROOT/"reports/experiments/l_4_breadth_b88r4_one_shot_marker_v5.json").exists())
 
 

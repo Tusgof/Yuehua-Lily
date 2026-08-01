@@ -133,8 +133,6 @@ def preflight(root=None, producing_commit=None):
     if resolved is None:
         return {"ready": False, "status": "blocked", "outcome": "refused_execution_provenance", "real_accessed": False}
     gate_raw, gate, identities = resolved
-    if not (root / ACTIVATION).is_file():
-        return {"ready": False, "status": "blocked", "outcome": "canonical_activation_absent", "real_accessed": False}
     activation = _activation(root, producing_commit, gate_raw, gate)
     if activation is None:
         return {"ready": False, "status": "blocked", "outcome": "refused_activation", "real_accessed": False}
