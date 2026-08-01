@@ -35,6 +35,8 @@
     ,"scripts/run_l_4_breadth_b88r3_scientific_execution_v4.py"
     ,"scripts/validate_l_4_breadth_b88r3_phase_a_execution_contract_v4.py"
     ,"scripts/validate_l_4_breadth_b88r3_scientific_report_v4.py"
+    ,"scripts/run_l_4_breadth_b88r4_committed_bootstrap_v5.py"
+    ,"scripts/validate_l_4_breadth_b88r4_phase_a_execution_contract_v5.py"
   ],
   "scripts": [
     "scripts/acquire_l_1_alpha_vantage_corporate_actions.py",
@@ -253,5 +255,9 @@
     ,"scripts/run_l_4_breadth_b88r3_scientific_execution_v4.py"
     ,"scripts/validate_l_4_breadth_b88r3_phase_a_execution_contract_v4.py"
     ,"scripts/validate_l_4_breadth_b88r3_scientific_report_v4.py"
+    ,"scripts/run_l_4_breadth_b88r4_committed_bootstrap_v5.py"
+    ,"scripts/run_l_4_breadth_b88r4_scientific_execution_v5.py"
+    ,"scripts/validate_l_4_breadth_b88r4_phase_a_execution_contract_v5.py"
+    ,"scripts/validate_l_4_breadth_b88r4_scientific_report_v5.py"
   ]
 }

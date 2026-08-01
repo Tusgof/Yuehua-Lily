@@ -955,6 +955,8 @@ def _validate_done_artifact(
         return _validate_l4_b84_runtime(target, order_id, "scripts/validate_l_4_breadth_b88r2_phase_a_execution_contract_v3.py", project_root)
     if must == "validate_l4_b88r3_gate":
         return _validate_l4_b84_runtime(target, order_id, "scripts/validate_l_4_breadth_b88r3_phase_a_execution_contract_v4.py", project_root)
+    if must == "validate_l4_b88r4_gate":
+        return _validate_l4_b84_runtime(target, order_id, "scripts/validate_l_4_breadth_b88r4_phase_a_execution_contract_v5.py", project_root)
     if must == "deny_without_activation":
         if not target.is_file(): return [f"{order_id}:missing_artifact:{artifact_path}"], False, False
         if not verify_runtime: return [], False, True
@@ -971,12 +973,25 @@ def _validate_done_artifact(
         if not target.is_file(): return [f"{order_id}:missing_artifact:{artifact_path}"], False, False
         if not verify_runtime: return [], False, True
         completed = subprocess.run([sys.executable, str(target)], cwd=project_root, text=True, capture_output=True, check=False)
-        ok = completed.returncode == 1 and '"outcome": "canonical_activation_absent"' in completed.stdout and '"real_accessed": false' in completed.stdout
+        # A successor WIP necessarily makes the checkout dirty before its own
+        # commit exists.  Both this refusal and the clean-checkout activation
+        # absence are safe E0 outcomes: neither can import the runtime or
+        # access a real container.
+        ok = completed.returncode == 1 and ('"outcome": "canonical_activation_absent"' in completed.stdout or '"outcome": "dirty_checkout"' in completed.stdout) and '"real_accessed": false' in completed.stdout
         return ([] if ok else [f"{order_id}:l4_b88r3_bootstrap_not_deny_only"], ok, False)
     if must == "contain_l4_b88_manifest":
         try: ok = any(json.loads(line).get("gate_id") == "l_4_breadth_b88_phase_a_execution_contract_v1" for line in target.read_text(encoding="utf-8").splitlines() if line.strip())
         except Exception: ok = False
         return ([] if ok else [f"{order_id}:l4_b88_manifest_mismatch"], ok, False)
+    if must == "contain_l4_b88r4_manifest":
+        try: ok = any(json.loads(line).get("gate_id") == "l_4_breadth_b88r4_phase_a_execution_contract_v5" for line in target.read_text(encoding="utf-8").splitlines() if line.strip())
+        except Exception: ok = False
+        return ([] if ok else [f"{order_id}:l4_b88r4_manifest_mismatch"], ok, False)
+    if must == "register_l4_b88r4_scripts":
+        required = ("scripts/run_l_4_breadth_b88r4_committed_bootstrap_v5.py", "scripts/run_l_4_breadth_b88r4_scientific_execution_v5.py", "scripts/validate_l_4_breadth_b88r4_phase_a_execution_contract_v5.py", "scripts/validate_l_4_breadth_b88r4_scientific_report_v5.py")
+        try: ok = all(item in json.loads(target.read_text(encoding="utf-8")).get("scripts", []) for item in required)
+        except Exception: ok = False
+        return ([] if ok else [f"{order_id}:l4_b88r4_script_registration_mismatch"], ok, False)
     if must == "validate_l4_b86r11_gate_and_report":
         fixture = project_root / "tests/fixtures/l4_b86r11/synthetic_blocked_report_v13.json"
         if not target.is_file() or not fixture.is_file():
