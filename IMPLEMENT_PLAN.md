@@ -375,4 +375,6 @@ B8.8R/v2 supersedes B8.8/v1 as Inspector-required E0 synthetic remediation. v1 r
 
 B8.8R2/v3 preserves v1/v2 bytes as Inspector-rejected history and adds dedicated activation/report schemas plus future gate-derived activation, pre-import git-show/blob/dirty checks, one-shot marker, and validator-derived E1 evidence shape. It remains E0 synthetic-only and does not open activation, execution, real data, or validation.
 
+B8.8R3/v4 preserves v1–v3 bytes as immutable Inspector-rejected history. It adds a stateful U8-calendar engine, exact U4 expense mapping, non-overlapping PnL attribution, derived robustness/regimes, and a future one-read, marker-first runtime with canonical report recomputation. Phase A remains E0: no activation, marker, report, ledger, real container access, return decode, or validation; `edge_claim none` and validation sealed. Normal commits/push only.
+
 B8.8 Phase A adds only E0 synthetic/no-real-data scientific falsification machinery. It source-binds v4, B8.7, B8.6R13B, and inherited L1/L3 controls; locks closed-world synthetic reporting, zero access counts, and a deny-only committed-bootstrap preflight. It does not authorize activation, execution, a real container read/hash/scan, return parsing, validation, or an E1 conclusion; `edge_claim none` and validation remain sealed.
