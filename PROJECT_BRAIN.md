@@ -160,9 +160,17 @@ Past reports are reproduced by checking out their recorded commit hash. Do not c
 - Decision history belongs in `docs/DECISION_RECORD_*.md`, registry decision logs, reports, and git.
 - `PROJECT_BRAIN.md` remains concise and points to those stores.
 
+### 9.1 Forward Operating Model
+
+`docs/DECISION_RECORD_005_FORWARD_RESEARCH_EXECUTION.md` governs future work without changing historical orders or locked evidence. Lily's minimum viable research system is `L-1 60-day baseline + equal-notional q sizing + L-4 breadth + locked costs`; L-2 multi-lookback and L-3 inverse-volatility are optional improvements, not prerequisites.
+
+GPT-5.6 Luna Max works as the primary implementation Worker in a separate user-opened session. The root Codex session is the Inspector and sole `research_log/` author unless the owner explicitly changes that rule. Luna works autonomously inside one bounded order, then commits, pushes, verifies exact-SHA CI, and stops for Inspector review only at CP-A real-evidence activation, CP-B empirical result, CP-C validation unlock, CP-D external or operational action, or CP-X unexpected integrity incident.
+
+Future execution machinery must pass a clean temporary-Git end-to-end test before CP-A. One bounded remediation is allowed after a first rejection; a second rejection at the same critical point ends patch layering and requires a smaller Inspector-reviewed replacement design.
+
 ## 10. Current Verified State
 
-- **Verified date**: 2026-07-28
+- **Verified date**: 2026-08-02
 - **Bootstrap**: B0 through B4.16 complete; B5.2 and B6.4 L-2 remediation complete; B7 L-3 governance lock, B7.2 hermetic source-provenance remediation, and B7.1 locked E0 gate-only preflight complete
 - **Legacy Note status**: retired and deleted by `docs/DECISION_RECORD_002_RESEARCH_LOG_CONTRACT.md` after its research content was promoted
 - **Human research logs**: contract active; L-0 sizing and Webull capability are logs 001 and 006; L-1 baseline, remediation, validation-capacity, and Alpha Vantage corporate-action audits are logs 002 through 005 under `research_log/`
@@ -231,12 +239,14 @@ Past reports are reproduced by checking out their recorded commit hash. Do not c
 - **L-4 B8.6R13B one-shot structural provisioning**: the sole authorized git-show committed-bootstrap invocation at `d06001b54a80321b9b7be356ef808670b17dfba6` exited `0`. It produced the canonical attempt marker, report, falsification manifest, and U8 session-date payload after one bounded container read that matched the locked SHA-256. The report validator passed; U8/order and structural dates through 2015-12-31 are bound, return decoding and validation access are zero, and the validation seal remains intact. This is E0 structural provenance, not a breadth result; `edge_claim none`. The one-shot cannot be retried.
 - **L-4 B8.7 Phase A capacity**: source-bound v4 science plus the B8.6R13B committed structural date artifacts derive 465 U8-common weekly paired slots from 2007-02-05 through 2015-12-31. Each of the four mandatory metrics separately clears planning `MinTRL_falsify` 49. This is E0 capacity only, not an E1 outcome: actual weekly paired MinTRL recalculation remains mandatory; validation sealed, edge_claim none, and every later activation/execution authorization false.
 - **Locked-gate manifest rotation**: `experiments/locked_gates.jsonl` is sealed v1 at 64,976 bytes to remain within the legacy B8.5R2 65,536-byte bound. New rows begin in `experiments/locked_gates_v2.jsonl`; `experiments/locked_gate_segments.json` binds both segments and their migration provenance.
-- **Operating roles**: Lily's persistent GPT-5.6 Terra high subagent is the primary implementation Worker for sequential bounded orders. The root agent is Inspector, owns inspection and `research_log` authorship/decision, and the Worker must hand off and wait for Inspector acceptance before a next order.
+- **Operating roles**: GPT-5.6 Luna Max in a separate user-opened session is the primary implementation Worker. The root Codex session is Inspector and sole `research_log/` author; Luna works independently between the critical points defined in Decision Record 005 and uses pushed Git state plus an owner-forwarded handoff packet as the interface.
 - **Databento**: `DATABENTO_API_02` passes metadata access with USD 0 spend, but relevant US-equity coverage begins in 2018 or later and no dedicated corporate-actions history was exposed; owner-reported USD 50 credit has unverified real-payment provenance
 
 ## 11. Next Safe Action
 
-Keep validation returns sealed and do not rerun B4.11, B4.12, B7.3, B7.6, B7.14, the consumed B8.5R5 Phase B one-shot, consumed B8.6R11B/v13, or B8.6R13B. L-3 is E1 scope_restricted and unresolved; no L-3 result may be carried forward as proof that inverse-volatility sizing passed. L-4 remains unresolved E0 with `edge_claim none`: B8.7 capacity funds four planning plans only and does not authorize activation or execution. The next step requires Inspector review and a separately owner-approved scientific execution gate, not a retry of any consumed one-shot. No UAT work is planned: a hostname reference is not a public UAT entitlement.
+Keep validation returns sealed and do not rerun B4.11, B4.12, B7.3, B7.6, B7.14, the consumed B8.5R5 Phase B one-shot, consumed B8.6R11B/v13, or B8.6R13B. L-3 is E1 scope_restricted and unresolved; no L-3 result may be carried forward as proof that inverse-volatility sizing passed. L-4 remains unresolved E0 with `edge_claim none`.
+
+The current safe action is CP-A Inspector review of B8.8R4/v5 at commit `f0759f99f866b985e50e0606aa56c13234bfb399`. Review does not authorize activation or real-return access. If accepted, a separate owner-approved order may create the canonical activation and execute the pre-2016 L-4 falsification exactly once. No UAT work is planned: a hostname reference is not a public UAT entitlement.
 
 Historical control compatibility: B4.14 records no UAT work and requires a new locked gate for any future broker probe. The next safe action, for a later order, is L-4 preregistration/planning only; B7.15 authorizes no L-4 work. B8.3 was accepted after Inspector review of B8.3 only. These are historical statements, not the current next action. B8 E0/edge_claim none validation controls retain U1, U4, U8, and B8.1 N_eff; B8.3's 465 weekly-paired, macro sleeves, four-outcome, and all-authorizations-false controls remain intact through accepted B8.4R2/v3.
 
@@ -267,6 +277,7 @@ Always:
 
 - `docs/DECISION_RECORD_001_PROJECT_REFOUNDING.md` and `experiments/hypothesis_registry.json`: promoted economic rationale, asymmetric payoff, architecture prerequisites, and predictions.
 - `docs/DECISION_RECORD_002_RESEARCH_LOG_CONTRACT.md`: retirement of legacy notes and adoption of audited Thai experiment narratives.
+- `docs/DECISION_RECORD_005_FORWARD_RESEARCH_EXECUTION.md`: decision-first core-system path, Luna/Inspector roles, critical points, and remediation stop rule for future work.
 - archived `Backup_/2026-07-15/IMPLEMENT_PLAN.md`: baseline, candidate, sizing, target-volatility, cost, and honest-unknown design inputs.
 
 ### Higanbana Sources Adapted

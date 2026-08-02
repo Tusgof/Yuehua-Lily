@@ -3,12 +3,36 @@
 ## 1. Plan Definition
 
 - **Program**: Lily systematic trend-following research
-- **Plan version**: Refounding v2
-- **Date**: 2026-07-15
-- **Operating model**: parallel hypothesis tracks plus standing governance programs
+- **Plan version**: Refounding v3 — decision-first execution
+- **Date**: 2026-08-02
+- **Operating model**: sequential core-system decisions plus standing governance programs
 - **End state**: Lily can honestly classify hypotheses as proposed, active, parked, falsified, scope-restricted, E2-validated, or E3 deployment-grade.
 
 This plan does not authorize strategy code, a backtest, paper trading, broker requests, or real-money trading by itself.
+
+### 1.1 Forward Plan From 2026-08-02
+
+`docs/DECISION_RECORD_005_FORWARD_RESEARCH_EXECUTION.md` governs future work without rewriting historical orders or locked artifacts.
+
+The minimum viable research system is `L-1 60-day baseline + equal-notional q sizing + L-4 breadth + locked costs`. L-2 multi-lookback and L-3 inverse-volatility are optional improvements, not prerequisites for testing that core system.
+
+Forward sequence:
+
+1. Inspector-review B8.8R4/v5, then—only through a separate approved activation—finish the pre-2016 L-4 falsification and keep validation sealed.
+2. Run an Inspector-led L-1 through L-4 family review immediately after the L-4 result.
+3. Resolve L-1 first because it survived falsification: choose adequate point-in-time corporate-action evidence or prospective evidence before any validation unlock.
+4. Revisit L-2 only if a new preregistration proves static `MinTRL_falsify` capacity before return access; otherwise retire it.
+5. Permit L-3 at most one new small preregistered attempt; if that cannot produce one valid bounded run, retain equal-notional q and retire the inverse-volatility branch.
+
+GPT-5.6 Luna Max is the primary implementation Worker in a separate user-opened session. The root Codex session is the Inspector and sole `research_log/` author. Luna works autonomously between the critical points below, then pushes and hands off:
+
+- **CP-A**: before real-return access, activation, or scientific execution;
+- **CP-B**: after an empirical report, before outcome/registry/next-hypothesis decisions;
+- **CP-C**: before opening the sealed validation window;
+- **CP-D**: before paid, provider-mutating, broker, paper, or real-money action;
+- **CP-X**: immediately after an unexpected one-shot, provenance, leakage, or locked-invariant incident.
+
+Every future execution path must pass a clean temporary-Git end-to-end test before CP-A. One bounded remediation is allowed after a first rejection. A second rejection at the same critical point stops patch layering and requires an Inspector-reviewed smaller replacement design.
 
 ## 2. Accepted Design Inputs
 
@@ -27,7 +51,7 @@ Founding decisions are in `docs/DECISION_RECORD_001_PROJECT_REFOUNDING.md`.
 
 ### P0 — Governance And Audit
 
-Maintain evidence tiers, hypothesis registry, preregistration, locked-gate hashes, adversarial E2 review, anti-overstatement checks, and machine-checkable trackers.
+Maintain the minimum controls needed for evidence tiers, hypothesis registry, preregistration, locked-gate hashes, adversarial E2 review, anti-overstatement checks, and machine-checkable trackers. Governance must protect a named scientific decision; it is not an independent expansion target.
 
 ### P1 — Reproducibility And Environment
 
@@ -357,7 +381,7 @@ If MinTRL validation cost is unaffordable or undefined against the benchmark nul
 | L-1 | Scope-restricted E1; B4.9 closes the unavailable Webull-ledger dry run without observation; B4.10 adds no L-1 evidence | Validation remains sealed; no broker-ledger or historical-correctness claim |
 | L-2 | E1 underfunded_scope_restricted | Redesign requires a new owner-approved preregistration before any L-2 data access |
 | L-3 | E1 scope_restricted and unresolved; B7.4 invalidates the B7.3 sole run's 500 weekly observations above the 465 ceiling, and B7.15 closes the current preregistration with no L-3 result carried forward as proof that inverse-volatility sizing passed | Validation sealed; no rerun is planned; next gate is L-4 preregistration/planning only |
-| L-4 | Unresolved E0; B8.7 capacity derives 465 weekly paired slots and independently funds all four planning `MinTRL_falsify=49` plans; `edge_claim none` | Capacity is not an E1 decision: actual weekly-paired MinTRL recalculation, Inspector review, and a separately owner-approved scientific execution gate are required; validation remains sealed |
+| L-4 | Unresolved E0; B8.7 funds the four planning tests and B8.8R4/v5 at `f0759f99f866b985e50e0606aa56c13234bfb399` is the current synthetic execution machinery; `edge_claim none` | CP-A Inspector review of v5 is required before a separately owner-approved activation or any real return access; validation remains sealed |
 
 Historical control compatibility: B8 E0/edge_claim none validation retains U1, U4, and U8; B8.1 retains N_eff. B8.3's 465 weekly-paired capacity, macro sleeves, four-outcome validation contract, and all authorizations are false remain intact; its former next step was Inspector review only.
 

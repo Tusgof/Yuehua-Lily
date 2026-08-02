@@ -25,6 +25,20 @@ Before editing, state:
 3. verification commands;
 4. stop conditions.
 
+### 3.1 Worker, Inspector, And Boot Sequence
+
+- GPT-5.6 Luna Max in a separate user-opened session is the primary implementation Worker. The root Codex session is the Inspector.
+- Before every modifying session, both roles must read `PROJECT_BRAIN.md`, `IMPLEMENT_PLAN.md`, this file, and `experiments/bootstrap_tracker.json`, then the owner-supplied Yuehua-Kit files `06-Final-[SETUP].txt` and `09-Order-[WORK].txt`.
+- Luna works autonomously within one bounded order. Pushed Git state and an owner-forwarded handoff packet are the interface between the separate sessions.
+- Luna must not create or edit `research_log/`. The Inspector decides whether a research log is required and is its sole author unless the owner explicitly changes that rule.
+- Luna must stop after commit, push, and exact-SHA CI verification at:
+  - **CP-A**: before real-return access, activation, or scientific execution;
+  - **CP-B**: after an empirical report, before changing the outcome, registry state, or next hypothesis;
+  - **CP-C**: before access to the sealed validation window;
+  - **CP-D**: before paid data, provider mutation, broker preview/order, paper trading, or real-money action;
+  - **CP-X**: after an unexpected one-shot, provenance, leakage, or locked-invariant incident.
+- Inspector review is not required between those points unless the owner asks for it or the bounded order reaches a stop condition.
+
 ## 4. Evidence And Claims
 
 - `E0`: infrastructure, fixtures, synthetic tests, or operational dry runs. Claim only that machinery works.
@@ -53,6 +67,8 @@ Locked preregistrations and their validators must be hash-bound in an append-onl
 Pin LF line endings for hash-bound files through `.gitattributes` so the same gate validates on Windows and Linux.
 
 Before promotion to E2, a separate adversarial review must try to refute the result through leakage checks, alternative nulls, cost stress, survivorship/roll analysis, and implementation-bug hypotheses.
+
+Every future execution path must pass a clean temporary-Git end-to-end test before CP-A. One bounded remediation is allowed after the first Inspector rejection. A second rejection at the same critical point stops patch layering and requires an Inspector-reviewed smaller replacement design in a new namespace.
 
 Every engineering commit must include the actual agent model/version in a trailer, for example:
 
