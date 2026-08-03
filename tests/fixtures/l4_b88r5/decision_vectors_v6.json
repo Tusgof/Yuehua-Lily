@@ -1,0 +1,38 @@
+{
+  "schema_version": "lily_l4_b88r5_decision_vectors_v6",
+  "vectors": [
+    {
+      "id": "scope_restricted",
+      "constraints_pass": false,
+      "statistics": {
+        "ex_ante_hhi_delta": {"values": [0.1], "mintrl": {"falsify": 1}, "falsify_ucb": 0.2},
+        "realized_hhi_delta": {"values": [0.1], "mintrl": {"falsify": 1}, "falsify_ucb": 0.2},
+        "top_dependency_delta": {"values": [0.2], "mintrl": {"falsify": 1}, "falsify_ucb": 0.3},
+        "n_eff_delta": {"values": [1.0], "mintrl": {"falsify": 1}, "falsify_ucb": 1.1}
+      },
+      "expected": "scope_restricted"
+    },
+    {
+      "id": "falsified_E1_only",
+      "constraints_pass": true,
+      "statistics": {
+        "ex_ante_hhi_delta": {"values": [0.1], "mintrl": {"falsify": 1}, "falsify_ucb": 0.04},
+        "realized_hhi_delta": {"values": [0.1], "mintrl": {"falsify": 1}, "falsify_ucb": 0.06},
+        "top_dependency_delta": {"values": [0.2], "mintrl": {"falsify": 1}, "falsify_ucb": 0.11},
+        "n_eff_delta": {"values": [1.0], "mintrl": {"falsify": 1}, "falsify_ucb": 0.6}
+      },
+      "expected": "falsified_E1_only"
+    },
+    {
+      "id": "not_falsified_not_validated_E1",
+      "constraints_pass": true,
+      "statistics": {
+        "ex_ante_hhi_delta": {"values": [0.1], "mintrl": {"falsify": 1}, "falsify_ucb": 0.05},
+        "realized_hhi_delta": {"values": [0.1], "mintrl": {"falsify": 1}, "falsify_ucb": 0.05},
+        "top_dependency_delta": {"values": [0.2], "mintrl": {"falsify": 1}, "falsify_ucb": 0.1},
+        "n_eff_delta": {"values": [1.0], "mintrl": {"falsify": 1}, "falsify_ucb": 0.5}
+      },
+      "expected": "not_falsified_not_validated_E1"
+    }
+  ]
+}

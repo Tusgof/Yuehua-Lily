@@ -18,7 +18,7 @@ The minimum viable research system is `L-1 60-day baseline + equal-notional q si
 
 Forward sequence:
 
-1. Inspector-review B8.8R4/v5, then—only through a separate approved activation—finish the pre-2016 L-4 falsification and keep validation sealed.
+1. Inspector-review B8.8R5/v6, then—only through a separate approved activation—consider the pre-2016 L-4 falsification while keeping validation sealed.
 2. Run an Inspector-led L-1 through L-4 family review immediately after the L-4 result.
 3. Resolve L-1 first because it survived falsification: choose adequate point-in-time corporate-action evidence or prospective evidence before any validation unlock.
 4. Revisit L-2 only if a new preregistration proves static `MinTRL_falsify` capacity before return access; otherwise retire it.
@@ -381,7 +381,7 @@ If MinTRL validation cost is unaffordable or undefined against the benchmark nul
 | L-1 | Scope-restricted E1; B4.9 closes the unavailable Webull-ledger dry run without observation; B4.10 adds no L-1 evidence | Validation remains sealed; no broker-ledger or historical-correctness claim |
 | L-2 | E1 underfunded_scope_restricted | Redesign requires a new owner-approved preregistration before any L-2 data access |
 | L-3 | E1 scope_restricted and unresolved; B7.4 invalidates the B7.3 sole run's 500 weekly observations above the 465 ceiling, and B7.15 closes the current preregistration with no L-3 result carried forward as proof that inverse-volatility sizing passed | Validation sealed; no rerun is planned; next gate is L-4 preregistration/planning only |
-| L-4 | Unresolved E0; B8.7 funds the four planning tests and B8.8R4/v5 at `f0759f99f866b985e50e0606aa56c13234bfb399` is the current synthetic execution machinery; `edge_claim none` | CP-A Inspector review of v5 is required before a separately owner-approved activation or any real return access; validation remains sealed |
+| L-4 | Unresolved E0; B8.7 funds the four planning tests and B8.8R5/v6 is the current superseding synthetic execution machinery; B8.8R4/v5 is rejected history; `edge_claim none` | CP-A Inspector review of v6 is required before a separately owner-approved activation or any real return access; validation remains sealed |
 
 Historical control compatibility: B8 E0/edge_claim none validation retains U1, U4, and U8; B8.1 retains N_eff. B8.3's 465 weekly-paired capacity, macro sleeves, four-outcome validation contract, and all authorizations are false remain intact; its former next step was Inspector review only.
 
@@ -404,3 +404,5 @@ B8.8R3/v4 preserves v1–v3 bytes as immutable Inspector-rejected history. It ad
 B8.8 Phase A adds only E0 synthetic/no-real-data scientific falsification machinery. It source-binds v4, B8.7, B8.6R13B, and inherited L1/L3 controls; locks closed-world synthetic reporting, zero access counts, and a deny-only committed-bootstrap preflight. It does not authorize activation, execution, a real container read/hash/scan, return parsing, validation, or an E1 conclusion; `edge_claim none` and validation remain sealed.
 
 B8.8R4/v5 preserves all rejected B8.8 v1-v4 bytes and replaces the future entrypoint with a stdlib-only committed bootstrap: it verifies gate-bound runtime bytes before import, marker claim, or container access. Its temporary-Git synthetic proof covers canonical activation, exactly one completed CLI invocation, independently validated report/ledger/marker/attempt, second-invocation refusal, and adversarial provenance drift. It is E0 only: no real activation, container, return, validation, broker, provider, paid, paper, or real-money action occurred; `edge_claim none` and validation remain sealed. Inspector review plus a separate owner-approved activation gate are still required before real execution.
+
+B8.8R5/v6 is the owner-authorized bounded remediation of rejected B8.8R4/v5. It preserves prior artifacts append-only, corrects aggregate side-effect intensity, gate-binds the exact B8.6R13 provisioned identities, enforces clean/untracked checkout before marker claim, proves the three mutually exclusive E1 outcomes with synthetic vectors, and makes asset/macro-sleeve/country-region breakdowns one-assignment component-risk summaries. It remains E0 synthetic-only with no activation or real container/return/validation access; `edge_claim none` and validation remain sealed pending Inspector review.

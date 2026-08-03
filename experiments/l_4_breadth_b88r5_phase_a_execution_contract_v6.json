@@ -1,0 +1,81 @@
+{
+  "schema_version":"lily_l4_b88r5_phase_a_execution_contract_v6",
+  "order_id":"B8.8R5",
+  "gate_id":"l_4_breadth_b88r5_phase_a_execution_contract_v6",
+  "supersedes_gate_id":"l_4_breadth_b88r4_phase_a_execution_contract_v5",
+  "hypothesis_id":"L-4",
+  "status":"locked_E0_future_contract_v6",
+  "evidence_ceiling":"E0",
+  "edge_claim":"none",
+  "owner_literal":"continue the work till we complete L4",
+  "inspector_rejection":{
+    "v5":"P0 side-effect evaluation rejected first zero-gross row instead of using aggregate preregistered denominators; P1 activation accepted arbitrary self-consistent dataset identities; clean checkout was not enforced before marker claim; and asset/sleeve/region regime buckets duplicated the portfolio sample."
+  },
+  "sources":{
+    "experiments/l_4_breadth_b88r4_phase_a_execution_contract_v5.json":"8242f8d9693b0ff8962bae269be60731946bbd1cfbe6897cbbb6ad4e2943c19f",
+    "experiments/l_4_breadth_preregistration_v4.json":"648b480aed523074e8c99646b313c70b074ca6bde95c2a30fb88a128d150ffcb",
+    "experiments/l_4_breadth_b87_phase_a_capacity_gate_v1.json":"c5f22f2a7153e79f9e13180ba129f6d19cea8759e8a5bc030c35571b19c13972",
+    "experiments/provisioned/l_4_breadth_b86r13_falsification_manifest_v15.json":"de00a4b5a5dd732e27a4a9900868a0f696bb80794e04924da9187808311bb008",
+    "experiments/provisioned/l_4_breadth_b86r13_u8_session_dates_v15.json":"f95665db8ad78280433b37e646486ba03954d0eccba13538d41e961ea88c94ef",
+    "experiments/l_1_baseline_preregistration.json":"91527c2f4ec00134767df86849f36b9876b00eb44cd56dc01650d33bf938fe29",
+    "experiments/l_3_inverse_volatility_sizing_preregistration_v2.json":"83a68792614ee0def3ddb96349d6d95c7f0aeb0ac8b1c984c1e3d29ed74e709e",
+    "tests/fixtures/l4_b88r5/decision_vectors_v6.json":"4a4eae22d2a35c7b9741b89e8e7b202ac1919a8da4812de7681fff999950f4d3"
+  },
+  "science":{
+    "preregistration_path":"experiments/l_4_breadth_preregistration_v4.json",
+    "universe":["VTI","VGK","EWJ","VWO","IEF","TIP","GLD","DBC"],
+    "u4":["VTI","IEF","GLD","DBC"],
+    "cutoff_inclusive":"2015-12-31",
+    "timing":"actual last eligible U8 weekly session; next U8 common/NYSE session; next 20 sessions strictly after execution",
+    "breakdown_contract":{
+      "dimensions":["asset","macro_sleeve","country_or_region"],
+      "asset":"dominant U8 component-risk share; ties use U8 order",
+      "macro_sleeve":"dominant U8 grouped macro-sleeve component-risk share; ties use fixed sleeve order",
+      "country_or_region":"dominant U8 region component-risk share; ties use fixed region order",
+      "assignment":"each paired week belongs to exactly one bucket in each breakdown dimension; no full-sample duplication"
+    }
+  },
+  "provisioned_identity":{
+    "container":{"path":"data/normalized/l1_yahoo_daily_v1.json","sha256":"6608c0ef88f4b7edaef7523738d7a172215aa4f97c8c403adeba884d6582a4dd"},
+    "structural_manifest":{"path":"experiments/provisioned/l_4_breadth_b86r13_falsification_manifest_v15.json","sha256":"de00a4b5a5dd732e27a4a9900868a0f696bb80794e04924da9187808311bb008","schema_version":"lily_l4_b86r13_falsification_manifest_v15","dataset_reference":"data/normalized/l1_yahoo_daily_v1.json","dataset_sha256":"6608c0ef88f4b7edaef7523738d7a172215aa4f97c8c403adeba884d6582a4dd","max_session_date":"2015-12-31","u8_members_in_order":["VTI","VGK","EWJ","VWO","IEF","TIP","GLD","DBC"],"validation_seal":{"status":"sealed_not_accessed","accessed":false}},
+    "u8_sessions":{"path":"experiments/provisioned/l_4_breadth_b86r13_u8_session_dates_v15.json","sha256":"f95665db8ad78280433b37e646486ba03954d0eccba13538d41e961ea88c94ef","schema_version":"lily_l4_b86r13_u8_session_dates_v15","dataset_sha256":"6608c0ef88f4b7edaef7523738d7a172215aa4f97c8c403adeba884d6582a4dd","u8_members_in_order":["VTI","VGK","EWJ","VWO","IEF","TIP","GLD","DBC"]},
+    "u8_members_in_order":["VTI","VGK","EWJ","VWO","IEF","TIP","GLD","DBC"],
+    "cutoff_inclusive":"2015-12-31"
+  },
+  "decision_vectors":{"path":"tests/fixtures/l4_b88r5/decision_vectors_v6.json","sha256":"4a4eae22d2a35c7b9741b89e8e7b202ac1919a8da4812de7681fff999950f4d3"},
+  "activation":{"path":"experiments/activation_records/l_4_breadth_b88r5_scientific_execution_activation_v6.json","schema_version":"lily_l4_b88r5_activation_v6","marker_path":"reports/experiments/l_4_breadth_b88r5_one_shot_marker_v6.json","gate_owns_schema_owner_literal_and_provisioned_identity":true,"one_read_after_atomic_marker_only":true,"no_retry":true},
+  "execution_dependencies":[
+    "lib/l4_b88r5_lifecycle_v6.py",
+    "lib/l4_b88r5_scientific_engine_v6.py",
+    "lib/l4_b88r4_scientific_engine_v5.py",
+    "lib/l4_b88_scientific_contract_v1.py",
+    "lib/l4_b88r_scientific_engine_v2.py",
+    "lib/statistics.py",
+    "lib/trend_baseline.py",
+    "scripts/run_l_4_breadth_b88r5_committed_bootstrap_v6.py",
+    "scripts/run_l_4_breadth_b88r5_scientific_execution_v6.py",
+    "scripts/validate_l_4_breadth_b88r5_phase_a_execution_contract_v6.py",
+    "scripts/validate_l_4_breadth_b88r5_scientific_report_v6.py",
+    "schemas/l_4_breadth_b88r5_activation_v6.schema.json",
+    "schemas/l_4_breadth_b88r5_scientific_report_v6.schema.json"
+  ],
+  "execution_binding":{
+    "lib/l4_b88r5_lifecycle_v6.py":{"path":"lib/l4_b88r5_lifecycle_v6.py","sha256":"bd2a014a60fb905bc37ccc5382bbb60ea7a7c95941cc4629c62be28d5bde5d93"},
+    "lib/l4_b88r5_scientific_engine_v6.py":{"path":"lib/l4_b88r5_scientific_engine_v6.py","sha256":"7d71e63f4b7e62b794eac6fd556057a2de8b75de7309af7b9fff27b198cb0e04"},
+    "lib/l4_b88r4_scientific_engine_v5.py":{"path":"lib/l4_b88r4_scientific_engine_v5.py","sha256":"9d44d4ec0c3e40037b989d27f89d3f89fbc43b20648ce89204a788492d9769bf"},
+    "lib/l4_b88_scientific_contract_v1.py":{"path":"lib/l4_b88_scientific_contract_v1.py","sha256":"4a41a5fe95b089b8ee03db2070b028526892987c076078bc3626d375902dd6e7"},
+    "lib/l4_b88r_scientific_engine_v2.py":{"path":"lib/l4_b88r_scientific_engine_v2.py","sha256":"2ca1c24abdeaa4dc6586313e814b902f728cbb7f34cbaa598895a55789a496d2"},
+    "lib/statistics.py":{"path":"lib/statistics.py","sha256":"763ff2fc5ae72e7db45d96648df9ed47ac91b51ae11ca77be776b79f7c568035"},
+    "lib/trend_baseline.py":{"path":"lib/trend_baseline.py","sha256":"c2ea3a7462a88bb18bb3814d618f6738a9f1024c28cb5b50074184b05d648d28"},
+    "scripts/run_l_4_breadth_b88r5_committed_bootstrap_v6.py":{"path":"scripts/run_l_4_breadth_b88r5_committed_bootstrap_v6.py","sha256":"c3046e835e922de0c57caf0bca214000ecab120d3f8afcd29f309fe4b7817918"},
+    "scripts/run_l_4_breadth_b88r5_scientific_execution_v6.py":{"path":"scripts/run_l_4_breadth_b88r5_scientific_execution_v6.py","sha256":"f5b2981c793957a5f1d31caac1d47ea0c725408bf6f1568ef9bbf9d536aaebcf"},
+    "scripts/validate_l_4_breadth_b88r5_phase_a_execution_contract_v6.py":{"path":"scripts/validate_l_4_breadth_b88r5_phase_a_execution_contract_v6.py","sha256":"799efa3694439a28546691c8a1eaffe3c1455b393299f9c3e27c8b398c5d2868"},
+    "scripts/validate_l_4_breadth_b88r5_scientific_report_v6.py":{"path":"scripts/validate_l_4_breadth_b88r5_scientific_report_v6.py","sha256":"86959f85c8fb1902eefc7aa2109bed5872344fca8497c78a28bb5c9ee367a459"},
+    "schemas/l_4_breadth_b88r5_activation_v6.schema.json":{"path":"schemas/l_4_breadth_b88r5_activation_v6.schema.json","sha256":"f29073ec74e6686e50983377a9eca620003124a3f02b970df61c52719ced187b"},
+    "schemas/l_4_breadth_b88r5_scientific_report_v6.schema.json":{"path":"schemas/l_4_breadth_b88r5_scientific_report_v6.schema.json","sha256":"2d81d69e00cd025b605ffe2ee9caccdc4cdf530fffa550280c3ec86a36f415ed"}
+  },
+  "validation_seal":{"status":"sealed_not_accessed","accessed":false},
+  "authorizations":{"data":false,"container":false,"market":false,"return":false,"signal":false,"position":false,"covariance":false,"regime":false,"cost":false,"pnl":false,"validation":false,"provider":false,"network":false,"credentials":false,"broker":false,"paid":false,"paper_trade":false,"real_money":false,"activation":false,"execution":false,"report":false,"research_decision":false,"ledger":false},
+  "access_counts":{"activation_count":0,"production_execution_count":0,"production_report_count":0,"ledger_count":0,"real_container_read_hash_scan_count":0,"market_return_signal_position_covariance_regime_cost_pnl_count":0,"validation_access_count":0,"provider_network_credentials_broker_paid_paper_real_money_count":0},
+  "hard_stops":["Phase A must not create activation, marker, report, or ledger.","No real container/data read, hash, scan, or return decode in Phase A.","No validation, provider, network, credential, broker, paid, paper, or real-money activity.","Activation identity must equal the provisioned B8.6R13 container, structural manifest, and U8 session payload identities; caller-supplied alternatives are forbidden.","Clean checkout including tracked and untracked paths is required before marker claim.","Normal commits and normal push only; never amend, reset, rebase, or force push."]
+}

@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Lily B8.8R5 activation v6",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "gate_id", "gate_sha256", "owner_literal", "accepted_gate_head_sha", "hermetic_ci_head_sha", "hermetic_ci_run_id", "inspector_decision", "container_path", "container_sha256", "structural_manifest_path", "structural_manifest_sha256", "u8_sessions_path", "u8_sessions_sha256", "u8_members_in_order", "cutoff_inclusive", "marker_path", "validation_seal"],
+  "properties": {
+    "schema_version": {"const": "lily_l4_b88r5_activation_v6"},
+    "gate_id": {"const": "l_4_breadth_b88r5_phase_a_execution_contract_v6"},
+    "gate_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "owner_literal": {"const": "continue the work till we complete L4"},
+    "accepted_gate_head_sha": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+    "hermetic_ci_head_sha": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+    "hermetic_ci_run_id": {"type": "integer", "minimum": 1},
+    "inspector_decision": {"const": "ACCEPTED"},
+    "container_path": {"const": "data/normalized/l1_yahoo_daily_v1.json"},
+    "container_sha256": {"const": "6608c0ef88f4b7edaef7523738d7a172215aa4f97c8c403adeba884d6582a4dd"},
+    "structural_manifest_path": {"const": "experiments/provisioned/l_4_breadth_b86r13_falsification_manifest_v15.json"},
+    "structural_manifest_sha256": {"const": "de00a4b5a5dd732e27a4a9900868a0f696bb80794e04924da9187808311bb008"},
+    "u8_sessions_path": {"const": "experiments/provisioned/l_4_breadth_b86r13_u8_session_dates_v15.json"},
+    "u8_sessions_sha256": {"const": "f95665db8ad78280433b37e646486ba03954d0eccba13538d41e961ea88c94ef"},
+    "u8_members_in_order": {"const": ["VTI", "VGK", "EWJ", "VWO", "IEF", "TIP", "GLD", "DBC"]},
+    "cutoff_inclusive": {"const": "2015-12-31"},
+    "marker_path": {"const": "reports/experiments/l_4_breadth_b88r5_one_shot_marker_v6.json"},
+    "validation_seal": {"const": {"status": "sealed_not_accessed", "accessed": false}}
+  }
+}
