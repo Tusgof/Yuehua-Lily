@@ -164,9 +164,15 @@ Past reports are reproduced by checking out their recorded commit hash. Do not c
 
 `docs/DECISION_RECORD_005_FORWARD_RESEARCH_EXECUTION.md` governs future work without changing historical orders or locked evidence. Lily's minimum viable research system is `L-1 60-day baseline + equal-notional q sizing + L-4 breadth + locked costs`; L-2 multi-lookback and L-3 inverse-volatility are optional improvements, not prerequisites.
 
-GPT-5.6 Luna Max works as the primary implementation Worker in a separate user-opened session. The root Codex session is the Inspector and sole `research_log/` author unless the owner explicitly changes that rule. Luna works autonomously inside one bounded order, then commits, pushes, verifies exact-SHA CI, and stops for Inspector review only at CP-A real-evidence activation, CP-B empirical result, CP-C validation unlock, CP-D external or operational action, or CP-X unexpected integrity incident.
+Decision Record 005's scientific simplification, forward sequence, and CP risk definitions remain in force. GOV-1 prospectively supersedes only Decision Record 005's role, session, branch, and closure mechanics. Under GOV-1, the Inspector is `gpt-5.6-sol / high` and repository read-only; the Worker is `gpt-5.6-luna / max` and workspace-write in a fresh separate thread for each milestone or work order. The Worker works one bounded order, pushes only its milestone branch, and hands off for Inspector review. The Inspector remains the sole `research_log/` author.
 
 Future execution machinery must pass a clean temporary-Git end-to-end test before CP-A. One bounded remediation is allowed after a first rejection; a second rejection at the same critical point ends patch layering and requires a smaller Inspector-reviewed replacement design.
+
+### 9.2 GOV-1 Adopted Agent Operating Model
+
+GOV-1 adopts `gpt-5.6-sol / high` as the repository-read-only Inspector and `gpt-5.6-luna / max` as the workspace-write Worker. The Inspector chat remains continuous; a fresh Worker thread is required for every milestone or work order. The Inspector owns Project Vision, the approved content of `PROJECT_BRAIN.md` and `IMPLEMENT_PLAN.md`, decomposition, acceptance gates, and independent Architecture, Scope, Security, and quality review. The Worker is the sole implementation writer for one bounded work order, runs tests, updates the tracker, commits, pushes only the milestone branch, and returns evidence. Neither role merges; the user decides material questions and merge/integration.
+
+The Inspector reviews before work starts, at explicit risk checkpoints, and before milestone closure. The Worker must stop and return to the Inspector for an ambiguous plan, changed risk, failed gate, unrelated dirty state, or any need for merge, deployment, production state, or external publication. The Worker must not autonomously change BRAIN, PLAN, locked gates, or scope. GOV-1 alone permits mechanical application of this exact approved policy to BRAIN and PLAN, with no change to scientific status, evidence tier, hypothesis state, or the L-4 next-safe-action substance. Future BRAIN/PLAN edits require Inspector-authored exact text inside an owner-approved governance order. Research logs remain Inspector-authored, and GOV-1 creates no research log.
 
 ## 10. Current Verified State
 
@@ -239,7 +245,7 @@ Future execution machinery must pass a clean temporary-Git end-to-end test befor
 - **L-4 B8.6R13B one-shot structural provisioning**: the sole authorized git-show committed-bootstrap invocation at `d06001b54a80321b9b7be356ef808670b17dfba6` exited `0`. It produced the canonical attempt marker, report, falsification manifest, and U8 session-date payload after one bounded container read that matched the locked SHA-256. The report validator passed; U8/order and structural dates through 2015-12-31 are bound, return decoding and validation access are zero, and the validation seal remains intact. This is E0 structural provenance, not a breadth result; `edge_claim none`. The one-shot cannot be retried.
 - **L-4 B8.7 Phase A capacity**: source-bound v4 science plus the B8.6R13B committed structural date artifacts derive 465 U8-common weekly paired slots from 2007-02-05 through 2015-12-31. Each of the four mandatory metrics separately clears planning `MinTRL_falsify` 49. This is E0 capacity only, not an E1 outcome: actual weekly paired MinTRL recalculation remains mandatory; validation sealed, edge_claim none, and every later activation/execution authorization false.
 - **Locked-gate manifest rotation**: `experiments/locked_gates.jsonl` is sealed v1 at 64,976 bytes to remain within the legacy B8.5R2 65,536-byte bound. New rows begin in `experiments/locked_gates_v2.jsonl`; `experiments/locked_gate_segments.json` binds both segments and their migration provenance.
-- **Operating roles**: GPT-5.6 Luna Max in a separate user-opened session is the primary implementation Worker. The root Codex session is Inspector and sole `research_log/` author; Luna works independently between the critical points defined in Decision Record 005 and uses pushed Git state plus an owner-forwarded handoff packet as the interface.
+- **GOV-1 operating model**: `docs/DECISION_RECORD_006_AGENT_OPERATING_MODEL.md` is the current prospective role, thread, branch, review-point, governance-document, user-integration, and research-log policy. Historical direct-main behavior is not rewritten. Scientific status remains unchanged, including unresolved L-4 E0, `edge_claim none`, sealed validation, and the existing L-4 next-safe-action substance.
 - **Databento**: `DATABENTO_API_02` passes metadata access with USD 0 spend, but relevant US-equity coverage begins in 2018 or later and no dedicated corporate-actions history was exposed; owner-reported USD 50 credit has unverified real-payment provenance
 
 ## 11. Next Safe Action
@@ -269,7 +275,7 @@ Always:
 - report calendar observations, trade counts, and effective independent bets;
 - record provenance, commit hash, environment, evidence tier, blockers, and scope;
 - write the audited Thai research log required for every completed experiment;
-- finish modifying sessions by pushing and reporting `origin/main` hash.
+- finish modifying sessions by pushing only the named milestone branch and reporting its remote hash.
 
 ## 13. Source Lineage
 

@@ -24,7 +24,7 @@ Forward sequence:
 4. Revisit L-2 only if a new preregistration proves static `MinTRL_falsify` capacity before return access; otherwise retire it.
 5. Permit L-3 at most one new small preregistered attempt; if that cannot produce one valid bounded run, retain equal-notional q and retire the inverse-volatility branch.
 
-GPT-5.6 Luna Max is the primary implementation Worker in a separate user-opened session. The root Codex session is the Inspector and sole `research_log/` author. Luna works autonomously between the critical points below, then pushes and hands off:
+Decision Record 005's scientific simplification, forward sequence, and CP risk definitions remain in force. GOV-1 prospectively supersedes only Decision Record 005's role, session, branch, and closure mechanics. Under GOV-1, the Inspector is `gpt-5.6-sol / high` and repository read-only; the Worker is `gpt-5.6-luna / max` and workspace-write in a fresh separate thread for each milestone or work order. The Worker works one bounded order, pushes only its milestone branch, and hands off for Inspector review. The Inspector remains the sole `research_log/` author.
 
 - **CP-A**: before real-return access, activation, or scientific execution;
 - **CP-B**: after an empirical report, before outcome/registry/next-hypothesis decisions;
@@ -33,6 +33,12 @@ GPT-5.6 Luna Max is the primary implementation Worker in a separate user-opened 
 - **CP-X**: immediately after an unexpected one-shot, provenance, leakage, or locked-invariant incident.
 
 Every future execution path must pass a clean temporary-Git end-to-end test before CP-A. One bounded remediation is allowed after a first rejection. A second rejection at the same critical point stops patch layering and requires an Inspector-reviewed smaller replacement design.
+
+### 1.2 GOV-1 Adopted Agent Operating Model
+
+For work orders created after GOV-1 acceptance, the Inspector is `gpt-5.6-sol / high` with repository read-only access and a continuous chat; the Worker is `gpt-5.6-luna / max` with workspace-write access in a fresh thread for each milestone or work order. The Inspector owns Project Vision, approved BRAIN/PLAN content, decomposition, acceptance gates, and independent Architecture, Scope, Security, and quality review. The Worker is the sole implementation writer for one bounded order, runs tests, updates the tracker, commits, pushes only the milestone branch, and returns evidence. The Worker does not merge, deploy, write production state, or publish externally; the user decides material questions and merge/integration.
+
+Review occurs before work starts, at explicit risk checkpoints (CP-A, CP-B, CP-C, CP-D, and CP-X), and before milestone closure. An ambiguous plan, changed risk, failed acceptance gate, unrelated dirty state, or required merge/deployment/production/external action stops the Worker and returns the order to the Inspector. The Worker may not autonomously change BRAIN, PLAN, locked gates, or scope. GOV-1 alone permits mechanical application of this exact approved policy to BRAIN and PLAN, reconciling only directly conflicting role statements and changing no scientific status, evidence tier, hypothesis state, or L-4 next-safe-action substance. Future BRAIN/PLAN edits require Inspector-authored exact text inside an owner-approved governance work order. Research logs remain Inspector-authored; GOV-1 creates no research log.
 
 ## 2. Accepted Design Inputs
 

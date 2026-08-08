@@ -27,17 +27,18 @@ Before editing, state:
 
 ### 3.1 Worker, Inspector, And Boot Sequence
 
-- GPT-5.6 Luna Max in a separate user-opened session is the primary implementation Worker. The root Codex session is the Inspector.
-- Before every modifying session, both roles must read `PROJECT_BRAIN.md`, `IMPLEMENT_PLAN.md`, this file, and `experiments/bootstrap_tracker.json`, then the owner-supplied Yuehua-Kit files `06-Final-[SETUP].txt` and `09-Order-[WORK].txt`.
-- Luna works autonomously within one bounded order. Pushed Git state and an owner-forwarded handoff packet are the interface between the separate sessions.
-- Luna must not create or edit `research_log/`. The Inspector decides whether a research log is required and is its sole author unless the owner explicitly changes that rule.
-- Luna must stop after commit, push, and exact-SHA CI verification at:
-  - **CP-A**: before real-return access, activation, or scientific execution;
-  - **CP-B**: after an empirical report, before changing the outcome, registry state, or next hypothesis;
-  - **CP-C**: before access to the sealed validation window;
-  - **CP-D**: before paid data, provider mutation, broker preview/order, paper trading, or real-money action;
-  - **CP-X**: after an unexpected one-shot, provenance, leakage, or locked-invariant incident.
-- Inspector review is not required between those points unless the owner asks for it or the bounded order reaches a stop condition.
+- **Inspector**: `gpt-5.6-sol / high`, repository read-only. The Inspector chat remains continuous and is the primary reasoning channel.
+- **Worker**: `gpt-5.6-luna / max`, workspace-write. The Worker is the primary implementation agent in a fresh separate thread for each milestone or work order.
+- A fresh Worker thread is required for every milestone or work order. Before every Inspector or Worker session, both roles must read `PROJECT_BRAIN.md`, `IMPLEMENT_PLAN.md`, this file, and `experiments/bootstrap_tracker.json`, then the owner-supplied Yuehua-Kit files `06-Final-[SETUP].txt` and `09-Order-[WORK].txt`.
+- The Inspector is the primary reasoning partner. It owns Project Vision, the approved content of `PROJECT_BRAIN.md` and `IMPLEMENT_PLAN.md`, work-order decomposition, acceptance gates, and independent Architecture, Scope, Security, and quality review.
+- The Worker independently implements one bounded work order, runs its tests, updates the tracker, commits, pushes only the milestone branch, and returns evidence. The Worker is the sole implementation writer during that work order to avoid file collisions.
+- The Worker must not merge, deploy, write production state, or publish externally, and must not autonomously change `PROJECT_BRAIN.md`, `IMPLEMENT_PLAN.md`, locked gates, or scope.
+- GOV-1 is the one exception for this order: the Worker may mechanically apply this exact Inspector-approved operating policy to `PROJECT_BRAIN.md` and `IMPLEMENT_PLAN.md` and reconcile only directly conflicting role statements. It must not change scientific status, evidence tier, hypothesis state, or the L-4 next-safe-action substance.
+- Future `PROJECT_BRAIN.md` or `IMPLEMENT_PLAN.md` edits require an Inspector-authored exact change inside an owner-approved governance work order. The Worker may apply that text but may not reinterpret it.
+- The Inspector reviews at three points: before work starts, at each explicit risk checkpoint, and before milestone closure. Risk checkpoints include **CP-A** before real-return access, activation, or scientific execution; **CP-B** after an empirical report and before changing outcome, registry state, or next hypothesis; **CP-C** before access to the sealed validation window; **CP-D** before paid data, provider mutation, broker preview/order, paper trading, or real-money action; and **CP-X** after an unexpected one-shot, provenance, leakage, or locked-invariant incident.
+- If the plan is ambiguous, risk changes, an acceptance gate fails, unrelated dirty state appears, or merge, deployment, production, or external action would be needed, the Worker stops and returns to the Inspector.
+- Merge authority is outside both roles: the Worker and the read-only Inspector do not merge. The user receives the evidence and decides material questions and merge/integration, performing it or separately delegating it.
+- The Inspector decides whether a research log is required and is its sole author for genuine research events/results. The Worker must not create or edit `research_log/`; GOV-1 creates no research log.
 
 ## 4. Evidence And Claims
 
@@ -121,10 +122,10 @@ Every session that modifies files must:
 1. run the scoped verification;
 2. inspect the final diff and unrelated changes;
 3. commit with the agent trailer;
-4. push to `origin/main`;
-5. report the resulting `origin/main` hash.
+4. push only the named milestone branch to `origin`;
+5. verify exact-SHA CI for that branch and report the branch and remote commit hash.
 
-Do not claim completion for anything not visible at that hash. Session summaries may claim only what the pushed commit proves.
+Never push `main`, merge, deploy, write production state, or publish externally from a Worker session. The GOV-1 branch-only rule supersedes earlier direct-main Worker behavior prospectively; historical commits and records are not rewritten. Do not claim completion for anything not visible at the reported remote hash. Session summaries may claim only what the pushed commit proves.
 
 ## 12. Source Lineage
 
