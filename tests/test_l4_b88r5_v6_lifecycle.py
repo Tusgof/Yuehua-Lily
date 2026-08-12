@@ -69,10 +69,12 @@ class B88R5V6Lifecycle(unittest.TestCase):
         )
         bootstrap = importlib.util.module_from_spec(bootstrap_spec)
         bootstrap_spec.loader.exec_module(bootstrap)
-        checked = bootstrap.preflight(ROOT, self.git(ROOT, "rev-parse", "HEAD"))
+        accepted_pre_activation = "fc727d78fc38a70e7bef7c85fb22d3e8fe2c7006"
+        checked = bootstrap.preflight(ROOT, accepted_pre_activation)
         self.assertFalse(checked["ready"])
-        self.assertIn(checked["outcome"], {"refused_execution_provenance", "dirty_checkout", "refused_activation"})
-        self.assertFalse((ROOT / "experiments/activation_records/l_4_breadth_b88r5_scientific_execution_activation_v6.json").exists())
+        self.assertEqual("refused_activation", checked["outcome"])
+        self.assertFalse(checked["real_accessed"])
+        self.assertIsNone(bootstrap.blob(ROOT, accepted_pre_activation, bootstrap.ACTIVATION))
         self.assertFalse((ROOT / "reports/experiments/l_4_breadth_b88r5_one_shot_marker_v6.json").exists())
 
         runtime_spec = importlib.util.spec_from_file_location(

@@ -1035,6 +1035,72 @@ def _validate_done_artifact(
                 ok = ok and any(item.get("decision") == "B8_8R5_aggregate_side_effect_and_provenance_remediation_v6_E0" for item in l4.get("decision_log", []) if isinstance(item, dict))
         except Exception: ok = False
         return ([] if ok else [f"{order_id}:l4_b88r5_mirror_mismatch"], ok, False)
+    if must == "validate_l4_b88r5ar_activation":
+        if not target.is_file():
+            return [f"{order_id}:missing_artifact:{artifact_path}"], False, False
+        if not verify_runtime:
+            return [], False, True
+        completed = subprocess.run(
+            [sys.executable, str(target)],
+            cwd=project_root,
+            text=True,
+            capture_output=True,
+            check=False,
+        )
+        try:
+            result = json.loads(completed.stdout)
+        except (json.JSONDecodeError, TypeError):
+            result = {}
+        ok = (
+            completed.returncode == 0
+            and result.get("status") == "pass"
+            and result.get("preflight_outcome") == "preflight_ready"
+            and result.get("real_accessed") is False
+        )
+        return (
+            [] if ok else [f"{order_id}:l4_b88r5ar_activation_validation_failed"],
+            ok,
+            False,
+        )
+    if must == "register_l4_b88r5ar_scripts":
+        required = ("scripts/validate_l_4_breadth_b88r5ar_activation_v6.py",)
+        try:
+            scripts = json.loads(target.read_text(encoding="utf-8")).get("scripts", [])
+            ok = all(scripts.count(item) == 1 for item in required)
+        except Exception:
+            ok = False
+        return (
+            [] if ok else [f"{order_id}:l4_b88r5ar_script_registration_mismatch"],
+            ok,
+            False,
+        )
+    if must == "match_l4_b88r5ar_mirror":
+        try:
+            text = target.read_text(encoding="utf-8").replace("`", "")
+            required = ("B8.8R5AR", "E0", "edge_claim none", "validation sealed")
+            if artifact_path in {"PROJECT_BRAIN.md", "docs/HYPOTHESIS_REGISTRY.md"}:
+                required += ("stale", "pre-activation", "test")
+            ok = all(item in text for item in required)
+            if artifact_path == "experiments/hypothesis_registry.json":
+                l4 = next(item for item in json.loads(text).get("hypotheses", []) if item.get("id") == "L-4")
+                ok = ok and any(
+                    item.get("decision") == "B8_8R5AR_clean_replacement_activation_checkpoint_E0"
+                    for item in l4.get("decision_log", [])
+                    if isinstance(item, dict)
+                )
+                ok = ok and any(
+                    item.get("path") == "experiments/activation_records/l_4_breadth_b88r5_scientific_execution_activation_v6.json"
+                    and item.get("evidence_tier") == "E0"
+                    for item in l4.get("evidence", [])
+                    if isinstance(item, dict)
+                )
+        except Exception:
+            ok = False
+        return (
+            [] if ok else [f"{order_id}:l4_b88r5ar_mirror_mismatch"],
+            ok,
+            False,
+        )
     if must == "validate_l4_b86r11_gate_and_report":
         fixture = project_root / "tests/fixtures/l4_b86r11/synthetic_blocked_report_v13.json"
         if not target.is_file() or not fixture.is_file():
