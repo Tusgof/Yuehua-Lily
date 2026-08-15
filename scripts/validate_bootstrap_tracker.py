@@ -959,18 +959,6 @@ def _validate_done_artifact(
         return _validate_l4_b84_runtime(target, order_id, "scripts/validate_l_4_breadth_b88r4_phase_a_execution_contract_v5.py", project_root)
     if must == "validate_l4_b88r5_gate":
         return _validate_l4_b84_runtime(target, order_id, "scripts/validate_l_4_breadth_b88r5_phase_a_execution_contract_v6.py", project_root)
-    if must == "exist_and_deny_without_activation":
-        if not target.is_file():
-            return [f"{order_id}:missing_artifact:{artifact_path}"], False, False
-        if not verify_runtime:
-            return [], False, True
-        completed = subprocess.run([sys.executable, str(target)], cwd=project_root, text=True, capture_output=True, check=False)
-        try:
-            output = json.loads(completed.stdout)
-        except (json.JSONDecodeError, TypeError):
-            output = {}
-        ok = completed.returncode == 1 and output.get("status") == "blocked" and output.get("real_accessed") is False and output.get("outcome") in {"dirty_checkout", "refused_activation", "refused_execution_provenance"}
-        return ([] if ok else [f"{order_id}:l4_b88r5_bootstrap_not_deny_only"], ok, False)
     if must == "exist_future_only":
         return ([] if target.is_file() else [f"{order_id}:missing_artifact:{artifact_path}"], target.is_file(), False)
     if must == "contain_three_reachable_e1_outcomes":
@@ -1074,12 +1062,26 @@ def _validate_done_artifact(
             ok,
             False,
         )
+    if must == "register_l4_b88r5arx_scripts":
+        required = (
+            "scripts/validate_l_4_breadth_b88r5arx_incident_v1.py",
+            "scripts/validate_l_4_breadth_b88r5_historical_pre_activation_v6.py",
+        )
+        try:
+            scripts = json.loads(target.read_text(encoding="utf-8")).get("scripts", [])
+            stdlib_only = json.loads(target.read_text(encoding="utf-8")).get("stdlib_only_scripts", [])
+            ok = all(scripts.count(item) == 1 for item in (required[0],)) and stdlib_only.count(required[1]) == 1
+        except Exception:
+            ok = False
+        return (
+            [] if ok else [f"{order_id}:l4_b88r5arx_script_registration_mismatch"],
+            ok,
+            False,
+        )
     if must == "match_l4_b88r5ar_mirror":
         try:
             text = target.read_text(encoding="utf-8").replace("`", "")
-            required = ("B8.8R5AR", "E0", "edge_claim none", "validation sealed")
-            if artifact_path in {"PROJECT_BRAIN.md", "docs/HYPOTHESIS_REGISTRY.md"}:
-                required += ("stale", "pre-activation", "test")
+            required = ("B8.8R5AR-X", "E0", "edge_claim none", "validation sealed")
             ok = all(item in text for item in required)
             if artifact_path == "experiments/hypothesis_registry.json":
                 l4 = next(item for item in json.loads(text).get("hypotheses", []) if item.get("id") == "L-4")
@@ -1098,6 +1100,28 @@ def _validate_done_artifact(
             ok = False
         return (
             [] if ok else [f"{order_id}:l4_b88r5ar_mirror_mismatch"],
+            ok,
+            False,
+        )
+    if must == "match_l4_b88r5arx_mirror":
+        try:
+            text = target.read_text(encoding="utf-8").replace("`", "")
+            required = ("B8.8R5AR-X", "E0", "edge_claim none", "validation", "sealed")
+            if artifact_path != "IMPLEMENT_PLAN.md":
+                required += ("incident", "unknown_not_durably_proven", "lower bound 0", "upper bound 1")
+            required += ("no retry is allowed",) if artifact_path == "IMPLEMENT_PLAN.md" else ("must not be retried",)
+            ok = all(item in text for item in required)
+            if artifact_path == "experiments/hypothesis_registry.json":
+                l4 = next(item for item in json.loads(text).get("hypotheses", []) if item.get("id") == "L-4")
+                ok = ok and any(
+                    item.get("decision") == "B8_8R5ARX_runtime_tracker_incident_E0"
+                    for item in l4.get("decision_log", [])
+                    if isinstance(item, dict)
+                )
+        except Exception:
+            ok = False
+        return (
+            [] if ok else [f"{order_id}:l4_b88r5arx_mirror_mismatch"],
             ok,
             False,
         )

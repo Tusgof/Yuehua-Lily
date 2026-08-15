@@ -1,0 +1,69 @@
+{
+  "schema_version": "lily_l4_b88r5arx_runtime_tracker_incident_v1",
+  "order_id": "B8.8R5AR-X",
+  "hypothesis_id": "L-4",
+  "incident_type": "control_plane_one_shot_consumed_by_runtime_tracker",
+  "evidence_tier": "E0",
+  "edge_claim": "none",
+  "scientific_outcome": "none",
+  "validation_seal": {"status": "sealed_not_accessed", "accessed": false},
+  "trigger": {
+    "historical_order_id": "B8.8R5AR",
+    "producing_commit": "8f080d39dca04714f7a245e13e8a4d782875c7d9",
+    "command": "python scripts/validate_bootstrap_tracker.py",
+    "handler": "exist_and_deny_without_activation",
+    "activation_path": "experiments/activation_records/l_4_breadth_b88r5_scientific_execution_activation_v6.json",
+    "activation_sha256": "6f092c187b8236ba52ecc9d3dfde78192a70f05ef635c4c9b5d67b97a9604913"
+  },
+  "marker": {
+    "path": "reports/experiments/l_4_breadth_b88r5_one_shot_marker_v6.json",
+    "sha256": "82ff7980d3e15b372747e1cdefdacfe68688c8c15899041b73c8e10ad9e0432c",
+    "fields": {
+      "activation_sha256": "6f092c187b8236ba52ecc9d3dfde78192a70f05ef635c4c9b5d67b97a9604913",
+      "producing_commit": "8f080d39dca04714f7a245e13e8a4d782875c7d9",
+      "schema_version": "lily_l4_b88r5_marker_v6"
+    }
+  },
+  "activation": {
+    "path": "experiments/activation_records/l_4_breadth_b88r5_scientific_execution_activation_v6.json",
+    "sha256": "6f092c187b8236ba52ecc9d3dfde78192a70f05ef635c4c9b5d67b97a9604913",
+    "gate_id": "l_4_breadth_b88r5_phase_a_execution_contract_v6",
+    "accepted_gate_head_sha": "fc727d78fc38a70e7bef7c85fb22d3e8fe2c7006",
+    "owner_literal": "continue the work till we complete L4",
+    "validation_seal": {"status": "sealed_not_accessed", "accessed": false}
+  },
+  "root_cause": {
+    "code": "historical_tracker_executed_activation_capable_bootstrap",
+    "description": "The historical exist_and_deny_without_activation handler launched the activation-capable bootstrap as a subprocess; after canonical activation existed, the bootstrap entered run() instead of a preflight-only path.",
+    "tracker_executable_behavior": true
+  },
+  "structural_reads": [
+    {"path": "experiments/provisioned/l_4_breadth_b86r13_falsification_manifest_v15.json", "accessed": true, "scope": "structural_metadata_only", "after_marker": true},
+    {"path": "experiments/provisioned/l_4_breadth_b86r13_u8_session_dates_v15.json", "accessed": true, "scope": "structural_metadata_only", "after_marker": true}
+  ],
+  "access_bounds": {
+    "container_return_access": {"classification": "unknown_not_durably_proven", "lower_bound": 0, "upper_bound": 1},
+    "validation_access_count": 0
+  },
+  "confirmed_absent_artifacts": [
+    "reports/experiments/l_4_breadth_b88r5_scientific_report_v6.json",
+    "reports/experiments/l_4_breadth_b88r5_execution_ledger_v6.json",
+    "reports/experiments/l_4_breadth_b88r5_execution_attempt_v6.json"
+  ],
+  "operational_access_counts": {"provider": 0, "network": 0, "credentials": 0, "broker": 0, "paid": 0, "paper_trade": 0, "real_money": 0},
+  "lifecycle": {
+    "activation_status": "consumed",
+    "retry_allowed": false,
+    "scientific_execution_authorized": false,
+    "new_owner_approved_gate_required": true,
+    "new_namespace_required": true,
+    "scientific_report_or_ledger_created": false
+  },
+  "prevention": {
+    "historical_required_artifact_condition": "exist",
+    "dangerous_handler_removed": true,
+    "safe_validator_path": "scripts/validate_l_4_breadth_b88r5_historical_pre_activation_v6.py",
+    "safe_validator_call": "bootstrap.preflight(ROOT, fc727d78fc38a70e7bef7c85fb22d3e8fe2c7006) only",
+    "no_retry_rule": "The consumed v6 one-shot must not be retried."
+  }
+}
