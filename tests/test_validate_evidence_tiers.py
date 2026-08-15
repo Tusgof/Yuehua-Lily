@@ -1,6 +1,8 @@
 from __future__ import annotations
 
+import tempfile
 import unittest
+from pathlib import Path
 
 from scripts.validate_evidence_tiers import (
     PROJECT_ROOT,
@@ -25,7 +27,20 @@ class EvidenceTierValidatorTests(unittest.TestCase):
             (PROJECT_ROOT / "reports/experiments/l_4_breadth_b86r13_provisioning_report_v15.json").resolve(),
             paths,
         )
+        self.assertNotIn(
+            (PROJECT_ROOT / "reports/experiments/l_4_breadth_b88r5_one_shot_marker_v6.json").resolve(),
+            paths,
+        )
         self.assertIn((PROJECT_ROOT / "reports/experiments/l_1_baseline_summary.json").resolve(), paths)
+
+    def test_similarly_named_marker_outside_exact_allowlist_remains_audited(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            reports = Path(temporary) / "reports"
+            experiments = reports / "experiments"
+            experiments.mkdir(parents=True)
+            marker = experiments / "l_4_breadth_b88r5_one_shot_marker_v6.json"
+            marker.write_text("{}", encoding="ascii")
+            self.assertIn(marker.resolve(), {path.resolve() for path in _research_reports(reports)})
 
     def test_E1_pass_or_edge_claim_is_rejected(self) -> None:
         payload = {

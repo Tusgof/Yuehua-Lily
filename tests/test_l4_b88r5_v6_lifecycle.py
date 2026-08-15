@@ -70,12 +70,36 @@ class B88R5V6Lifecycle(unittest.TestCase):
         bootstrap = importlib.util.module_from_spec(bootstrap_spec)
         bootstrap_spec.loader.exec_module(bootstrap)
         accepted_pre_activation = "fc727d78fc38a70e7bef7c85fb22d3e8fe2c7006"
-        checked = bootstrap.preflight(ROOT, accepted_pre_activation)
-        self.assertFalse(checked["ready"])
-        self.assertEqual("refused_activation", checked["outcome"])
-        self.assertFalse(checked["real_accessed"])
-        self.assertIsNone(bootstrap.blob(ROOT, accepted_pre_activation, bootstrap.ACTIVATION))
-        self.assertFalse((ROOT / "reports/experiments/l_4_breadth_b88r5_one_shot_marker_v6.json").exists())
+        with tempfile.TemporaryDirectory() as temporary:
+            checkout = Path(temporary) / "historical-checkout"
+            subprocess.run(
+                ["git", "worktree", "add", "--detach", str(checkout), accepted_pre_activation],
+                cwd=ROOT,
+                check=True,
+                capture_output=True,
+                text=True,
+            )
+            try:
+                checked = bootstrap.preflight(checkout, accepted_pre_activation)
+                self.assertEqual(
+                    {
+                        "status": "blocked",
+                        "outcome": "refused_activation",
+                        "ready": False,
+                        "real_accessed": False,
+                    },
+                    {key: checked.get(key) for key in ("status", "outcome", "ready", "real_accessed")},
+                )
+                self.assertIsNone(bootstrap.blob(checkout, accepted_pre_activation, bootstrap.ACTIVATION))
+                self.assertIsNone(bootstrap.blob(checkout, accepted_pre_activation, bootstrap.MARKER))
+            finally:
+                subprocess.run(
+                    ["git", "worktree", "remove", "--force", str(checkout)],
+                    cwd=ROOT,
+                    check=True,
+                    capture_output=True,
+                    text=True,
+                )
 
         runtime_spec = importlib.util.spec_from_file_location(
             "lily_b88r5_runtime", ROOT / "scripts/run_l_4_breadth_b88r5_scientific_execution_v6.py"
