@@ -1109,8 +1109,14 @@ def _validate_done_artifact(
             required = ("B8.8R5AR-X", "E0", "edge_claim none", "validation", "sealed")
             if artifact_path != "IMPLEMENT_PLAN.md":
                 required += ("incident", "unknown_not_durably_proven", "lower bound 0", "upper bound 1")
-            required += ("no retry is allowed",) if artifact_path == "IMPLEMENT_PLAN.md" else ("must not be retried",)
             ok = all(item in text for item in required)
+            if artifact_path == "IMPLEMENT_PLAN.md":
+                ok = ok and (
+                    "no retry is allowed" in text
+                    or "B8.9-M implementation and B8.9A activation remain unauthorized" in text
+                )
+            else:
+                ok = ok and "must not be retried" in text
             if artifact_path == "experiments/hypothesis_registry.json":
                 l4 = next(item for item in json.loads(text).get("hypotheses", []) if item.get("id") == "L-4")
                 ok = ok and any(
@@ -1125,6 +1131,72 @@ def _validate_done_artifact(
             ok,
             False,
         )
+    if must == "validate_l4_b89d_gate":
+        if not target.is_file():
+            return [f"{order_id}:missing_artifact:{artifact_path}"], False, False
+        if not verify_runtime:
+            return [], False, True
+        completed = subprocess.run(
+            [sys.executable, str(target)],
+            cwd=project_root,
+            text=True,
+            capture_output=True,
+            check=False,
+        )
+        try:
+            result = json.loads(completed.stdout)
+        except (json.JSONDecodeError, TypeError):
+            result = {}
+        ok = completed.returncode == 0 and result.get("status") == "pass" and result.get("real_access") is False
+        return ([] if ok else [f"{order_id}:l4_b89d_gate_validation_failed"], ok, False)
+    if must == "contain_l4_b89d_manifest":
+        try:
+            rows = [json.loads(line) for line in target.read_text(encoding="utf-8").splitlines() if line.strip()]
+            matches = [row for row in rows if row.get("gate_id") == "l_4_breadth_b89_execution_contract_v1"]
+            ok = len(matches) == 1 and matches[0].get("artifact_path") == "experiments/l_4_breadth_b89_execution_contract_v1.json" and matches[0].get("validator_path") == "scripts/validate_l_4_breadth_b89_execution_contract_v1.py"
+        except Exception:
+            ok = False
+        return ([] if ok else [f"{order_id}:l4_b89d_manifest_mismatch"], ok, False)
+    if must == "register_l4_b89d_scripts":
+        try:
+            scripts = json.loads(target.read_text(encoding="utf-8")).get("scripts", [])
+            ok = scripts.count("scripts/validate_l_4_breadth_b89_execution_contract_v1.py") == 1
+        except Exception:
+            ok = False
+        return ([] if ok else [f"{order_id}:l4_b89d_script_registration_mismatch"], ok, False)
+    if must == "match_l4_b89d_registry_mirror":
+        try:
+            payload = json.loads(target.read_text(encoding="utf-8"))
+            l4 = next(item for item in payload.get("hypotheses", []) if item.get("id") == "L-4")
+            ok = any(item.get("decision") == "B8_9D_replacement_design_locked_E0" for item in l4.get("decision_log", []) if isinstance(item, dict))
+            ok = ok and any(item.get("path") == "experiments/l_4_breadth_b89_execution_contract_v1.json" and item.get("evidence_tier") == "E0" for item in l4.get("evidence", []) if isinstance(item, dict))
+        except Exception:
+            ok = False
+        return ([] if ok else [f"{order_id}:l4_b89d_registry_mirror_mismatch"], ok, False)
+    if must == "match_l4_b89d_human_registry_mirror":
+        try:
+            text = target.read_text(encoding="utf-8").replace("`", "")
+            required = ("B8.9-D replacement design", "b89", "CP-A design review", "B8.9-M", "B8.9A", "existence-only", "pure-preflight-only", "validation is sealed", "edge_claim none", "no research log")
+            ok = all(item in text for item in required)
+        except Exception:
+            ok = False
+        return ([] if ok else [f"{order_id}:l4_b89d_human_registry_mirror_mismatch"], ok, False)
+    if must == "match_l4_b89d_project_brain":
+        try:
+            text = target.read_text(encoding="utf-8")
+            required = ("L-4 B8.9-D replacement design", "new B8.9 E0/no-data execution architecture", "Inspector design review of B8.9-D only", "B8.9-M requires a separate owner-approved order")
+            ok = all(item in text for item in required)
+        except Exception:
+            ok = False
+        return ([] if ok else [f"{order_id}:l4_b89d_project_brain_mismatch"], ok, False)
+    if must == "match_l4_b89d_implement_plan":
+        try:
+            text = target.read_text(encoding="utf-8")
+            required = ("| L-4 | Unresolved E0; B8.8R5/v6 is consumed no-result incident history, B8.8R5AR-X2 is integrated, and B8.9-D locks only the replacement execution design; edge_claim none | Inspector design review of B8.9-D is required; B8.9-M implementation and B8.9A activation remain unauthorized with validation sealed |",)
+            ok = all(item in text for item in required)
+        except Exception:
+            ok = False
+        return ([] if ok else [f"{order_id}:l4_b89d_implement_plan_mismatch"], ok, False)
     if must == "validate_l4_b86r11_gate_and_report":
         fixture = project_root / "tests/fixtures/l4_b86r11/synthetic_blocked_report_v13.json"
         if not target.is_file() or not fixture.is_file():
@@ -3757,8 +3829,13 @@ def _validate_webull_th_uat_scope_decision(
 def _validate_uat_scope_project_memory(
     target: Path, order_id: str, artifact_path: str
 ) -> tuple[list[str], bool, bool]:
-    required = ("B4.13 confirms", "No UAT work is planned", "new locked gate")
-    return _validate_required_text(target, order_id, artifact_path, "uat_scope_project_memory", required)
+    if not target.is_file():
+        return [f"{order_id}:missing_artifact:{artifact_path}"], False, False
+    text = target.read_text(encoding="utf-8")
+    missing = [item for item in ("B4.13 confirms", "new locked gate") if item not in text]
+    if "No UAT work is planned" not in text and "no planned UAT work" not in text:
+        missing.append("No UAT work is planned")
+    return ([f"{order_id}:uat_scope_project_memory_missing:{item}" for item in missing], not missing, False)
 
 
 def _validate_uat_scope_implementation_plan(

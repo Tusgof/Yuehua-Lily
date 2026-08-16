@@ -387,7 +387,7 @@ If MinTRL validation cost is unaffordable or undefined against the benchmark nul
 | L-1 | Scope-restricted E1; B4.9 closes the unavailable Webull-ledger dry run without observation; B4.10 adds no L-1 evidence | Validation remains sealed; no broker-ledger or historical-correctness claim |
 | L-2 | E1 underfunded_scope_restricted | Redesign requires a new owner-approved preregistration before any L-2 data access |
 | L-3 | E1 scope_restricted and unresolved; B7.4 invalidates the B7.3 sole run's 500 weekly observations above the 465 ceiling, and B7.15 closes the current preregistration with no L-3 result carried forward as proof that inverse-volatility sizing passed | Validation sealed; no rerun is planned; next gate is L-4 preregistration/planning only |
-| L-4 | Unresolved E0; B8.8R5AR-X records the consumed no-result incident, and B8.8R5AR-X2 closes only the exact-path evidence-audit classification and historical-test assumptions; `edge_claim none` | Inspector closure review and user integration decision for B8.8R5AR-X2; no retry is allowed, and any future execution requires a new owner-approved gate/namespace with validation sealed |
+| L-4 | Unresolved E0; B8.8R5/v6 is consumed no-result incident history, B8.8R5AR-X2 is integrated, and B8.9-D locks only the replacement execution design; edge_claim none | Inspector design review of B8.9-D is required; B8.9-M implementation and B8.9A activation remain unauthorized with validation sealed |
 
 Historical control compatibility: B8 E0/edge_claim none validation retains U1, U4, and U8; B8.1 retains N_eff. B8.3's 465 weekly-paired capacity, macro sleeves, four-outcome validation contract, and all authorizations are false remain intact; its former next step was Inspector review only.
 

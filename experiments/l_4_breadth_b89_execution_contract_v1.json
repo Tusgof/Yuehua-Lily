@@ -1,0 +1,393 @@
+{
+  "schema_version": "lily_l4_b89d_replacement_execution_contract_v1",
+  "order_id": "B8.9-D",
+  "gate_id": "l_4_breadth_b89_execution_contract_v1",
+  "supersedes_gate_id": "l_4_breadth_b88r5_phase_a_execution_contract_v6_hash_correction",
+  "hypothesis_id": "L-4",
+  "status": "locked_E0_static_design_only",
+  "evidence_ceiling": "E0",
+  "edge_claim": "none",
+  "owner_authorization": "Owner-approved static replacement design only. B8.9-M and B8.9A are forbidden under this gate; no activation, execution, data, return, validation, provider, broker, credential, paid, paper, or real-money action is authorized.",
+  "source_binding": {
+    "accepted_science": {
+      "preregistration": {
+        "path": "experiments/l_4_breadth_preregistration_v4.json",
+        "sha256": "648b480aed523074e8c99646b313c70b074ca6bde95c2a30fb88a128d150ffcb",
+        "role": "accepted L-4 v4 science and decision contract"
+      },
+      "validator": {
+        "path": "scripts/validate_l_4_breadth_preregistration_v4.py",
+        "sha256": "78bd4553ca0145d78f2408b0a325fe630897cc717495c6a60766fd72b9a42a42",
+        "role": "accepted L-4 v4 validator"
+      }
+    },
+    "capacity": {
+      "gate": {
+        "path": "experiments/l_4_breadth_b87_phase_a_capacity_gate_v1.json",
+        "sha256": "c5f22f2a7153e79f9e13180ba129f6d19cea8759e8a5bc030c35571b19c13972",
+        "role": "B8.7 no-return capacity gate"
+      },
+      "gate_validator": {
+        "path": "scripts/validate_l_4_breadth_b87_phase_a_capacity_gate_v1.py",
+        "sha256": "e127a4045a8ecf6b64f6d885797701068ebeb23cbb7875b058e56232fed9df03",
+        "role": "B8.7 gate validator"
+      },
+      "report": {
+        "path": "experiments/l_4_breadth_b87_capacity_report_v1.json",
+        "sha256": "220c024b5771d4a3ea39c5936cf18d3fb97a10f0ff8d60958e591ca59971de79",
+        "role": "B8.7 committed no-return capacity report"
+      },
+      "report_validator": {
+        "path": "scripts/validate_l_4_breadth_b87_capacity_report_v1.py",
+        "sha256": "24198a3cd34d84122f0d585a64244fe056b02f532c665b2f201e8cee7a508500",
+        "role": "B8.7 report validator"
+      }
+    },
+    "structural_predecessor": {
+      "provisioning_gate": {
+        "path": "experiments/l_4_breadth_b86r13_provisioning_gate_v15.json",
+        "sha256": "7013e389599cc936f80dfa66f465bc5523d76975c223e0d5325526abb8246fc8",
+        "role": "B8.6R13 structural gate identity"
+      },
+      "provisioning_report": {
+        "path": "reports/experiments/l_4_breadth_b86r13_provisioning_report_v15.json",
+        "sha256": "41e35cc1a5f54f5ee45a5eea61f7da18f28bb77d8fd14738668defb1f9f6d846",
+        "role": "B8.6R13B structural report"
+      },
+      "structural_manifest": {
+        "path": "experiments/provisioned/l_4_breadth_b86r13_falsification_manifest_v15.json",
+        "sha256": "de00a4b5a5dd732e27a4a9900868a0f696bb80794e04924da9187808311bb008",
+        "role": "B8.6R13B committed structural manifest"
+      },
+      "u8_session_dates": {
+        "path": "experiments/provisioned/l_4_breadth_b86r13_u8_session_dates_v15.json",
+        "sha256": "f95665db8ad78280433b37e646486ba03954d0eccba13538d41e961ea88c94ef",
+        "role": "B8.6R13B committed U8 session-date payload"
+      },
+      "provisioning_gate_validator": {
+        "path": "scripts/validate_l_4_breadth_b86r13_provisioning_gate_v15.py",
+        "sha256": "4eca6e654bbda5d1915d3e35c8995e6ee86b55797369824f9b74f2a2977bb7f5",
+        "role": "B8.6R13 structural gate validator"
+      },
+      "provisioning_report_validator": {
+        "path": "scripts/validate_l_4_breadth_b86r13_provisioning_report_v15.py",
+        "sha256": "2b6324623dc9b2b53aa9d20e25c7d032dbe1c35c820161df5997d7c5c94aba9e",
+        "role": "B8.6R13 structural report validator"
+      },
+      "manifest_schema": {
+        "path": "schemas/l_4_breadth_b86r13_falsification_manifest_v15.schema.json",
+        "sha256": "ffe50b25ad36b4503f1b2d52cd0b17136cddbd946f1b0862961959e1cb950ffa",
+        "role": "B8.6R13 structural manifest schema"
+      },
+      "u8_session_dates_schema": {
+        "path": "schemas/l_4_breadth_b86r13_u8_session_dates_v15.schema.json",
+        "sha256": "6dd60ed154a1d06f4db51aeb68b9808e661e54a3b54f9104d6984a016766e746",
+        "role": "B8.6R13 U8 session-date schema"
+      }
+    },
+    "incident": {
+      "report": {
+        "path": "reports/incidents/l_4_breadth_b88r5arx_runtime_tracker_incident_v1.json",
+        "sha256": "03f865635c0e4fa7649cd43942b5c6572f75e0237c441ee7ee41d44b6de79ba3",
+        "role": "B8.8R5AR-X control-plane incident report"
+      },
+      "schema": {
+        "path": "schemas/l_4_breadth_b88r5arx_incident_v1.schema.json",
+        "sha256": "8aa12d887feac3ca55dadb5e0120c738cb295108d5776153d2a2b057770559fd",
+        "role": "B8.8R5AR-X incident schema"
+      }
+    }
+  },
+  "closure_provenance": {
+    "closure_order": "B8.8R5AR-X2",
+    "closure_commit": "086c445e6ef711d1d553a121c2c80577afa86f99",
+    "provenance_files": [
+      {
+        "path": "PROJECT_BRAIN.md",
+        "git_blob_sha1": "0e6f80701792662d15de5f3acc6ad0156bd4464a"
+      },
+      {
+        "path": "IMPLEMENT_PLAN.md",
+        "git_blob_sha1": "6c221e9a47c55ee52cec2bdc428ddd2ca9602faf"
+      },
+      {
+        "path": "experiments/bootstrap_tracker.json",
+        "git_blob_sha1": "50d3ab7e8eef71aab5e06fd73b8471fb9a5b4503"
+      },
+      {
+        "path": "scripts/validate_evidence_tiers.py",
+        "git_blob_sha1": "bd3e1a1e433452e61ee8df491e9d896339c5d7d5"
+      },
+      {
+        "path": "tests/test_validate_evidence_tiers.py",
+        "git_blob_sha1": "ae8959eb92a49e68b155d125604f9fe0e714d567"
+      },
+      {
+        "path": "reports/incidents/l_4_breadth_b88r5arx_runtime_tracker_incident_v1.json",
+        "git_blob_sha1": "36f29475efeeca824702e5615db41a3e96258e4f"
+      }
+    ]
+  },
+  "preserved_science": {
+    "research_question": "On matched pre-2016 U8-common weekly dates, does U8 versus U4 reduce dependency/concentration and increase independent trend opportunity after locked costs and deterministic robustness, without a profitability claim?",
+    "universes": {
+      "order": ["VTI", "VGK", "EWJ", "VWO", "IEF", "TIP", "GLD", "DBC"],
+      "U1": {
+        "members": ["VTI"],
+        "role": "descriptive_only",
+        "claim_eligible": false
+      },
+      "U4": ["VTI", "IEF", "GLD", "DBC"],
+      "U8": ["VTI", "VGK", "EWJ", "VWO", "IEF", "TIP", "GLD", "DBC"],
+      "dates": "Exactly U8-common eligible weekly decision dates; no pairwise, complete-case, post-result, or validation selection."
+    },
+    "primary_sizing": {
+      "step_1": "u[i,t] = q[i,t] with no division by volatility.",
+      "stages": [
+        "gross normalization",
+        "cap and deterministic redistribution",
+        "60-session EWMA PSD-clipped covariance target-volatility scale-down-only",
+        "cash",
+        "trade threshold",
+        "next-actual-NYSE-close execution",
+        "locked cost accounting"
+      ],
+      "sensitivity": "One frozen q/volatility sensitivity is non-claim-eligible and cannot choose a conclusion."
+    },
+    "macro_sleeves": {
+      "equity": ["VTI", "VGK", "EWJ", "VWO"],
+      "nominal_bonds": ["IEF"],
+      "inflation_linked_bonds": ["TIP"],
+      "gold": ["GLD"],
+      "broad_commodities": ["DBC"]
+    },
+    "static_capacity": {
+      "maximum_weekly_slots_before_warmup_missingness_or_evaluable_pair_reductions": 465,
+      "observation_unit": "one weekly paired portfolio observation; never assets, sleeves, correlations, days, trades, or overlapping realized windows."
+    },
+    "inherited_controls": {
+      "primary_sizing": "Primary u[i,t]=q[i,t], then inherited L1 normalization, 60-session EWMA PSD-clipped covariance target-volatility scale-down-only, caps, cash, weekly timing, trade threshold, locked costs, and accounting identically to U4/U8.",
+      "matched_dates": "Exactly U8-common eligible weekly decision dates; no pairwise, complete-case, post-result, or validation selection.",
+      "l3_status": "L-3 remains unresolved; the frozen q/volatility sensitivity is non-claim-eligible and cannot select a conclusion."
+    },
+    "component_risk": {
+      "formula": "rc_i = w_i * (Sigma w)_i; p_i = abs(rc_i) / sum_j abs(rc_j); HHI = sum_i p_i^2.",
+      "covariance": "Inherited L1 60-session EWMA covariance with deterministic PSD clipping.",
+      "cash": "Cash excluded and reported.",
+      "non_evaluable": "Missing/nonfinite required input, missing/constant/nonfinite q for N_eff, failed covariance, or zero/nonfinite denominator makes the whole paired week non-evaluable and fail-closed."
+    },
+    "mandatory_metrics": {
+      "ex_ante_hhi_delta": {
+        "formula": "HHI_U4 - HHI_U8",
+        "useful_threshold": 0.05,
+        "falsify": {"tail": "lower", "null": 0.05, "alternative": 0.0, "planning_sd": 0.1, "expected_mintrl": 49},
+        "validation_zero": {"tail": "upper", "null": 0.0, "alternative": 0.05, "planning_sd": 0.1, "expected_mintrl": 49},
+        "validation_minimum_useful": {"tail": "upper", "null": 0.05, "alternative": 0.1, "planning_sd": 0.1, "expected_mintrl": 49}
+      },
+      "realized_hhi_delta": {
+        "formula": "Fixed execution-close weights and actual total-return rows t+1 through t+20 only; sample covariance is PSD-clipped then component risk is recomputed; never feed realized covariance into sizing.",
+        "useful_threshold": 0.05,
+        "falsify": {"tail": "lower", "null": 0.05, "alternative": 0.0, "planning_sd": 0.1, "expected_mintrl": 49},
+        "validation_zero": {"tail": "upper", "null": 0.0, "alternative": 0.05, "planning_sd": 0.1, "expected_mintrl": 49},
+        "validation_minimum_useful": {"tail": "upper", "null": 0.05, "alternative": 0.1, "planning_sd": 0.1, "expected_mintrl": 49}
+      },
+      "top_dependency_delta": {
+        "formula": "market_share=max_i p_i; macro_sleeve_share=sum p_i in fixed sleeves; top_dependency=max(market_share, macro_sleeve_share); delta=U4-U8.",
+        "useful_threshold": 0.1,
+        "falsify": {"tail": "lower", "null": 0.1, "alternative": 0.0, "planning_sd": 0.2, "expected_mintrl": 49},
+        "validation_zero": {"tail": "upper", "null": 0.0, "alternative": 0.1, "planning_sd": 0.2, "expected_mintrl": 49},
+        "validation_minimum_useful": {"tail": "upper", "null": 0.1, "alternative": 0.2, "planning_sd": 0.2, "expected_mintrl": 49}
+      },
+      "n_eff_delta": {
+        "formula": "Use continuous signed q for every asset on exactly trailing 52 common eligible weekly decision dates ending at t; every series complete/nonconstant; Pearson correlation, negative-eigenvalue clipping, clipped mass, N_eff=(sum lambda)^2/sum(lambda^2), delta=U8-U4; mean absolute off-diagonal correlation is diagnostic only.",
+        "useful_threshold": 0.5,
+        "falsify": {"tail": "lower", "null": 0.5, "alternative": 0.0, "planning_sd": 1.0, "expected_mintrl": 49},
+        "validation_zero": {"tail": "upper", "null": 0.0, "alternative": 0.5, "planning_sd": 1.0, "expected_mintrl": 49},
+        "validation_minimum_useful": {"tail": "upper", "null": 0.5, "alternative": 1.0, "planning_sd": 1.0, "expected_mintrl": 49}
+      }
+    },
+    "statistics": {
+      "one_sided_alpha": 0.05,
+      "power": 0.8,
+      "autocorrelations_lags_1_to_5": [0.25, 0.125, 0.0625, 0.03125, 0.015625],
+      "inflation": 1.96875,
+      "actual_recalculation": "For each metric and each plan separately recompute sample SD, lags 1-5, dependence inflation, HAC/Newey-West interval, falsify MinTRL, validation-zero MinTRL, and validation-minimum-useful MinTRL; no metric may fund another."
+    },
+    "robustness_and_side_effects": {
+      "classification": "deterministic_full_sample_constraints",
+      "best_market": {
+        "selection": "Select the U8 market with greatest cumulative net PnL contribution after exact asset-attributed locked costs over matched dates; ties use inherited ETF order.",
+        "recalculation": "Remove that asset from U8 and U4 if present; renormalize remaining component-risk shares without rerunning or reselecting the strategy; recompute mean HHI delta on the same weeks.",
+        "threshold": 0.025,
+        "retained_fraction": 0.5,
+        "failure": "Zero denominator or nonpositive original mean is non-evaluable and fail-closed."
+      },
+      "best_trend_episode": {
+        "episode_rule": "Inherited L1 per-asset episode: consecutive weekly nonzero q of one sign, at most one neutral bridge, ending on opposite sign or two neutrals.",
+        "selection": "Select the U8 asset-episode with greatest cumulative net PnL contribution after costs; ties use inherited asset order then earliest start.",
+        "recalculation": "Remove every paired week in that episode from both U4/U8; recompute mean primary HHI delta on remaining common weeks without alternative episode search.",
+        "threshold": 0.025,
+        "retained_fraction": 0.5,
+        "minimum_sample": "Remaining observations must meet the actual primary HHI MinTRL."
+      },
+      "side_effects": {
+        "turnover_intensity": "sum one-way turnover / sum pre-trade gross exposure on identical paired dates",
+        "cost_intensity": "sum all booked locked costs / sum pre-trade gross exposure on identical paired dates",
+        "relative_increase": "(U8-U4)/U4; comparator zero or nonfinite is non-evaluable.",
+        "maximum_relative_increase": 0.2,
+        "cap_cash_scale_down": "Use inherited L3 cap/cash/scale-down indicator and frequency on identical paired dates; delta=U8-U4.",
+        "maximum_frequency_delta_percentage_points": 10.0
+      }
+    },
+    "regime_matrix": {
+      "global_state": "Inherited L1 global trend/whipsaw states.",
+      "volatility": "Inherited prior-only volatility terciles.",
+      "equity_synchronization": ["all four equity q signs same nonzero", "mixed signs", "neutral present"],
+      "major_subperiods": [
+        {"start": "2007-02-05", "end": "2011-06-30"},
+        {"start": "2011-07-01", "end": "2015-12-31"}
+      ],
+      "crisis_windows": "Inherited fixed L1 crisis windows.",
+      "breakdowns": ["asset", "macro_sleeve", "country_or_region"],
+      "funding": "Each inferential bucket independently meets its metric actual MinTRL; no pooling; underfunded is descriptive and blocks E2 scope."
+    },
+    "decision_contract": {
+      "e1": ["scope_restricted", "falsified_E1_only", "not_falsified_not_validated_E1"],
+      "validation": ["validation_scope_restricted", "validation_falsified_E1_only", "validation_candidate", "not_validated_E1"],
+      "precedence": "scope restriction first; then falsification/constraint breach; then candidate; then funded/evaluable middle.",
+      "equality": "UCB equal useful threshold is not falsification; LCB equal useful threshold is not validation candidate.",
+      "scope_restricted": "Any mandatory metric, deterministic constraint, or required E1 input non-evaluable, or any mandatory metric below its falsify actual MinTRL.",
+      "falsified_E1_only": "Only after scope_restricted is false, a mandatory one-sided 95% UCB strictly below useful threshold or an evaluable deterministic constraint breach.",
+      "not_falsified_not_validated_E1": "Only after the preceding predicates are false; validation remains sealed.",
+      "validation_scope_restricted": "Any mandatory validation plan, regime, or constraint is non-evaluable or underfunded.",
+      "validation_falsified_E1_only": "Only after validation_scope_restricted is false, a validation breach or evaluable constraint breach occurs.",
+      "validation_candidate": "Only after the preceding validation outcomes are false, every mandatory 95% LCB strictly exceeds useful threshold, all constraints pass, and integrity/adversarial review pass.",
+      "not_validated_E1": "Only after prior validation predicates are false."
+    },
+    "timing_and_seal": {
+      "falsification_end": "2015-12-31",
+      "validation_start": "2016-01-04",
+      "validation_end": "2026-06-30",
+      "validation_opened": false,
+      "pooling": false
+    },
+    "hard_stops": [
+      "No data/container/path discovery or inspection beyond named methodology sources and committed controls.",
+      "No market, return, signal, position, covariance, regime, cost, or PnL computation or backtest.",
+      "No validation, provider/network, credentials, broker, paid, paper-trade, or real-money action.",
+      "No L-4 activation, execution runner, report, ledger, or B8.4.",
+      "No L-3 closure weakening or inverse-volatility pass claim."
+    ]
+  },
+  "future_namespace": {
+    "namespace_id": "b89",
+    "activation_path": "experiments/activation_records/l_4_breadth_b89_scientific_execution_activation_v1.json",
+    "marker_path": "reports/experiments/l_4_breadth_b89_one_shot_marker_v1.json",
+    "report_path": "reports/experiments/l_4_breadth_b89_scientific_report_v1.json",
+    "ledger_path": "reports/experiments/l_4_breadth_b89_execution_ledger_v1.json",
+    "attempt_path": "reports/experiments/l_4_breadth_b89_execution_attempt_v1.json",
+    "paths_are_new_and_absent": true,
+    "legacy_namespace_reuse_forbidden": true
+  },
+  "future_lifecycle": {
+    "stages": ["B8.9-D", "CP-A design review", "B8.9-M", "CP-A machinery review", "owner-approved B8.9A"],
+    "current_stage": "B8.9-D",
+    "implementation_order": "B8.9-M",
+    "activation_order": "B8.9A",
+    "implementation_authorized": false,
+    "activation_authorized": false,
+    "execution_authorized": false,
+    "owner_approval_required_for_next_stage": true
+  },
+  "future_tracker_semantics": {
+    "required_existence_check": "existence_only",
+    "denial_proof": "pure_preflight_result",
+    "forbidden_denial_proof": "invoke_activation_capable_runner_to_prove_denial",
+    "preflight_must_be_pure": true,
+    "fail_closed_on_preflight_or_provenance_error": true
+  },
+  "future_cp_a_requirements": {
+    "pure_preflight_path_required": true,
+    "poison_test_required": true,
+    "clean_temporary_git_synthetic_lifecycle_proof_required": true,
+    "all_required_before_machinery_review": true,
+    "no_b89m_or_b89a_under_this_gate": true
+  },
+  "future_report_requirements": {
+    "closed_world": true,
+    "producing_git_commit": true,
+    "actual_paired_mintrl_recalculation": true,
+    "u4_u8_matching": true,
+    "n_eff": true,
+    "hhi": true,
+    "regimes": true,
+    "robustness": true,
+    "costs_and_turnover": true,
+    "side_effects": true,
+    "four_outcome_precedence": true,
+    "mechanism_autopsy": "required_for_falsified_outcome",
+    "validation_seal": "must_remain_sealed_until_separately_authorized"
+  },
+  "validation_seal": {
+    "status": "sealed_not_accessed",
+    "accessed": false
+  },
+  "authorizations": {
+    "data": false,
+    "container": false,
+    "market": false,
+    "return": false,
+    "signal": false,
+    "position": false,
+    "covariance": false,
+    "regime": false,
+    "cost": false,
+    "pnl": false,
+    "validation": false,
+    "provider": false,
+    "network": false,
+    "credentials": false,
+    "broker": false,
+    "paid": false,
+    "paper_trade": false,
+    "real_money": false,
+    "activation": false,
+    "execution": false,
+    "report": false,
+    "research_decision": false,
+    "ledger": false
+  },
+  "access_counts": {
+    "data": 0,
+    "container": 0,
+    "market": 0,
+    "return": 0,
+    "signal": 0,
+    "position": 0,
+    "covariance": 0,
+    "regime": 0,
+    "cost": 0,
+    "pnl": 0,
+    "validation": 0,
+    "provider": 0,
+    "network": 0,
+    "credentials": 0,
+    "broker": 0,
+    "paid": 0,
+    "paper_trade": 0,
+    "real_money": 0,
+    "activation": 0,
+    "execution": 0,
+    "report": 0,
+    "research_decision": 0,
+    "ledger": 0
+  },
+  "hard_stops": [
+    "This B8.9-D gate is design-only; do not implement B8.9-M or activate B8.9A.",
+    "Do not read, hash, stat, retry, edit, or reuse any consumed legacy one-shot output.",
+    "Do not create an activation, marker, report, ledger, or attempt artifact in B8.9-D.",
+    "Do not access real/container/return/validation data or invoke a provider, broker, credential, paid, paper, or real-money path.",
+    "Do not prove denial by invoking an activation-capable runner; future tracker checks are existence-only and future denial is pure-preflight-only.",
+    "Do not alter accepted L-4 v4 science, B8.7 capacity, or the unresolved E0/edge_claim-none state."
+  ]
+}
