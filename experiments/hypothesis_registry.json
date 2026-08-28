@@ -293,6 +293,11 @@
           "date": "2026-07-20",
           "decision": "B4_12_authentication_timeout_adds_no_L1_evidence",
           "notes": "The single B4.12 shared-UAT run exhausted its fixed 30-second authentication window before preview. It adds no broker-ledger, corporate-action, price, return, edge, or validation evidence to L-1. Validation remains sealed and L-1 remains scope-restricted E1."
+        },
+        {
+          "date": "2026-08-26",
+          "decision": "CORE_1_stable_baseline_preregistration_locked_E0",
+          "notes": "CORE-1P locks exactly three prospective long/cash low-turnover candidates after the L-1 cost/turnover diagnosis. It preserves L-1 status and E1 evidence, makes no empirical claim, keeps validation sealed, and requires Inspector acceptance plus user integration before CORE-1E."
         }
       ]
     },
@@ -377,6 +382,11 @@
           "date": "2026-07-24",
           "decision": "B6_3_static_capacity_underfunded_before_data_access",
           "notes": "Gate l_2_falsification_capacity_gate_v1 proves the absolute upper bound of 26,016 joint independent-bet equivalents is below locked MinTRL_falsify 54,048 for the current L-2 window and fixed eight-asset universe. L-2 remains E1 scope_restricted; no container or return may be inspected."
+        },
+        {
+          "date": "2026-08-26",
+          "decision": "CORE_1_prospective_pause",
+          "notes": "L-2 enhancement execution is prospectively paused while CORE-1 is active. Its status, evidence tier, locked artifacts, history, validation seal, and no-access boundary are unchanged."
         }
       ]
     },
@@ -503,7 +513,8 @@
         {"date":"2026-07-28","decision":"B7_14R6_v8_checkout_compatibility_E0_checkpoint_rejected","notes":"v8 remains immutable rejected history after its duplicate-v7 manifest recovery sequence; no locked artifact is edited."},
         {"date":"2026-07-28","decision":"B7_14R7_v9_rejected_after_failed_phase_a","notes":"v9 is immutable rejected history after failed Phase A; it opens no real-access path."},
         {"date":"2026-07-28","decision":"B7_14R8_v10_snapshot_only_governance_complete_E0","notes":"v10 completed E0 snapshot-only governance at d2a9001 with Phase-A CI 30351502467 and closure cf0fa3d with CI 30351716462. All fourteen authorizations are false; L-3 remains E1 scope_restricted and unresolved, validation sealed, edge_claim none, and no rerun or real result is authorized."},
-        {"date":"2026-07-28","decision":"B7_15_current_preregistration_closure_synchronized","notes":"Current-preregistration closure: L-3 remains E1 scope_restricted and unresolved, not falsified or validated; no rerun is planned under the current preregistration; validation is sealed; edge_claim none; no L-3 result may be carried forward as proof that inverse-volatility sizing passed. The next gate is L-4 preregistration/planning only."}
+        {"date":"2026-07-28","decision":"B7_15_current_preregistration_closure_synchronized","notes":"Current-preregistration closure: L-3 remains E1 scope_restricted and unresolved, not falsified or validated; no rerun is planned under the current preregistration; validation is sealed; edge_claim none; no L-3 result may be carried forward as proof that inverse-volatility sizing passed. The next gate is L-4 preregistration/planning only."},
+        {"date":"2026-08-26","decision":"CORE_1_prospective_pause","notes":"L-3 enhancement execution is prospectively paused while CORE-1 is active. Its status, evidence tier, locked artifacts, history, validation seal, and no-rerun boundary are unchanged."}
       ]
     },
     {
@@ -764,6 +775,7 @@
       ,{"date":"2026-08-03","decision":"B8_8R5_aggregate_side_effect_and_provenance_remediation_v6_E0","notes":"Owner-authorized B8.8R5/v6 supersedes only rejected B8.8R4/v5 machinery and preserves prior bytes. v6 uses aggregate preregistered turnover/cost denominators, gate-binds future activation to the exact B8.6R13 container/manifest/U8-session identities, enforces tracked-dirty and untracked checkout refusal before marker claim, proves all three E1 outcomes with synthetic vectors, and assigns one dominant component-risk bucket per asset, macro-sleeve, and country/region dimension. No activation, real container/return/validation/provider/network/credential/broker/paid/paper/real-money access occurred; E0, edge_claim none, validation sealed."}
       ,{"date":"2026-08-12","decision":"B8_8R5AR_clean_replacement_activation_checkpoint_E0","notes":"Inspector accepted B8.8R5/v6 at fc727d78fc38a70e7bef7c85fb22d3e8fe2c7006 after Exact-SHA Hermetic CI 30806980165. B8.8R5AR is E0 activation/control-plane only: it creates the canonical activation record and adds no empirical/scientific result, hypothesis status, evidence-tier, or edge change; edge_claim none and validation sealed. It replaces an unpushed B8.8R5A attempt, which is not evidence; the stale pre-activation test assumption is corrected by a Git-blob assertion at the frozen pre-activation commit while allowing the current checkpoint blob. No production bootstrap, scientific runner, marker, report, ledger, container/data/return, validation, provider, broker, credential, paid, paper, or real-money action occurred; separate owner-approved execution and CP-A Inspector review remain required."}
       ,{"date":"2026-08-16","decision":"B8_8R5ARX_runtime_tracker_incident_E0","notes":"B8.8R5AR-X records a control-plane incident only: the legacy runtime tracker launched the activation-capable bootstrap, created the exact one-shot marker, and accessed only the structural manifest/U8-session artifacts after marker creation. No scientific report, execution ledger, or execution-attempt artifact exists. Container/return access is unknown_not_durably_proven with lower bound 0 and upper bound 1; validation/provider/network/credential/broker/paid/paper/real-money access is zero and validation remains sealed. L-4 remains active/unresolved E0 with edge_claim none and no scientific result. The consumed v6 one-shot must not be retried; any future execution requires a new owner-approved gate and namespace. No research log is created because this is a control-plane incident without an empirical result."}
+      ,{"date":"2026-08-26","decision":"CORE_1_prospective_pause","notes":"L-4 enhancement execution is prospectively paused while CORE-1 is active. Its status, evidence tier, locked artifacts, incident history, validation seal, and consumed-one-shot no-retry boundary are unchanged. B8.9-D commit e76a2ec remains unmerged, paused, and non-authoritative."}
       ]
     }
   ]

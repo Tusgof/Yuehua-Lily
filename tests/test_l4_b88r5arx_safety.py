@@ -34,7 +34,8 @@ class B88R5ARXSafetyTests(unittest.TestCase):
         b88r5 = next(item for item in tracker["orders"] if item["id"] == "B8.8R5")
         bootstrap_artifact = next(item for item in b88r5["required_artifacts"] if "committed_bootstrap_v6.py" in item["path"])
         self.assertEqual("exist", bootstrap_artifact["must"])
-        self.assertEqual("B8.8R5AR-X", tracker["orders"][-1]["id"])
+        order_ids = [item["id"] for item in tracker["orders"]]
+        self.assertLess(order_ids.index("B8.8R5AR-X"), order_ids.index("CORE-1P"))
 
     def test_safe_validator_calls_only_preflight_when_runtime_is_poisoned(self) -> None:
         expected = {"status": "blocked", "outcome": "refused_activation", "ready": False, "real_accessed": False}

@@ -129,6 +129,12 @@
 
 ## Seed Status
 
+### CORE-1 stable baseline direction
+
+`CORE-1P` is an E0 planning workstream under the current L-1 family. It records the L-1 cost/turnover diagnosis and locks exactly three prospective long/cash, fixed-sleeve candidates; it creates no empirical evidence, does not change L-1's E1 scope-restricted status, and keeps final validation sealed. `CORE-1E` is permitted only after Inspector acceptance plus user integration.
+
+L-2, L-3, and L-4 enhancement execution is prospectively paused while CORE-1 is active. Their scientific status, evidence tier, locked artifacts, history, seals, and no-retry boundaries remain unchanged. B8.9-D commit `e76a2ec` is unmerged, paused, and non-authoritative.
+
 L-0 has E0 sizing and production Webull capability evidence and remains scope-restricted. B4.6 verifies read-only account endpoints plus `status=OC` and `fractionable=true` for all ten ETF candidates. B4.10 hash-locks the fail-closed UAT preview runner and fixtures. B4.11 stops after three authentication requests. B4.12 then funds one token create and seven checks over 30 seconds, but authentication still does not become NORMAL and no preview occurs; minimum order, funding FX, execution quality, and realized costs remain unknown. L-1 has E1 falsification-window, data-remediation, capacity, and independent corporate-action evidence: `MinTRL_falsify` is funded, but the full two-regime falsification rule is not met. The sealed validation calendar projects 20,376 joint independent-bet equivalents against the binding 8,673 under the locked actual-dependence rule, while the original planning sensitivity projects only 7,604. Treasury cash is resolved and fee uncertainty cannot reverse the negative primary result even under a full-credit bound. B4.4 acquires the locked Alpha Vantage matrix at zero cost, but only 11/16 pre-2016 symbol-endpoint pairs reconcile exactly and the provider has no point-in-time revision archive. B4.5 accepts that limitation at E1 and pauses further source search. B4.7 locks a forward three-stream design and B4.8 blocks it before observation. B4.9 closes the unavailable Webull ledger path. B4.10 through B4.12 add no L-1 evidence. The validation window is sealed. L-2 through L-4 remain proposed and may not be promoted by prose edits alone.
 
 ## Source Adaptation
