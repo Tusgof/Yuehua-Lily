@@ -1,0 +1,281 @@
+{
+  "schema_version": "lily_core_1e_a_phase_a_execution_contract_v1",
+  "order_id": "CORE-1E-A",
+  "gate_id": "core_1e_a_phase_a_execution_contract_v1",
+  "hypothesis_id": "L-1",
+  "status": "locked_before_execution",
+  "evidence_tier": "E0",
+  "edge_claim": "none",
+  "core_1p_source_binding": {
+    "preregistration": {
+      "path": "experiments/core_1_stable_baseline_preregistration_v1.json",
+      "sha256": "5003d2360bb8729bcd91a39da34ff2e28c92ad2eb75c9b632c3ee85bcda7682f"
+    },
+    "validator": {
+      "path": "scripts/validate_core_1_stable_baseline_preregistration_v1.py",
+      "sha256": "55b0cf8769276e091bb4cf38cfabb44d98f5a9e5a4d12670e7d710820e1d5da5"
+    },
+    "locked_manifest": {
+      "path": "experiments/locked_gates_v2.jsonl",
+      "gate_id": "core_1_stable_baseline_preregistration_v1_validator_hardening_v2",
+      "artifact_sha256": "5003d2360bb8729bcd91a39da34ff2e28c92ad2eb75c9b632c3ee85bcda7682f",
+      "validator_sha256": "55b0cf8769276e091bb4cf38cfabb44d98f5a9e5a4d12670e7d710820e1d5da5",
+      "line_sha256": "5f16a5ac659e52791f9affac19812acee8204cc5f6a10c3a68f307b295769e24"
+    }
+  },
+  "locked_science": {
+    "research_question": "Can a low-turnover long/cash trend-following system produce positive net return and positive net Sharpe after realistic costs on globally diversified ETFs?",
+    "development_candidates_in_locked_order": [
+      {
+        "id": "CORE1_DC60",
+        "signal": "For each asset, use daily total-return direction over the prior 60 complete sessions; zero return contributes 0; long iff sum(direction)>0, otherwise cash.",
+        "lookback_complete_sessions": 60
+      },
+      {
+        "id": "CORE1_DC120",
+        "signal": "For each asset, use daily total-return direction over the prior 120 complete sessions; zero return contributes 0; long iff sum(direction)>0, otherwise cash.",
+        "lookback_complete_sessions": 120
+      },
+      {
+        "id": "CORE1_SMA200",
+        "signal": "Long iff the current corporate-action-aware total-return close is strictly above its simple moving average over the current and prior 199 complete sessions; otherwise cash.",
+        "lookback_complete_sessions": 200
+      }
+    ],
+    "candidate_constraints": {
+      "missing_required_observation": "asset_cash_until_complete",
+      "continuous_q_magnitude": false,
+      "shorting": false,
+      "inverse_volatility_division": false,
+      "target_volatility_scaling": false,
+      "leverage": false,
+      "regime_filter": false,
+      "ensemble": false,
+      "parameter_variation": false,
+      "candidate_count": 3
+    },
+    "universe": {
+      "symbols_in_order": ["VTI", "VGK", "EWJ", "VWO", "IEF", "TIP", "GLD", "DBC"],
+      "rationale": "US-listed fractional implementation proxies with global countries and asset classes; do not claim point-in-time opportunity-set generality."
+    },
+    "portfolio_construction": {
+      "fixed_sleeve_budget_per_asset": 0.125,
+      "long_target_weight": 0.125,
+      "inactive_asset_target_weight": 0.0,
+      "inactive_sleeve": "cash",
+      "renormalize_active_sleeves": false,
+      "gross_exposure_range": [0.0, 1.0],
+      "cash_weight": "1-gross_exposure",
+      "borrowing": false,
+      "no_trade_band": {
+        "comparison": "target versus drifted pre-trade portfolio weight at an execution opportunity",
+        "trade_when_absolute_difference_at_least": 0.02,
+        "otherwise": "retain drifted weight",
+        "opening_and_closing_0_125_sleeves": "subject to the same rule and normally pass",
+        "fixed_dollar_floor_in_research_accounting": false,
+        "current_capital_feasibility": "later separate study"
+      }
+    },
+    "timing": {
+      "decision": "Weekly after official close of actual last NYSE session of each ISO week using only available data.",
+      "execution": "Official close of next actual NYSE session.",
+      "pnl_start": "after_that_execution_close",
+      "same_close_execution": false,
+      "manufactured_sessions": false
+    },
+    "costs": {
+      "primary": {
+        "commission_one_way_traded_notional": 0.00107,
+        "commission_source": "Webull Thailand commission including VAT",
+        "spread_slippage_one_way": 0.0025,
+        "sell_surcharge": 0.0001,
+        "etf_expense_ratios": "then-current locked ETF expense ratios accrued daily on held notional",
+        "short_borrow": "not_applicable_long_cash",
+        "cash_yield": 0.0,
+        "cash_yield_limitation": "Cash yield is 0 until an approved, timestamp-valid cash series exists.",
+        "funding_fx": "excluded_from_recurring_pnl_report_separately_later",
+        "booking_rule": "Book commission, spread-slippage, and sell surcharge only on executed notional changes; accrue ETF expense ratios daily on held notional."
+      },
+      "stress": {
+        "name": "2x_execution_costs",
+        "double": ["commission", "spread_slippage", "sell_surcharge"],
+        "do_not_double": ["ETF expenses"]
+      },
+      "reported_paths": ["gross", "primary_net", "two_x_execution_cost_net"]
+    },
+    "windows": {
+      "warmup_qa": {"start": "2006-02-03", "end": "2007-02-02", "performance_claim": false},
+      "opened_development_falsification": {"start": "2007-02-05", "end": "2015-12-31"},
+      "final_validation": {
+        "start": "2016-01-04",
+        "end": "2026-06-30",
+        "status": "sealed_not_accessed",
+        "forbidden": ["read", "scan", "hash", "count", "infer"]
+      }
+    },
+    "search_accounting_and_inference": {
+      "search_inventory_exact_trials": 3,
+      "attempted_real_return_run_counts_as_trial": true,
+      "extra_debug_variant": false,
+      "DSR": "use all three trials/effective-rank conventions",
+      "required_reporting": ["PSR", "HAC/Newey-West inference", "autocorrelation-adjusted Sharpe variance", "calendar count", "trades", "turnover", "independent-bet equivalents"]
+    },
+    "matched_benchmark": {
+      "name": "equal_weight_always_long_fixed_sleeves",
+      "target_weight_per_asset": 0.125,
+      "same_dates": true,
+      "same_one_session_delay": true,
+      "same_drift": true,
+      "same_no_trade_band": 0.02,
+      "same_costs": true,
+      "same_expenses": true,
+      "same_cash_conventions": true,
+      "switch_after_results": false
+    },
+    "development_eligibility_gates": {
+      "A": "Primary net annual geometric return > 0 and primary net annual Sharpe > 0.",
+      "B": "PSR versus annual Sharpe 0 is >= 0.90; report HAC/Newey-West mean-return evidence and DSR for all three trials.",
+      "C": "Under 2x execution costs, net annual geometric return > 0 and net annual Sharpe > 0.",
+      "D": "Primary maximum drawdown is at least 5 percentage points less severe than the matched benchmark (strategy MDD - benchmark MDD >= 0.05, where both are negative or zero).",
+      "E": "Remove the single asset with greatest full-window positive net contribution, hold its sleeve as cash without re-optimization, and primary net annual geometric return remains > 0.",
+      "F": "Contribution concentration: largest positive asset share <= 0.50; also report positive-contribution HHI and best-episode concentration.",
+      "G": "Fixed subperiods 2007-2009, 2010-2012, 2013-2015: at least 2 of 3 have positive net annual geometric return, and no subperiod is below -5% net annual geometric return. Report the locked GFC diagnostic and prior-only global-state/whipsaw diagnostics, but never manufacture a funded regime claim.",
+      "H": "No critical timestamp, corporate-action, survivorship/inception, missingness, or accounting blocker."
+    },
+    "selection_rule": {
+      "discard_first": "Discard any candidate failing any A-H gate.",
+      "primary": "Among eligible candidates, choose the one with highest worst-subperiod net Sharpe.",
+      "near_tie": "If the top two are within 0.02 annual Sharpe on that criterion, choose lower one-way turnover.",
+      "final_tie": "If still tied within 1e-12, order is CORE1_DC60, CORE1_DC120, CORE1_SMA200.",
+      "claim_limit": "Selection is E1 development evidence only and does not open validation or claim an edge."
+    },
+    "stop_rule": "If no candidate passes every A-H gate, stop CORE-1 after CORE-1E, keep validation sealed, and require an owner/Inspector decision to reformulate or close this ETF trend family. No fourth candidate, parameter rescue, universe/date/cost change, or remediation layering. If one candidate passes, lock that single candidate in a separate future order before any request to open final validation.",
+    "claim_ceiling": "E0 planning/governance only; no empirical result, validation opening, or edge claim.",
+    "exact_next_safe_action": "CORE-1E only after Inspector acceptance + user integration.",
+    "authorizations": {
+      "backtest": false,
+      "return_reading_or_parsing": false,
+      "dataset_access": false,
+      "container_access": false,
+      "dataset_hash_or_scan": false,
+      "validation_access": false,
+      "provider_or_network_data_call": false,
+      "credential_access": false,
+      "broker_or_account_action": false,
+      "paid_action": false,
+      "paper_trading": false,
+      "real_money_action": false,
+      "research_log_edit": false
+    }
+  },
+  "synthetic_fixture": {
+    "path": "tests/fixtures/core1e_a/synthetic_market_v1.json",
+    "schema_version": "lily_core_1e_a_synthetic_market_v1",
+    "only_input_allowed_in_phase_a": true
+  },
+  "report_contract": {
+    "schema_path": "schemas/core_1e_a_synthetic_report_v1.schema.json",
+    "validator_path": "scripts/validate_core_1e_a_synthetic_report_v1.py",
+    "mode": "synthetic_calculation_only",
+    "required_metric_paths": [
+      "gross.annual_arithmetic_return",
+      "gross.annual_geometric_return",
+      "gross.annualized_volatility",
+      "gross.annualized_sharpe",
+      "gross.maximum_drawdown",
+      "costs.commission",
+      "costs.spread_slippage",
+      "costs.sell_surcharge",
+      "costs.etf_expense_accrual",
+      "costs.execution_cost_primary",
+      "costs.execution_cost_two_x",
+      "primary_net.one_way_turnover",
+      "primary_net.trade_count",
+      "primary_net.average_exposure",
+      "primary_net.psr",
+      "primary_net.dsr",
+      "primary_net.autocorrelation_adjusted_sharpe_variance",
+      "primary_net.hac_newey_west",
+      "primary_net.independent_bet_equivalents",
+      "two_x_execution_cost_net.annual_geometric_return",
+      "two_x_execution_cost_net.annualized_sharpe"
+    ],
+    "closed_world": true,
+    "recompute_material_decisions": true,
+    "unknown_fields_rejected": true
+  },
+  "future_lifecycle": {
+    "activation_schema_version": "lily_core_1e_a_activation_v1",
+    "activation_record_path": "experiments/activation_records/core_1e_a_activation_v1.json",
+    "required_bindings": [
+      "accepted_phase_a_gate_commit",
+      "successful_exact_sha_ci_for_that_commit",
+      "explicit_owner_authorization_reference",
+      "exact_committed_runtime_bytes",
+      "development_only_date_cutoff",
+      "sealed_validation_boundary",
+      "one_shot_marker_attempt_report_lifecycle"
+    ],
+    "marker_path": "reports/experiments/core_1e_a_one_shot_marker_v1.json",
+    "attempt_path": "reports/experiments/core_1e_a_execution_attempt_v1.json",
+    "report_path": "reports/experiments/core_1e_a_execution_report_v1.json",
+    "pre_activation_data_access": "deny",
+    "atomic_marker_before_input_read": true,
+    "no_retry": true,
+    "phase_a_activation_present": false
+  },
+  "validation_seal": {
+    "status": "sealed_not_accessed",
+    "accessed": false
+  },
+  "authorizations": {
+    "phase_a_synthetic_fixture_calculation": true,
+    "real_backtest": false,
+    "real_dataset_or_container": false,
+    "validation_window": false,
+    "provider_or_network": false,
+    "credentials": false,
+    "broker_or_account": false,
+    "paid": false,
+    "paper_trading": false,
+    "real_money": false,
+    "research_log": false,
+    "activation_creation": false,
+    "production_report": false
+  },
+  "access_counts": {
+    "real_dataset_access": 0,
+    "real_container_access": 0,
+    "real_return_decode": 0,
+    "validation_access": 0,
+    "provider_calls": 0,
+    "credential_reads": 0,
+    "broker_actions": 0,
+    "paid_actions": 0
+  },
+  "hard_stops": [
+    "missing_or_invalid_phase_a_contract",
+    "core_1p_source_hash_or_manifest_drift",
+    "unknown_report_field_or_missing_material_metric",
+    "any_validation_window_reference",
+    "activation_missing_any_gate_commit_ci_owner_runtime_cutoff_seal_or_one_shot_binding",
+    "prior_marker_or_attempt_exists",
+    "dirty_or_uncommitted_future_runtime_dependencies"
+  ],
+  "execution_dependencies": [
+    "lib/core_1e_a_synthetic_engine.py",
+    "lib/core_1e_a_lifecycle_v1.py",
+    "scripts/run_core_1e_a_committed_bootstrap_v1.py",
+    "scripts/validate_core_1e_a_synthetic_report_v1.py",
+    "schemas/core_1e_a_activation_v1.schema.json",
+    "schemas/core_1e_a_synthetic_report_v1.schema.json"
+  ],
+  "execution_binding": {
+    "lib/core_1e_a_synthetic_engine.py": {"path": "lib/core_1e_a_synthetic_engine.py", "sha256": "f92b39f7f0bbde1361326eff5b16d875a01e9938f16408dedbe0cd80cd9a1487"},
+    "lib/core_1e_a_lifecycle_v1.py": {"path": "lib/core_1e_a_lifecycle_v1.py", "sha256": "855b85c542d1a0d7ffae039a9e1cc825e6e996cd71ca78c516fc7b31b2b2c379"},
+    "scripts/run_core_1e_a_committed_bootstrap_v1.py": {"path": "scripts/run_core_1e_a_committed_bootstrap_v1.py", "sha256": "f6711c7317e29e0e0384c801173cdcfbdae151ab594753dd84e34afdbc846170"},
+    "scripts/validate_core_1e_a_synthetic_report_v1.py": {"path": "scripts/validate_core_1e_a_synthetic_report_v1.py", "sha256": "fc3faca845c7de983e1a5b14c9d1e3815fc8e1daa58ea2c7caa2ef6fc7dff9c0"},
+    "schemas/core_1e_a_activation_v1.schema.json": {"path": "schemas/core_1e_a_activation_v1.schema.json", "sha256": "92697332d081e147e90b4b73abc16f5a08f3440e11107881481f69ffe46bc5a7"},
+    "schemas/core_1e_a_synthetic_report_v1.schema.json": {"path": "schemas/core_1e_a_synthetic_report_v1.schema.json", "sha256": "c2cf784d1c8578fef56eb9cadf4cfba15478e50a47430b35cc21d9c86d3613f1"}
+  }
+}

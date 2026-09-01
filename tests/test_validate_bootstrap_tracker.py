@@ -307,6 +307,36 @@ class BootstrapTrackerValidatorTests(unittest.TestCase):
         self.assertEqual("fail", result["status"])
         self.assertIn("B0.1:missing_artifact:missing.py", result["blockers"])
 
+    def test_core_1e_a_done_claim_requires_artifact_and_validator(self) -> None:
+        cases = ("missing_artifact", "missing_validator")
+        for case in cases:
+            with self.subTest(case=case), tempfile.TemporaryDirectory() as tmp:
+                root = Path(tmp)
+                payload = _tracker_with_artifact(
+                    "experiments/core_1e_a_phase_a_execution_contract_v1.json",
+                    "validate_core_1e_a_gate",
+                )
+                payload["orders"][0]["id"] = "CORE-1E-A"
+                artifact = root / "experiments/core_1e_a_phase_a_execution_contract_v1.json"
+                if case == "missing_validator":
+                    artifact.parent.mkdir(parents=True)
+                    artifact.write_text("{}\n", encoding="utf-8")
+                tracker = root / "tracker.json"
+                tracker.write_text(json.dumps(payload), encoding="utf-8")
+                result = self.validator.validate_tracker(
+                    tracker,
+                    project_root=root,
+                    verify_runtime=True,
+                )
+            self.assertEqual("fail", result["status"])
+            if case == "missing_artifact":
+                self.assertIn(
+                    "CORE-1E-A:missing_artifact:experiments/core_1e_a_phase_a_execution_contract_v1.json",
+                    result["blockers"],
+                )
+            else:
+                self.assertIn("CORE-1E-A:core_1e_a_contract_validator_failed", result["blockers"])
+
     def test_done_claim_requires_evidence(self) -> None:
         payload = _tracker_with_artifact("present.py", "pass")
         payload["orders"][0]["evidence"] = []

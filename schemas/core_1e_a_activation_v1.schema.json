@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "lily_core_1e_a_activation_v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "gate_id", "gate_sha256", "accepted_gate_commit", "exact_ci_head_sha", "exact_ci_run_id", "owner_authorization_ref", "runtime_bytes", "development_cutoff", "validation_boundary", "input_ref", "input_sha256", "one_shot"],
+  "properties": {
+    "schema_version": {"const": "lily_core_1e_a_activation_v1"},
+    "gate_id": {"const": "core_1e_a_phase_a_execution_contract_v1"},
+    "gate_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "accepted_gate_commit": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+    "exact_ci_head_sha": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+    "exact_ci_run_id": {"type": "integer", "minimum": 1},
+    "owner_authorization_ref": {"type": "string", "minLength": 1},
+    "runtime_bytes": {
+      "type": "object",
+      "additionalProperties": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+      "minProperties": 1
+    },
+    "development_cutoff": {"const": "2015-12-31"},
+    "validation_boundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["start", "end", "status", "accessed"],
+      "properties": {
+        "start": {"const": "2016-01-04"},
+        "end": {"const": "2026-06-30"},
+        "status": {"const": "sealed_not_accessed"},
+        "accessed": {"const": false}
+      }
+    },
+    "input_ref": {"type": "string", "pattern": "^(?!/)(?![A-Za-z]:)(?!.*\\\\)(?!.*(^|/)\\.\\.(/|$)).+$"},
+    "input_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "one_shot": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["marker_path", "attempt_path", "report_path", "max_invocations", "claim_before_input_read", "retry_allowed"],
+      "properties": {
+        "marker_path": {"const": "reports/experiments/core_1e_a_one_shot_marker_v1.json"},
+        "attempt_path": {"const": "reports/experiments/core_1e_a_execution_attempt_v1.json"},
+        "report_path": {"const": "reports/experiments/core_1e_a_execution_report_v1.json"},
+        "max_invocations": {"const": 1},
+        "claim_before_input_read": {"const": true},
+        "retry_allowed": {"const": false}
+      }
+    }
+  }
+}

@@ -997,6 +997,30 @@
     "forbidden": ["research_log edit", "backtest", "return reading or parsing", "dataset/container access/hash/scan", "validation access", "provider/network data call", "credential/broker/account action", "paid action", "paper trading", "real-money action", "merge or main push"],
     "evidence": ["CORE-1P is E0 planning only. The locked preregistration binds the three-candidate long/cash inventory, universe/order, timing, portfolio and band semantics, costs and stress, sealed validation window, matched benchmark, A-H gates, selection, stop rule, claim ceiling, all-false authorizations, source provenance, and next action.", "The new hash-bound validator and focused adversarial test fail closed on every locked contract category. L-1, L-2, L-3, and L-4 retain their scientific status and history; L-2/L-3/L-4 enhancement execution is prospectively paused."],
     "updated": "2026-08-26"
+  },
+  {
+    "id": "CORE-1E-A",
+    "title": "CORE-1E Phase-A synthetic execution machinery",
+    "status": "done",
+    "depends_on": ["CORE-1P"],
+    "required_artifacts": [
+      {"path": "experiments/core_1e_a_phase_a_execution_contract_v1.json", "must": "validate_core_1e_a_gate"},
+      {"path": "scripts/validate_core_1e_a_phase_a_execution_contract_v1.py", "must": "exist"},
+      {"path": "lib/core_1e_a_synthetic_engine.py", "must": "exist"},
+      {"path": "schemas/core_1e_a_synthetic_report_v1.schema.json", "must": "exist"},
+      {"path": "scripts/validate_core_1e_a_synthetic_report_v1.py", "must": "validate_core_1e_a_report"},
+      {"path": "tests/fixtures/core1e_a/synthetic_market_v1.json", "must": "exist"},
+      {"path": "schemas/core_1e_a_activation_v1.schema.json", "must": "exist"},
+      {"path": "lib/core_1e_a_lifecycle_v1.py", "must": "exist"},
+      {"path": "scripts/run_core_1e_a_committed_bootstrap_v1.py", "must": "deny_core_1e_a_bootstrap"},
+      {"path": "tests/test_core_1e_a_synthetic_machinery.py", "must": "pass_core_1e_a_hermetic"},
+      {"path": "experiments/locked_gates_v2.jsonl", "must": "contain_core_1e_a_manifest"},
+      {"path": "config/new_code_scripts.json", "must": "register_core_1e_a_scripts"}
+    ],
+    "user_actions_pending": ["Inspector acceptance and a separately approved canonical activation are required before any real execution; CORE-1E-B is not authorized."],
+    "forbidden": ["real dataset/container path resolution, existence check, read, hash, stat, scan, parse, decode, or return access", "validation-window prices, returns, signals, positions, regimes, benchmarks, costs, or PnL", "provider/network/credential/broker/account/paid/paper/real-money action", "activation, marker, attempt, empirical report, execution ledger, or research result creation in this order", "research_log, PROJECT_BRAIN.md, IMPLEMENT_PLAN.md, or AGENTS.md edit", "historical locked-artifact edit or deletion", "CORE-1E-B"],
+    "evidence": ["E0 synthetic-only calculation and closed-world report validation cover the exact three candidates, eight-symbol order, weekly next-session timing, fixed sleeves, inclusive 2pp band, primary/2x execution costs, daily ETF expenses, statistics, A-H decisions, selection, and stop rule.", "The committed bootstrap denies without a later canonical activation. A clean temporary Git repository proves exact gate/CI/owner/runtime/cutoff/seal bindings, marker-before-input-read, one completed synthetic attempt/report, and second-invocation refusal. Project access counts are zero; validation remains sealed; edge_claim is none."],
+    "updated": "2026-08-31"
   }
 ]
 }

@@ -959,6 +959,89 @@ def _validate_done_artifact(
         return _validate_l4_b84_runtime(target, order_id, "scripts/validate_l_4_breadth_b88r4_phase_a_execution_contract_v5.py", project_root)
     if must == "validate_l4_b88r5_gate":
         return _validate_l4_b84_runtime(target, order_id, "scripts/validate_l_4_breadth_b88r5_phase_a_execution_contract_v6.py", project_root)
+    if must == "validate_core_1e_a_gate":
+        if not target.is_file():
+            return [f"{order_id}:missing_artifact:{artifact_path}"], False, False
+        completed = subprocess.run(
+            [sys.executable, "scripts/validate_core_1e_a_phase_a_execution_contract_v1.py"],
+            cwd=project_root,
+            text=True,
+            capture_output=True,
+            check=False,
+        )
+        ok = completed.returncode == 0
+        return ([] if ok else [f"{order_id}:core_1e_a_contract_validator_failed"], ok, False)
+    if must == "validate_core_1e_a_report":
+        if not target.is_file():
+            return [f"{order_id}:missing_artifact:{artifact_path}"], False, False
+        completed = subprocess.run(
+            [sys.executable, str(target)],
+            cwd=project_root,
+            text=True,
+            capture_output=True,
+            check=False,
+        )
+        ok = completed.returncode == 0
+        return ([] if ok else [f"{order_id}:core_1e_a_report_validator_failed"], ok, False)
+    if must == "deny_core_1e_a_bootstrap":
+        if not target.is_file():
+            return [f"{order_id}:missing_artifact:{artifact_path}"], False, False
+        completed = subprocess.run(
+            [sys.executable, str(target)],
+            cwd=project_root,
+            text=True,
+            capture_output=True,
+            check=False,
+        )
+        try:
+            value = json.loads(completed.stdout)
+            ok = completed.returncode == 1 and value == {
+                "data_accessed": False,
+                "one_shot_consumed": False,
+                "outcome": "canonical_activation_absent",
+                "paths_resolved": [],
+                "real_data_accessed": False,
+                "status": "blocked",
+                "validation_accessed": False,
+            }
+        except (json.JSONDecodeError, TypeError):
+            ok = False
+        return ([] if ok else [f"{order_id}:core_1e_a_bootstrap_not_deny_only"], ok, False)
+    if must == "contain_core_1e_a_manifest":
+        try:
+            rows = [json.loads(line) for line in target.read_text(encoding="utf-8").splitlines() if line.strip()]
+            row = next(item for item in rows if item.get("gate_id") == "core_1e_a_phase_a_execution_contract_v1")
+            contract = project_root / row["artifact_path"]
+            validator = project_root / row["validator_path"]
+            ok = row.get("artifact_sha256") == hashlib.sha256(contract.read_bytes()).hexdigest() and row.get("validator_sha256") == hashlib.sha256(validator.read_bytes()).hexdigest()
+        except (OSError, StopIteration, KeyError, TypeError, json.JSONDecodeError):
+            ok = False
+        return ([] if ok else [f"{order_id}:core_1e_a_manifest_mismatch"], ok, False)
+    if must == "register_core_1e_a_scripts":
+        required_scripts = {
+            "scripts/run_core_1e_a_committed_bootstrap_v1.py",
+            "scripts/validate_core_1e_a_phase_a_execution_contract_v1.py",
+            "scripts/validate_core_1e_a_synthetic_report_v1.py",
+        }
+        try:
+            config = json.loads(target.read_text(encoding="utf-8"))
+            registered = set(config.get("scripts", [])) | set(config.get("stdlib_only_scripts", []))
+            ok = required_scripts <= registered
+        except (OSError, TypeError, json.JSONDecodeError):
+            ok = False
+        return ([] if ok else [f"{order_id}:core_1e_a_script_registration_mismatch"], ok, False)
+    if must == "pass_core_1e_a_hermetic":
+        if not target.is_file():
+            return [f"{order_id}:missing_artifact:{artifact_path}"], False, False
+        completed = subprocess.run(
+            [sys.executable, "-m", "unittest", "tests.test_core_1e_a_synthetic_machinery"],
+            cwd=project_root,
+            text=True,
+            capture_output=True,
+            check=False,
+        )
+        ok = completed.returncode == 0
+        return ([] if ok else [f"{order_id}:core_1e_a_focused_tests_failed"], ok, False)
     if must == "exist_future_only":
         return ([] if target.is_file() else [f"{order_id}:missing_artifact:{artifact_path}"], target.is_file(), False)
     if must == "contain_three_reachable_e1_outcomes":

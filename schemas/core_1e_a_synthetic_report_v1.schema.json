@@ -1,0 +1,369 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "lily_core_1e_a_synthetic_report_v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "report_type",
+    "outcome",
+    "evidence_tier",
+    "edge_claim",
+    "contract_sha256",
+    "fixture",
+    "windows",
+    "timing_attestation",
+    "calculation_attestation",
+    "trial_inventory",
+    "trial_statistics",
+    "candidates",
+    "benchmark",
+    "selection",
+    "access_counts",
+    "validation_seal",
+    "provenance"
+  ],
+  "properties": {
+    "schema_version": {"const": "lily_core_1e_a_synthetic_report_v1"},
+    "report_type": {"const": "synthetic_calculation_only"},
+    "outcome": {"const": "synthetic_evaluation"},
+    "evidence_tier": {"const": "E0"},
+    "edge_claim": {"const": "none"},
+    "contract_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "fixture": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256", "fixture_id"],
+      "properties": {
+        "path": {"const": "tests/fixtures/core1e_a/synthetic_market_v1.json"},
+        "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "fixture_id": {"const": "core1e_a_synthetic_market_v1"}
+      }
+    },
+    "windows": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["warmup_qa", "development", "validation"],
+      "properties": {
+        "warmup_qa": {"$ref": "#/$defs/window"},
+        "development": {"$ref": "#/$defs/window"},
+        "validation": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["start", "end", "status", "accessed"],
+          "properties": {
+            "start": {"const": "2016-01-04"},
+            "end": {"const": "2026-06-30"},
+            "status": {"const": "sealed_not_accessed"},
+            "accessed": {"const": false}
+          }
+        }
+      }
+    },
+    "timing_attestation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["weekly_decisions", "all_execution_dates_after_decisions", "same_close_execution", "manufactured_sessions", "lookahead_detected"],
+      "properties": {
+        "weekly_decisions": {"type": "integer", "minimum": 0},
+        "all_execution_dates_after_decisions": {"const": true},
+        "same_close_execution": {"const": false},
+        "manufactured_sessions": {"const": false},
+        "lookahead_detected": {"const": false}
+      }
+    },
+    "calculation_attestation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["fixed_sleeve_weight", "no_trade_band", "expense_accrual_basis", "primary_execution_cost_multiplier", "two_x_execution_cost_multiplier", "two_x_expense_multiplier"],
+      "properties": {
+        "fixed_sleeve_weight": {"const": 0.125},
+        "no_trade_band": {"const": 0.02},
+        "expense_accrual_basis": {"const": "annual_ratio_divided_by_252_on_held_notional"},
+        "primary_execution_cost_multiplier": {"const": 1.0},
+        "two_x_execution_cost_multiplier": {"const": 2.0},
+        "two_x_expense_multiplier": {"const": 1.0}
+      }
+    },
+    "trial_inventory": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["count", "candidate_ids", "effective_rank_convention"],
+      "properties": {
+        "count": {"const": 3},
+        "candidate_ids": {"const": ["CORE1_DC60", "CORE1_DC120", "CORE1_SMA200"]},
+        "effective_rank_convention": {"const": "all_three_locked_trials"}
+      }
+    },
+    "trial_statistics": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 3,
+      "items": {"$ref": "#/$defs/trial"}
+    },
+    "candidates": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 3,
+      "items": {"$ref": "#/$defs/candidate"}
+    },
+    "benchmark": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "metrics", "costs"],
+      "properties": {
+        "id": {"const": "equal_weight_always_long_fixed_sleeves"},
+        "metrics": {"$ref": "#/$defs/paths"},
+        "costs": {"$ref": "#/$defs/costs"}
+      }
+    },
+    "selection": {"$ref": "#/$defs/selection"},
+    "access_counts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["real_dataset_access", "real_container_access", "real_return_decode", "validation_access", "provider_calls", "credential_reads", "broker_actions", "paid_actions"],
+      "properties": {
+        "real_dataset_access": {"const": 0},
+        "real_container_access": {"const": 0},
+        "real_return_decode": {"const": 0},
+        "validation_access": {"const": 0},
+        "provider_calls": {"const": 0},
+        "credential_reads": {"const": 0},
+        "broker_actions": {"const": 0},
+        "paid_actions": {"const": 0}
+      }
+    },
+    "validation_seal": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "accessed"],
+      "properties": {"status": {"const": "sealed_not_accessed"}, "accessed": {"const": false}}
+    },
+    "provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["producing_commit", "engine_sha256", "source_kind"],
+      "properties": {
+        "producing_commit": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+        "engine_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "source_kind": {"const": "committed_synthetic_fixture_only"}
+      }
+    }
+  },
+  "$defs": {
+    "window": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["start", "end"],
+      "properties": {
+        "start": {"type": "string", "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"},
+        "end": {"type": "string", "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"},
+        "performance_claim": {"const": false}
+      }
+    },
+    "number_or_null": {"type": ["number", "null"]},
+    "metric": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["calendar_count", "annual_arithmetic_return", "annual_geometric_return", "annualized_volatility", "annualized_sharpe", "maximum_drawdown", "one_way_turnover", "annualized_one_way_turnover", "trade_count", "average_exposure", "minimum_exposure", "maximum_exposure", "psr", "dsr", "autocorrelation_adjusted_sharpe_variance", "autocorrelation_lags", "hac_newey_west", "independent_bet_equivalents", "daily_sharpe_for_inference", "skewness_population", "raw_kurtosis_population"],
+      "properties": {
+        "calendar_count": {"type": "integer", "minimum": 0},
+        "annual_arithmetic_return": {"$ref": "#/$defs/number_or_null"},
+        "annual_geometric_return": {"$ref": "#/$defs/number_or_null"},
+        "annualized_volatility": {"$ref": "#/$defs/number_or_null"},
+        "annualized_sharpe": {"$ref": "#/$defs/number_or_null"},
+        "maximum_drawdown": {"$ref": "#/$defs/number_or_null"},
+        "one_way_turnover": {"$ref": "#/$defs/number_or_null"},
+        "annualized_one_way_turnover": {"$ref": "#/$defs/number_or_null"},
+        "trade_count": {"type": "integer", "minimum": 0},
+        "average_exposure": {"$ref": "#/$defs/number_or_null"},
+        "minimum_exposure": {"$ref": "#/$defs/number_or_null"},
+        "maximum_exposure": {"$ref": "#/$defs/number_or_null"},
+        "psr": {"$ref": "#/$defs/number_or_null"},
+        "dsr": {"$ref": "#/$defs/number_or_null"},
+        "autocorrelation_adjusted_sharpe_variance": {"$ref": "#/$defs/number_or_null"},
+        "autocorrelation_lags": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["lags", "values"],
+          "properties": {"lags": {"const": [1, 2, 3, 4, 5]}, "values": {"type": "array", "minItems": 5, "maxItems": 5, "items": {"$ref": "#/$defs/number_or_null"}}}
+        },
+        "hac_newey_west": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["lags", "variance_of_mean", "t_statistic"],
+          "properties": {"lags": {"type": ["integer", "null"]}, "variance_of_mean": {"$ref": "#/$defs/number_or_null"}, "t_statistic": {"$ref": "#/$defs/number_or_null"}}
+        },
+        "independent_bet_equivalents": {
+          "type": "object",
+          "additionalProperties": false,
+      "required": ["effective_time_count", "cross_section_count", "joint_count", "cross_section_eigenvalues"],
+      "properties": {"effective_time_count": {"$ref": "#/$defs/number_or_null"}, "cross_section_count": {"$ref": "#/$defs/number_or_null"}, "joint_count": {"$ref": "#/$defs/number_or_null"}, "cross_section_eigenvalues": {"type": ["array", "null"], "items": {"type": "number"}}}
+        },
+        "daily_sharpe_for_inference": {"$ref": "#/$defs/number_or_null"},
+        "skewness_population": {"$ref": "#/$defs/number_or_null"},
+        "raw_kurtosis_population": {"$ref": "#/$defs/number_or_null"}
+      }
+    },
+    "paths": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["gross", "primary_net", "two_x_execution_cost_net"],
+      "properties": {"gross": {"$ref": "#/$defs/metric"}, "primary_net": {"$ref": "#/$defs/metric"}, "two_x_execution_cost_net": {"$ref": "#/$defs/metric"}}
+    },
+    "costs": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["commission", "spread_slippage", "sell_surcharge", "execution_cost_primary", "execution_cost_two_x", "etf_expense_accrual", "primary_total_cost_drag", "two_x_total_cost_drag"],
+      "properties": {
+        "commission": {"type": "number"},
+        "spread_slippage": {"type": "number"},
+        "sell_surcharge": {"type": "number"},
+        "execution_cost_primary": {"type": "number"},
+        "execution_cost_two_x": {"type": "number"},
+        "etf_expense_accrual": {"type": "number"},
+        "primary_total_cost_drag": {"type": "number"},
+        "two_x_total_cost_drag": {"type": "number"}
+      }
+    },
+    "trial": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["candidate_id", "annualized_sharpe", "dsr", "effective_trial_count"],
+      "properties": {"candidate_id": {"enum": ["CORE1_DC60", "CORE1_DC120", "CORE1_SMA200"]}, "annualized_sharpe": {"$ref": "#/$defs/number_or_null"}, "dsr": {"$ref": "#/$defs/number_or_null"}, "effective_trial_count": {"const": 3}}
+    },
+    "candidate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "metrics", "costs", "asset_contributions", "attribution", "largest_positive_contribution_share", "positive_contribution_hhi", "best_episode_concentration", "leave_one_out", "subperiods", "regime_diagnostics", "critical_blockers", "gates", "all_gates_pass"],
+      "properties": {
+        "id": {"enum": ["CORE1_DC60", "CORE1_DC120", "CORE1_SMA200"]},
+        "metrics": {"$ref": "#/$defs/paths"},
+        "costs": {"$ref": "#/$defs/costs"},
+        "asset_contributions": {"$ref": "#/$defs/asset_map"},
+        "attribution": {"$ref": "#/$defs/attribution"},
+        "largest_positive_contribution_share": {"$ref": "#/$defs/number_or_null"},
+        "positive_contribution_hhi": {"type": "number"},
+        "best_episode_concentration": {"$ref": "#/$defs/number_or_null"},
+        "leave_one_out": {"anyOf": [{"type": "null"}, {"$ref": "#/$defs/leave_one_out"}]},
+        "subperiods": {"$ref": "#/$defs/subperiods"},
+        "regime_diagnostics": {"$ref": "#/$defs/regime"},
+        "critical_blockers": {"type": "array", "items": {"type": "string"}},
+        "gates": {"$ref": "#/$defs/gates"},
+        "all_gates_pass": {"type": "boolean"}
+      }
+    },
+    "asset_map": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["VTI", "VGK", "EWJ", "VWO", "IEF", "TIP", "GLD", "DBC"],
+      "properties": {"VTI": {"type": "number"}, "VGK": {"type": "number"}, "EWJ": {"type": "number"}, "VWO": {"type": "number"}, "IEF": {"type": "number"}, "TIP": {"type": "number"}, "GLD": {"type": "number"}, "DBC": {"type": "number"}}
+    },
+    "attribution_component": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["return", "etf_expense", "commission", "spread_slippage", "sell_surcharge", "primary_net"],
+      "properties": {
+        "return": {"type": "number"},
+        "etf_expense": {"type": "number"},
+        "commission": {"type": "number"},
+        "spread_slippage": {"type": "number"},
+        "sell_surcharge": {"type": "number"},
+        "primary_net": {"type": "number"}
+      }
+    },
+    "attribution_asset_map": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["VTI", "VGK", "EWJ", "VWO", "IEF", "TIP", "GLD", "DBC"],
+      "properties": {
+        "VTI": {"$ref": "#/$defs/attribution_component"},
+        "VGK": {"$ref": "#/$defs/attribution_component"},
+        "EWJ": {"$ref": "#/$defs/attribution_component"},
+        "VWO": {"$ref": "#/$defs/attribution_component"},
+        "IEF": {"$ref": "#/$defs/attribution_component"},
+        "TIP": {"$ref": "#/$defs/attribution_component"},
+        "GLD": {"$ref": "#/$defs/attribution_component"},
+        "DBC": {"$ref": "#/$defs/attribution_component"}
+      }
+    },
+    "daily_attribution": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["date", "primary_net_return", "asset_components", "asset_total"],
+      "properties": {
+        "date": {"type": "string", "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"},
+        "primary_net_return": {"type": "number"},
+        "asset_components": {"$ref": "#/$defs/attribution_asset_map"},
+        "asset_total": {"type": "number"}
+      }
+    },
+    "attribution": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["units", "tolerance", "daily", "full_window"],
+      "properties": {
+        "units": {"const": "fraction_of_starting_nav"},
+        "tolerance": {"const": 1e-12},
+        "daily": {"type": "array", "items": {"$ref": "#/$defs/daily_attribution"}},
+        "full_window": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["asset_components", "primary_net_return_sum", "asset_total"],
+          "properties": {
+            "asset_components": {"$ref": "#/$defs/attribution_asset_map"},
+            "primary_net_return_sum": {"type": "number"},
+            "asset_total": {"type": "number"}
+          }
+        }
+      }
+    },
+    "leave_one_out": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["removed_asset", "annual_geometric_return"],
+      "properties": {"removed_asset": {"enum": ["VTI", "VGK", "EWJ", "VWO", "IEF", "TIP", "GLD", "DBC"]}, "annual_geometric_return": {"$ref": "#/$defs/number_or_null"}}
+    },
+    "subperiod": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["observations", "annual_geometric_return", "annualized_sharpe"],
+      "properties": {"observations": {"type": "integer", "minimum": 0}, "annual_geometric_return": {"$ref": "#/$defs/number_or_null"}, "annualized_sharpe": {"$ref": "#/$defs/number_or_null"}}
+    },
+    "subperiods": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["2007_2009", "2010_2012", "2013_2015"],
+      "properties": {"2007_2009": {"$ref": "#/$defs/subperiod"}, "2010_2012": {"$ref": "#/$defs/subperiod"}, "2013_2015": {"$ref": "#/$defs/subperiod"}}
+    },
+    "regime": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["gfc", "prior_only_global_state_whipsaw"],
+      "properties": {
+        "gfc": {"type": "object", "additionalProperties": false, "required": ["status", "funded", "claim"], "properties": {"status": {"const": "diagnostic_only"}, "funded": {"const": false}, "claim": {"const": "none"}}},
+        "prior_only_global_state_whipsaw": {"type": "object", "additionalProperties": false, "required": ["status", "lookahead_free", "claim"], "properties": {"status": {"const": "not_funded"}, "lookahead_free": {"const": true}, "claim": {"const": "none"}}}
+      }
+    },
+    "gates": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["A", "B", "C", "D", "E", "F", "G", "H"],
+      "properties": {"A": {"type": "boolean"}, "B": {"type": "boolean"}, "C": {"type": "boolean"}, "D": {"type": "boolean"}, "E": {"type": "boolean"}, "F": {"type": "boolean"}, "G": {"type": "boolean"}, "H": {"type": "boolean"}}
+    },
+    "selection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["outcome", "winner", "eligible_candidates", "discarded_candidates", "ranking", "stop_rule", "tie_break"],
+      "properties": {
+        "outcome": {"enum": ["single_winner", "no_winner_stop"]},
+        "winner": {"type": ["string", "null"]},
+        "eligible_candidates": {"type": "array", "items": {"enum": ["CORE1_DC60", "CORE1_DC120", "CORE1_SMA200"]}},
+        "discarded_candidates": {"type": "array", "items": {"enum": ["CORE1_DC60", "CORE1_DC120", "CORE1_SMA200"]}},
+        "ranking": {"type": "array", "minItems": 3, "maxItems": 3, "items": {"type": "object", "additionalProperties": false, "required": ["candidate_id", "eligible", "worst_subperiod_annualized_sharpe", "one_way_turnover"], "properties": {"candidate_id": {"enum": ["CORE1_DC60", "CORE1_DC120", "CORE1_SMA200"]}, "eligible": {"type": "boolean"}, "worst_subperiod_annualized_sharpe": {"$ref": "#/$defs/number_or_null"}, "one_way_turnover": {"$ref": "#/$defs/number_or_null"}}}},
+        "stop_rule": {"type": "string"},
+        "tie_break": {"enum": ["not_applied", "none", "lower_one_way_turnover_then_locked_candidate_order"]}
+      }
+    }
+  }
+}
