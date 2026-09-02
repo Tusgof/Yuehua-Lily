@@ -1,0 +1,108 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "lily_core_1e_b1_synthetic_report_v1",
+  "title": "CORE-1E-B1 closed-world synthetic development report",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "order_id",
+    "status",
+    "evidence_tier",
+    "edge_claim",
+    "contract_sha256",
+    "fixture",
+    "selection",
+    "calculation_report",
+    "access_counts",
+    "validation_seal",
+    "lifecycle",
+    "provenance"
+  ],
+  "properties": {
+    "schema_version": {"const": "lily_core_1e_b1_synthetic_report_v1"},
+    "order_id": {"const": "CORE-1E-B1"},
+    "status": {"const": "synthetic_completed"},
+    "evidence_tier": {"const": "E0"},
+    "edge_claim": {"const": "none"},
+    "contract_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "fixture": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256", "fixture_id", "max_date"],
+      "properties": {
+        "path": {"const": "tests/fixtures/core1e_a/synthetic_market_v1.json"},
+        "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "fixture_id": {"const": "core1e_a_synthetic_market_v1"},
+        "max_date": {"const": "2015-12-31"}
+      }
+    },
+    "selection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["outcome", "winner", "eligible_candidates", "discarded_candidates", "ranking", "stop_rule", "tie_break"],
+      "properties": {
+        "outcome": {"type": "string"},
+        "winner": {"type": ["string", "null"]},
+        "eligible_candidates": {"type": "array", "items": {"type": "string"}},
+        "discarded_candidates": {"type": "array", "items": {"type": "string"}},
+        "ranking": {"type": "array"},
+        "stop_rule": {"type": "string"},
+        "tie_break": {"type": "string"}
+      }
+    },
+    "calculation_report": {"type": "object"},
+    "access_counts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["real_dataset_access", "real_container_access", "real_return_decode", "validation_access", "provider_calls", "credential_reads", "broker_actions", "paid_actions"],
+      "properties": {
+        "real_dataset_access": {"const": 0},
+        "real_container_access": {"const": 0},
+        "real_return_decode": {"const": 0},
+        "validation_access": {"const": 0},
+        "provider_calls": {"const": 0},
+        "credential_reads": {"const": 0},
+        "broker_actions": {"const": 0},
+        "paid_actions": {"const": 0}
+      }
+    },
+    "validation_seal": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["start", "end", "status", "accessed"],
+      "properties": {
+        "start": {"const": "2016-01-04"},
+        "end": {"const": "2026-06-30"},
+        "status": {"const": "sealed_not_accessed"},
+        "accessed": {"const": false}
+      }
+    },
+    "lifecycle": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["marker_first", "input_read_count", "temporary_git_proof", "project_artifacts_created", "real_data_accessed", "validation_accessed", "second_execution_refused"],
+      "properties": {
+        "marker_first": {"const": true},
+        "input_read_count": {"const": 1},
+        "temporary_git_proof": {"const": true},
+        "project_artifacts_created": {"const": false},
+        "real_data_accessed": {"const": false},
+        "validation_accessed": {"const": false},
+        "second_execution_refused": {"const": false}
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["producing_commit", "engine_path", "engine_sha256", "adapter_path", "adapter_sha256"],
+      "properties": {
+        "producing_commit": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+        "engine_path": {"const": "lib/core_1e_a_synthetic_engine.py"},
+        "engine_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "adapter_path": {"const": "lib/core_1e_b1_synthetic_adapter_v1.py"},
+        "adapter_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+      }
+    }
+  }
+}

@@ -519,6 +519,82 @@ def _validate_done_artifact(
             project_root=project_root,
             verify_runtime=verify_runtime,
         )
+    if must == "validate_core_1e_b1_gate":
+        completed = subprocess.run(
+            [sys.executable, "scripts/validate_core_1e_b1_development_execution_contract_v1.py"],
+            cwd=project_root,
+            text=True,
+            capture_output=True,
+            check=False,
+        )
+        ok = target.is_file() and completed.returncode == 0
+        return ([] if ok else [f"{order_id}:core_1e_b1_gate_failed"], ok, False)
+    if must == "validate_core_1e_b1_report":
+        completed = subprocess.run(
+            [sys.executable, "scripts/validate_core_1e_b1_synthetic_report_v1.py"],
+            cwd=project_root,
+            text=True,
+            capture_output=True,
+            check=False,
+        )
+        ok = target.is_file() and completed.returncode == 0
+        return ([] if ok else [f"{order_id}:core_1e_b1_report_failed"], ok, False)
+    if must == "deny_core_1e_b1_bootstrap":
+        completed = subprocess.run(
+            [sys.executable, "scripts/run_core_1e_b1_committed_bootstrap_v1.py"],
+            cwd=project_root,
+            text=True,
+            capture_output=True,
+            check=False,
+        )
+        try:
+            payload = json.loads(completed.stdout)
+            ok = (
+                target.is_file()
+                and completed.returncode == 1
+                and payload == {
+                    "data_accessed": False,
+                    "input_read_count": 0,
+                    "one_shot_consumed": False,
+                    "outcome": "canonical_activation_absent",
+                    "paths_resolved": [],
+                    "project_artifacts_created": False,
+                    "real_data_accessed": False,
+                    "status": "blocked",
+                    "validation_accessed": False,
+                }
+            )
+        except (json.JSONDecodeError, TypeError):
+            ok = False
+        return ([] if ok else [f"{order_id}:core_1e_b1_bootstrap_not_deny_only"], ok, False)
+    if must == "contain_core_1e_b1_manifest":
+        try:
+            rows = [json.loads(line) for line in target.read_text(encoding="utf-8").splitlines() if line.strip()]
+            matches = [row for row in rows if row.get("gate_id") == "core_1e_b1_development_execution_contract_v1"]
+            gate = project_root / "experiments/core_1e_b1_development_execution_contract_v1.json"
+            validator = project_root / "scripts/validate_core_1e_b1_development_execution_contract_v1.py"
+            ok = (
+                len(matches) == 1
+                and matches[0].get("artifact_path") == "experiments/core_1e_b1_development_execution_contract_v1.json"
+                and matches[0].get("artifact_sha256") == hashlib.sha256(gate.read_bytes()).hexdigest()
+                and matches[0].get("validator_path") == "scripts/validate_core_1e_b1_development_execution_contract_v1.py"
+                and matches[0].get("validator_sha256") == hashlib.sha256(validator.read_bytes()).hexdigest()
+            )
+        except (OSError, json.JSONDecodeError):
+            ok = False
+        return ([] if ok else [f"{order_id}:core_1e_b1_manifest_identity_failed"], ok, False)
+    if must == "register_core_1e_b1_scripts":
+        try:
+            scripts = json.loads(target.read_text(encoding="utf-8")).get("scripts", [])
+            required = (
+                "scripts/validate_core_1e_b1_development_execution_contract_v1.py",
+                "scripts/validate_core_1e_b1_synthetic_report_v1.py",
+                "scripts/run_core_1e_b1_committed_bootstrap_v1.py",
+            )
+            ok = all(scripts.count(item) == 1 for item in required)
+        except (OSError, json.JSONDecodeError, AttributeError):
+            ok = False
+        return ([] if ok else [f"{order_id}:core_1e_b1_script_registration_failed"], ok, False)
     if must == "contain_active_l_1_hashes":
         return _validate_l1_manifest(target, order_id, artifact_path, project_root=project_root)
     if must == "contain_l3_manifest_identity":
