@@ -1,0 +1,67 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "lily_core_1e_b2_normalized_container_v1",
+  "title": "CORE-1E-B2 normalized total-return container contract",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "container_id", "symbols_in_order", "rows", "expense_ratios"],
+  "properties": {
+    "schema_version": {"const": "lily_l1_yahoo_daily_v1"},
+    "container_id": {"const": "l1_yahoo_daily_v1"},
+    "symbols_in_order": {
+      "const": ["VTI", "VGK", "EWJ", "VWO", "IEF", "TIP", "GLD", "DBC"]
+    },
+    "rows": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["session_date", "observations"],
+        "properties": {
+          "session_date": {"type": "string", "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"},
+          "observations": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["VTI", "VGK", "EWJ", "VWO", "IEF", "TIP", "GLD", "DBC"],
+            "properties": {
+              "VTI": {"$ref": "#/$defs/observation"},
+              "VGK": {"$ref": "#/$defs/observation"},
+              "EWJ": {"$ref": "#/$defs/observation"},
+              "VWO": {"$ref": "#/$defs/observation"},
+              "IEF": {"$ref": "#/$defs/observation"},
+              "TIP": {"$ref": "#/$defs/observation"},
+              "GLD": {"$ref": "#/$defs/observation"},
+              "DBC": {"$ref": "#/$defs/observation"}
+            }
+          }
+        }
+      }
+    },
+    "expense_ratios": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["VTI", "VGK", "EWJ", "VWO", "IEF", "TIP", "GLD", "DBC"],
+      "properties": {
+        "VTI": {"type": "number", "minimum": 0},
+        "VGK": {"type": "number", "minimum": 0},
+        "EWJ": {"type": "number", "minimum": 0},
+        "VWO": {"type": "number", "minimum": 0},
+        "IEF": {"type": "number", "minimum": 0},
+        "TIP": {"type": "number", "minimum": 0},
+        "GLD": {"type": "number", "minimum": 0},
+        "DBC": {"type": "number", "minimum": 0}
+      }
+    }
+  },
+  "$defs": {
+    "observation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["total_return_close"],
+      "properties": {
+        "total_return_close": {"type": "number", "exclusiveMinimum": 0}
+      }
+    }
+  }
+}

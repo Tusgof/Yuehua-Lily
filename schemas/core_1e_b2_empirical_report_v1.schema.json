@@ -1,0 +1,262 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "lily_core_1e_b2_empirical_report_v1",
+  "title": "CORE-1E-B2 closed-world synthetic adapter report",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "order_id", "status", "evidence_tier", "edge_claim", "result_kind",
+    "empirical_result_created", "contract_sha256", "source", "windows", "timing_attestation",
+    "calculation_attestation", "trial_inventory", "trial_statistics", "candidates", "benchmark",
+    "selection", "access_counts", "validation_seal", "lifecycle", "provenance"
+  ],
+  "properties": {
+    "schema_version": {"const": "lily_core_1e_b2_empirical_report_v1"},
+    "order_id": {"const": "CORE-1E-B2-A"},
+    "status": {"const": "synthetic_completed"},
+    "evidence_tier": {"const": "E0"},
+    "edge_claim": {"const": "none"},
+    "result_kind": {"const": "synthetic_fixture_only"},
+    "empirical_result_created": {"const": false},
+    "contract_sha256": {"$ref": "#/$defs/hash64"},
+    "source": {"$ref": "#/$defs/source"},
+    "windows": {"$ref": "#/$defs/windows"},
+    "timing_attestation": {"$ref": "#/$defs/timing"},
+    "calculation_attestation": {"$ref": "#/$defs/calculation"},
+    "trial_inventory": {"$ref": "#/$defs/trial_inventory"},
+    "trial_statistics": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 3,
+      "items": {"$ref": "#/$defs/trial_statistic"}
+    },
+    "candidates": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 3,
+      "items": {"$ref": "#/$defs/candidate"}
+    },
+    "benchmark": {"$ref": "#/$defs/benchmark"},
+    "selection": {"$ref": "#/$defs/selection"},
+    "access_counts": {"$ref": "#/$defs/access_counts"},
+    "validation_seal": {"$ref": "#/$defs/validation_seal"},
+    "lifecycle": {"$ref": "#/$defs/lifecycle"},
+    "provenance": {"$ref": "#/$defs/provenance"}
+  },
+  "$defs": {
+    "hash64": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "hash40": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+    "number_or_null": {"type": ["number", "null"]},
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256", "schema_version", "container_id", "max_date", "row_count", "symbols_in_order", "expense_ratios"],
+      "properties": {
+        "path": {"const": "tests/fixtures/core1e_b2/normalized_market_v1.json"},
+        "sha256": {"$ref": "#/$defs/hash64"},
+        "schema_version": {"const": "lily_l1_yahoo_daily_v1"},
+        "container_id": {"const": "l1_yahoo_daily_v1"},
+        "max_date": {"type": "string", "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"},
+        "row_count": {"type": "integer", "minimum": 1},
+        "symbols_in_order": {"const": ["VTI", "VGK", "EWJ", "VWO", "IEF", "TIP", "GLD", "DBC"]},
+        "expense_ratios": {"$ref": "#/$defs/expense_ratios"}
+      }
+    },
+    "expense_ratios": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["VTI", "VGK", "EWJ", "VWO", "IEF", "TIP", "GLD", "DBC"],
+      "properties": {
+        "VTI": {"type": "number", "minimum": 0}, "VGK": {"type": "number", "minimum": 0},
+        "EWJ": {"type": "number", "minimum": 0}, "VWO": {"type": "number", "minimum": 0},
+        "IEF": {"type": "number", "minimum": 0}, "TIP": {"type": "number", "minimum": 0},
+        "GLD": {"type": "number", "minimum": 0}, "DBC": {"type": "number", "minimum": 0}
+      }
+    },
+    "windows": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["warmup_qa", "development", "validation"],
+      "properties": {
+        "warmup_qa": {"$ref": "#/$defs/warmup"},
+        "development": {"$ref": "#/$defs/development"},
+        "validation": {"$ref": "#/$defs/validation"}
+      }
+    },
+    "warmup": {
+      "type": "object", "additionalProperties": false,
+      "required": ["start", "end", "performance_claim"],
+      "properties": {"start": {"const": "2006-02-03"}, "end": {"const": "2007-02-02"}, "performance_claim": {"const": false}}
+    },
+    "development": {
+      "type": "object", "additionalProperties": false,
+      "required": ["start", "end"],
+      "properties": {"start": {"const": "2007-02-05"}, "end": {"const": "2015-12-31"}}
+    },
+    "validation": {
+      "type": "object", "additionalProperties": false,
+      "required": ["start", "end", "status", "accessed"],
+      "properties": {
+        "start": {"const": "2016-01-04"}, "end": {"const": "2026-06-30"},
+        "status": {"const": "sealed_not_accessed"}, "accessed": {"const": false}
+      }
+    },
+    "timing": {
+      "type": "object", "additionalProperties": false,
+      "required": ["weekly_decisions", "all_execution_dates_after_decisions", "same_close_execution", "manufactured_sessions", "lookahead_detected"],
+      "properties": {
+        "weekly_decisions": {"type": "integer", "minimum": 0},
+        "all_execution_dates_after_decisions": {"const": true},
+        "same_close_execution": {"const": false},
+        "manufactured_sessions": {"const": false},
+        "lookahead_detected": {"const": false}
+      }
+    },
+    "calculation": {
+      "type": "object", "additionalProperties": false,
+      "required": ["fixed_sleeve_weight", "no_trade_band", "expense_accrual_basis", "primary_execution_cost_multiplier", "two_x_execution_cost_multiplier", "two_x_expense_multiplier"],
+      "properties": {
+        "fixed_sleeve_weight": {"const": 0.125}, "no_trade_band": {"const": 0.02},
+        "expense_accrual_basis": {"const": "annual_ratio_divided_by_252_on_held_notional"},
+        "primary_execution_cost_multiplier": {"const": 1.0}, "two_x_execution_cost_multiplier": {"const": 2.0},
+        "two_x_expense_multiplier": {"const": 1.0}
+      }
+    },
+    "trial_inventory": {
+      "type": "object", "additionalProperties": false,
+      "required": ["count", "candidate_ids", "effective_rank_convention"],
+      "properties": {
+        "count": {"const": 3},
+        "candidate_ids": {"const": ["CORE1_DC60", "CORE1_DC120", "CORE1_SMA200"]},
+        "effective_rank_convention": {"const": "all_three_locked_trials"}
+      }
+    },
+    "trial_statistic": {
+      "type": "object", "additionalProperties": false,
+      "required": ["candidate_id", "annualized_sharpe", "dsr", "effective_trial_count"],
+      "properties": {
+        "candidate_id": {"enum": ["CORE1_DC60", "CORE1_DC120", "CORE1_SMA200"]},
+        "annualized_sharpe": {"$ref": "#/$defs/number_or_null"},
+        "dsr": {"$ref": "#/$defs/number_or_null"},
+        "effective_trial_count": {"const": 3}
+      }
+    },
+    "metric": {
+      "type": "object", "additionalProperties": false,
+      "required": [
+        "calendar_count", "annual_arithmetic_return", "annual_geometric_return", "annualized_volatility",
+        "annualized_sharpe", "maximum_drawdown", "one_way_turnover", "annualized_one_way_turnover",
+        "trade_count", "average_exposure", "minimum_exposure", "maximum_exposure", "psr", "dsr",
+        "autocorrelation_adjusted_sharpe_variance", "autocorrelation_lags", "hac_newey_west",
+        "independent_bet_equivalents", "daily_sharpe_for_inference", "skewness_population", "raw_kurtosis_population"
+      ],
+      "properties": {
+        "calendar_count": {"type": "integer", "minimum": 0}, "annual_arithmetic_return": {"$ref": "#/$defs/number_or_null"},
+        "annual_geometric_return": {"$ref": "#/$defs/number_or_null"}, "annualized_volatility": {"$ref": "#/$defs/number_or_null"},
+        "annualized_sharpe": {"$ref": "#/$defs/number_or_null"}, "maximum_drawdown": {"$ref": "#/$defs/number_or_null"},
+        "one_way_turnover": {"type": "number", "minimum": 0}, "annualized_one_way_turnover": {"$ref": "#/$defs/number_or_null"},
+        "trade_count": {"type": "integer", "minimum": 0}, "average_exposure": {"$ref": "#/$defs/number_or_null"},
+        "minimum_exposure": {"$ref": "#/$defs/number_or_null"}, "maximum_exposure": {"$ref": "#/$defs/number_or_null"},
+        "psr": {"$ref": "#/$defs/number_or_null"}, "dsr": {"$ref": "#/$defs/number_or_null"},
+        "autocorrelation_adjusted_sharpe_variance": {"$ref": "#/$defs/number_or_null"},
+        "autocorrelation_lags": {"$ref": "#/$defs/autocorrelation"},
+        "hac_newey_west": {"$ref": "#/$defs/hac"},
+        "independent_bet_equivalents": {"$ref": "#/$defs/independent_bets"},
+        "daily_sharpe_for_inference": {"$ref": "#/$defs/number_or_null"},
+        "skewness_population": {"$ref": "#/$defs/number_or_null"}, "raw_kurtosis_population": {"$ref": "#/$defs/number_or_null"}
+      }
+    },
+    "autocorrelation": {
+      "type": "object", "additionalProperties": false, "required": ["lags", "values"],
+      "properties": {"lags": {"const": [1, 2, 3, 4, 5]}, "values": {"type": "array", "minItems": 5, "maxItems": 5, "items": {"$ref": "#/$defs/number_or_null"}}}
+    },
+    "hac": {
+      "type": "object", "additionalProperties": false, "required": ["lags", "variance_of_mean", "t_statistic"],
+      "properties": {"lags": {"type": ["integer", "null"]}, "variance_of_mean": {"$ref": "#/$defs/number_or_null"}, "t_statistic": {"$ref": "#/$defs/number_or_null"}}
+    },
+    "independent_bets": {
+      "type": "object", "additionalProperties": false,
+      "required": ["effective_time_count", "cross_section_count", "joint_count", "cross_section_eigenvalues"],
+      "properties": {
+        "effective_time_count": {"$ref": "#/$defs/number_or_null"}, "cross_section_count": {"$ref": "#/$defs/number_or_null"},
+        "joint_count": {"$ref": "#/$defs/number_or_null"},
+        "cross_section_eigenvalues": {"type": ["array", "null"], "items": {"type": "number"}}
+      }
+    },
+    "costs": {
+      "type": "object", "additionalProperties": false,
+      "required": ["commission", "spread_slippage", "sell_surcharge", "execution_cost_primary", "execution_cost_two_x", "etf_expense_accrual", "primary_total_cost_drag", "two_x_total_cost_drag"],
+      "properties": {
+        "commission": {"type": "number", "minimum": 0}, "spread_slippage": {"type": "number", "minimum": 0},
+        "sell_surcharge": {"type": "number", "minimum": 0}, "execution_cost_primary": {"type": "number", "minimum": 0},
+        "execution_cost_two_x": {"type": "number", "minimum": 0}, "etf_expense_accrual": {"type": "number", "minimum": 0},
+        "primary_total_cost_drag": {"type": "number", "minimum": 0}, "two_x_total_cost_drag": {"type": "number", "minimum": 0}
+      }
+    },
+    "subperiod": {
+      "type": "object", "additionalProperties": false,
+      "required": ["observations", "annual_geometric_return", "annualized_sharpe"],
+      "properties": {"observations": {"type": "integer", "minimum": 0}, "annual_geometric_return": {"$ref": "#/$defs/number_or_null"}, "annualized_sharpe": {"$ref": "#/$defs/number_or_null"}}
+    },
+    "regime_diagnostics": {
+      "type": "object", "additionalProperties": false,
+      "required": ["gfc", "prior_only_global_state_whipsaw"],
+      "properties": {
+        "gfc": {"type": "object", "additionalProperties": false, "required": ["status", "funded", "claim"], "properties": {"status": {"const": "diagnostic_only"}, "funded": {"const": false}, "claim": {"const": "none"}}},
+        "prior_only_global_state_whipsaw": {"type": "object", "additionalProperties": false, "required": ["status", "lookahead_free", "claim"], "properties": {"status": {"const": "not_funded"}, "lookahead_free": {"const": true}, "claim": {"const": "none"}}}
+      }
+    },
+    "candidate": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "metrics", "costs", "asset_contributions", "largest_positive_contribution_share", "positive_contribution_hhi", "best_episode_concentration", "leave_one_out", "subperiods", "regime_diagnostics", "critical_blockers", "gates", "all_gates_pass"],
+      "properties": {
+        "id": {"enum": ["CORE1_DC60", "CORE1_DC120", "CORE1_SMA200"]},
+        "metrics": {"type": "object", "additionalProperties": false, "required": ["gross", "primary_net", "two_x_execution_cost_net"], "properties": {"gross": {"$ref": "#/$defs/metric"}, "primary_net": {"$ref": "#/$defs/metric"}, "two_x_execution_cost_net": {"$ref": "#/$defs/metric"}}},
+        "costs": {"$ref": "#/$defs/costs"},
+        "asset_contributions": {"$ref": "#/$defs/asset_contributions"},
+        "largest_positive_contribution_share": {"$ref": "#/$defs/number_or_null"}, "positive_contribution_hhi": {"type": "number", "minimum": 0}, "best_episode_concentration": {"$ref": "#/$defs/number_or_null"},
+        "leave_one_out": {"type": ["object", "null"], "additionalProperties": false, "required": ["removed_asset", "annual_geometric_return"], "properties": {"removed_asset": {"enum": ["VTI", "VGK", "EWJ", "VWO", "IEF", "TIP", "GLD", "DBC"]}, "annual_geometric_return": {"$ref": "#/$defs/number_or_null"}}},
+        "subperiods": {"type": "object", "additionalProperties": false, "required": ["2007_2009", "2010_2012", "2013_2015"], "properties": {"2007_2009": {"$ref": "#/$defs/subperiod"}, "2010_2012": {"$ref": "#/$defs/subperiod"}, "2013_2015": {"$ref": "#/$defs/subperiod"}}},
+        "regime_diagnostics": {"$ref": "#/$defs/regime_diagnostics"}, "critical_blockers": {"type": "array", "items": {"type": "string"}},
+        "gates": {"$ref": "#/$defs/gates"}, "all_gates_pass": {"type": "boolean"}
+      }
+    },
+    "asset_contributions": {
+      "type": "object", "additionalProperties": false, "required": ["VTI", "VGK", "EWJ", "VWO", "IEF", "TIP", "GLD", "DBC"],
+      "properties": {"VTI": {"type": "number"}, "VGK": {"type": "number"}, "EWJ": {"type": "number"}, "VWO": {"type": "number"}, "IEF": {"type": "number"}, "TIP": {"type": "number"}, "GLD": {"type": "number"}, "DBC": {"type": "number"}}
+    },
+    "gates": {
+      "type": "object", "additionalProperties": false, "required": ["A", "B", "C", "D", "E", "F", "G", "H"],
+      "properties": {"A": {"type": "boolean"}, "B": {"type": "boolean"}, "C": {"type": "boolean"}, "D": {"type": "boolean"}, "E": {"type": "boolean"}, "F": {"type": "boolean"}, "G": {"type": "boolean"}, "H": {"type": "boolean"}}
+    },
+    "benchmark": {
+      "type": "object", "additionalProperties": false, "required": ["id", "metrics", "costs"],
+      "properties": {"id": {"const": "equal_weight_always_long_fixed_sleeves"}, "metrics": {"type": "object", "additionalProperties": false, "required": ["gross", "primary_net", "two_x_execution_cost_net"], "properties": {"gross": {"$ref": "#/$defs/metric"}, "primary_net": {"$ref": "#/$defs/metric"}, "two_x_execution_cost_net": {"$ref": "#/$defs/metric"}}}, "costs": {"$ref": "#/$defs/costs"}}
+    },
+    "selection": {
+      "type": "object", "additionalProperties": false, "required": ["outcome", "winner", "eligible_candidates", "discarded_candidates", "ranking", "stop_rule", "tie_break"],
+      "properties": {
+        "outcome": {"enum": ["no_winner_stop", "single_winner"]}, "winner": {"type": ["string", "null"]},
+        "eligible_candidates": {"type": "array", "items": {"enum": ["CORE1_DC60", "CORE1_DC120", "CORE1_SMA200"]}}, "discarded_candidates": {"type": "array", "items": {"enum": ["CORE1_DC60", "CORE1_DC120", "CORE1_SMA200"]}},
+        "ranking": {"type": "array", "minItems": 3, "maxItems": 3, "items": {"type": "object", "additionalProperties": false, "required": ["candidate_id", "eligible", "worst_subperiod_annualized_sharpe", "one_way_turnover"], "properties": {"candidate_id": {"enum": ["CORE1_DC60", "CORE1_DC120", "CORE1_SMA200"]}, "eligible": {"type": "boolean"}, "worst_subperiod_annualized_sharpe": {"$ref": "#/$defs/number_or_null"}, "one_way_turnover": {"$ref": "#/$defs/number_or_null"}}}},
+        "stop_rule": {"type": "string", "minLength": 1}, "tie_break": {"type": "string", "minLength": 1}
+      }
+    },
+    "access_counts": {
+      "type": "object", "additionalProperties": false, "required": ["real_dataset_access", "real_container_access", "real_return_decode", "validation_access", "provider_calls", "credential_reads", "broker_actions", "paid_actions"],
+      "properties": {"real_dataset_access": {"const": 0}, "real_container_access": {"const": 0}, "real_return_decode": {"const": 0}, "validation_access": {"const": 0}, "provider_calls": {"const": 0}, "credential_reads": {"const": 0}, "broker_actions": {"const": 0}, "paid_actions": {"const": 0}}
+    },
+    "validation_seal": {
+      "type": "object", "additionalProperties": false, "required": ["status", "accessed"],
+      "properties": {"status": {"const": "sealed_not_accessed"}, "accessed": {"const": false}}
+    },
+    "lifecycle": {
+      "type": "object", "additionalProperties": false, "required": ["marker_first", "input_read_count", "temporary_git_proof", "project_artifacts_created", "real_data_accessed", "validation_accessed", "second_execution_refused"],
+      "properties": {"marker_first": {"const": true}, "input_read_count": {"const": 1}, "temporary_git_proof": {"const": true}, "project_artifacts_created": {"const": false}, "real_data_accessed": {"const": false}, "validation_accessed": {"const": false}, "second_execution_refused": {"const": false}}
+    },
+    "provenance": {
+      "type": "object", "additionalProperties": false, "required": ["producing_commit", "contract_sha256", "engine_path", "engine_sha256", "adapter_path", "adapter_sha256", "source_kind"],
+      "properties": {"producing_commit": {"$ref": "#/$defs/hash40"}, "contract_sha256": {"$ref": "#/$defs/hash64"}, "engine_path": {"const": "lib/core_1e_a_synthetic_engine.py"}, "engine_sha256": {"$ref": "#/$defs/hash64"}, "adapter_path": {"const": "lib/core_1e_b2_empirical_adapter_v1.py"}, "adapter_sha256": {"$ref": "#/$defs/hash64"}, "source_kind": {"const": "committed_synthetic_fixture_only"}}
+    }
+  }
+}

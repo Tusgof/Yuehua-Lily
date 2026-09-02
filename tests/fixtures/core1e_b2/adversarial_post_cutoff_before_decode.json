@@ -1,0 +1,10 @@
+{
+  "schema_version": "lily_l1_yahoo_daily_v1",
+  "container_id": "l1_yahoo_daily_v1",
+  "symbols_in_order": ["VTI", "VGK", "EWJ", "VWO", "IEF", "TIP", "GLD", "DBC"],
+  "rows": [
+    {"session_date": "2015-12-31", "observations": {"VTI": {"total_return_close": 100.0}, "VGK": {"total_return_close": 100.0}, "EWJ": {"total_return_close": 100.0}, "VWO": {"total_return_close": 100.0}, "IEF": {"total_return_close": 100.0}, "TIP": {"total_return_close": 100.0}, "GLD": {"total_return_close": 100.0}, "DBC": {"total_return_close": 100.0}}},
+    {"session_date": "2016-01-04", "observations": {"VTI": {"total_return_close": 1e999999}, "VGK": {"total_return_close": 1e999999}, "EWJ": {"total_return_close": 1e999999}, "VWO": {"total_return_close": 1e999999}, "IEF": {"total_return_close": 1e999999}, "TIP": {"total_return_close": 1e999999}, "GLD": {"total_return_close": 1e999999}, "DBC": {"total_return_close": 1e999999}}}
+  ],
+  "expense_ratios": {"VTI": 0.0010, "VGK": 0.0012, "EWJ": 0.0011, "VWO": 0.0015, "IEF": 0.0008, "TIP": 0.0007, "GLD": 0.0020, "DBC": 0.0025}
+}

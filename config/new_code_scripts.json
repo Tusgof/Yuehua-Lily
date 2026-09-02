@@ -43,6 +43,9 @@
     ,"scripts/run_core_1e_a_committed_bootstrap_v1.py"
     ,"scripts/validate_core_1e_b1_development_execution_contract_v1.py"
     ,"scripts/run_core_1e_b1_committed_bootstrap_v1.py"
+    ,"scripts/validate_core_1e_b2_development_execution_contract_v1.py"
+    ,"scripts/validate_core_1e_b2_empirical_report_v1.py"
+    ,"scripts/run_core_1e_b2_committed_bootstrap_v1.py"
   ],
   "scripts": [
     "scripts/acquire_l_1_alpha_vantage_corporate_actions.py",
@@ -279,5 +282,8 @@
     ,"scripts/validate_core_1e_b1_development_execution_contract_v1.py"
     ,"scripts/validate_core_1e_b1_synthetic_report_v1.py"
     ,"scripts/run_core_1e_b1_committed_bootstrap_v1.py"
+    ,"scripts/validate_core_1e_b2_development_execution_contract_v1.py"
+    ,"scripts/validate_core_1e_b2_empirical_report_v1.py"
+    ,"scripts/run_core_1e_b2_committed_bootstrap_v1.py"
   ]
 }

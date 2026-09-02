@@ -1,0 +1,68 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "lily_core_1e_b2_activation_v1",
+  "title": "CORE-1E-B2 future activation contract",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "gate_id", "gate_sha256", "accepted_gate_commit", "exact_ci_head_sha", "exact_ci_run_id",
+    "owner_authorization_ref", "runtime_bytes", "development_cutoff", "validation_boundary", "input_ref",
+    "input_sha256", "input_size_bytes", "container_identity", "one_shot"
+  ],
+  "properties": {
+    "schema_version": {"const": "lily_core_1e_b2_activation_v1"},
+    "gate_id": {"const": "core_1e_b2_development_execution_contract_v1"},
+    "gate_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "accepted_gate_commit": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+    "exact_ci_head_sha": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+    "exact_ci_run_id": {"type": "integer", "minimum": 1},
+    "owner_authorization_ref": {"type": "string"},
+    "runtime_bytes": {"type": "object", "additionalProperties": {"type": "string", "pattern": "^[0-9a-f]{64}$"}},
+    "development_cutoff": {"const": "2015-12-31"},
+    "validation_boundary": {"$ref": "#/$defs/validation"},
+    "input_ref": {"const": "tests/fixtures/core1e_b2/normalized_market_v1.json"},
+    "input_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "input_size_bytes": {"type": "integer", "minimum": 0},
+    "container_identity": {"$ref": "#/$defs/container"},
+    "one_shot": {"$ref": "#/$defs/one_shot"}
+  },
+  "$defs": {
+    "validation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["start", "end", "status", "accessed"],
+      "properties": {
+        "start": {"const": "2016-01-04"},
+        "end": {"const": "2026-06-30"},
+        "status": {"const": "sealed_not_accessed"},
+        "accessed": {"const": false}
+      }
+    },
+    "container": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256", "size_bytes", "max_date", "symbols_in_order", "future_only"],
+      "properties": {
+        "path": {"const": "data/normalized/l1_yahoo_daily_v1.json"},
+        "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "size_bytes": {"type": "integer", "minimum": 0},
+        "max_date": {"const": "2015-12-31"},
+        "symbols_in_order": {"const": ["VTI", "VGK", "EWJ", "VWO", "IEF", "TIP", "GLD", "DBC"]},
+        "future_only": {"const": true}
+      }
+    },
+    "one_shot": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["marker_path", "attempt_path", "report_path", "max_invocations", "claim_before_input_read", "retry_allowed"],
+      "properties": {
+        "marker_path": {"const": "reports/experiments/core_1e_b2_one_shot_marker_v1.json"},
+        "attempt_path": {"const": "reports/experiments/core_1e_b2_execution_attempt_v1.json"},
+        "report_path": {"const": "reports/experiments/core_1e_b2_execution_report_v1.json"},
+        "max_invocations": {"const": 1},
+        "claim_before_input_read": {"const": true},
+        "retry_allowed": {"const": false}
+      }
+    }
+  }
+}

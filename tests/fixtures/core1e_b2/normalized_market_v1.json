@@ -1,0 +1,16 @@
+{
+  "schema_version": "lily_l1_yahoo_daily_v1",
+  "container_id": "l1_yahoo_daily_v1",
+  "symbols_in_order": ["VTI", "VGK", "EWJ", "VWO", "IEF", "TIP", "GLD", "DBC"],
+  "rows": [
+    {"session_date": "2006-02-03", "observations": {"VTI": {"total_return_close": 100.0}, "VGK": {"total_return_close": 100.0}, "EWJ": {"total_return_close": 100.0}, "VWO": {"total_return_close": 100.0}, "IEF": {"total_return_close": 100.0}, "TIP": {"total_return_close": 100.0}, "GLD": {"total_return_close": 100.0}, "DBC": {"total_return_close": 100.0}}},
+    {"session_date": "2006-02-06", "observations": {"VTI": {"total_return_close": 100.2}, "VGK": {"total_return_close": 100.2}, "EWJ": {"total_return_close": 100.2}, "VWO": {"total_return_close": 100.2}, "IEF": {"total_return_close": 100.2}, "TIP": {"total_return_close": 100.2}, "GLD": {"total_return_close": 100.2}, "DBC": {"total_return_close": 100.2}}},
+    {"session_date": "2006-02-07", "observations": {"VTI": {"total_return_close": 100.1}, "VGK": {"total_return_close": 100.1}, "EWJ": {"total_return_close": 100.1}, "VWO": {"total_return_close": 100.1}, "IEF": {"total_return_close": 100.1}, "TIP": {"total_return_close": 100.1}, "GLD": {"total_return_close": 100.1}, "DBC": {"total_return_close": 100.1}}},
+    {"session_date": "2006-02-08", "observations": {"VTI": {"total_return_close": 100.3}, "VGK": {"total_return_close": 100.3}, "EWJ": {"total_return_close": 100.3}, "VWO": {"total_return_close": 100.3}, "IEF": {"total_return_close": 100.3}, "TIP": {"total_return_close": 100.3}, "GLD": {"total_return_close": 100.3}, "DBC": {"total_return_close": 100.3}}},
+    {"session_date": "2006-02-09", "observations": {"VTI": {"total_return_close": 100.4}, "VGK": {"total_return_close": 100.4}, "EWJ": {"total_return_close": 100.4}, "VWO": {"total_return_close": 100.4}, "IEF": {"total_return_close": 100.4}, "TIP": {"total_return_close": 100.4}, "GLD": {"total_return_close": 100.4}, "DBC": {"total_return_close": 100.4}}},
+    {"session_date": "2007-02-02", "observations": {"VTI": {"total_return_close": 100.5}, "VGK": {"total_return_close": 100.5}, "EWJ": {"total_return_close": 100.5}, "VWO": {"total_return_close": 100.5}, "IEF": {"total_return_close": 100.5}, "TIP": {"total_return_close": 100.5}, "GLD": {"total_return_close": 100.5}, "DBC": {"total_return_close": 100.5}}},
+    {"session_date": "2007-02-05", "observations": {"VTI": {"total_return_close": 100.7}, "VGK": {"total_return_close": 100.7}, "EWJ": {"total_return_close": 100.7}, "VWO": {"total_return_close": 100.7}, "IEF": {"total_return_close": 100.7}, "TIP": {"total_return_close": 100.7}, "GLD": {"total_return_close": 100.7}, "DBC": {"total_return_close": 100.7}}},
+    {"session_date": "2007-02-06", "observations": {"VTI": {"total_return_close": 100.8}, "VGK": {"total_return_close": 100.8}, "EWJ": {"total_return_close": 100.8}, "VWO": {"total_return_close": 100.8}, "IEF": {"total_return_close": 100.8}, "TIP": {"total_return_close": 100.8}, "GLD": {"total_return_close": 100.8}, "DBC": {"total_return_close": 100.8}}}
+  ],
+  "expense_ratios": {"VTI": 0.0010, "VGK": 0.0012, "EWJ": 0.0011, "VWO": 0.0015, "IEF": 0.0008, "TIP": 0.0007, "GLD": 0.0020, "DBC": 0.0025}
+}

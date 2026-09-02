@@ -1,0 +1,160 @@
+{
+  "schema_version": "lily_core_1e_b2_development_execution_contract_v1",
+  "order_id": "CORE-1E-B2-A",
+  "work_order_id": "CORE-1E-B2-A",
+  "gate_id": "core_1e_b2_development_execution_contract_v1",
+  "hypothesis_id": "L-1",
+  "status": "locked_before_execution",
+  "evidence_tier": "E0",
+  "edge_claim": "none",
+  "owner_authorization_ref": "owner_authorized_core_1e_b2_e0_machinery_only_2026-09-02",
+  "static_source_bindings": {
+    "core_1p_preregistration": {
+      "path": "experiments/core_1_stable_baseline_preregistration_v1.json",
+      "sha256": "5003d2360bb8729bcd91a39da34ff2e28c92ad2eb75c9b632c3ee85bcda7682f"
+    },
+    "core_1e_a_contract": {
+      "path": "experiments/core_1e_a_phase_a_execution_contract_v1.json",
+      "sha256": "adcbdbc26d02a287394bbfd5a3893a2d24d027b322e545e7a8b06378a7c35c7d"
+    },
+    "accepted_engine": {
+      "path": "lib/core_1e_a_synthetic_engine.py",
+      "sha256": "f92b39f7f0bbde1361326eff5b16d875a01e9938f16408dedbe0cd80cd9a1487"
+    },
+    "core_1e_b1_contract": {
+      "path": "experiments/core_1e_b1_development_execution_contract_v1.json",
+      "sha256": "adf3169a4d895d17e3e3ea489cc74d66e8a080a2c1ba88267cfb854d6e8ba6e5"
+    }
+  },
+  "future_container_identity": {
+    "path": "data/normalized/l1_yahoo_daily_v1.json",
+    "sha256": "6608c0ef88f4b7edaef7523738d7a172215aa4f97c8c403adeba884d6582a4dd",
+    "size_bytes": 8258827,
+    "max_date": "2015-12-31",
+    "symbols_in_order": ["VTI", "VGK", "EWJ", "VWO", "IEF", "TIP", "GLD", "DBC"],
+    "future_only": true
+  },
+  "normalized_container_contract": {
+    "schema_version": "lily_l1_yahoo_daily_v1",
+    "container_id": "l1_yahoo_daily_v1",
+    "top_level_fields": ["schema_version", "container_id", "symbols_in_order", "rows", "expense_ratios"],
+    "row_fields": ["session_date", "observations"],
+    "observation_fields": ["total_return_close"],
+    "expense_field": "expense_ratios",
+    "session_date_format": "ISO-8601 calendar date",
+    "session_calendar": "actual NYSE sessions supplied by the container; no sessions manufactured",
+    "availability_semantics": "A row is available at its official session close; weekly decisions use only rows through the last actual session of the ISO week and execute on the next supplied actual session.",
+    "return_semantics": "total_return_close is the only decoded close field; no price or adjusted-close field is inferred",
+    "expense_semantics": "expense_ratios must be explicitly supplied for every U8 symbol as annual decimal ratios; no future value is inferred"
+  },
+  "execution_boundaries": {
+    "mode": "synthetic_only",
+    "allowed_input_ref": "tests/fixtures/core1e_b2/normalized_market_v1.json",
+    "allowed_input_kind": "committed_fixture_only",
+    "development_cutoff": "2015-12-31",
+    "reject_on_or_after": "2016-01-04",
+    "validation_boundary": {
+      "start": "2016-01-04",
+      "end": "2026-06-30",
+      "status": "sealed_not_accessed",
+      "accessed": false
+    },
+    "marker_first": true,
+    "max_invocations": 1,
+    "retry_allowed": false,
+    "project_activation_creation": false,
+    "project_marker_creation": false,
+    "project_attempt_creation": false,
+    "project_report_creation": false,
+    "project_result_creation": false,
+    "temporary_git_proof_only": true
+  },
+  "required_future_checks_before_input_decode": [
+    "gate_identity",
+    "exact_ci_head_identity",
+    "gate_blob_hash",
+    "owner_authorization_ref",
+    "future_container_identity",
+    "development_cutoff",
+    "activation_schema_and_canonical_bytes",
+    "runtime_byte_hashes",
+    "clean_checkout",
+    "prior_one_shot_absence",
+    "container_structure_and_all_session_dates"
+  ],
+  "locked_science": {
+    "universe_symbols_in_order": ["VTI", "VGK", "EWJ", "VWO", "IEF", "TIP", "GLD", "DBC"],
+    "candidates_in_order": ["CORE1_DC60", "CORE1_DC120", "CORE1_SMA200"],
+    "long_only_cash_only": true,
+    "fixed_sleeve_weight": 0.125,
+    "no_trade_band": 0.02,
+    "weekly_next_actual_session_execution": true,
+    "same_close_execution": false,
+    "pnl_start": "after_that_execution_close",
+    "warmup_qa": {"start": "2006-02-03", "end": "2007-02-02", "performance_claim": false},
+    "development": {"start": "2007-02-05", "end": "2015-12-31"},
+    "validation": {"start": "2016-01-04", "end": "2026-06-30", "status": "sealed_not_accessed", "accessed": false},
+    "primary_costs": {
+      "commission_one_way_traded_notional": 0.00107,
+      "spread_slippage_one_way": 0.0025,
+      "sell_surcharge": 0.0001,
+      "etf_expense_accrual": "annual_ratio_divided_by_252_on_held_notional",
+      "cash_yield": 0.0
+    },
+    "stress_costs": {"execution_multiplier": 2.0, "expense_multiplier": 1.0},
+    "reported_paths": ["gross", "primary_net", "two_x_execution_cost_net"],
+    "benchmark": "equal_weight_always_long_fixed_sleeves",
+    "gates": ["A", "B", "C", "D", "E", "F", "G", "H"],
+    "selection": "discard_failed_candidates_then_highest_worst_subperiod_sharpe_with_locked_near_tie_turnover_rule",
+    "stop_rule": "No fourth candidate, parameter rescue, universe/date/timing/cost change, validation unlock, or remediation layering."
+  },
+  "report_contract": {
+    "schema_path": "schemas/core_1e_b2_empirical_report_v1.schema.json",
+    "schema_version": "lily_core_1e_b2_empirical_report_v1",
+    "source_kind": "committed_synthetic_fixture_only",
+    "empirical_result_created": false,
+    "required_candidate_count": 3,
+    "required_gate_count": 8,
+    "required_cost_paths": ["primary_net", "two_x_execution_cost_net"],
+    "decision_evidence_binding": "validator recomputes the adapter and accepted engine from the committed fixture and compares every closed-world report field"
+  },
+  "authorizations": {
+    "synthetic_fixture_calculation": true,
+    "real_dataset_or_container": false,
+    "real_return_decode": false,
+    "validation_window": false,
+    "provider_or_network": false,
+    "credentials": false,
+    "broker_or_account": false,
+    "paid": false,
+    "paper_trading": false,
+    "real_money": false,
+    "activation_creation": false,
+    "production_report": false,
+    "research_log": false,
+    "core_1e_b2_b": false
+  },
+  "access_counts": {
+    "real_dataset_access": 0,
+    "real_container_access": 0,
+    "real_return_decode": 0,
+    "validation_access": 0,
+    "provider_calls": 0,
+    "credential_reads": 0,
+    "broker_actions": 0,
+    "paid_actions": 0
+  },
+  "stop_conditions": [
+    "canonical_activation_absent_or_invalid",
+    "gate_ci_blob_owner_container_or_cutoff_mismatch",
+    "dirty_or_untracked_checkout",
+    "validation_boundary_opened",
+    "input_hash_or_identity_mismatch",
+    "input_contains_date_after_2015-12-31",
+    "post_cutoff_row_before_return_decode",
+    "forged_report_selection_or_gate_decision",
+    "prior_marker_attempt_or_report_exists",
+    "second_execution",
+    "unknown_or_missing_closed_world_field"
+  ]
+}
