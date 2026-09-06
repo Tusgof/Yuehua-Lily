@@ -6,6 +6,7 @@ import json
 import sys
 import tempfile
 import unittest
+from unittest import mock
 from pathlib import Path
 
 
@@ -44,6 +45,53 @@ class BootstrapTrackerValidatorTests(unittest.TestCase):
         result = self.validator.validate_tracker(verify_runtime=False)
         self.assertEqual("pass", result["status"], result["blockers"])
         self.assertEqual([], result["blockers"])
+
+    def test_no_runtime_checks_skip_artifact_python_subprocesses_but_keep_missing_failure(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            artifact = root / "scripts" / "synthetic_validator.py"
+            artifact.parent.mkdir()
+            artifact.write_text("raise SystemExit('must not run')\n", encoding="utf-8")
+            tracker = root / "tracker.json"
+            tracker.write_text(
+                json.dumps(_tracker_with_artifact("scripts/synthetic_validator.py", "validate_core_1e_b2_r1_gate")),
+                encoding="utf-8",
+            )
+            original_run = self.validator.subprocess.run
+            commands = []
+
+            def reject_artifact_python(command, *args, **kwargs):
+                commands.append(command)
+                if command and str(command[0]) == sys.executable:
+                    raise AssertionError(f"artifact Python subprocess launched: {command}")
+                return original_run(command, *args, **kwargs)
+
+            with mock.patch.object(self.validator.subprocess, "run", side_effect=reject_artifact_python):
+                result = self.validator.validate_tracker(tracker, project_root=root, verify_runtime=False)
+
+            self.assertEqual("pass", result["status"], result["blockers"])
+            self.assertEqual(
+                [{
+                    "order": "B0.1",
+                    "path": "scripts/synthetic_validator.py",
+                    "must": "validate_core_1e_b2_r1_gate",
+                    "reason": "runtime_checks_disabled",
+                }],
+                result["unverified"],
+            )
+            self.assertTrue(any(command[:2] == ["git", "ls-files"] for command in commands))
+
+            missing_tracker = root / "missing-tracker.json"
+            missing_tracker.write_text(
+                json.dumps(_tracker_with_artifact("scripts/missing_validator.py", "validate_core_1e_b2_r1_gate")),
+                encoding="utf-8",
+            )
+            missing = self.validator.validate_tracker(missing_tracker, project_root=root, verify_runtime=False)
+            self.assertEqual("fail", missing["status"])
+            self.assertIn(
+                "B0.1:missing_artifact:scripts/missing_validator.py",
+                missing["blockers"],
+            )
 
     def test_B7_manifest_done_claim_rejects_forged_artifact_hash(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:

@@ -1,0 +1,165 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "lily_core_1e_b2_normalized_container_v2",
+  "title": "CORE-1E-B2-R1 normalized Yahoo daily dataset contract",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "acquired_at",
+    "cutoff_inclusive",
+    "symbols"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "lily_l1_daily_dataset_v1"
+    },
+    "acquired_at": {
+      "type": "string",
+      "minLength": 1
+    },
+    "cutoff_inclusive": {
+      "const": "2015-12-31"
+    },
+    "symbols": {
+      "type": "array",
+      "minItems": 8,
+      "maxItems": 8,
+      "items": {
+        "$ref": "#/$defs/symbol"
+      }
+    }
+  },
+  "$defs": {
+    "coverage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "start",
+        "end"
+      ],
+      "properties": {
+        "start": {
+          "type": "string",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+        },
+        "end": {
+          "type": "string",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+        }
+      }
+    },
+    "record": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "session_date",
+        "availability_timestamp",
+        "raw_close",
+        "cash_distribution",
+        "split",
+        "total_return_close",
+        "trading_currency",
+        "provider_revision",
+        "is_backfilled"
+      ],
+      "properties": {
+        "session_date": {
+          "type": "string",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+        },
+        "availability_timestamp": {
+          "type": "string",
+          "minLength": 1
+        },
+        "raw_close": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "cash_distribution": {
+          "type": "number",
+          "minimum": 0
+        },
+        "split": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "exclusiveMinimum": 0
+        },
+        "total_return_close": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "trading_currency": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "provider_revision": {
+          "type": "string",
+          "minLength": 1
+        },
+        "is_backfilled": {
+          "type": "boolean"
+        }
+      }
+    },
+    "symbol": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "provider",
+        "symbol",
+        "legal_inception",
+        "coverage",
+        "records",
+        "limitations"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "lily_yahoo_daily_normalized_v1"
+        },
+        "provider": {
+          "const": "Yahoo Finance chart API"
+        },
+        "symbol": {
+          "enum": [
+            "VTI",
+            "VGK",
+            "EWJ",
+            "VWO",
+            "IEF",
+            "TIP",
+            "GLD",
+            "DBC"
+          ]
+        },
+        "legal_inception": {
+          "type": "string",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+        },
+        "coverage": {
+          "$ref": "#/$defs/coverage"
+        },
+        "records": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/record"
+          }
+        },
+        "limitations": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    }
+  }
+}

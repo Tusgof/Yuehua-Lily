@@ -1,0 +1,311 @@
+{
+  "schema_version": "lily_l1_daily_dataset_v1",
+  "acquired_at": "2026-09-03T00:00:00+00:00",
+  "cutoff_inclusive": "2015-12-31",
+  "symbols": [
+    {
+      "schema_version": "lily_yahoo_daily_normalized_v1",
+      "provider": "Yahoo Finance chart API",
+      "symbol": "VTI",
+      "legal_inception": "2015-12-31",
+      "coverage": {
+        "start": "2015-12-31",
+        "end": "2016-01-04"
+      },
+      "records": [
+        {
+          "session_date": "2015-12-31",
+          "availability_timestamp": "2015-12-31T16:00:00-05:00",
+          "raw_close": 10,
+          "cash_distribution": 0,
+          "split": null,
+          "total_return_close": 100,
+          "trading_currency": "USD",
+          "provider_revision": "poison_fixture",
+          "is_backfilled": false
+        },
+        {
+          "session_date": "2016-01-04",
+          "availability_timestamp": "2016-01-04T16:00:00-05:00",
+          "raw_close": 11,
+          "cash_distribution": 0,
+          "split": null,
+          "total_return_close": 1e999999,
+          "trading_currency": "USD",
+          "provider_revision": "poison_fixture",
+          "is_backfilled": false
+        }
+      ],
+      "limitations": [
+        "Provider close appears split-normalized; cash distributions are reconstructed from event records.",
+        "The public endpoint is not a point-in-time revision archive."
+      ]
+    },
+    {
+      "schema_version": "lily_yahoo_daily_normalized_v1",
+      "provider": "Yahoo Finance chart API",
+      "symbol": "VGK",
+      "legal_inception": "2015-12-31",
+      "coverage": {
+        "start": "2015-12-31",
+        "end": "2016-01-04"
+      },
+      "records": [
+        {
+          "session_date": "2015-12-31",
+          "availability_timestamp": "2015-12-31T16:00:00-05:00",
+          "raw_close": 10,
+          "cash_distribution": 0,
+          "split": null,
+          "total_return_close": 100,
+          "trading_currency": "USD",
+          "provider_revision": "poison_fixture",
+          "is_backfilled": false
+        },
+        {
+          "session_date": "2016-01-04",
+          "availability_timestamp": "2016-01-04T16:00:00-05:00",
+          "raw_close": 11,
+          "cash_distribution": 0,
+          "split": null,
+          "total_return_close": 1e999999,
+          "trading_currency": "USD",
+          "provider_revision": "poison_fixture",
+          "is_backfilled": false
+        }
+      ],
+      "limitations": [
+        "Provider close appears split-normalized; cash distributions are reconstructed from event records.",
+        "The public endpoint is not a point-in-time revision archive."
+      ]
+    },
+    {
+      "schema_version": "lily_yahoo_daily_normalized_v1",
+      "provider": "Yahoo Finance chart API",
+      "symbol": "EWJ",
+      "legal_inception": "2015-12-31",
+      "coverage": {
+        "start": "2015-12-31",
+        "end": "2016-01-04"
+      },
+      "records": [
+        {
+          "session_date": "2015-12-31",
+          "availability_timestamp": "2015-12-31T16:00:00-05:00",
+          "raw_close": 10,
+          "cash_distribution": 0,
+          "split": null,
+          "total_return_close": 100,
+          "trading_currency": "USD",
+          "provider_revision": "poison_fixture",
+          "is_backfilled": false
+        },
+        {
+          "session_date": "2016-01-04",
+          "availability_timestamp": "2016-01-04T16:00:00-05:00",
+          "raw_close": 11,
+          "cash_distribution": 0,
+          "split": null,
+          "total_return_close": 1e999999,
+          "trading_currency": "USD",
+          "provider_revision": "poison_fixture",
+          "is_backfilled": false
+        }
+      ],
+      "limitations": [
+        "Provider close appears split-normalized; cash distributions are reconstructed from event records.",
+        "The public endpoint is not a point-in-time revision archive."
+      ]
+    },
+    {
+      "schema_version": "lily_yahoo_daily_normalized_v1",
+      "provider": "Yahoo Finance chart API",
+      "symbol": "VWO",
+      "legal_inception": "2015-12-31",
+      "coverage": {
+        "start": "2015-12-31",
+        "end": "2016-01-04"
+      },
+      "records": [
+        {
+          "session_date": "2015-12-31",
+          "availability_timestamp": "2015-12-31T16:00:00-05:00",
+          "raw_close": 10,
+          "cash_distribution": 0,
+          "split": null,
+          "total_return_close": 100,
+          "trading_currency": "USD",
+          "provider_revision": "poison_fixture",
+          "is_backfilled": false
+        },
+        {
+          "session_date": "2016-01-04",
+          "availability_timestamp": "2016-01-04T16:00:00-05:00",
+          "raw_close": 11,
+          "cash_distribution": 0,
+          "split": null,
+          "total_return_close": 1e999999,
+          "trading_currency": "USD",
+          "provider_revision": "poison_fixture",
+          "is_backfilled": false
+        }
+      ],
+      "limitations": [
+        "Provider close appears split-normalized; cash distributions are reconstructed from event records.",
+        "The public endpoint is not a point-in-time revision archive."
+      ]
+    },
+    {
+      "schema_version": "lily_yahoo_daily_normalized_v1",
+      "provider": "Yahoo Finance chart API",
+      "symbol": "IEF",
+      "legal_inception": "2015-12-31",
+      "coverage": {
+        "start": "2015-12-31",
+        "end": "2016-01-04"
+      },
+      "records": [
+        {
+          "session_date": "2015-12-31",
+          "availability_timestamp": "2015-12-31T16:00:00-05:00",
+          "raw_close": 10,
+          "cash_distribution": 0,
+          "split": null,
+          "total_return_close": 100,
+          "trading_currency": "USD",
+          "provider_revision": "poison_fixture",
+          "is_backfilled": false
+        },
+        {
+          "session_date": "2016-01-04",
+          "availability_timestamp": "2016-01-04T16:00:00-05:00",
+          "raw_close": 11,
+          "cash_distribution": 0,
+          "split": null,
+          "total_return_close": 1e999999,
+          "trading_currency": "USD",
+          "provider_revision": "poison_fixture",
+          "is_backfilled": false
+        }
+      ],
+      "limitations": [
+        "Provider close appears split-normalized; cash distributions are reconstructed from event records.",
+        "The public endpoint is not a point-in-time revision archive."
+      ]
+    },
+    {
+      "schema_version": "lily_yahoo_daily_normalized_v1",
+      "provider": "Yahoo Finance chart API",
+      "symbol": "TIP",
+      "legal_inception": "2015-12-31",
+      "coverage": {
+        "start": "2015-12-31",
+        "end": "2016-01-04"
+      },
+      "records": [
+        {
+          "session_date": "2015-12-31",
+          "availability_timestamp": "2015-12-31T16:00:00-05:00",
+          "raw_close": 10,
+          "cash_distribution": 0,
+          "split": null,
+          "total_return_close": 100,
+          "trading_currency": "USD",
+          "provider_revision": "poison_fixture",
+          "is_backfilled": false
+        },
+        {
+          "session_date": "2016-01-04",
+          "availability_timestamp": "2016-01-04T16:00:00-05:00",
+          "raw_close": 11,
+          "cash_distribution": 0,
+          "split": null,
+          "total_return_close": 1e999999,
+          "trading_currency": "USD",
+          "provider_revision": "poison_fixture",
+          "is_backfilled": false
+        }
+      ],
+      "limitations": [
+        "Provider close appears split-normalized; cash distributions are reconstructed from event records.",
+        "The public endpoint is not a point-in-time revision archive."
+      ]
+    },
+    {
+      "schema_version": "lily_yahoo_daily_normalized_v1",
+      "provider": "Yahoo Finance chart API",
+      "symbol": "GLD",
+      "legal_inception": "2015-12-31",
+      "coverage": {
+        "start": "2015-12-31",
+        "end": "2016-01-04"
+      },
+      "records": [
+        {
+          "session_date": "2015-12-31",
+          "availability_timestamp": "2015-12-31T16:00:00-05:00",
+          "raw_close": 10,
+          "cash_distribution": 0,
+          "split": null,
+          "total_return_close": 100,
+          "trading_currency": "USD",
+          "provider_revision": "poison_fixture",
+          "is_backfilled": false
+        },
+        {
+          "session_date": "2016-01-04",
+          "availability_timestamp": "2016-01-04T16:00:00-05:00",
+          "raw_close": 11,
+          "cash_distribution": 0,
+          "split": null,
+          "total_return_close": 1e999999,
+          "trading_currency": "USD",
+          "provider_revision": "poison_fixture",
+          "is_backfilled": false
+        }
+      ],
+      "limitations": [
+        "Provider close appears split-normalized; cash distributions are reconstructed from event records.",
+        "The public endpoint is not a point-in-time revision archive."
+      ]
+    },
+    {
+      "schema_version": "lily_yahoo_daily_normalized_v1",
+      "provider": "Yahoo Finance chart API",
+      "symbol": "DBC",
+      "legal_inception": "2015-12-31",
+      "coverage": {
+        "start": "2015-12-31",
+        "end": "2016-01-04"
+      },
+      "records": [
+        {
+          "session_date": "2015-12-31",
+          "availability_timestamp": "2015-12-31T16:00:00-05:00",
+          "raw_close": 10,
+          "cash_distribution": 0,
+          "split": null,
+          "total_return_close": 100,
+          "trading_currency": "USD",
+          "provider_revision": "poison_fixture",
+          "is_backfilled": false
+        },
+        {
+          "session_date": "2016-01-04",
+          "availability_timestamp": "2016-01-04T16:00:00-05:00",
+          "raw_close": 11,
+          "cash_distribution": 0,
+          "split": null,
+          "total_return_close": 1e999999,
+          "trading_currency": "USD",
+          "provider_revision": "poison_fixture",
+          "is_backfilled": false
+        }
+      ],
+      "limitations": [
+        "Provider close appears split-normalized; cash distributions are reconstructed from event records.",
+        "The public endpoint is not a point-in-time revision archive."
+      ]
+    }
+  ]
+}

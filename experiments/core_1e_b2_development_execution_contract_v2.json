@@ -1,0 +1,378 @@
+{
+  "schema_version": "lily_core_1e_b2_development_execution_contract_v2",
+  "order_id": "CORE-1E-B2-A",
+  "work_order_id": "CORE-1E-B2-A-R1",
+  "gate_id": "core_1e_b2_development_execution_contract_v2",
+  "supersedes_gate_id": "core_1e_b2_development_execution_contract_v1",
+  "hypothesis_id": "L-1",
+  "status": "locked_before_execution",
+  "evidence_tier": "E0",
+  "edge_claim": "none",
+  "owner_authorization_ref": "owner_authorized_core_1e_b2_e0_machinery_only_2026-09-03",
+  "supersession": {
+    "rejected_commit": "83d3c3fd1bc7058399aecb960eedc17cbc388b19",
+    "reason": "Preserve rejected v1 history and add one real-schema-compatible remediation namespace.",
+    "validation_boundary_unchanged": true
+  },
+  "static_source_bindings": {
+    "core_1p_preregistration": {
+      "path": "experiments/core_1_stable_baseline_preregistration_v1.json",
+      "sha256": "5003d2360bb8729bcd91a39da34ff2e28c92ad2eb75c9b632c3ee85bcda7682f"
+    },
+    "core_1e_a_contract": {
+      "path": "experiments/core_1e_a_phase_a_execution_contract_v1.json",
+      "sha256": "adcbdbc26d02a287394bbfd5a3893a2d24d027b322e545e7a8b06378a7c35c7d"
+    },
+    "core_1e_b1_contract": {
+      "path": "experiments/core_1e_b1_development_execution_contract_v1.json",
+      "sha256": "adf3169a4d895d17e3e3ea489cc74d66e8a080a2c1ba88267cfb854d6e8ba6e5"
+    },
+    "accepted_engine": {
+      "path": "lib/core_1e_a_synthetic_engine.py",
+      "sha256": "f92b39f7f0bbde1361326eff5b16d875a01e9938f16408dedbe0cd80cd9a1487"
+    },
+    "yahoo_normalizer": {
+      "path": "lib/yahoo_daily.py",
+      "sha256": "c0e94c8e3b2dc11b4022ba6b93418c4d65a1305027d2bfe099c69e243b899417"
+    },
+    "expense_source": {
+      "path": "lib/trend_baseline.py",
+      "sha256": "c2ea3a7462a88bb18bb3814d618f6738a9f1024c28cb5b50074184b05d648d28"
+    },
+    "expense_input": {
+      "path": "experiments/inputs/core_1e_b2_expense_ratios_v1.json",
+      "sha256": "69405624fe3b56561707205b79bd2af2e5ade9a09d4ee71bf6ff9d9c2b019199"
+    },
+    "synthetic_fixture": {
+      "path": "tests/fixtures/core1e_b2r1/normalized_market_v2.json",
+      "sha256": "ed942153f6033034ff716b09062d79b7bac5935306286ce52b10001307888082"
+    },
+    "poison_fixture": {
+      "path": "tests/fixtures/core1e_b2r1/adversarial_post_cutoff_before_decode_v2.json",
+      "sha256": "de60004d5950a3b2ff83872338890311061cf171fd4235ce74a750433a7c4083"
+    }
+  },
+  "future_container_identity": {
+    "path": "data/normalized/l1_yahoo_daily_v1.json",
+    "sha256": "6608c0ef88f4b7edaef7523738d7a172215aa4f97c8c403adeba884d6582a4dd",
+    "size_bytes": 8258827,
+    "max_date": "2015-12-31",
+    "symbols_in_order": [
+      "VTI",
+      "VGK",
+      "EWJ",
+      "VWO",
+      "IEF",
+      "TIP",
+      "GLD",
+      "DBC"
+    ],
+    "future_only": true
+  },
+  "normalized_container_contract": {
+    "top_level_schema_version": "lily_l1_daily_dataset_v1",
+    "top_level_fields": [
+      "schema_version",
+      "acquired_at",
+      "cutoff_inclusive",
+      "symbols"
+    ],
+    "per_symbol_schema_version": "lily_yahoo_daily_normalized_v1",
+    "per_symbol_fields": [
+      "schema_version",
+      "provider",
+      "symbol",
+      "legal_inception",
+      "coverage",
+      "records",
+      "limitations"
+    ],
+    "coverage_fields": [
+      "start",
+      "end"
+    ],
+    "record_fields": [
+      "session_date",
+      "availability_timestamp",
+      "raw_close",
+      "cash_distribution",
+      "split",
+      "total_return_close",
+      "trading_currency",
+      "provider_revision",
+      "is_backfilled"
+    ],
+    "decoded_return_field": "total_return_close",
+    "raw_close_decoded": false,
+    "adjusted_close_inferred": false,
+    "expense_ratios_field_present": false,
+    "u8_membership_and_order": [
+      "VTI",
+      "VGK",
+      "EWJ",
+      "VWO",
+      "IEF",
+      "TIP",
+      "GLD",
+      "DBC"
+    ],
+    "common_session_intersection": "set intersection of each symbol records, emitted in VTI record order; no sessions manufactured",
+    "availability_timestamp_semantics": "lib/yahoo_daily.py normalizer convention: fixed 16:00 America/New_York label for each session_date; conservative on exchange early-close sessions; not an assertion that every official NYSE close occurs at 16:00; timestamp date must equal session_date",
+    "date_rule": "every symbol record session_date is canonical ISO date, sorted unique, on or before cutoff_inclusive, and after legal_inception",
+    "cutoff_rule": "cutoff_inclusive must equal 2015-12-31 and every record is rejected before return-value conversion if it is later"
+  },
+  "expense_input_contract": {
+    "path": "experiments/inputs/core_1e_b2_expense_ratios_v1.json",
+    "schema_version": "lily_core_1e_etf_expense_input_v1",
+    "input_id": "core_1e_b2r1_etf_expense_ratios_v1",
+    "source_path": "lib/trend_baseline.py",
+    "source_sha256": "c2ea3a7462a88bb18bb3814d618f6738a9f1024c28cb5b50074184b05d648d28",
+    "source_symbol": "CURRENT_EXPENSE_RATIOS",
+    "values": {
+      "VTI": 0.0003,
+      "VGK": 0.0006,
+      "EWJ": 0.005,
+      "VWO": 0.0007,
+      "IEF": 0.0015,
+      "TIP": 0.0018,
+      "GLD": 0.004,
+      "DBC": 0.0085
+    },
+    "separate_from_yahoo_container": true,
+    "current_proxy": true,
+    "point_in_time": false,
+    "limitation": "Current proxy expense ratios are not point-in-time historical observations; this limitation remains explicit in the future report contract."
+  },
+  "locked_science": {
+    "universe_symbols_in_order": [
+      "VTI",
+      "VGK",
+      "EWJ",
+      "VWO",
+      "IEF",
+      "TIP",
+      "GLD",
+      "DBC"
+    ],
+    "candidates_in_order": [
+      "CORE1_DC60",
+      "CORE1_DC120",
+      "CORE1_SMA200"
+    ],
+    "candidate_lookbacks_complete_sessions": {
+      "CORE1_DC60": 60,
+      "CORE1_DC120": 120,
+      "CORE1_SMA200": 200
+    },
+    "long_only_cash_only": true,
+    "fixed_sleeve_weight": 0.125,
+    "inactive_sleeve_target_weight": 0,
+    "renormalize_active_sleeves": false,
+    "no_trade_band": {
+      "comparison": "target versus drifted pre-trade weight",
+      "absolute_difference_at_least": 0.02
+    },
+    "weekly_timing": {
+      "decision": "official close of actual last U8-common NYSE session in ISO week using only available records",
+      "execution": "official close of next actual U8-common NYSE session",
+      "pnl_start": "after_that_execution_close",
+      "same_close_execution": false,
+      "same_close_pnl": false,
+      "manufactured_sessions": false
+    },
+    "primary_costs": {
+      "commission_one_way_traded_notional": 0.00107,
+      "spread_slippage_one_way": 0.0025,
+      "sell_surcharge": 0.0001,
+      "etf_expense_accrual": "annual_ratio_divided_by_252_on_held_notional",
+      "cash_yield": 0
+    },
+    "stress_costs": {
+      "execution_multiplier": 2,
+      "expense_multiplier": 1
+    },
+    "reported_paths": [
+      "gross",
+      "primary_net",
+      "two_x_execution_cost_net"
+    ],
+    "benchmark": "equal_weight_always_long_fixed_sleeves",
+    "gates": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H"
+    ],
+    "selection_rule": "discard failed candidates, rank eligible candidates by highest worst-subperiod net Sharpe, use lower one-way turnover within 0.02, then locked candidate order",
+    "stop_rule": "If no candidate passes every A-H gate, stop CORE-1 after CORE-1E, keep validation sealed, and require an owner/Inspector decision to reformulate or close this ETF trend family. No fourth candidate, parameter rescue, universe/date/timing/cost change, validation unlock, or remediation layering."
+  },
+  "windows": {
+    "warmup_qa": {
+      "start": "2006-02-03",
+      "end": "2007-02-02",
+      "performance_claim": false
+    },
+    "development": {
+      "start": "2007-02-05",
+      "end": "2015-12-31",
+      "mode": "future_e1_development_only"
+    },
+    "validation": {
+      "start": "2016-01-04",
+      "end": "2026-06-30",
+      "status": "sealed_not_accessed",
+      "accessed": false,
+      "forbidden": [
+        "read",
+        "scan",
+        "hash",
+        "count",
+        "infer"
+      ]
+    }
+  },
+  "execution_boundaries": {
+    "mode": "synthetic_only",
+    "allowed_input_ref": "tests/fixtures/core1e_b2r1/normalized_market_v2.json",
+    "allowed_input_kind": "committed_synthetic_fixture_only",
+    "expense_input_ref": "experiments/inputs/core_1e_b2_expense_ratios_v1.json",
+    "development_cutoff": "2015-12-31",
+    "reject_on_or_after": "2016-01-04",
+    "validation_boundary": {
+      "start": "2016-01-04",
+      "end": "2026-06-30",
+      "status": "sealed_not_accessed",
+      "accessed": false
+    },
+    "marker_first": true,
+    "max_invocations": 1,
+    "retry_allowed": false,
+    "project_activation_creation": false,
+    "project_marker_creation": false,
+    "project_attempt_creation": false,
+    "project_report_creation": false,
+    "project_result_creation": false,
+    "temporary_git_proof_only": true
+  },
+  "required_pre_decode_checks": [
+    "top_level_cutoff",
+    "exact_u8_membership_and_order",
+    "per_symbol_schema_and_coverage",
+    "every_symbol_record_session_date",
+    "post_cutoff_rejection_before_return_decode",
+    "availability_timestamp_semantics",
+    "separate_expense_input_binding"
+  ],
+  "future_development_execution": {
+    "mode": "e1_empirical_development_only",
+    "activation_required": true,
+    "activation_reference_requirement": "separate owner-approved CORE-1E-B2-B activation reference",
+    "owner_approval_must_be_distinct_from_r1": true,
+    "development_window_only": true,
+    "final_validation": {
+      "status": "sealed_not_accessed",
+      "accessed": false
+    },
+    "edge_claim": "none",
+    "real_access_in_r1": false,
+    "report_mode": "lily_core_1e_b2_empirical_report_v2"
+  },
+  "future_lifecycle_binding": {
+    "activation_schema": "lily_core_1e_b2_activation_v2",
+    "active_gate_id": "core_1e_b2_development_execution_contract_v2",
+    "required_bindings": [
+      "real_container_path_hash_size",
+      "active_gate_and_blob",
+      "accepted_gate_commit",
+      "exact_sha_ci_head_and_run",
+      "exact_runtime_bytes",
+      "clean_tracked_and_untracked_checkout",
+      "marker_first_atomic_claim",
+      "attempt_identity",
+      "report_identity",
+      "one_shot_second_run_refusal"
+    ],
+    "one_shot_paths": {
+      "marker_path": "reports/experiments/core_1e_b2r1_one_shot_marker_v2.json",
+      "attempt_path": "reports/experiments/core_1e_b2r1_execution_attempt_v2.json",
+      "report_path": "reports/experiments/core_1e_b2r1_execution_report_v2.json"
+    },
+    "activation_record_present": false,
+    "project_marker_present": false,
+    "project_attempt_present": false,
+    "project_report_present": false
+  },
+  "report_contract": {
+    "schema_version": "lily_core_1e_b2_empirical_report_v2",
+    "schema_path": "schemas/core_1e_b2_empirical_report_v2.schema.json",
+    "source_kind": "committed_synthetic_fixture_only",
+    "empirical_result_created": false,
+    "required_candidate_count": 3,
+    "required_gate_count": 8,
+    "required_cost_paths": [
+      "gross",
+      "primary_net",
+      "two_x_execution_cost_net"
+    ],
+    "closed_world": true,
+    "recompute_material_decisions": true,
+    "independently_verified_hashes": [
+      "contract",
+      "normalized_fixture",
+      "expense_input",
+      "yahoo_normalizer",
+      "engine",
+      "adapter"
+    ],
+    "expense_ratios_embedded_in_yahoo_container": false,
+    "final_validation_sealed": true,
+    "edge_claim": "none"
+  },
+  "authorizations": {
+    "synthetic_fixture_calculation": true,
+    "real_dataset_or_container": false,
+    "real_return_decode": false,
+    "validation_window": false,
+    "provider_or_network": false,
+    "credentials": false,
+    "broker_or_account": false,
+    "paid": false,
+    "paper_trading": false,
+    "real_money": false,
+    "activation_creation": false,
+    "production_report": false,
+    "research_log": false,
+    "core_1e_b2_b": false
+  },
+  "access_counts": {
+    "real_dataset_access": 0,
+    "real_container_access": 0,
+    "real_return_decode": 0,
+    "validation_access": 0,
+    "provider_calls": 0,
+    "credential_reads": 0,
+    "broker_actions": 0,
+    "paid_actions": 0
+  },
+  "stop_conditions": [
+    "actual_yahoo_schema_ambiguity",
+    "expense_provenance_ambiguity",
+    "timing_ambiguity",
+    "real_container_or_validation_access_needed",
+    "protected_or_unrelated_dirty_state",
+    "validator_or_locked_science_weakening",
+    "two_focused_implementation_failures",
+    "unrelated_full_suite_failure",
+    "cp_a_not_satisfied",
+    "canonical_activation_missing_or_invalid",
+    "dirty_or_untracked_checkout",
+    "forged_report_decision",
+    "prior_one_shot_artifact",
+    "second_execution",
+    "core_1e_b2_b_without_separate_owner_activation"
+  ]
+}

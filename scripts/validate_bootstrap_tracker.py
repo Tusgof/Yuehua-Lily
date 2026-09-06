@@ -16,6 +16,90 @@ PROJECT_ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_TRACKER = PROJECT_ROOT / "experiments" / "bootstrap_tracker.json"
 VALID_STATUSES = {"not_started", "in_progress", "done", "blocked"}
 SUPPORTED_PYTHON_LINE = (3, 14)
+RUNTIME_ARTIFACT_RULES = {
+    # These rules invoke a Python validator, runner, or test subprocess when
+    # runtime checks are enabled.  Keep this explicit so static dispatches and
+    # read-only Git identity checks continue to run in no-runtime mode.
+    "pass",
+    "pass_in_hermetic_tier",
+    "pass_hermetic_tier",
+    "pass_all_available_tiers",
+    "validate_core_1e_a_gate",
+    "validate_core_1e_a_report",
+    "deny_core_1e_a_bootstrap",
+    "pass_core_1e_a_hermetic",
+    "validate_core_1e_b1_gate",
+    "validate_core_1e_b1_report",
+    "deny_core_1e_b1_bootstrap",
+    "validate_core_1e_b2_gate",
+    "validate_core_1e_b2_report",
+    "deny_core_1e_b2_bootstrap",
+    "pass_core_1e_b2_hermetic",
+    "validate_core_1e_b2_r1_gate",
+    "validate_core_1e_b2_r1_report",
+    "deny_core_1e_b2_r1_bootstrap",
+    "pass_core_1e_b2_r1_hermetic",
+    "validate_l3_b713_gate",
+    "validate_l3_b714r8_gate",
+    "validate_l3_b714r8_validator",
+    "validate_l3_b714r8_snapshots",
+    "validate_l3_b714r8_recovery",
+    "validate_l3_b75_gate",
+    "validate_l3_b76_activation",
+    "validate_l3_b76_report",
+    "validate_l3_b76_preflight_report",
+    "validate_l3_b78_gate",
+    "validate_l3_b79_gate",
+    "validate_l3_b710_gate",
+    "validate_l3_b711_gate",
+    "validate_l3_b712_gate",
+    "run_l3_b712_fixture",
+    "validate_l4_b8_gate",
+    "validate_l4_b81_gate",
+    "validate_l4_b83_gate",
+    "validate_l4_b84_gate",
+    "validate_l4_b84r2_gate",
+    "validate_l4_b84r2_report",
+    "run_l4_b84r2_fixture",
+    "validate_l4_b85_phase_a_gate",
+    "validate_l4_b85r_gate",
+    "validate_l4_b85r_report",
+    "validate_l4_b85r2_gate",
+    "validate_l4_b85r2_report",
+    "validate_l4_b85r3_gate",
+    "validate_l4_b85r3_report",
+    "validate_l4_b85r4_gate",
+    "validate_l4_b85r4_report",
+    "validate_l4_b85r5_gate",
+    "validate_l4_b85r5_report",
+    "validate_l4_b85r5_activation",
+    "validate_l4_b85r5_phase_b_result",
+    "validate_l4_b86_gate",
+    "validate_l4_b86r_gate",
+    "validate_l4_b86r2_gate",
+    "validate_l4_b86r3_gate",
+    "validate_l4_b86r4_gate",
+    "validate_l4_b86r7_gate",
+    "validate_l4_b86r8_gate",
+    "validate_l4_b86r9_gate",
+    "validate_l4_b86r11_activation",
+    "validate_l4_b86r11_gate_and_report",
+    "validate_l4_b86r13_gate",
+    "validate_l4_b86r13_activation",
+    "validate_l4_b86r13_report",
+    "validate_l4_b87_gate",
+    "validate_l4_b87_report",
+    "validate_l4_b88_gate",
+    "validate_l4_b88r2_gate",
+    "validate_l4_b88r3_gate",
+    "validate_l4_b88r4_gate",
+    "validate_l4_b88r5_gate",
+    "deny_without_activation",
+    "deny_l4_b88r2_without_activation",
+    "deny_l4_b88r3_without_activation",
+    "validate_l4_b88r5ar_activation",
+    "refuse_direct_worktree_execution",
+}
 TEXT_SUFFIXES = {
     "",
     ".css",
@@ -184,6 +268,12 @@ def _validate_done_artifact(
     runtime_cache: dict[str, bool],
 ) -> tuple[list[str], bool, bool]:
     target = (project_root / artifact_path).resolve()
+    if not verify_runtime and must in RUNTIME_ARTIFACT_RULES:
+        if not target.is_file():
+            return [f"{order_id}:missing_artifact:{artifact_path}"], False, False
+        if must == "pass" and target == Path(__file__).resolve():
+            return [], True, False
+        return [], False, True
     if must == "exist":
         exists = target.exists()
         return ([] if exists else [f"{order_id}:missing_artifact:{artifact_path}"], exists, False)
@@ -682,6 +772,112 @@ def _validate_done_artifact(
         )
         ok = completed.returncode == 0
         return ([] if ok else [f"{order_id}:core_1e_b2_focused_tests_failed"], ok, False)
+    if must == "validate_core_1e_b2_r1_gate":
+        if not target.is_file():
+            return [f"{order_id}:missing_artifact:{artifact_path}"], False, False
+        completed = subprocess.run(
+            [sys.executable, "scripts/validate_core_1e_b2_development_execution_contract_v2.py"],
+            cwd=project_root,
+            text=True,
+            capture_output=True,
+            check=False,
+        )
+        ok = completed.returncode == 0
+        return ([] if ok else [f"{order_id}:core_1e_b2_r1_contract_validator_failed"], ok, False)
+    if must == "validate_core_1e_b2_r1_report":
+        if not target.is_file():
+            return [f"{order_id}:missing_artifact:{artifact_path}"], False, False
+        completed = subprocess.run(
+            [sys.executable, "scripts/validate_core_1e_b2_empirical_report_v2.py"],
+            cwd=project_root,
+            text=True,
+            capture_output=True,
+            check=False,
+        )
+        ok = completed.returncode == 0
+        return ([] if ok else [f"{order_id}:core_1e_b2_r1_report_validator_failed"], ok, False)
+    if must == "deny_core_1e_b2_r1_bootstrap":
+        if not target.is_file():
+            return [f"{order_id}:missing_artifact:{artifact_path}"], False, False
+        completed = subprocess.run(
+            [sys.executable, str(target)], cwd=project_root, text=True, capture_output=True, check=False
+        )
+        try:
+            value = json.loads(completed.stdout)
+            ok = completed.returncode == 1 and value == {
+                "data_accessed": False,
+                "input_read_count": 0,
+                "one_shot_consumed": False,
+                "outcome": "canonical_activation_absent",
+                "paths_resolved": [],
+                "project_artifacts_created": False,
+                "real_data_accessed": False,
+                "status": "blocked",
+                "validation_accessed": False,
+            }
+        except (json.JSONDecodeError, TypeError):
+            ok = False
+        return ([] if ok else [f"{order_id}:core_1e_b2_r1_bootstrap_not_deny_only"], ok, False)
+    if must == "contain_core_1e_b2_r1_manifest":
+        try:
+            rows = [json.loads(line) for line in target.read_text(encoding="utf-8").splitlines() if line.strip()]
+            matches = [row for row in rows if row.get("gate_id") == "core_1e_b2_development_execution_contract_v2"]
+            gate = project_root / "experiments/core_1e_b2_development_execution_contract_v2.json"
+            validator = project_root / "scripts/validate_core_1e_b2_development_execution_contract_v2.py"
+            ok = (
+                len(matches) == 1
+                and matches[0].get("supersedes_gate_id") == "core_1e_b2_development_execution_contract_v1"
+                and matches[0].get("artifact_path") == "experiments/core_1e_b2_development_execution_contract_v2.json"
+                and matches[0].get("artifact_sha256") == hashlib.sha256(gate.read_bytes()).hexdigest()
+                and matches[0].get("validator_path") == "scripts/validate_core_1e_b2_development_execution_contract_v2.py"
+                and matches[0].get("validator_sha256") == hashlib.sha256(validator.read_bytes()).hexdigest()
+            )
+        except (OSError, json.JSONDecodeError, TypeError, KeyError):
+            ok = False
+        return ([] if ok else [f"{order_id}:core_1e_b2_r1_manifest_identity_failed"], ok, False)
+    if must == "register_core_1e_b2_r1_scripts":
+        required = {
+            "scripts/validate_core_1e_b2_development_execution_contract_v2.py",
+            "scripts/validate_core_1e_b2_empirical_report_v2.py",
+            "scripts/run_core_1e_b2_committed_bootstrap_v2.py",
+        }
+        stdlib_only_runner = "scripts/run_core_1e_b2_committed_bootstrap_v2.py"
+        try:
+            config = json.loads(target.read_text(encoding="utf-8"))
+            scripts = config.get("scripts", [])
+            stdlib_only_scripts = config.get("stdlib_only_scripts", [])
+            ok = (
+                isinstance(scripts, list)
+                and isinstance(stdlib_only_scripts, list)
+                and all(scripts.count(item) == 1 for item in required)
+                and stdlib_only_scripts.count(stdlib_only_runner) == 1
+                and all(
+                    item not in stdlib_only_scripts
+                    for item in required
+                    if item != stdlib_only_runner
+                )
+            )
+        except (OSError, json.JSONDecodeError, TypeError):
+            ok = False
+        return ([] if ok else [f"{order_id}:core_1e_b2_r1_script_registration_failed"], ok, False)
+    if must == "pass_core_1e_b2_r1_hermetic":
+        if not target.is_file():
+            return [f"{order_id}:missing_artifact:{artifact_path}"], False, False
+        completed = subprocess.run(
+            [
+                sys.executable,
+                "-m",
+                "unittest",
+                "tests.test_core_1e_b2_r1_contract_adapter_report",
+                "tests.test_core_1e_b2_r1_lifecycle",
+            ],
+            cwd=project_root,
+            text=True,
+            capture_output=True,
+            check=False,
+        )
+        ok = completed.returncode == 0
+        return ([] if ok else [f"{order_id}:core_1e_b2_r1_focused_tests_failed"], ok, False)
     if must == "contain_active_l_1_hashes":
         return _validate_l1_manifest(target, order_id, artifact_path, project_root=project_root)
     if must == "contain_l3_manifest_identity":

@@ -1038,5 +1038,23 @@
       {"path":"experiments/locked_gates_v2.jsonl","must":"contain_core_1e_b2_manifest"},
       {"path":"config/new_code_scripts.json","must":"register_core_1e_b2_scripts"}
     ],"user_actions_pending":["Inspector CP-A review and owner integration are required before any real development-return access, activation, or empirical execution."],"forbidden":["real market container/data path resolution, existence check, read, hash, stat, scan, parse, or decode","validation-window access","provider, network, credentials, broker, paid, paper-trading, or real-money action","project activation, marker, attempt, report, result, or research-log creation","CORE-1E-B2-B","merge or main push"],"evidence":["CORE-1E-B2-A is E0 machinery only: the adapter maps explicit total_return_close rows and explicit expense_ratios into the accepted CORE-1E-A engine without duplicating calculations.","The date-first parser rejects every post-cutoff session before converting any return value; a committed adversarial byte fixture proves the conversion counter remains zero.","The future lifecycle is activation-, exact gate/CI/commit/runtime-byte-, clean-checkout-, marker-first-, and one-shot-bound in temporary Git only. The project bootstrap remains deny-only, no empirical result is created, all access counts are zero, and validation remains sealed."],"updated":"2026-09-02"}
+  ,{"id":"CORE-1E-B2-A-R1","title":"CORE-1E-B2-A-R1 bounded real-Yahoo-schema remediation and future E1-shaped synthetic lifecycle","status":"done","depends_on":["CORE-1E-B2-A"],"required_artifacts":[
+      {"path":"experiments/core_1e_b2_development_execution_contract_v2.json","must":"validate_core_1e_b2_r1_gate"},
+      {"path":"scripts/validate_core_1e_b2_development_execution_contract_v2.py","must":"validate_core_1e_b2_r1_gate"},
+      {"path":"schemas/core_1e_b2_normalized_container_v2.schema.json","must":"exist"},
+      {"path":"schemas/core_1e_b2_empirical_report_v2.schema.json","must":"exist"},
+      {"path":"schemas/core_1e_b2_activation_v2.schema.json","must":"exist"},
+      {"path":"experiments/inputs/core_1e_b2_expense_ratios_v1.json","must":"exist"},
+      {"path":"lib/core_1e_b2_empirical_adapter_v2.py","must":"exist"},
+      {"path":"lib/core_1e_b2_lifecycle_v2.py","must":"exist"},
+      {"path":"scripts/validate_core_1e_b2_empirical_report_v2.py","must":"validate_core_1e_b2_r1_report"},
+      {"path":"scripts/run_core_1e_b2_committed_bootstrap_v2.py","must":"deny_core_1e_b2_r1_bootstrap"},
+      {"path":"tests/fixtures/core1e_b2r1/normalized_market_v2.json","must":"exist"},
+      {"path":"tests/fixtures/core1e_b2r1/adversarial_post_cutoff_before_decode_v2.json","must":"exist"},
+      {"path":"tests/test_core_1e_b2_r1_contract_adapter_report.py","must":"pass_core_1e_b2_r1_hermetic"},
+      {"path":"tests/test_core_1e_b2_r1_lifecycle.py","must":"exist"},
+      {"path":"experiments/locked_gates_v2.jsonl","must":"contain_core_1e_b2_r1_manifest"},
+      {"path":"config/new_code_scripts.json","must":"register_core_1e_b2_r1_scripts"}
+    ],"user_actions_pending":["Inspector CP-A review and owner integration are required before any real development-return access, activation, or empirical execution; CORE-1E-B2-B remains separately gated."],"forbidden":["real market container/data path resolution, existence check, read, hash, stat, scan, parse, or decode","validation-window prices, returns, signals, positions, regimes, benchmarks, costs, or PnL","provider/network/credentials/broker/account/paid/paper/real-money action","activation, marker, attempt, report, result, or research-log creation in the project checkout","research_log, PROJECT_BRAIN.md, IMPLEMENT_PLAN.md, AGENTS.md, registry, or locked v1 artifact edit","CORE-1E-B2-B without a separate owner-approved activation reference","merge or main push"],"evidence":["R1 binds the actual lily_l1_daily_dataset_v1 and lily_yahoo_daily_normalized_v1 Yahoo-normalized shape, exact U8 order/intersection, total_return_close-only decoding, availability semantics, separate source-bound expense input, and pre-decode post-cutoff rejection proven by a poison fixture with zero decoded returns.","R1 defines all three candidate lookbacks, weekly next-common-session timing, no-trade band, primary and 2x execution costs, A-H recomputation, ranking/selection/stop logic, and a closed-world report validator while retaining E0 and edge_claim none.","The future lifecycle binds activation, gate/blob, Exact-SHA CI, runtime bytes, container identity, clean checkout, marker-first atomic claim, attempt/report identities, and second-run refusal in temporary Git only; the project bootstrap remains deny-only and all real/validation access counts remain zero."],"updated":"2026-09-05"}
 ]
 }

@@ -1,0 +1,26 @@
+{
+  "schema_version": "lily_core_1e_etf_expense_input_v1",
+  "input_id": "core_1e_b2r1_etf_expense_ratios_v1",
+  "status": "locked_before_execution",
+  "evidence_tier": "E0",
+  "edge_claim": "none",
+  "source": {
+    "path": "lib/trend_baseline.py",
+    "sha256": "c2ea3a7462a88bb18bb3814d618f6738a9f1024c28cb5b50074184b05d648d28",
+    "symbol": "CURRENT_EXPENSE_RATIOS",
+    "derivation": "Exact values copied from the existing CURRENT_EXPENSE_RATIOS mapping; no values inferred."
+  },
+  "expense_ratios": {
+    "VTI": 0.0003,
+    "VGK": 0.0006,
+    "EWJ": 0.005,
+    "VWO": 0.0007,
+    "IEF": 0.0015,
+    "TIP": 0.0018,
+    "GLD": 0.004,
+    "DBC": 0.0085
+  },
+  "point_in_time": false,
+  "current_proxy": true,
+  "limitation": "Current proxy expense ratios are not point-in-time historical observations; this limitation remains explicit in the future report contract."
+}
