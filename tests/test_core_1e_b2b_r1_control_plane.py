@@ -1,10 +1,12 @@
 import hashlib
 import json
+import os
 import subprocess
 import tempfile
 import unittest
 from contextlib import contextmanager
 from pathlib import Path
+from unittest.mock import patch
 
 from lib.core_1e_b2b_r1_control_plane import (
     ActivationRefused,
@@ -33,7 +35,13 @@ def _write(path: Path, content: bytes) -> None:
 
 
 @contextmanager
-def _synthetic_repo(allowed: tuple[str, ...] = (), closed_world: dict | None = None):
+def _synthetic_repo(
+    allowed: tuple[str, ...] = (),
+    closed_world: dict | None = None,
+    *,
+    gitignore: bytes | None = None,
+    activation_path: str = "activation.json",
+):
     with tempfile.TemporaryDirectory(prefix="core-1e-b2b-r1-") as directory:
         root = Path(directory)
         _git(root, "init", "--quiet")
@@ -43,7 +51,11 @@ def _synthetic_repo(allowed: tuple[str, ...] = (), closed_world: dict | None = N
         runtime = b"synthetic runtime bytes\n"
         _write(root / "gate.json", gate)
         _write(root / "runtime.bin", runtime)
+        if gitignore is not None:
+            _write(root / ".gitignore", gitignore)
         _git(root, "add", "gate.json", "runtime.bin")
+        if gitignore is not None:
+            _git(root, "add", ".gitignore")
         _git(root, "commit", "--quiet", "-m", "synthetic provenance")
         source_commit = _git(root, "rev-parse", "HEAD")
         gate_hash = hashlib.sha256(gate).hexdigest()
@@ -60,12 +72,13 @@ def _synthetic_repo(allowed: tuple[str, ...] = (), closed_world: dict | None = N
         activation_bytes = json.dumps(
             activation, ensure_ascii=False, sort_keys=True, separators=(",", ":")
         ).encode("utf-8")
-        _write(root / "activation.json", activation_bytes)
-        _git(root, "add", "activation.json")
+        activation_file = root.joinpath(*activation_path.split("/"))
+        _write(activation_file, activation_bytes)
+        _git(root, "add", activation_path)
         _git(root, "commit", "--quiet", "-m", "synthetic activation")
         spec = ControlSpec(
             repo_root=root,
-            activation_path="activation.json",
+            activation_path=activation_path,
             expected_activation_sha256=hashlib.sha256(activation_bytes).hexdigest(),
             source_commit=source_commit,
             gate_path="gate.json",
@@ -148,9 +161,20 @@ class ControlPlaneTests(unittest.TestCase):
             self.assertFalse(root.joinpath("marker.json").exists())
 
     def test_exact_allowlisted_untracked_path_passes(self) -> None:
-        with _synthetic_repo(allowed=("data/allowed.bin",)) as (root, spec):
+        with _synthetic_repo(
+            allowed=("data/allowed.bin",), gitignore=b"data/\n"
+        ) as (root, spec):
             _write(root / "data/allowed.bin", b"synthetic opaque input\n")
             self.assertEqual(execute_once(spec, lambda _: None, lambda _: "ok"), "ok")
+
+    def test_ignored_sibling_is_not_allowed_by_ignored_directory(self) -> None:
+        with _synthetic_repo(
+            allowed=("data/allowed.bin",), gitignore=b"data/\n"
+        ) as (root, spec):
+            _write(root / "data/allowed.bin", b"synthetic opaque input\n")
+            _write(root / "data/sibling.bin", b"not allowlisted\n")
+            with self.assertRaises(DirtyCheckoutRefused):
+                execute_once(spec, lambda _: None, lambda _: None)
 
     def test_other_untracked_path_fails_even_with_allowed_data(self) -> None:
         with _synthetic_repo(allowed=("data/allowed.bin",)) as (root, spec):
@@ -216,6 +240,61 @@ class ControlPlaneTests(unittest.TestCase):
                 )
             self.assertEqual(calls, [])
             self.assertEqual(_marker(root)["completion_count"], 1)
+
+    def test_initial_marker_directory_sync_precedes_callbacks(self) -> None:
+        with _synthetic_repo() as (root, spec):
+            events: list[tuple[str, str]] = []
+
+            def sync(directory: str) -> None:
+                events.append(("sync", _marker(root)["state"]))
+                self.assertEqual(Path(directory), root)
+
+            def resolver(admission):
+                events.append(("resolver", _marker(root)["state"]))
+                return admission
+
+            def operation(admission):
+                events.append(("operation", _marker(root)["state"]))
+                return admission
+
+            with patch(
+                "lib.core_1e_b2b_r1_control_plane._fsync_directory",
+                side_effect=sync,
+            ):
+                execute_once(spec, resolver, operation)
+            self.assertEqual(
+                events,
+                [
+                    ("sync", "claimed"),
+                    ("resolver", "claimed"),
+                    ("operation", "claimed"),
+                    ("sync", "completed"),
+                ],
+            )
+
+    def test_symlinked_activation_parent_refuses_before_activation_read(self) -> None:
+        with _synthetic_repo(activation_path="nested/activation.json") as (root, spec):
+            parent = root / "nested"
+            redirected = root / "redirected"
+            redirected.mkdir()
+            _write(redirected / "activation.json", (parent / "activation.json").read_bytes())
+            (parent / "activation.json").unlink()
+            parent.rmdir()
+            try:
+                os.symlink(redirected, parent, target_is_directory=True)
+            except OSError as error:
+                if os.name == "nt" and getattr(error, "winerror", None) == 1314:
+                    self.skipTest("Windows symlink privilege is unavailable")
+                raise
+            calls: list[str] = []
+            with self.assertRaises(ActivationRefused):
+                execute_once(
+                    spec,
+                    lambda _: calls.append("resolver"),
+                    lambda _: calls.append("operation"),
+                )
+            self.assertEqual(calls, [])
+            self.assertFalse(root.joinpath("marker.json").exists())
 
 
 if __name__ == "__main__":

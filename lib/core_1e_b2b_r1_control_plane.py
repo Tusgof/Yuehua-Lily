@@ -219,8 +219,13 @@ def _parse_json(raw: bytes) -> Any:
 
 def _worktree_control_bytes(repo: Path, path: str) -> bytes:
     target = repo.joinpath(*path.split("/"))
-    if os.path.islink(target):
-        raise ActivationRefused("activation must not be a worktree symlink")
+    parent = repo
+    for component in path.split("/")[:-1]:
+        if parent.is_symlink():
+            raise ActivationRefused("activation path has a symlinked parent")
+        parent /= component
+    if parent.is_symlink() or target.is_symlink():
+        raise ActivationRefused("activation path must not traverse a symlink")
     try:
         return target.read_bytes()
     except OSError as exc:
@@ -280,7 +285,6 @@ def _status_paths(repo: Path) -> list[tuple[str, str]]:
         "--porcelain=v1",
         "-z",
         "--untracked-files=all",
-        "--ignored=matching",
     )
     if result.returncode != 0:
         raise AdmissionRefused("Git worktree status cannot be obtained")
@@ -300,6 +304,17 @@ def _status_paths(repo: Path) -> list[tuple[str, str]]:
         except ValueError as exc:
             raise DirtyCheckoutRefused("Git status contains an unsafe path") from exc
         entries.append((code, path))
+    ignored = _git_run(repo, "ls-files", "--others", "--ignored", "--exclude-standard", "-z")
+    if ignored.returncode != 0:
+        raise AdmissionRefused("Git ignored-path status cannot be obtained")
+    for token in ignored.stdout.split(b"\0"):
+        if not token:
+            continue
+        try:
+            path = _normalise_relpath(token.decode("utf-8", "surrogateescape"))
+        except (UnicodeDecodeError, ValueError) as exc:
+            raise DirtyCheckoutRefused("Git ignored-path status contains an unsafe path") from exc
+        entries.append(("!!", path))
     return entries
 
 
@@ -307,7 +322,7 @@ def _guard_clean_checkout(spec: ControlSpec) -> None:
     allowed = set(spec.allowed_untracked_paths)
     allowed.add(spec.marker_path)
     for code, path in _status_paths(spec.repo_root):
-        if code == "??" and path in allowed:
+        if code in ("??", "!!") and path in allowed:
             continue
         raise DirtyCheckoutRefused(f"checkout path is not allowlisted: {code} {path}")
 
@@ -397,6 +412,7 @@ def _claim_marker(admission: Admission) -> dict[str, Any]:
         os.fsync(fd)
     finally:
         os.close(fd)
+    _fsync_directory(os.fspath(admission.marker_path.parent))
     return payload
 
 
