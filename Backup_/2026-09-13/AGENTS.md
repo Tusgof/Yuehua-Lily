@@ -1,0 +1,139 @@
+# AGENTS.md
+
+## 1. Active Scope
+
+Lily is a hypothesis-led systematic trend-following research program. The research program is the product. The static `Dashboard/` is an optional visualization surface and never owns project state.
+
+The current execution scope is governance, data design, sizing feasibility, and research specifications. Do not write strategy code or run a real backtest until the bootstrap governance order and the relevant preregistration are complete.
+
+## 2. Think Before Editing
+
+- State assumptions and competing interpretations before implementation.
+- Prefer the smallest change that satisfies the named work order.
+- Do not refactor or clean adjacent files.
+- Every changed line must trace to the current session scope.
+- Use the local LLM Wiki as the primary methodology source for trend following, portfolio construction, backtesting, and statistical validation.
+
+## 3. One Session, One Scope
+
+Each modifying session must serve one bounded work order from `experiments/bootstrap_tracker.json` or a later approved tracker. Do not combine governance, data acquisition, hypothesis execution, and operational work in one session merely because they are adjacent.
+
+Before editing, state:
+
+1. the active order and hypothesis ID, if any;
+2. files expected to change;
+3. verification commands;
+4. stop conditions.
+
+### 3.1 Worker, Inspector, And Boot Sequence
+
+- **Inspector**: `gpt-5.6-sol / high`, repository read-only. The Inspector chat remains continuous and is the primary reasoning channel.
+- **Worker**: `gpt-5.6-luna / max`, workspace-write. The Worker is the primary implementation agent in a fresh separate thread for each milestone or work order.
+- A fresh Worker thread is required for every milestone or work order. Before every Inspector or Worker session, both roles must read `PROJECT_BRAIN.md`, `IMPLEMENT_PLAN.md`, this file, and `experiments/bootstrap_tracker.json`, then the owner-supplied Yuehua-Kit files `06-Final-[SETUP].txt` and `09-Order-[WORK].txt`.
+- The Inspector is the primary reasoning partner. It owns Project Vision, the approved content of `PROJECT_BRAIN.md` and `IMPLEMENT_PLAN.md`, work-order decomposition, acceptance gates, and independent Architecture, Scope, Security, and quality review.
+- The Worker independently implements one bounded work order, runs its tests, updates the tracker, commits, pushes only the milestone branch, and returns evidence. The Worker is the sole implementation writer during that work order to avoid file collisions.
+- The Worker must not merge, deploy, write production state, or publish externally, and must not autonomously change `PROJECT_BRAIN.md`, `IMPLEMENT_PLAN.md`, locked gates, or scope.
+- GOV-1 is the one exception for this order: the Worker may mechanically apply this exact Inspector-approved operating policy to `PROJECT_BRAIN.md` and `IMPLEMENT_PLAN.md` and reconcile only directly conflicting role statements. It must not change scientific status, evidence tier, hypothesis state, or the L-4 next-safe-action substance.
+- Future `PROJECT_BRAIN.md` or `IMPLEMENT_PLAN.md` edits require an Inspector-authored exact change inside an owner-approved governance work order. The Worker may apply that text but may not reinterpret it.
+- The Inspector reviews at three points: before work starts, at each explicit risk checkpoint, and before milestone closure. Risk checkpoints include **CP-A** before real-return access, activation, or scientific execution; **CP-B** after an empirical report and before changing outcome, registry state, or next hypothesis; **CP-C** before access to the sealed validation window; **CP-D** before paid data, provider mutation, broker preview/order, paper trading, or real-money action; and **CP-X** after an unexpected one-shot, provenance, leakage, or locked-invariant incident.
+- If the plan is ambiguous, risk changes, an acceptance gate fails, unrelated dirty state appears, or merge, deployment, production, or external action would be needed, the Worker stops and returns to the Inspector.
+- Merge authority is outside both roles: the Worker and the read-only Inspector do not merge. The user receives the evidence and decides material questions and merge/integration, performing it or separately delegating it.
+- The Inspector decides whether a research log is required and is its sole author for genuine research events/results. The Worker must not create or edit `research_log/`; GOV-1 creates no research log.
+
+## 4. Evidence And Claims
+
+- `E0`: infrastructure, fixtures, synthetic tests, or operational dry runs. Claim only that machinery works.
+- `E1`: real-data diagnostic evidence that is under-sampled, underpowered, or gate-blocked. Never claim edge.
+- `E2`: validation-grade evidence passing preregistered sample, PSR/DSR, regime, robustness, cost, and adversarial-review gates. Claim only within tested scope.
+- `E3`: E2 plus operational validation, account feasibility, and a separate launch checklist. Real-money use still requires explicit owner approval.
+
+Paper trading is allowed only after E2 or as an explicitly labeled E0 operational dry run with `edge_claim: none`.
+
+Any pass, acceptance, edge, or deployment language below E2 is a blocker. Scope restriction is a valid outcome and must be recorded explicitly.
+
+## 5. Hypothesis Governance
+
+- Every experiment must reference a registered hypothesis ID.
+- Preregister falsification, validation, sample, regime, cost, and search rules before observing the result.
+- Fund `MinTRL_falsify` before `MinTRL_validate`.
+- Trend-following inference must account for persistent overlapping positions, serial correlation, and independent-bet-equivalent counts. Do not copy per-trade MinTRL assumptions from Higanbana.
+- Killing a hypothesis requires both its preregistered statistical criterion and a mechanism autopsy.
+- Resurrection requires a new registry ID and at least one new testable prediction.
+- Three consecutive adequately powered falsifications of distinct edge/mechanism hypotheses trigger the Lily family review. L-0 feasibility and engineering failures do not count toward this total.
+
+## 6. Locked Gates And Review
+
+Locked preregistrations and their validators must be hash-bound in an append-only manifest. Never edit a locked artifact or validator silently. A revision requires a new gate ID, `supersedes_gate_id`, human approval, and replacement hashes.
+
+Pin LF line endings for hash-bound files through `.gitattributes` so the same gate validates on Windows and Linux.
+
+Before promotion to E2, a separate adversarial review must try to refute the result through leakage checks, alternative nulls, cost stress, survivorship/roll analysis, and implementation-bug hypotheses.
+
+Every future execution path must pass a clean temporary-Git end-to-end test before CP-A. One bounded remediation is allowed after the first Inspector rejection. A second rejection at the same critical point stops patch layering and requires an Inspector-reviewed smaller replacement design in a new namespace.
+
+Every engineering commit must include the actual agent model/version in a trailer, for example:
+
+```text
+Agent: Codex (GPT-5.6)
+```
+
+## 7. Repository And Test Contract
+
+- The hermetic tier uses only committed fixtures and must pass in CI on every push.
+- The state-audit tier may use local data roots and optional providers; missing state must skip loudly with the missing variable named.
+- Pin the supported Python version before the first implementation module.
+- Use environment variables or one untracked machine manifest. Credentials and absolute local paths are forbidden in active code, config, tests, experiments, reports, and control documents. Dated files under `Backup_/` are immutable historical exceptions and must be excluded from active-path checks.
+- Put hypothesis-independent infrastructure in `lib/` before the first experiment script. New scripts must import it instead of copying loaders, timestamp logic, statistics, guardrails, or report writers.
+- Every report records the producing git commit. Reproduction means checking out that commit, not preserving duplicated helpers forever.
+- Golden-number tests anchored to published statistical examples must exist before a real backtest.
+
+## 8. Data And Cost Boundaries
+
+- Lily has its own repo, registry, data budget, cost ledger, and credentials. Never share Higanbana cost guards, state, or keys.
+- Initial paid-data guard: USD 0 through L-0; then a cumulative USD 50 guard through L-1 unless the owner changes it.
+- Funding uses one real account and real payment only. Record true per-key provenance; never create accounts to harvest promotional credits.
+- No paid action without a named hypothesis gap, preregistered cost estimate, remaining-room check, and smallest-recoverable-block rule.
+- Handle survivorship bias, delisted instruments/contracts, backfilled histories, futures rolls, timestamps, and provider schema drift explicitly.
+- Use dual hashes for hard-to-reproduce data. Re-downloadable free daily data may use documented container hashes.
+
+## 9. Capital And Broker Boundaries
+
+- Lily capital is separate from Higanbana and currently USD 1,000–2,000.
+- The current-capital branch uses globally diversified exposure through US-listed fractional ETFs; Webull Thailand is the preferred operational candidate.
+- IBKR is the reference broker for micro-futures feasibility and broader API capability.
+- Do not assume Webull Thailand API supports fractional orders or futures until a bounded capability probe verifies the Thai account.
+- Do not assume an IBKR trading permission exists until the account reports it.
+- Full-size futures are outside current-capital implementation scope. Micro futures remain a sizing study, not an approved deployment path.
+
+## 10. Project Memory
+
+- Versioned machine-readable files in the repo own project state.
+- `research_log/` contains the required Thai human-readable account of completed experiments. It explains machine artifacts but never overrides them.
+- The Lily Inspector owns both research-log authorship and the decision whether a work order requires a new log, an amendment to an existing log, or no log. An implementation Worker must hand off the machine artifacts and must not create or edit `research_log/` or claim the research order fully closed until the Inspector has reviewed the evidence, recorded that decision, and—when required—written the Thai log and passed its audit. Only an explicit owner instruction may override this division of responsibility.
+- Every completed experiment named in `config/research_log_requirements.json` must have a sequential audited research log using `RESEARCH_LOG_FORMAT.md`.
+- Research questions must be short, testable, explicitly scoped, and paired with a decision rule; vague topics are not research questions.
+- `Dashboard/` may render exported state but may not write authoritative decisions to browser `localStorage`.
+- Keep `PROJECT_BRAIN.md` concise: pointers, invariants, current state, and next safe action. History belongs in decision records, reports, and git.
+
+## 11. Session Closure
+
+Every session that modifies files must:
+
+1. run the scoped verification;
+2. inspect the final diff and unrelated changes;
+3. commit with the agent trailer;
+4. push only the named milestone branch to `origin`;
+5. verify exact-SHA CI for that branch and report the branch and remote commit hash.
+
+Never push `main`, merge, deploy, write production state, or publish externally from a Worker session. The GOV-1 branch-only rule supersedes earlier direct-main Worker behavior prospectively; historical commits and records are not rewritten. Do not claim completion for anything not visible at the reported remote hash. Session summaries may claim only what the pushed commit proves.
+
+## 12. Source Lineage
+
+This contract adapts the following Higanbana sources without importing 0DTE-specific policy:
+
+- `Yuehua-Higanbana/docs/FABLE5_UPGRADE_PROPOSAL.md`: evidence tiers, dual MinTRL, registry, data decision logic, kill/resurrection, and paper-trading boundary.
+- `Yuehua-Higanbana/docs/HIGANBANA_TECHNICAL_DUE_DILIGENCE.md`: self-verification, shared infrastructure, golden-number anchors, locked-gate review, and control-plane limits.
+- `Yuehua-Higanbana/AGENTS.md`: session closure, commit trailer, test tiers, and locked-gate integrity.
+- `Yuehua-Higanbana/experiments/dd_remediation_tracker.json`: required-artifact and evidence-backed completion pattern.
+
+Changed for Lily: per-trade 0DTE statistics, SPY regimes, Databento-specific permissions, and Higanbana budgets/credentials are excluded. Lily uses persistent-position/autocorrelation-aware inference, global trend regimes, its own budget, and its own broker feasibility gates.

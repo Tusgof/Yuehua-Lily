@@ -16,6 +16,13 @@ PROJECT_ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_TRACKER = PROJECT_ROOT / "experiments" / "bootstrap_tracker.json"
 VALID_STATUSES = {"not_started", "in_progress", "done", "blocked"}
 SUPPORTED_PYTHON_LINE = (3, 14)
+GOV2_ARCHIVE_PATHS = {
+    "PROJECT_BRAIN.md": "Backup_/2026-09-13/PROJECT_BRAIN.md",
+    "IMPLEMENT_PLAN.md": "Backup_/2026-09-13/IMPLEMENT_PLAN.md",
+    "AGENTS.md": "Backup_/2026-09-13/AGENTS.md",
+}
+GOV2_ACTIVE_DOC_MAX_LINES = 220
+SHA256_RULE = re.compile(r"sha256:[0-9a-f]{64}\Z")
 RUNTIME_ARTIFACT_RULES = {
     # These rules invoke a Python validator, runner, or test subprocess when
     # runtime checks are enabled.  Keep this explicit so static dispatches and
@@ -202,6 +209,7 @@ def validate_tracker(
             blockers.append(f"{order_id}:done_requires_evidence")
 
     runtime_cache: dict[str, bool] = {}
+    gov2_archives_present = _gov2_archives_present(payload, project_root)
     for order in orders:
         if not isinstance(order, dict) or not isinstance(order.get("id"), str):
             continue
@@ -220,6 +228,14 @@ def validate_tracker(
                 continue
             artifact_path = str(artifact.get("path", ""))
             must = str(artifact.get("must", ""))
+            target_override = None
+            if (
+                gov2_archives_present
+                and must.startswith("match_")
+                and not must.startswith("match_gov2_")
+                and artifact_path in {"PROJECT_BRAIN.md", "IMPLEMENT_PLAN.md"}
+            ):
+                target_override = project_root / GOV2_ARCHIVE_PATHS[artifact_path]
             artifact_blockers, was_checked, was_unverified = _validate_done_artifact(
                 order_id,
                 artifact_path,
@@ -227,6 +243,7 @@ def validate_tracker(
                 project_root=project_root,
                 verify_runtime=verify_runtime,
                 runtime_cache=runtime_cache,
+                target_override=target_override,
             )
             blockers.extend(artifact_blockers)
             entry = {"order": order_id, "path": artifact_path, "must": must}
@@ -258,6 +275,47 @@ def _load_tracker(path: Path, blockers: list[str]) -> dict[str, Any] | None:
     return payload
 
 
+def _gov2_archives_present(payload: dict[str, Any], project_root: Path) -> bool:
+    """Return whether the completed GOV-2 archive contract enables legacy mirrors."""
+    orders = payload.get("orders")
+    if not isinstance(orders, list):
+        return False
+    gov2 = next(
+        (
+            order
+            for order in orders
+            if isinstance(order, dict) and order.get("id") == "GOV-2-OUTCOME-FIRST"
+        ),
+        None,
+    )
+    if not isinstance(gov2, dict):
+        return False
+    if gov2.get("status") != "done":
+        return False
+    required = gov2.get("required_artifacts")
+    if not isinstance(required, list):
+        return False
+    configured = {
+        artifact.get("path"): artifact.get("must")
+        for artifact in required
+        if isinstance(artifact, dict)
+    }
+    for archive_path in GOV2_ARCHIVE_PATHS.values():
+        rule = configured.get(archive_path)
+        if not isinstance(rule, str) or SHA256_RULE.fullmatch(rule) is None:
+            return False
+        archive = project_root / archive_path
+        if not archive.is_file():
+            return False
+        try:
+            actual = hashlib.sha256(archive.read_bytes()).hexdigest()
+        except OSError:
+            return False
+        if actual != rule.removeprefix("sha256:"):
+            return False
+    return True
+
+
 def _validate_done_artifact(
     order_id: str,
     artifact_path: str,
@@ -266,14 +324,32 @@ def _validate_done_artifact(
     project_root: Path,
     verify_runtime: bool,
     runtime_cache: dict[str, bool],
+    target_override: Path | None = None,
 ) -> tuple[list[str], bool, bool]:
     target = (project_root / artifact_path).resolve()
+    if target_override is not None:
+        target = target_override.resolve()
     if not verify_runtime and must in RUNTIME_ARTIFACT_RULES:
         if not target.is_file():
             return [f"{order_id}:missing_artifact:{artifact_path}"], False, False
         if must == "pass" and target == Path(__file__).resolve():
             return [], True, False
         return [], False, True
+    if must.startswith("sha256:"):
+        if SHA256_RULE.fullmatch(must) is None:
+            return [f"{order_id}:invalid_sha256_rule:{artifact_path}"], False, False
+        if not target.is_file():
+            return [f"{order_id}:missing_artifact:{artifact_path}"], False, False
+        try:
+            actual = hashlib.sha256(target.read_bytes()).hexdigest()
+        except OSError:
+            actual = None
+        ok = actual == must.removeprefix("sha256:")
+        return (
+            [] if ok else [f"{order_id}:artifact_sha256_mismatch:{artifact_path}"],
+            ok,
+            False,
+        )
     if must == "exist":
         exists = target.exists()
         return ([] if exists else [f"{order_id}:missing_artifact:{artifact_path}"], exists, False)
@@ -339,6 +415,18 @@ def _validate_done_artifact(
         return _validate_uat_scope_project_memory(target, order_id, artifact_path)
     if must == "match_uat_scope_implementation_plan":
         return _validate_uat_scope_implementation_plan(target, order_id, artifact_path)
+    if must == "match_gov2_decision_record":
+        return _validate_gov2_decision_record(target, order_id, artifact_path)
+    if must == "match_gov2_brain":
+        return _validate_gov2_brain(target, order_id, artifact_path)
+    if must == "match_gov2_plan":
+        return _validate_gov2_plan(target, order_id, artifact_path)
+    if must == "match_gov2_agents":
+        return _validate_gov2_agents(target, order_id, artifact_path)
+    if must == "match_gov2_ci":
+        return _validate_gov2_ci(target, order_id, artifact_path)
+    if must == "match_gov2_full_audit":
+        return _validate_gov2_full_audit(target, order_id, artifact_path)
     if must == "pin_supported_python":
         return _validate_python_pin(target, order_id, artifact_path)
     if must == "declare_python_and_dependencies":
@@ -4164,6 +4252,294 @@ def _run_all_tiers_once(project_root: Path, cache: dict[str, bool]) -> bool:
         )
         cache["all"] = completed.returncode == 0
     return cache["all"]
+
+
+GOV2_QUESTION_TERMS = (
+    "locked U8 daily total-return universe through 2015-12-31",
+    "CORE1_DC60",
+    "CORE1_DC120",
+    "CORE1_SMA200",
+    "all locked A-H gates after locked costs",
+)
+GOV2_STATUS_TERMS = (
+    "L-0: scope-restricted.",
+    "L-1: scope-restricted E1.",
+    "L-2: E1 `underfunded_scope_restricted`, paused.",
+    "L-3: E1 `scope_restricted`/unresolved, paused.",
+    "L-4: unresolved E0, `edge_claim: none`, paused.",
+    "CORE-1: active E0 machinery, no empirical result, no edge claim.",
+)
+
+
+def _validate_gov2_document(
+    target: Path,
+    order_id: str,
+    artifact_path: str,
+    label: str,
+    required: tuple[str, ...],
+) -> tuple[list[str], bool, bool]:
+    if not target.is_file():
+        return [f"{order_id}:missing_artifact:{artifact_path}"], False, False
+    try:
+        text = target.read_text(encoding="utf-8")
+    except (OSError, UnicodeDecodeError):
+        return [f"{order_id}:{label}_unreadable"], False, False
+    blockers: list[str] = []
+    line_count = len(text.splitlines())
+    if line_count > GOV2_ACTIVE_DOC_MAX_LINES:
+        blockers.append(f"{order_id}:{label}_too_many_lines:{line_count}")
+    blockers.extend(
+        f"{order_id}:{label}_missing:{term}"
+        for term in required
+        if term not in text
+    )
+    return blockers, not blockers, False
+
+
+def _validate_gov2_decision_record(
+    target: Path, order_id: str, artifact_path: str
+) -> tuple[list[str], bool, bool]:
+    required = (
+        "# Decision Record 008: Outcome-First Research Execution",
+        "- **Date**: 2026-09-13",
+        "Lily accumulated many governance, schema, validator, and full-repository-check versions",
+        "The current hermetic suite is 686 tests.",
+        "The clean full tracker took roughly 15+ minutes locally and repeated the test tier.",
+        "There is one active scientific lane: the CORE-1 stable baseline.",
+        *GOV2_QUESTION_TERMS,
+        "Candidate definitions, U8 order, costs, timing, A-H gates, selection/stop rules, evidence tiers, provenance",
+        "2016-01-04 through 2026-06-30 validation seal do not change.",
+        "There is no parameter rescue and no fourth candidate.",
+        "risk-proportionate",
+        "not after every small edit",
+        "Edit uncommitted work in place.",
+        "The Worker runs one bounded order autonomously",
+        "Inspector reviews before work, at CP-A/B/C/D/X",
+        "standalone clone",
+        "No log is written for synthetic or control-plane work.",
+        "A Thai research log is mandatory after a genuine development empirical result",
+        "This decision prospectively supersedes conflicting forward-order/process text in Decision Records 005/006",
+        "Not authorized: data/return/container access",
+        "The next scientific milestone ends with a reproducible empirical report",
+        "Historical `match_*` checks for the superseded control-document text validate the exact bytes",
+        "exact SHA-256 rules",
+    )
+    return _validate_gov2_document(
+        target, order_id, artifact_path, "gov2_decision_record", required
+    )
+
+
+def _validate_gov2_brain(
+    target: Path, order_id: str, artifact_path: str
+) -> tuple[list[str], bool, bool]:
+    required = (
+        "## Project definition and thesis",
+        "## Evidence tiers",
+        "## Current capital, broker, and universe facts",
+        "## Data, cost, and validation invariants",
+        "## Current scientific status",
+        *GOV2_STATUS_TERMS,
+        "The R3 decision kernel commit `eec2ebf2c17957ff87d7b39cfec741b81084e9cd` passed Exact-SHA CI `34766759693`.",
+        "One active scientific lane and one bounded order are the default.",
+        "The Inspector owns review, integration recommendation, and Thai research-log authorship.",
+        "### Fixed CORE-1 question",
+        *GOV2_QUESTION_TERMS,
+        "### Shortest safe queue",
+        "No parameter rescue and no fourth candidate.",
+        "L-2/L-3/L-4 remain paused until this decision.",
+        "### Next safe action",
+        "Owner integration of GOV-2",
+        "2016-01-04 through 2026-06-30 validation window is sealed.",
+        "Do not alter locked gates, manifests, registries, reports, hypothesis statuses, or historical files.",
+        "Backup_/2026-09-13/",
+    )
+    return _validate_gov2_document(target, order_id, artifact_path, "gov2_brain", required)
+
+
+def _validate_gov2_plan(
+    target: Path, order_id: str, artifact_path: str
+) -> tuple[list[str], bool, bool]:
+    required = (
+        "# IMPLEMENT_PLAN.md",
+        "**Plan version**: Refounding v4",
+        "**Date**: 2026-09-13",
+        "**Scope**: one CORE-1 development decision",
+        *GOV2_QUESTION_TERMS,
+        "docs/DECISION_RECORD_007_STABLE_BASELINE_DIRECTION.md",
+        "experiments/core_1_stable_baseline_preregistration_v1.json",
+        "experiments/locked_gates_v2.jsonl",
+        "experiments/locked_gate_segments.json",
+        "scripts/validate_locked_gates.py",
+        "experiments/hypothesis_registry.json",
+        "**OF-0",
+        "**OF-1",
+        "**OF-2",
+        "**OF-3",
+        "**OF-4",
+        "**OF-5",
+        "**OF-6",
+        "One provenance-bound report",
+        "return",
+        "Sharpe",
+        "PSR",
+        "DSR",
+        "HAC",
+        "drawdown",
+        "turnover and cost",
+        "subperiods",
+        "concentration",
+        "all A-H results",
+        "ranking",
+        "selection",
+        "Validation remains sealed.",
+        "A Thai research log exists before the scientific outcome closes.",
+        "static tracker check locally",
+        "fast exact-SHA CI on every push",
+        "full runtime audit only",
+        "Never run a full tracker from a dirty checkout.",
+        "Every order names the scientific decision it unlocks.",
+        "a fourth candidate, parameter search, or rescue path",
+        "L-2, L-3, and L-4 execution",
+        "Owner integration of GOV-2",
+        "CORE-1 is active E0 machinery with no empirical result and no edge claim.",
+        "Historical execution detail belongs in `Backup_/2026-09-13/`",
+    )
+    return _validate_gov2_document(target, order_id, artifact_path, "gov2_plan", required)
+
+
+def _validate_gov2_agents(
+    target: Path, order_id: str, artifact_path: str
+) -> tuple[list[str], bool, bool]:
+    required = (
+        "Communicate in simple Thai",
+        "Before work, read in order",
+        "local LLM Wiki",
+        "one bounded work order and one active scientific lane",
+        "standalone clone with its own `.git`",
+        "autonomous within the named order until its checkpoint",
+        "Stop only for ambiguity, changed risk, a failed gate, unrelated dirty state, an unexpected path, or external/material authority.",
+        "CP-A",
+        "CP-B",
+        "CP-C",
+        "CP-D",
+        "CP-X",
+        "E0 is infrastructure",
+        "E1 is blocked",
+        "E2 requires preregistered statistics",
+        "E3 additionally requires operational validation",
+        "Locked gates, manifests, schemas, validators, registries, reports, and hypothesis statuses",
+        "supersedes_gate_id",
+        "Use only data available at the decision time.",
+        "2016-01-04 through 2026-06-30 validation window is sealed",
+        "USD 0 through L-0",
+        "cumulative USD 50 through L-1",
+        "fast exact-SHA CI on every push",
+        "Full runtime audit is reserved",
+        "Never run the full tracker from a dirty checkout.",
+        "No log is written for synthetic/control-plane work.",
+        "Inspector alone writes the required audited Thai research log",
+        "Agent: Codex (GPT-5.6-luna)",
+        "branch-only",
+        "Never merge, push main, deploy, or publish.",
+    )
+    return _validate_gov2_document(target, order_id, artifact_path, "gov2_agents", required)
+
+
+def _workflow_run_lines(text: str) -> list[str]:
+    return [
+        match.group(1).strip()
+        for match in re.finditer(r"(?m)^[ \t]*(?:-\s+)?run:[ \t]*([^\r\n]+)[ \t]*$", text)
+    ]
+
+
+def _validate_gov2_ci(
+    target: Path, order_id: str, artifact_path: str
+) -> tuple[list[str], bool, bool]:
+    required = (
+        "name: Hermetic CI",
+        "push:",
+        "pull_request:",
+        "permissions:",
+        "contents: read",
+        "timeout-minutes: 10",
+        "uses: actions/checkout@v5",
+        "uses: actions/setup-python@v6",
+        "python-version-file: .python-version",
+        "name: Run hermetic tier",
+        "python scripts/run_test_tier.py hermetic",
+        "name: Validate bootstrap tracker (static)",
+        "python scripts/validate_bootstrap_tracker.py --no-runtime-checks",
+    )
+    blockers, checked, unverified = _validate_gov2_document(
+        target, order_id, artifact_path, "gov2_ci", required
+    )
+    if not target.is_file():
+        return blockers, checked, unverified
+    try:
+        text = target.read_text(encoding="utf-8")
+    except (OSError, UnicodeDecodeError):
+        return blockers, checked, unverified
+    run_lines = _workflow_run_lines(text)
+    static_command = "python scripts/validate_bootstrap_tracker.py --no-runtime-checks"
+    if run_lines.count(static_command) != 1:
+        blockers.append(f"{order_id}:gov2_ci_static_tracker_command_count")
+    if any(
+        "python scripts/validate_bootstrap_tracker.py" in line
+        and "--no-runtime-checks" not in line
+        for line in run_lines
+    ):
+        blockers.append(f"{order_id}:gov2_ci_full_tracker_command_forbidden")
+    permission_lines = [
+        line.strip() for line in text.splitlines() if line.strip().startswith("contents:")
+    ]
+    if any(line != "contents: read" for line in permission_lines):
+        blockers.append(f"{order_id}:gov2_ci_permissions_not_read_only")
+    return blockers, not blockers, False
+
+
+def _validate_gov2_full_audit(
+    target: Path, order_id: str, artifact_path: str
+) -> tuple[list[str], bool, bool]:
+    required = (
+        "name: Full Repository Audit",
+        "workflow_dispatch:",
+        "schedule:",
+        "cron:",
+        "push:",
+        "timeout-minutes: 30",
+        "permissions:",
+        "contents: read",
+        "uses: actions/checkout@v5",
+        "uses: actions/setup-python@v6",
+        "python-version-file: .python-version",
+        "AGENTS.md",
+        "PROJECT_BRAIN.md",
+        "IMPLEMENT_PLAN.md",
+        "experiments/bootstrap_tracker.json",
+        "experiments/locked_gates*.jsonl",
+        "experiments/locked_gate_segments.json",
+        "scripts/validate_bootstrap_tracker.py",
+        ".github/workflows/**",
+        "python scripts/validate_bootstrap_tracker.py",
+    )
+    blockers, checked, unverified = _validate_gov2_document(
+        target, order_id, artifact_path, "gov2_full_audit", required
+    )
+    if not target.is_file():
+        return blockers, checked, unverified
+    try:
+        text = target.read_text(encoding="utf-8")
+    except (OSError, UnicodeDecodeError):
+        return blockers, checked, unverified
+    run_lines = _workflow_run_lines(text)
+    if run_lines != ["python scripts/validate_bootstrap_tracker.py"]:
+        blockers.append(f"{order_id}:gov2_full_audit_must_have_one_full_tracker_command")
+    permission_lines = [
+        line.strip() for line in text.splitlines() if line.strip().startswith("contents:")
+    ]
+    if any(line != "contents: read" for line in permission_lines):
+        blockers.append(f"{order_id}:gov2_full_audit_permissions_not_read_only")
+    return blockers, not blockers, False
 
 
 def _validate_ci(target: Path, order_id: str, artifact_path: str) -> tuple[list[str], bool, bool]:

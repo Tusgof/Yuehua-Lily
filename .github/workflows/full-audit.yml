@@ -1,0 +1,35 @@
+name: Full Repository Audit
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "30 1 * * 1"
+  push:
+    paths:
+      - AGENTS.md
+      - PROJECT_BRAIN.md
+      - IMPLEMENT_PLAN.md
+      - experiments/bootstrap_tracker.json
+      - experiments/locked_gates*.jsonl
+      - experiments/locked_gate_segments.json
+      - scripts/validate_bootstrap_tracker.py
+      - .github/workflows/**
+
+permissions:
+  contents: read
+
+jobs:
+  full-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+      - name: Set up pinned Python
+        uses: actions/setup-python@v6
+        with:
+          python-version-file: .python-version
+      - name: Run full repository audit
+        run: python scripts/validate_bootstrap_tracker.py

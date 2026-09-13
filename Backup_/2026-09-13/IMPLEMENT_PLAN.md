@@ -1,0 +1,415 @@
+# IMPLEMENT_PLAN.md
+
+## 1. Plan Definition
+
+- **Program**: Lily systematic trend-following research
+- **Plan version**: Refounding v3 — decision-first execution
+- **Date**: 2026-08-02
+- **Operating model**: sequential core-system decisions plus standing governance programs
+- **End state**: Lily can honestly classify hypotheses as proposed, active, parked, falsified, scope-restricted, E2-validated, or E3 deployment-grade.
+
+This plan does not authorize strategy code, a backtest, paper trading, broker requests, or real-money trading by itself.
+
+### 1.1 Forward Plan From 2026-08-02
+
+`docs/DECISION_RECORD_005_FORWARD_RESEARCH_EXECUTION.md` governs future work without rewriting historical orders or locked artifacts.
+
+The minimum viable research system is `L-1 60-day baseline + equal-notional q sizing + L-4 breadth + locked costs`. L-2 multi-lookback and L-3 inverse-volatility are optional improvements, not prerequisites for testing that core system.
+
+Forward sequence:
+
+1. Inspector-review B8.8R5/v6, then—only through a separate approved activation—consider the pre-2016 L-4 falsification while keeping validation sealed.
+2. Run an Inspector-led L-1 through L-4 family review immediately after the L-4 result.
+3. Resolve L-1 first because it survived falsification: choose adequate point-in-time corporate-action evidence or prospective evidence before any validation unlock.
+4. Revisit L-2 only if a new preregistration proves static `MinTRL_falsify` capacity before return access; otherwise retire it.
+5. Permit L-3 at most one new small preregistered attempt; if that cannot produce one valid bounded run, retain equal-notional q and retire the inverse-volatility branch.
+
+Decision Record 005's scientific simplification, forward sequence, and CP risk definitions remain in force. GOV-1 prospectively supersedes only Decision Record 005's role, session, branch, and closure mechanics. Under GOV-1, the Inspector is `gpt-5.6-sol / high` and repository read-only; the normal Worker is `gpt-5.6-luna / max` and workspace-write in a fresh separate thread for each milestone or work order. The Worker works one bounded order, pushes only its milestone branch, and hands off for Inspector review. The Inspector remains the sole `research_log/` author.
+
+- **CP-A**: before real-return access, activation, or scientific execution;
+- **CP-B**: after an empirical report, before outcome/registry/next-hypothesis decisions;
+- **CP-C**: before opening the sealed validation window;
+- **CP-D**: before paid, provider-mutating, broker, paper, or real-money action;
+- **CP-X**: immediately after an unexpected one-shot, provenance, leakage, or locked-invariant incident.
+
+Every future execution path must pass a clean temporary-Git end-to-end test before CP-A. One bounded remediation is allowed after a first rejection. A second rejection at the same critical point stops patch layering and requires an Inspector-reviewed smaller replacement design.
+
+### 1.2 GOV-1 Adopted Agent Operating Model
+
+For work orders created after GOV-1 acceptance, the Inspector is `gpt-5.6-sol / high` with repository read-only access and a continuous chat; the normal Worker is `gpt-5.6-luna / max` with workspace-write access in a fresh thread for each milestone or work order. The Inspector owns Project Vision, approved BRAIN/PLAN content, decomposition, acceptance gates, and independent Architecture, Scope, Security, and quality review. The Worker is the sole implementation writer for one bounded order, runs tests, updates the tracker, commits, pushes only the milestone branch, and returns evidence. The Worker does not merge, deploy, write production state, or publish externally; the user decides material questions and merge/integration.
+
+Review occurs before work starts, at explicit risk checkpoints (CP-A, CP-B, CP-C, CP-D, and CP-X), and before milestone closure. An ambiguous plan, changed risk, failed acceptance gate, unrelated dirty state, or required merge/deployment/production/external action stops the Worker and returns the order to the Inspector. The Worker may not autonomously change BRAIN, PLAN, locked gates, or scope. GOV-1 alone permits mechanical application of this exact approved policy to BRAIN and PLAN, reconciling only directly conflicting role statements and changing no scientific status, evidence tier, hypothesis state, or L-4 next-safe-action substance. Future BRAIN/PLAN edits require Inspector-authored exact text inside an owner-approved governance work order. Research logs remain Inspector-authored; GOV-1 creates no research log.
+
+## 2. Accepted Design Inputs
+
+Pre-refounding, owner-authored inputs carried forward:
+
+- baseline: 60-day directional count;
+- candidate: multi-lookback t-stat / delta-straddle interpretation;
+- sizing: `signal × risk weight / volatility`;
+- portfolio leverage: target volatility plus caps;
+- costs before trust;
+- unknowns remain explicit.
+
+Founding decisions are in `docs/DECISION_RECORD_001_PROJECT_REFOUNDING.md`.
+
+## 3. Standing Programs
+
+### P0 — Governance And Audit
+
+Maintain the minimum controls needed for evidence tiers, hypothesis registry, preregistration, locked-gate hashes, adversarial E2 review, anti-overstatement checks, and machine-checkable trackers. Governance must protect a named scientific decision; it is not an independent expansion target.
+
+### P1 — Reproducibility And Environment
+
+Maintain pinned Python, dependency manifests, hermetic/state-audit tiers, CI, environment resolution, commit provenance, and zero tracked absolute paths.
+
+### P2 — Statistics Kernel
+
+Maintain one `lib/` implementation for autocorrelation-adjusted Sharpe variance, PSR, DSR, dual MinTRL, HAC sensitivity, independent-bet-equivalent counts, and golden-number anchors.
+
+### P3 — Data Integrity And Cost
+
+Maintain acquisition decisions, provider schemas, survivorship/roll policy, dataset registry, dual hashes, true-provenance per-key cost ledger, and budget guards.
+
+### P4 — Backup, Restore, And Retention
+
+Maintain `BACKUP_AND_RESTORE.md`, restore rehearsals, durable evidence indices, and later retention policy. A backup is not trusted until restored successfully.
+
+## 4. Hypothesis Tracks
+
+### T0 / L-0 — Sizing Feasibility First
+
+Question: can a globally diversified trend implementation be sized honestly at USD 1,000 and USD 2,000, and what capital is required for broader futures variants?
+
+Required branches:
+
+1. US-listed fractional ETF portfolio with global country and asset-class exposure;
+2. micro-futures feasibility at 4, 8, and 12 markets;
+3. full-size futures as a documented out-of-current-scope comparator.
+
+Include whole/fractional granularity, margin, cash buffer, target risk, volatility, cost, turnover, concentration, currency, and broker capability. No return backtest is needed to resolve L-0.
+
+Exit: classify each branch as current-capital feasible, scope-restricted, minimum-capital-only, or infeasible under the preregistered constraints.
+
+### T1 / L-1 — Baseline Continuation
+
+Test the 60-day directional-count baseline on the chosen research universe after implementable costs. Evaluate convex/right-tail behavior, whipsaw regimes, concentration, and scope restrictions.
+
+Exit: falsified with mechanism autopsy, parked as underpowered, or E2-eligible after all gates and adversarial review.
+
+### T2 / L-2 — Candidate Versus Baseline
+
+Compare the multi-lookback t-stat candidate with a matched-horizon baseline on the same universe, dates, sizing, cost model, and search accounting.
+
+Exit: candidate improves a preregistered utility criterion without relying on unlogged search, or is falsified/parked.
+
+### T3 / L-3 — Sizing Architecture
+
+B7 is complete as E0 governance only: it locks the L1 `research_signed` eight-ETF q/volatility candidate versus q comparator under identical inherited weekly constraints and next-actual-NYSE-close timing. The primary unit is the weekly paired portfolio component-risk HHI delta with a 0.05 minimum useful reduction; fixed-weight realized confirmation uses t+1 through t+20 actual sessions. Turnover/cost and cap/cash/scale-down limits are locked, `MinTRL_falsify` is 49, both validation plans bind at `MinTRL_validate` 49, and the optimistic separately funded regime ceiling is 366 weekly slots before actual-session/missingness reductions. B7.2 makes v2 active through hermetic source-provenance snapshots only; v1 research semantics remain unchanged. B7.1 locked E0 gate-only preflight source-binds v2/v1/L1 and the validation sealed boundary; all six authorization flags false.
+
+B7.3 used its one owner-authorized run but exceeded the locked 465 weekly-observation ceiling (500 recorded), so its provisional classification is invalidated and L-3 is E1 scope_restricted. B7.4 preserves the original ledger row and appends one hash-bound invalidation: the original ledger `falsified` decision and every provisional metric are invalid, while scope_restricted is the sole authoritative state. B7.4 reads zero market returns. Validation remains sealed; no rerun is authorized. No edge claim exists.
+
+B7.5 is E0 no-data governance only: it preserves the L-3 research question, thresholds, universe, signal, comparator, costs, constraints, statistics, and validation seal while correcting only the future execution-window control. A future date-only pre-return schedule must exclude decisions before 2007-02-05, require complete t+20 confirmation no later than 2015-12-31, stay at or below 465 weekly paired observations, and produce a hash-bound attestation before returns. Its fresh report/ledger namespace cannot overwrite B7.3 history. All B7.5 authorization flags are false; B7.3 remains invalidated E1 scope_restricted, edge claim none, validation sealed, and a future one-run needs Inspector acceptance plus new explicit owner authorization.
+
+B7.6 used its one owner-authorized corrected attempt but hard-stopped at `date_only_schema_metadata_missing` before return parsing. No fresh schedule attestation or ledger row exists, no empirical metric or decision was produced, and the authoritative outcome is E1 scope_restricted with validation sealed and edge claim none.
+
+B7.7 is E0 synthetic-only remediation. It preserves B7.6 as history, records that its hard stop arose from a schema/schema_version implementation mismatch, and supersedes only the defective execution machinery. A future rerun requires Inspector acceptance of B7.7 plus a new explicit owner authorization.
+
+B7.8 is E0 synthetic-only remediation. It supersedes defective B7.7 execution-contract machinery without changing locked science, binds B7.7/v2 and the sealed prior gate lineage, and verifies scanner, weekly schedule, side-effect, and prospective report contracts using hermetic fixtures only. All access flags remain false; L-3 remains E1 scope-restricted with validation sealed and edge_claim none. A future rerun requires Inspector acceptance of B7.8 and a new explicit owner authorization.
+
+B7.9 is E0 synthetic-only adversarial remediation. It supersedes B7.8/v4 machinery without changing locked science: v5 rejects each individual post-end symbol session before intersection while accepting 2015-12-31, enforces the exact report matrix, recomputes finite decision evidence, and binds only committed synthetic fixture identities by actual SHA-256. All fourteen access flags remain false; L-3 remains E1 scope-restricted with validation sealed and edge_claim none. A future rerun requires Inspector acceptance of B7.9 and a new explicit owner authorization.
+
+B7.10 is E0 synthetic-only decision-integrity remediation. It supersedes B7.9/v5 machinery without changing locked science: v6 recomputes locked weekly-paired UCB and MinTRL inputs, validates HHI/event/regime conservation, enforces mutually exclusive decisions, and binds only synthetic fixture identities. All fourteen access flags remain false; L-3 remains E1 scope-restricted with validation sealed and edge_claim none. A future rerun requires Inspector acceptance of B7.10 and a new explicit owner authorization.
+
+B7.10 Inspector rejection is recorded: v6 trusted reporter-authored mean/SD/autocorrelation/effective-bet summaries, accepted mismatched MinTRL, and permitted synthetic E1 decision modes. B7.11 is an E0 synthetic-only supersession that preserves every locked v6 artifact and L-3 scientific semantic. The v7 report admits only a hash-bound closed-world weekly-observation fixed vector and `synthetic_evaluation` / `not_run` / E0 / `edge_claim: none`; it independently derives paired deltas, sample SD and lags 1–5, locked inflation, SE/UCB, raw-observation MinTRL, disjoint regime vectors, HHI arithmetic, and side-effect limits. All fourteen access flags remain false, validation sealed, and no rerun is authorized. The next safe action is Inspector review; a future rerun needs Inspector acceptance and new explicit owner authorization.
+
+B7.12 is an E0 synthetic-only supersession of immutable v7 after Inspector identified binary-float rejection of inclusive limits, an absent runner fixture, and incomplete golden assertions. v8 binds one committed report fixture and its closed-world observation hash in the gate; its runner succeeds only for that exact file and rejects outside or tampered paths. Decimal arithmetic makes exact 20% turnover/cost and exact 10-percentage-point event increases inclusive, while attainable next-value breaches fail. Golden tests hard-code mean, SD, all five lags, inflation, SE, UCB, MinTRL, raw funding, and 2-of-3 regime boundaries. All fourteen access flags remain false, validation sealed, edge_claim none, and no rerun is authorized.
+
+B7.13 is E0 synthetic-only contract work. Its v3 manifest-integrity recovery restores the immutable v2 row byte-for-byte and directly supersedes only its missing `human_approval` with a new gate and validator, preserving the active L-3 v2, B7.5, B7.6 hard-stop addendum, accepted B7.12/v8, and approved synthetic-metadata bindings. It defines only a future B7.14 date-only preflight. A future approved falsification-only container must bind its environment/manfiest identity, exact hash, schema, active gate, and schedule; it may inspect only symbol/session_date, rejects each individual post-end session before intersection, and fails before returns, execution, ledger, or decision. L-3 remains E1 scope_restricted, validation sealed, edge_claim none, and B7.14 is unauthorized.
+
+B7.14 v3 wrote its immutable scope-restricted report and hard-stopped at `unknown_structural_key`, but Inspector rejects it because a skipped timestamp lexeme was UTF-8 decoded once. B7.14R/v4 is rejected for incomplete bindings/contracts; B7.14R3/v5 is blocked because its runner failed `audit_new_script_lib_usage`. B7.14R4/v6 supersedes v5 with E0-only synthetic/no-data machinery; no container/path inspection, execution, or new real report is authorized.
+
+B7.14R5/v7 and B7.14R6/v8 are rejected immutable history; B7.14R7/v9 is rejected after failed Phase A. B7.14R8/v10 completed E0 snapshot-only governance at `d2a9001` with CI 30351502467 and closure `cf0fa3d` with CI 30351716462. It preserves all locked history, binds committed predecessor/recovery proof without real access, and keeps all fourteen authorizations false. L-3 remains E1 `scope_restricted` and unresolved, validation sealed, no rerun, no edge.
+
+B7.15 current-preregistration closure: L-3 remains E1 scope_restricted and unresolved, not falsified or validated; no rerun is planned under the current preregistration; validation is sealed; edge_claim none; no L-3 result may be carried forward as proof that inverse-volatility sizing passed. The next gate is L-4 preregistration/planning only.
+
+### T4 / L-4 — Breadth
+
+Test whether additional countries, sleeves, and independent markets reduce single-market trend dependency after accounting for trend-state correlation and costs.
+
+B8.3 v4 is Inspector-accepted and supersedes B8.2 while preserving v1/v2/v3. B8.4R2/v3 is also Inspector-accepted after Exact-SHA CI run `30367686488`; it preserves CI-defective v1/v2 history, source-binds v4 without superseding its science, and provides E0 synthetic-only future falsification-preflight machinery. B8.5/v1, B8.5R/v2, B8.5R2/v3, and B8.5R3/v4 are immutable Inspector-rejected history. B8.5R4/v5 locks a later tracked activation checkpoint bound to the accepted gate commit and Exact-SHA Hermetic CI, full pass bindings, and ancestor activation-blob provenance; future Phase B resolves only `LILY_DATA_ROOT` plus literal references. Phase B and activation are not executed. Every individual session must be structurally checked <= 2015-12-31 before return/value decoding and fail closed on missing/ambiguous U8 or date/schema/path/hash mismatch. `edge_claim none`; validation remains sealed.
+
+B8.5R5/v6 supersedes immutable Inspector-rejected v5 without changing it. It closes blocked-report integrity with exact artifact state transitions and closed categories, and requires the accepted gate commit to be an activation-checkpoint ancestor whose gate blob hashes to the v6 gate. Phase B and activation remain not executed; `edge_claim none`; validation sealed.
+
+Inspector ACCEPTED B8.5R5/v6 at `c8d358ee23b68e11ee02bb00eec17ee7f08128dd` after Exact-SHA Hermetic CI `30384415559`. The B8.5R5 Phase-B activation checkpoint is created with validation sealed and `edge_claim none`; Phase B remains unexecuted until this checkpoint commit passes Exact-SHA CI. The sole next safe action is one Phase B CLI execution.
+
+The one permitted B8.5R5 Phase B CLI call is consumed and blocked with `data_root_unavailable` (exit `1`) after atomic marker claim. Its report validates; manifest/payload reads and return/value/validation access are zero. Inspector ACCEPTED result commit `edc922cff688256472ec1f452a51535e296fc744` after Exact-SHA Hermetic CI `30386988365` and decided no new research log: this E0 control-plane pre-data hard stop produced no market observation, empirical experiment, L-4 metric, or scientific decision. The one-shot cannot be retried; L-4 remains unresolved E0 with `edge_claim none`, validation sealed. Further progress requires a separately owner-approved container-provisioning/new-gate order after `LILY_DATA_ROOT` and exact structural manifest/payload availability are resolved, without opening validation or silently reusing this attempt.
+
+B8.6 Phase A locks E0/no-data provisioning machinery for the literal repo-relative normalized Yahoo container, its expected hash, full normalized schema/U8/cutoff structural scanner, and a non-circular future activation then one-shot lifecycle. The Inspector pre-gate hash-only read is recorded separately as non-evidence and does not satisfy the future gated read. No activation, provisioning, validation, empirical result, or edge claim is authorized.
+
+B8.6R Phase-A v2 is append-only Inspector remediation. It preserves B8.6 v1 and records the corrected literal-path hash addendum. The v2 one-shot has no environment dependency; activation requires an accepted gate commit, exact CI run/head, `ACCEPTED`, scope/seal, ancestor proof, and gate-blob proof. It performs only opaque structural inspection after an atomic marker claim; E0 remains `edge_claim none`.
+
+B8.6R2 Phase-A v3 preserves v1/v2 after Inspector rejection. It closes the report blocker matrix, validates JSON numeric grammar as opaque bytes, rejects nested output drift, binds canonical manifest/payload path/hash/bytes into real reports, and executes the repository's constrained Draft 2020-12 validator in hermetic tests. No activation, provisioning, or validation access is authorized; validation sealed, E0 remains `edge_claim none`.
+
+B8.6R3 Phase-A v4 preserves v1-v3 after Inspector rejection. It defines the exact reachable blocker matrix and restores real-report activation provenance, consumption, commit, summary, output identity, and cross-binding checks. E0 only, validation sealed, `edge_claim none`.
+
+B8.6R4 Phase-A v5 preserves v1-v4 after Inspector rejection. It binds activation bytes to the producing commit and closes manifest/payload coverage, date, count, total, and cross-binding forgery. E0 only, validation sealed, `edge_claim none`.
+
+B8.6R5 Phase-A v6 preserves v1-v5 and adds only the fail-closed, activation-gated one-shot runner. E0 only, validation sealed, `edge_claim none`.
+B8.6R6 Phase-A v8 replaces rejected v5/v7 recovery machinery with a cohesive v8 identity contract. Synthetic E0 only; no data access, activation, execution, or validation access occurred.
+B8.6R7 Phase-A v9 supersedes v8 after Inspector found that v8 accepted a coherently forged synthetic success. It is E0 remediation only: its shared activation check requires exact canonical activation content and schema, a positive CI run and matching accepted/CI head, plus accepted-gate ancestry and immutable blob identity; its production output check requires bounded positive row counters and hashes, exact U8 coverage, sorted unique pre-cutoff ISO dates, totals, and persisted canonical artifact identities. No data access, activation, execution, or validation access occurred; `edge_claim none`, validation sealed, and Inspector review remains required.
+B8.6R11 Phase-A v13 supersedes incomplete checkpoint `2509213`/v12 without modifying it; B8.6R8/v10 remains immutable rejected E0 history. It is E0 remediation only: the git-show-sourced, stdlib-only bootstrap verifies every declared runtime byte against the exact `producing_git_commit` before project imports, marker claim, or dataset access; the semantic report validator independently requires exact allowed fields for every outcome and important nested object, as well as activation ancestry/blob, output, U8/date/hash, and validation-seal protections. No data access, activation, execution, or validation access occurred; `edge_claim none`, validation sealed, and Inspector review remains required.
+B8.6R11A creates only the canonical activation checkpoint after Inspector acceptance of `4387081407b92f50df6003f9435b19b885135daf` and Hermetic CI `30523998233`. It is E0, `edge_claim none`, validation sealed, and not provisioning: no bootstrap, marker, container/data access, or execution is authorized until Inspector reviews this checkpoint and a later separate execution order exists.
+B8.6R11B consumed its one authorized committed-bootstrap command at `4cc5f3da07d09ad100f1a04043214e87a1dfc943`, which exited 1 before runtime because activation literal `lily_l4_breadth_b86r11_provisioning_activation_v13` disagreed with bootstrap literal `lily_l4_b86r11_provisioning_activation_v13`. Invocation count is 1; marker, dataset read/hash/scan, return decode, and validation counts are all 0, and no marker, report, manifest, or payload exists. This is E0 `blocked_before_runtime_schema_contract_mismatch_no_retry`, not data or a breadth result; `edge_claim none`, validation sealed, no retry, backtest, or scientific progression is authorized without a new Inspector/owner order.
+B8.6R12/v14 preserves v13 and its incident history. It puts `activation_schema_version` in the v14 gate as the sole executable authority, binds that value in bootstrap preflight, the activation validator, report validation, static schema verification, and a future activation-content builder, and proves agreement in temporary-Git adversarial tests. It is E0 machinery only: no activation, provisioning, container/data, return, or validation access occurs. A later activation checkpoint must invoke the actual committed bootstrap `preflight` and require `ready=True`; no execution is authorized by B8.6R12.
+B8.6R13/v15 preserves v14 as immutable Inspector-rejected history because the v14 owner-authorization reference was caller-controlled. Its gate now owns both `activation_schema_version` and exact `required_owner_authorization_reference`; the builder has no owner parameter, and the canonical activation, committed-bootstrap preflight, activation validator, and activation schema enforce both. The v15 report/output contract retains v14's exact dataset hash, U8 membership/order, ISO dates through 2015-12-31, coverage/count, canonical disk identities, provenance, and validation seal. It is E0 machinery only: no activation, provisioning, container/data, return, or validation access occurs. Inspector review is required before a separately owner-approved future activation checkpoint.
+B8.6R13A creates only the canonical no-LF activation checkpoint after Inspector acceptance of `42bfe3da3c58103317a71edb33bcd0d280b3017c` and Hermetic CI `30591744500`. The record is generated by the v15 gate-derived builder, not hand-composed. At checkpoint commit `ddbd096cf960f1702f75687d285b0b899a2670de`, its validator invokes the actual bootstrap preflight and passes with committed canonical bytes and accepted-gate ancestry/blob. It remains E0 with `edge_claim none` and validation sealed; no bootstrap production/run, marker, provisioning, container/data, return, or validation access is authorized.
+B8.6R13B consumed its sole authorized v15 git-show committed-bootstrap command at `d06001b54a80321b9b7be356ef808670b17dfba6`, which exited `0` once. It completed only structural provisioning: the bounded container read matched the locked SHA-256 and produced the canonical marker, report, falsification manifest, and U8 date payload. The report validator passed with exact U8/order, dates no later than 2015-12-31, zero return-value decoding, and validation sealed. It is E0 `structural_provisioned`, `edge_claim none`, and cannot be retried. A new separately owner-approved scientific execution gate is required before any L-4 falsification computation.
+B8.7 Phase A source-binds v4 science and the committed B8.6R13B manifest/U8 dates, then derives the exact 465 U8-common weekly paired slots from 2007-02-05 through 2015-12-31 without reading any return/value. All four mandatory metrics independently have planning `MinTRL_falsify` 49, so the plan is capacity-funded only. This remains E0: every metric still needs actual weekly-paired MinTRL recalculation before an E1 decision; validation is sealed; activation and execution remain forbidden pending Inspector review and a separate owner-approved scientific execution gate.
+The legacy locked-gate manifest is sealed as v1 below B8.5R2's 65,536-byte bounded-read limit. All future locked rows must be appended to `experiments/locked_gates_v2.jsonl` under the segment registry; this is control-plane compatibility only, not research evidence.
+
+Exit: breadth reduces preregistered dependency/concentration measures, produces an explicit scope restriction, or is falsified.
+
+## 5. Execution Orders
+
+### B0 — Governance Bootstrap
+
+Source of truth: `HANDOFF_FOR_CODEX_BOOTSTRAP.md` and `experiments/bootstrap_tracker.json`.
+
+Deliver the self-verifying repository contract before research code. The tracker validator must reject false `done` claims. CI must run the hermetic tier on every push.
+
+Forbidden: data acquisition, broker contact, strategy rules, backtests, and performance claims.
+
+### B1 — Data Layer Design And Fixtures
+
+After B0 passes:
+
+- write the data acquisition decision tree;
+- define dataset registry and dual-hash rules;
+- define ETF survivorship/inception/delisting policy;
+- define futures contract/roll and adjusted-series policy;
+- add provider-boundary schemas and committed synthetic fixtures;
+- keep paid spend at USD 0.
+
+Exit: hermetic ingestion/normalization fixtures pass and no real strategy is executed.
+
+### B2 — L-0 Feasibility Study
+
+After B1 passes, preregister L-0 and run only the sizing/capability study. Use read-only public terms, sandbox, or account-reported permissions; never store credentials.
+
+Exit: current-capital and minimum-capital classifications are reproducible and costed.
+
+### B3 — L-1 Baseline Specification
+
+After L-0 decision:
+
+- lock research universe and observation unit;
+- lock 60-day formula, timing, neutral handling, volatility estimate, rebalance rule, cost model, benchmarks, regimes, and untouched test;
+- compute/fund `MinTRL_falsify` before `MinTRL_validate`;
+- create locked manifest entry and adversarial-review plan.
+
+No real backtest may run in the same session that first writes or revises this preregistration.
+
+### B4 — L-1 Baseline Execution
+
+Only after B3's hashes and validators pass may a separate session run the bounded baseline. Report E1 unless every E2 criterion, including adversarial review, passes.
+
+The completed run must also write the audited Thai narrative `research_log/002-lily-l1-baseline.md`. It must state the scoped question, hypothesis, method, results, discussion and limitations, conclusion, and next research direction in language that can be understood without opening JSON first.
+
+### B4.1 — L-1 Data-Quality Remediation
+
+Without opening validation, reconcile corporate actions, acquire dated official fee evidence, replace zero cash with a lagged Treasury series, and classify Webull Thailand capability from public evidence. The completed order must retain E1, state every unresolved point-in-time or broker restriction, and write `research_log/003-lily-l1-data-quality-remediation.md`.
+
+Exit: cash is resolved at E1; fee uncertainty is either reconstructed or decision-bounded; corporate-action and broker gaps are either resolved or explicitly scope-restricted; no E2, edge, or deployment claim is allowed.
+
+### B4.2 — L-1 Validation Funding Capacity
+
+Before any validation unlock, count the sealed window using calendar rules only and project effective observations with the dependence fields from the prior opened stage exactly as locked in B3. Do not request or load validation prices, returns, signals, regimes, positions, benchmarks, or PnL.
+
+Exit: classify every validation null as statistically funded or underfunded, report the founding planning assumptions as a non-binding sensitivity, and retain all data-integrity and owner-approval blockers. Provider credentials may be used only for an explicitly authorized zero-spend metadata probe with true key provenance and no credential value stored.
+
+### B4.3–B4.4 — Alpha Vantage Corporate-Action Audit
+
+B4.3 locks the exact free 8-symbol by 2-endpoint acquisition, credential redaction, hashes, validation-return seal, and current-snapshot claim limit. B4.4 executes only that matrix and compares pre-2016 corporate-action events without loading validation prices or returns.
+
+Exit: B4.4 completes 16/16 payloads at USD 0 and remains E1 scope-restricted because only 11/16 symbol-endpoint pairs reconcile exactly and Alpha Vantage has no point-in-time revision archive.
+
+### B4.5 — Owner Scope Decision
+
+The owner accepts the unresolved corporate-action history as an E1 limitation and pauses further free or paid provider search. This does not unlock validation, authorize paper trading, or promote L-1.
+
+A later prospective comparison is allowed only through a separate hash-locked `E0` operational dry-run preregistration with `edge_claim: none`. It must lock the comparison streams, event/cash/unit/weight/order fields, materiality thresholds, insufficient-event rule, and stop conditions before the first observation. Complete the Webull Thailand read-only capability probe first; broker preview and order actions remain forbidden.
+
+### B4.6 — Webull Thailand Read-only Capability Probe
+
+B4.6 locks and executes a production read-only probe against the owner's Webull Thailand application. Authentication, account list, balance, positions, and one exact ten-symbol instrument query are allowed; private account values, preview, order, paper trade, validation access, and real money are forbidden.
+
+Exit: all four read-only endpoints succeed, and VTI, VGK, EWJ, IPAC, VWO, IEF, SCHP, GLDM, PDBC, and VNQI return `status=OC` and `fractionable=true`. This is E0 operational evidence only. Minimum order, funding FX, execution quality, and realized costs remain outside the claim.
+
+### B4.7 — Prospective Shadow-Accounting Preregistration
+
+B4.7 locks an `E0` design before any prospective observation. It compares a Webull Thailand paper ledger, an Alpha Vantage current-snapshot shadow ledger, and Lily's Yahoo-event accounting on the frozen L-0 ten-sleeve portfolio. Materiality is account-scaled for cash, units, weight tracking, hypothetical order notional, and posting delay; opposite discrepancies cannot be netted.
+
+Exit: gate `l_1_prospective_shadow_accounting_v1` is hash-bound with at least 180 days and three matched events across two symbols required, a 365-day hard stop, and explicit insufficient-evidence and claim rules. No API call, event observation, activation, preview, paper order, validation access, signal, PnL, E2, edge, or real-money action occurs in B4.7.
+
+### B4.8 — Activation Contract (Complete: Activation Blocked)
+
+Before the dry run begins, separately lock the paper environment and exact endpoints, broker fractional quantum, forward start/stop timestamps, immutable redacted containers, event-ledger implementation, hermetic fixtures, report validator, request/cost limits, and order attestation. If Webull cannot expose an auditable paper ledger, stop; do not substitute production or real money.
+
+Exit: B4.8 locks `activation_blocked_before_observation`. Public Webull Thailand evidence does not establish a dedicated owner-controlled test ledger, account-level corporate-action cash/unit paths, or the minimum fractional-share quantum. Runtime allowlists and request caps remain empty/zero, no activation marker exists, and no broker/provider call or prospective observation occurred. Activation requires written Webull Thailand confirmation and a new owner-approved gate that supersedes B4.8.
+
+### B4.9 — Webull API Scope And Fractional-preview Preregistration (Complete)
+
+B4.9 accepts the published Webull Thailand API inventory as the current boundary. Account-level corporate-action event, cash, unit, dividend, and split ledgers are classified as unavailable; the B4.7 three-stream dry run is closed without observation. Alpha Vantage and Lily Yahoo accounting remain limited research streams and neither is promoted to ground truth.
+
+Exit: gate `l_1_shadow_accounting_activation_v2` supersedes the B4.8 gate and preregisters, but does not execute, a UAT-only VTI preview grid of eight fixed quantities from 1 through 0.0000001. Only `POST /openapi/trade/order/preview` may be considered by the later machinery and activation orders. Production, balance, positions, AMOUNT mode, retries, order mutation/query endpoints, validation access, paper trading, and real money remain forbidden.
+
+### B4.10 — UAT Fractional-preview Machinery Gate (Complete, Not Executed)
+
+B4.10 implements and hash-locks the fail-closed runner, exact Thailand UAT request path, eight-value VTI QTY grid, request caps, report schema/validator, and three hermetic fixtures. The runner requires both `--execute` and a future active `l_0_webull_th_fractional_preview_activation_v1` gate before it reads credentials or imports the SDK.
+
+Exit: gate `l_0_webull_th_fractional_preview_probe_v1` is active with machinery status `locked_machinery_ready_execution_not_authorized`. B4.10 makes zero Webull, provider, authentication, preview, order, or validation requests and creates no experiment report or research log. The next possible order is a separately owner-approved B4.11 activation gate; it may not authorize production, balance, positions, order mutation/query, validation access, paper trading, or real money.
+
+### B4.11 — UAT Fractional-preview Activation And Execution (Complete: Blocked Before Preview)
+
+The owner approves one bounded execution of the exact B4.10 matrix. Gate `l_0_webull_th_fractional_preview_activation_v1` must be committed and pushed before the runner may read the three `WEBULL_UAT_*` variables, import the SDK, authenticate, or preview.
+
+Exit: the activation gate was committed and pushed before execution. The one guarded run used the official shared UAT row in process memory, made one token-create and two token-check requests, and stopped when the guard blocked authentication request four. Preview requests, orders, production calls, provider calls, validation access, and paid spend are all zero. Report and Thai research log 007 classify the result as `blocked_before_preview`; no fractional minimum is known and rerun requires a new superseding gate.
+
+### B4.12 — UAT Authentication-budget Remediation (Complete: Blocked Before Preview)
+
+B4.12 preserves every locked B4.10/B4.11 file and creates a new superseding activation artifact, runner, report schema, validator, and tests. It funds a fixed 30-second SDK polling window with one token-create request and at most seven token checks, while retaining the exact eight-value VTI preview grid and a sixteen-request total cap. Automatic retry, token persistence, production, orders, balance, positions, providers, validation access, paper trading, and real money remain forbidden.
+
+Exit: gate commit `152c8e1e8ecc946b889472707b4b3280e63d4e02` was pushed and passed Hermetic CI before execution. The one authorized run made one token-create and seven token-check requests over 30 seconds, but authentication remained non-NORMAL. The run stopped with zero previews, orders, production calls, provider calls, validation access, or paid spend. The redacted v2 report and Thai research log 008 record `blocked_before_preview`; the evidence ceiling remains E0 and no rerun is authorized.
+
+### B4.13 — UAT Documentation Scope Decision (Complete)
+
+B4.13 records that the SDK markdown reference to `th-api.uat.webullbroker.com` does not establish a publicly available UAT service or an access entitlement for Lily. The inspected public pages are the Trade API and Market Data API getting-started pages; they do not document owner-controlled UAT provisioning or non-interactive authentication.
+
+Exit: UAT is closed as an unsupported path for Lily. This static E0 decision makes no broker or provider call, changes no locked gate, and does not establish a broker defect, preview result, production capability, execution result, or strategy evidence.
+
+### B4.14 — Project-memory Synchronization (Complete)
+
+B4.14 aligns project memory with B4.13. No UAT work is planned, and the UAT hostname is not treated as a public test-environment entitlement. L-0 remains scope-restricted E0, L-1 remains scope-restricted E1, and validation stays sealed.
+
+### B4.16 — Governance Content-validation Remediation (Complete)
+
+B4.16 responds to the independent review finding that B4.13–B4.15 completion checks were too weak. The tracker now validates the inspected source list and claim limits in Decision Record 004, the UAT-closure statements in project memory, and the exact `actions/checkout@v5` requirement in CI.
+
+### B5 — L-2 Multi-Lookback t-stat Candidate Preregistration (Complete)
+
+B5 locks the 32/64/126/252 equal-weight t-stat candidate against the 60-day baseline. Candidate and baseline inherit the same L-1 universe, timing, sizing, costs, return accounting, benchmarks, sample order, and data-integrity rules. The primary utility is paired annualized net-Sharpe improvement of at least 0.10; the complete DSR log contains the primary candidate and four leave-one-horizon-out sensitivities.
+
+Exit: gate `l_2_multi_lookback_tstat_v1` is hash-bound before execution. Dual MinTRL is locked on paired portfolio-return differences, and the 2016-01-04 through 2026-06-30 validation window remains sealed. B5 makes no market-data, broker, provider, paid, paper-trading, or real-money request and creates no L-2 performance result.
+
+### B5.1 — L-2 Preregistration Inference Remediation (Complete)
+
+B5.1 preserves B5 v1 and appends superseding gate `l_2_multi_lookback_tstat_v2`. Its primary comparator is the equal-weight 32/64/126/252 directional-count signal, so candidate and comparator share horizons as well as all inherited L-1 portfolio plumbing. The L-1 60-day baseline is a secondary descriptive reference only.
+
+The primary utility, MinTRL, PSR, and DSR input is the same paired daily net active-return series. Annualized planning Sharpes are divided by `sqrt(252)` before calling the per-period MinTRL kernel; locked requirements are 54,048 for falsification, 54,056 for no-improvement validation, and 216,218 for minimum-useful-improvement validation. The unambiguous decision matrix and DSR active-return trial inventory remain pre-execution only; validation remains sealed.
+
+### B5.2 — L-2 Shared Time-Index Remediation (Complete)
+
+B5.2 preserves v1/v2 and appends superseding gate `l_2_multi_lookback_tstat_v3`. At decision close `t`, the candidate and its matched comparator use exactly the same return window `r[t-k]`, `k=0..h-1`, for every horizon. Return `r[t]` is available after that close; `r[t+1]` and later returns are forbidden from signals, weights, and decisions.
+
+Both t-index targets execute at the official close of the next actual NYSE session `t+1`; no same-close execution is allowed. Their paired active-return observation uses the same post-execution effective interval, so neither comparator mismatch nor a timing variant can support L-2. This is pre-execution governance only and validation remains sealed.
+
+### B6 — L-2 Falsification Execution Contract And Preflight (Complete, Not Executed)
+
+B6 locks a fail-closed runner, report schema/validator, and synthetic fixture. The runner validates v2 and v3 independently: v2 owns inference, DSR, MinTRL, trial inventory, and decision matrix; v3 owns only the shared time-index contract. It contains no data loader and rejects execution until a separately owner-approved B6.1 activation gate exists.
+
+Exit: gate `l_2_falsification_execution_contract_v1` is hash-bound. B6 reads no market returns, does not inspect a falsification-only container, and produces no L-2 report or Thai research log. A future B6.1 must first lock its activation, enforce a container with `max_date <= 2015-12-31` before parsing any return row, retain the 2016-01-04 through 2026-06-30 validation seal, and then write the report plus research log 009 if execution actually occurs.
+
+### B6.2 — L-2 Falsification Report-Contract Remediation (Complete, Not Executed)
+
+B6.2 preserves B6 v1 and locks superseding gate `l_2_falsification_execution_contract_v2` after the report validator was shown to accept unsupported no-data falsification claims. The v2 report contract is closed-world and binds an accepted report to the active contract hash, exact v2/v3 hashes, and the reproducing checkout HEAD. Synthetic reports are strictly `not_run`; a pre-data failure is strictly `scope_restricted`; only actual falsification execution can produce `falsified` or `not_falsified_not_validated`.
+
+Execution reports must carry the locked container/max-date proof, effective-observation and independent-bet counts, paired daily net active-return statistics, annual-to-daily conversion, PSR/DSR, all five trials, costs/turnover, decision-matrix trace, v3 timing attestation, and sealed validation declaration. A `falsified` result additionally requires the five-part mechanism autopsy. B6.2 reads no data and does not authorize B6.1.
+
+### B6.3 — L-2 Static Falsification Capacity Gate (Complete, Underfunded)
+
+B6.3 supersedes the B6.2 execution path with a no-return capacity gate. The inclusive 2007-02-05 through 2015-12-31 calendar window has 3,252 days and the locked research universe has eight assets. Even the impossible ceiling of one independent observation per calendar day per asset is 26,016 joint independent-bet equivalents, below locked `MinTRL_falsify` 54,048.
+
+Exit: L-2 is `underfunded_scope_restricted` at E1 under the current preregistration. The gate forbids container inspection, return parsing, backtest execution, and a falsified/not-falsified report. Any redesign of statistical unit, window, or universe needs a separately owner-approved preregistration before data access.
+
+## 6. Acceptance Gate
+
+E2 requires all of the following:
+
+1. preregistration and locked-gate integrity;
+2. implementable net PnL with spread, commission, slippage, roll/currency costs, and turnover;
+3. sample adequacy against zero, matched benchmark, and minimum acceptable nulls using autocorrelation-adjusted effective observations;
+4. PSR threshold and DSR/search-log handling;
+5. regime matrix including trend/whipsaw, volatility, asset sleeve, country/region, major subperiod, and crisis behavior, or explicit scope restrictions;
+6. big-trend/outlier dependency and concentration analysis;
+7. survivorship, inception, backfill, and futures-roll controls;
+8. an independent adversarial review with no unresolved critical blocker.
+
+Paper trading after E2 validates operations, not edge. An earlier E0 dry run must contain `edge_claim: none`.
+
+## 7. Family Stop And Resurrection
+
+After three consecutive adequately powered falsifications of distinct edge/mechanism hypotheses, stop new family expansion and run a Lily family review. L-0 and engineering/data failures are excluded.
+
+Each kill needs a mechanism autopsy. Resurrection requires a new registry entry and a new testable prediction.
+
+## 8. Data Purchase Rule
+
+No paid data through L-0. Cumulative guard through L-1 is USD 50.
+
+A purchase is rejected unless it:
+
+1. serves a named hypothesis and gap;
+2. cannot be filled from cache/free sources;
+3. funds falsification first or an affordable validation plan;
+4. fits remaining guard room using a live estimate;
+5. is the smallest recoverable block;
+6. records the selected key environment name and true provenance without recording its value.
+
+If MinTRL validation cost is unaffordable or undefined against the benchmark null, revise or falsify; do not buy completionist data.
+
+## 9. Broker And Credential Rule
+
+- Webull Thailand: preferred current-capital ETF candidate; B4.6 verifies production read-only access plus `status=OC` and `fractionable=true` for all ten current candidates, while minimum order, funding FX, execution quality, and realized costs remain unverified.
+- IBKR: micro-futures/reference API candidate; actual permissions remain unverified.
+- Databento: metadata access through `DATABENTO_API_02` is verified with zero spend; relevant equity coverage begins in 2018 or later and does not expose the required corporate-actions history. The owner-reported USD 50 credit is ineligible for paid use until real-payment provenance is confirmed.
+- No shared Higanbana credentials or cost state.
+- No tracked credentials, account identifiers, or absolute local paths.
+- Broker order transmission is outside this plan until E3 and separate owner approval.
+
+## 10. Current Status
+
+| Program/track | Status | Next gate |
+|:--|:--|:--|
+| Founding decisions | Complete | pushed founding pack |
+| P0–P4 | Active after bootstrap | Maintain governance, reproducibility, statistics, data, and restore controls |
+| L-0 | Scope-restricted E0; B4.6 verifies production read-only and fractional metadata; B4.11/B4.12 stop before preview; B4.13 confirms the UAT hostname is not a public access entitlement | No UAT work planned; fractional minimum, funding FX, execution quality, and realized-cost evidence remain open |
+| L-1 | Scope-restricted E1; B4.9 closes the unavailable Webull-ledger dry run without observation; B4.10 adds no L-1 evidence | Validation remains sealed; no broker-ledger or historical-correctness claim |
+| L-2 | E1 underfunded_scope_restricted | Redesign requires a new owner-approved preregistration before any L-2 data access |
+| L-3 | E1 scope_restricted and unresolved; B7.4 invalidates the B7.3 sole run's 500 weekly observations above the 465 ceiling, and B7.15 closes the current preregistration with no L-3 result carried forward as proof that inverse-volatility sizing passed | Validation sealed; no rerun is planned; next gate is L-4 preregistration/planning only |
+| L-4 | Unresolved E0; B8.8R5AR-X records the consumed no-result incident, and B8.8R5AR-X2 closes only the exact-path evidence-audit classification and historical-test assumptions; `edge_claim none` | Inspector closure review and user integration decision for B8.8R5AR-X2; no retry is allowed, and any future execution requires a new owner-approved gate/namespace with validation sealed |
+| CORE-1 | Active E0 stable-baseline planning under the L-1 family; L-1 remains scope-restricted E1 after costs/turnover failure and all historical status/evidence remains unchanged | Inspector acceptance and user integration of CORE-1P, then CORE-1E only; L-2/L-3/L-4 enhancement execution is prospectively paused and final validation remains sealed |
+
+Historical control compatibility: B8 E0/edge_claim none validation retains U1, U4, and U8; B8.1 retains N_eff. B8.3's 465 weekly-paired capacity, macro sleeves, four-outcome validation contract, and all authorizations are false remain intact; its former next step was Inspector review only.
+
+## 11. Source Lineage
+
+- Lily `docs/DECISION_RECORD_001_PROJECT_REFOUNDING.md` and `experiments/hypothesis_registry.json`: promoted L-1 through L-4 rationale and predictions.
+- Archived Lily `Backup_/2026-07-15/IMPLEMENT_PLAN.md`: baseline/candidate/sizing/cost inputs.
+- Higanbana `docs/FABLE5_UPGRADE_PROPOSAL.md`: registry, tiers, dual MinTRL, data decisions, tracks, and acceptance gate.
+- Higanbana `docs/HIGANBANA_TECHNICAL_DUE_DILIGENCE.md`: B0/P1/P2/P4 requirements.
+- Higanbana `experiments/dd_remediation_tracker.json`: evidence-backed order completion.
+
+Lily changes the statistical observation model for persistent trend positions and adds country/asset breadth, survivorship, futures-roll, and small-account sizing gates.
+
+B8.8R/v2 supersedes B8.8/v1 as Inspector-required E0 synthetic remediation. v1 remains immutable rejected history. v2 strengthens strict t+1..t+20 timing, validation equality precedence, in-memory daily mechanics, future report derivation, and deny-only committed-bootstrap lifecycle. The earlier B8.8 force-with-lease rewrite is recorded as a provenance warning; B8.8R forbids amend/reset/rebase/force push and requires a normal push.
+
+B8.8R2/v3 preserves v1/v2 bytes as Inspector-rejected history and adds dedicated activation/report schemas plus future gate-derived activation, pre-import git-show/blob/dirty checks, one-shot marker, and validator-derived E1 evidence shape. It remains E0 synthetic-only and does not open activation, execution, real data, or validation.
+
+B8.8R3/v4 preserves v1–v3 bytes as immutable Inspector-rejected history. It adds a stateful U8-calendar engine, exact U4 expense mapping, non-overlapping PnL attribution, derived robustness/regimes, and a future one-read, marker-first runtime with canonical report recomputation. Phase A remains E0: no activation, marker, report, ledger, real container access, return decode, or validation; `edge_claim none` and validation sealed. Normal commits/push only.
+
+B8.8 Phase A adds only E0 synthetic/no-real-data scientific falsification machinery. It source-binds v4, B8.7, B8.6R13B, and inherited L1/L3 controls; locks closed-world synthetic reporting, zero access counts, and a deny-only committed-bootstrap preflight. It does not authorize activation, execution, a real container read/hash/scan, return parsing, validation, or an E1 conclusion; `edge_claim none` and validation remain sealed.
+
+B8.8R4/v5 preserves all rejected B8.8 v1-v4 bytes and replaces the future entrypoint with a stdlib-only committed bootstrap: it verifies gate-bound runtime bytes before import, marker claim, or container access. Its temporary-Git synthetic proof covers canonical activation, exactly one completed CLI invocation, independently validated report/ledger/marker/attempt, second-invocation refusal, and adversarial provenance drift. It is E0 only: no real activation, container, return, validation, broker, provider, paid, paper, or real-money action occurred; `edge_claim none` and validation remain sealed. Inspector review plus a separate owner-approved activation gate are still required before real execution.
+
+B8.8R5/v6 is the owner-authorized bounded remediation of rejected B8.8R4/v5. It preserves prior artifacts append-only, corrects aggregate side-effect intensity, gate-binds the exact B8.6R13 provisioned identities, enforces clean/untracked checkout before marker claim, proves the three mutually exclusive E1 outcomes with synthetic vectors, and makes asset/macro-sleeve/country-region breakdowns one-assignment component-risk summaries. It remains E0 synthetic-only with no activation or real container/return/validation access; `edge_claim none` and validation remain sealed pending Inspector review.

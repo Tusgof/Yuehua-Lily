@@ -1,6 +1,6 @@
 {
   "schema_version": "lily_bootstrap_tracker_v1",
-  "updated": "2026-09-02",
+  "updated": "2026-09-13",
   "done_claim_rule": "A workstream may be marked done only after scripts/validate_bootstrap_tracker.py verifies every required artifact and named check. Prose evidence alone is insufficient.",
   "orders": [
     {
@@ -1056,5 +1056,35 @@
       {"path":"experiments/locked_gates_v2.jsonl","must":"contain_core_1e_b2_r1_manifest"},
       {"path":"config/new_code_scripts.json","must":"register_core_1e_b2_r1_scripts"}
     ],"user_actions_pending":["Inspector CP-A review and owner integration are required before any real development-return access, activation, or empirical execution; CORE-1E-B2-B remains separately gated."],"forbidden":["real market container/data path resolution, existence check, read, hash, stat, scan, parse, or decode","validation-window prices, returns, signals, positions, regimes, benchmarks, costs, or PnL","provider/network/credentials/broker/account/paid/paper/real-money action","activation, marker, attempt, report, result, or research-log creation in the project checkout","research_log, PROJECT_BRAIN.md, IMPLEMENT_PLAN.md, AGENTS.md, registry, or locked v1 artifact edit","CORE-1E-B2-B without a separate owner-approved activation reference","merge or main push"],"evidence":["R1 binds the actual lily_l1_daily_dataset_v1 and lily_yahoo_daily_normalized_v1 Yahoo-normalized shape, exact U8 order/intersection, total_return_close-only decoding, availability semantics, separate source-bound expense input, and pre-decode post-cutoff rejection proven by a poison fixture with zero decoded returns.","R1 defines all three candidate lookbacks, weekly next-common-session timing, no-trade band, primary and 2x execution costs, A-H recomputation, ranking/selection/stop logic, and a closed-world report validator while retaining E0 and edge_claim none.","The future lifecycle binds activation, gate/blob, Exact-SHA CI, runtime bytes, container identity, clean checkout, marker-first atomic claim, attempt/report identities, and second-run refusal in temporary Git only; the project bootstrap remains deny-only and all real/validation access counts remain zero."],"updated":"2026-09-05"}
+,
+  {
+    "id": "GOV-2-OUTCOME-FIRST",
+    "title": "Outcome-first research execution governance",
+    "status": "done",
+    "depends_on": ["CORE-1P"],
+    "required_artifacts": [
+      {"path": "docs/DECISION_RECORD_008_OUTCOME_FIRST_RESEARCH_EXECUTION.md", "must": "match_gov2_decision_record"},
+      {"path": "PROJECT_BRAIN.md", "must": "match_gov2_brain"},
+      {"path": "IMPLEMENT_PLAN.md", "must": "match_gov2_plan"},
+      {"path": "AGENTS.md", "must": "match_gov2_agents"},
+      {"path": ".github/workflows/ci.yml", "must": "match_gov2_ci"},
+      {"path": ".github/workflows/full-audit.yml", "must": "match_gov2_full_audit"},
+      {"path": "Backup_/2026-09-13/PROJECT_BRAIN.md", "must": "sha256:5fb7453a3e841f11b677d77ca6e7fce685862582cc4173ffc6f656a834f072fd"},
+      {"path": "Backup_/2026-09-13/IMPLEMENT_PLAN.md", "must": "sha256:7b86acdb1eac647c365d31c10d63c3fca9b89da2fde20d3b001f4e8394ee9bac"},
+      {"path": "Backup_/2026-09-13/AGENTS.md", "must": "sha256:db1268569f038bec419de34a714e094358f82b6cd96eff5a572e387ac0030f4e"}
+    ],
+    "forbidden": [
+      "scientific/data/activation/validation/provider/broker/credential/paid/paper/live actions",
+      "locked artifact or hypothesis status changes",
+      "research_log edits",
+      "merge/main push"
+    ],
+    "user_actions_pending": ["Inspector acceptance and user integration before the new plan governs main."],
+    "evidence": [
+      "Governance-only change: concise active control documents, dated exact-byte archives, Decision Record 008, and split fast/full CI workflows; no scientific result or research log was created.",
+      "Local checks: focused test_validate_bootstrap_tracker tests, static bootstrap-tracker validation, locked-gates validation, hypothesis-registry validation, evidence-tier validation, research-log audit, and git diff --check passed. The full runtime audit was not run in this work order."
+    ],
+    "updated": "2026-09-13"
+  }
 ]
 }

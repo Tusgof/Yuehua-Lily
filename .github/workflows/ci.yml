@@ -22,5 +22,5 @@ jobs:
           python-version-file: .python-version
       - name: Run hermetic tier
         run: python scripts/run_test_tier.py hermetic
-      - name: Validate bootstrap tracker
-        run: python scripts/validate_bootstrap_tracker.py
+      - name: Validate bootstrap tracker (static)
+        run: python scripts/validate_bootstrap_tracker.py --no-runtime-checks

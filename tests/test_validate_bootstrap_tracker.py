@@ -1264,6 +1264,374 @@ class BootstrapTrackerValidatorTests(unittest.TestCase):
             self.assertFalse(checked)
             self.assertIn("B8.8R2:l4_b88r2_bootstrap_not_deny_only", blockers)
 
+    def test_gov2_sha256_archive_rule_is_exact_and_fail_closed(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            archive = root / "Backup_" / "2026-09-13" / "PROJECT_BRAIN.md"
+            archive.parent.mkdir(parents=True)
+            archive.write_bytes(b"immutable archive bytes\n")
+            digest = hashlib.sha256(archive.read_bytes()).hexdigest()
+
+            blockers, checked, unverified = self.validator._validate_done_artifact(
+                "GOV-2-OUTCOME-FIRST",
+                "Backup_/2026-09-13/PROJECT_BRAIN.md",
+                f"sha256:{digest}",
+                project_root=root,
+                verify_runtime=False,
+                runtime_cache={},
+            )
+            self.assertEqual([], blockers)
+            self.assertTrue(checked)
+            self.assertFalse(unverified)
+
+            for malformed in (
+                "sha256:" + "A" * 64,
+                "sha256:" + "0" * 63,
+                "sha256:" + "g" * 64,
+            ):
+                broken, broken_checked, broken_unverified = self.validator._validate_done_artifact(
+                    "GOV-2-OUTCOME-FIRST",
+                    "Backup_/2026-09-13/PROJECT_BRAIN.md",
+                    malformed,
+                    project_root=root,
+                    verify_runtime=False,
+                    runtime_cache={},
+                )
+                self.assertTrue(broken)
+                self.assertFalse(broken_checked)
+                self.assertFalse(broken_unverified)
+                self.assertIn(
+                    "GOV-2-OUTCOME-FIRST:invalid_sha256_rule:Backup_/2026-09-13/PROJECT_BRAIN.md",
+                    broken,
+                )
+
+            archive.write_bytes(b"tampered archive bytes\n")
+            tampered, _, _ = self.validator._validate_done_artifact(
+                "GOV-2-OUTCOME-FIRST",
+                "Backup_/2026-09-13/PROJECT_BRAIN.md",
+                f"sha256:{digest}",
+                project_root=root,
+                verify_runtime=False,
+                runtime_cache={},
+            )
+            self.assertIn(
+                "GOV-2-OUTCOME-FIRST:artifact_sha256_mismatch:Backup_/2026-09-13/PROJECT_BRAIN.md",
+                tampered,
+            )
+
+            archive.unlink()
+            missing, _, _ = self.validator._validate_done_artifact(
+                "GOV-2-OUTCOME-FIRST",
+                "Backup_/2026-09-13/PROJECT_BRAIN.md",
+                f"sha256:{digest}",
+                project_root=root,
+                verify_runtime=False,
+                runtime_cache={},
+            )
+            self.assertIn(
+                "GOV-2-OUTCOME-FIRST:missing_artifact:Backup_/2026-09-13/PROJECT_BRAIN.md",
+                missing,
+            )
+
+    def test_gov2_in_progress_cannot_activate_legacy_archive_redirect(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            archive_root = root / "Backup_" / "2026-09-13"
+            source_archive_root = PROJECT_ROOT / "Backup_" / "2026-09-13"
+            archive_root.mkdir(parents=True)
+            archive_digests: list[dict[str, str]] = []
+            for name in ("PROJECT_BRAIN.md", "IMPLEMENT_PLAN.md", "AGENTS.md"):
+                archive = archive_root / name
+                archive.write_bytes((source_archive_root / name).read_bytes())
+                archive_digests.append(
+                    {
+                        "path": f"Backup_/2026-09-13/{name}",
+                        "must": f"sha256:{hashlib.sha256(archive.read_bytes()).hexdigest()}",
+                    }
+                )
+            (root / "PROJECT_BRAIN.md").write_text("concise active document\n", encoding="utf-8")
+
+            legacy_order = {
+                "id": "B7.3",
+                "title": "legacy mirror",
+                "status": "done",
+                "depends_on": [],
+                "required_artifacts": [
+                    {"path": "PROJECT_BRAIN.md", "must": "match_l3_b73_text_mirror"}
+                ],
+                "forbidden": ["scope expansion"],
+                "evidence": ["historical mirror"],
+            }
+            gov2_order = {
+                "id": "GOV-2-OUTCOME-FIRST",
+                "title": "archive presence",
+                "status": "in_progress",
+                "depends_on": [],
+                "required_artifacts": archive_digests,
+                "forbidden": ["scientific execution"],
+                "evidence": [],
+            }
+            tracker = root / "tracker.json"
+            tracker.write_text(
+                json.dumps(
+                    {
+                        "schema_version": "lily_bootstrap_tracker_v1",
+                        "done_claim_rule": "Done requires checked artifacts.",
+                        "orders": [legacy_order, gov2_order],
+                    }
+                ),
+                encoding="utf-8",
+            )
+            result = self.validator.validate_tracker(
+                tracker, project_root=root, verify_runtime=False
+            )
+            self.assertEqual("fail", result["status"])
+            self.assertTrue(
+                any("B7.3:l3_b73_text_mirror_missing" in blocker for blocker in result["blockers"])
+            )
+
+            active = root / "PROJECT_BRAIN.md"
+            active.write_text(
+                (PROJECT_ROOT / "PROJECT_BRAIN.md").read_text(encoding="utf-8")
+                .replace("CORE1_DC60", "CORE1_DC61"),
+                encoding="utf-8",
+            )
+            blockers, checked, unverified = self.validator._validate_done_artifact(
+                "GOV-2-OUTCOME-FIRST",
+                "PROJECT_BRAIN.md",
+                "match_gov2_brain",
+                project_root=root,
+                verify_runtime=False,
+                runtime_cache={},
+            )
+            self.assertTrue(blockers)
+            self.assertFalse(checked)
+            self.assertFalse(unverified)
+            self.assertTrue(any("CORE1_DC60" in blocker for blocker in blockers))
+
+    def test_gov2_tampered_archive_cannot_activate_legacy_archive_redirect(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            archive_root = root / "Backup_" / "2026-09-13"
+            source_archive_root = PROJECT_ROOT / "Backup_" / "2026-09-13"
+            archive_root.mkdir(parents=True)
+            archive_digests: list[dict[str, str]] = []
+            for name in ("PROJECT_BRAIN.md", "IMPLEMENT_PLAN.md", "AGENTS.md"):
+                archive = archive_root / name
+                archive.write_bytes((source_archive_root / name).read_bytes())
+                archive_digests.append(
+                    {
+                        "path": f"Backup_/2026-09-13/{name}",
+                        "must": f"sha256:{hashlib.sha256(archive.read_bytes()).hexdigest()}",
+                    }
+                )
+            (root / "PROJECT_BRAIN.md").write_text("concise active document\n", encoding="utf-8")
+            (archive_root / "PROJECT_BRAIN.md").write_text("tampered archive\n", encoding="utf-8")
+            legacy_order = {
+                "id": "B7.3",
+                "title": "legacy mirror",
+                "status": "done",
+                "depends_on": [],
+                "required_artifacts": [
+                    {"path": "PROJECT_BRAIN.md", "must": "match_l3_b73_text_mirror"}
+                ],
+                "forbidden": ["scope expansion"],
+                "evidence": ["historical mirror"],
+            }
+            gov2_order = {
+                "id": "GOV-2-OUTCOME-FIRST",
+                "title": "archive presence",
+                "status": "done",
+                "depends_on": [],
+                "required_artifacts": archive_digests,
+                "forbidden": ["scientific execution"],
+                "evidence": ["archive hashes"],
+            }
+            tracker = root / "tracker.json"
+            tracker.write_text(
+                json.dumps(
+                    {
+                        "schema_version": "lily_bootstrap_tracker_v1",
+                        "done_claim_rule": "Done requires checked artifacts.",
+                        "orders": [legacy_order, gov2_order],
+                    }
+                ),
+                encoding="utf-8",
+            )
+            result = self.validator.validate_tracker(
+                tracker, project_root=root, verify_runtime=False
+            )
+            self.assertEqual("fail", result["status"])
+            self.assertIn(
+                "GOV-2-OUTCOME-FIRST:artifact_sha256_mismatch:"
+                "Backup_/2026-09-13/PROJECT_BRAIN.md",
+                result["blockers"],
+            )
+            self.assertTrue(
+                any("B7.3:l3_b73_text_mirror_missing" in blocker for blocker in result["blockers"])
+            )
+
+    def test_gov2_done_with_exact_archives_activates_legacy_archive_redirect(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            archive_root = root / "Backup_" / "2026-09-13"
+            source_archive_root = PROJECT_ROOT / "Backup_" / "2026-09-13"
+            archive_root.mkdir(parents=True)
+            archive_digests: list[dict[str, str]] = []
+            for name in ("PROJECT_BRAIN.md", "IMPLEMENT_PLAN.md", "AGENTS.md"):
+                archive = archive_root / name
+                archive.write_bytes((source_archive_root / name).read_bytes())
+                archive_digests.append(
+                    {
+                        "path": f"Backup_/2026-09-13/{name}",
+                        "must": f"sha256:{hashlib.sha256(archive.read_bytes()).hexdigest()}",
+                    }
+                )
+            (root / "PROJECT_BRAIN.md").write_text("concise active document\n", encoding="utf-8")
+            legacy_order = {
+                "id": "B7.3",
+                "title": "legacy mirror",
+                "status": "done",
+                "depends_on": [],
+                "required_artifacts": [
+                    {"path": "PROJECT_BRAIN.md", "must": "match_l3_b73_text_mirror"}
+                ],
+                "forbidden": ["scope expansion"],
+                "evidence": ["historical mirror"],
+            }
+            gov2_order = {
+                "id": "GOV-2-OUTCOME-FIRST",
+                "title": "archive presence",
+                "status": "done",
+                "depends_on": [],
+                "required_artifacts": archive_digests,
+                "forbidden": ["scientific execution"],
+                "evidence": ["archive hashes"],
+            }
+            tracker = root / "tracker.json"
+            tracker.write_text(
+                json.dumps(
+                    {
+                        "schema_version": "lily_bootstrap_tracker_v1",
+                        "done_claim_rule": "Done requires checked artifacts.",
+                        "orders": [legacy_order, gov2_order],
+                    }
+                ),
+                encoding="utf-8",
+            )
+            result = self.validator.validate_tracker(
+                tracker, project_root=root, verify_runtime=False
+            )
+            self.assertEqual("pass", result["status"], result["blockers"])
+            self.assertEqual([], result["blockers"])
+
+    def test_gov2_concise_active_docs_and_policy_tamper_are_bounded(self) -> None:
+        current = {
+            "PROJECT_BRAIN.md": "match_gov2_brain",
+            "IMPLEMENT_PLAN.md": "match_gov2_plan",
+            "AGENTS.md": "match_gov2_agents",
+        }
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            for name, rule in current.items():
+                target = root / name
+                target.write_text((PROJECT_ROOT / name).read_text(encoding="utf-8"), encoding="utf-8")
+                blockers, checked, unverified = self.validator._validate_done_artifact(
+                    "GOV-2-OUTCOME-FIRST",
+                    name,
+                    rule,
+                    project_root=root,
+                    verify_runtime=False,
+                    runtime_cache={},
+                )
+                self.assertEqual([], blockers, name)
+                self.assertTrue(checked, name)
+                self.assertFalse(unverified, name)
+            brain = root / "PROJECT_BRAIN.md"
+            self.assertNotIn("B8.8R5", brain.read_text(encoding="utf-8"))
+            brain.write_text(
+                brain.read_text(encoding="utf-8").replace(
+                    "L-3: E1 `scope_restricted`/unresolved, paused.",
+                    "L-3: E1 `scope_restricted`/unresolved, active.",
+                ),
+                encoding="utf-8",
+            )
+            blockers, checked, _ = self.validator._validate_done_artifact(
+                "GOV-2-OUTCOME-FIRST",
+                "PROJECT_BRAIN.md",
+                "match_gov2_brain",
+                project_root=root,
+                verify_runtime=False,
+                runtime_cache={},
+            )
+            self.assertTrue(blockers)
+            self.assertFalse(checked)
+            self.assertTrue(any("paused" in blocker for blocker in blockers))
+
+    def test_gov2_ci_and_full_audit_contracts_reject_runtime_or_trigger_drift(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            ci = root / "ci.yml"
+            ci.write_text(
+                (PROJECT_ROOT / ".github/workflows/ci.yml").read_text(encoding="utf-8"),
+                encoding="utf-8",
+            )
+            blockers, checked, _ = self.validator._validate_done_artifact(
+                "GOV-2-OUTCOME-FIRST",
+                "ci.yml",
+                "match_gov2_ci",
+                project_root=root,
+                verify_runtime=False,
+                runtime_cache={},
+            )
+            self.assertEqual([], blockers)
+            self.assertTrue(checked)
+            ci.write_text(
+                ci.read_text(encoding="utf-8")
+                + "\n      - run: python scripts/validate_bootstrap_tracker.py\n",
+                encoding="utf-8",
+            )
+            broken_ci, _, _ = self.validator._validate_done_artifact(
+                "GOV-2-OUTCOME-FIRST",
+                "ci.yml",
+                "match_gov2_ci",
+                project_root=root,
+                verify_runtime=False,
+                runtime_cache={},
+            )
+            self.assertTrue(broken_ci)
+            self.assertIn("GOV-2-OUTCOME-FIRST:gov2_ci_full_tracker_command_forbidden", broken_ci)
+
+            audit = root / "full-audit.yml"
+            audit.write_text(
+                (PROJECT_ROOT / ".github/workflows/full-audit.yml").read_text(encoding="utf-8"),
+                encoding="utf-8",
+            )
+            blockers, checked, _ = self.validator._validate_done_artifact(
+                "GOV-2-OUTCOME-FIRST",
+                "full-audit.yml",
+                "match_gov2_full_audit",
+                project_root=root,
+                verify_runtime=False,
+                runtime_cache={},
+            )
+            self.assertEqual([], blockers)
+            self.assertTrue(checked)
+            audit.write_text(
+                audit.read_text(encoding="utf-8").replace("timeout-minutes: 30", "timeout-minutes: 10"),
+                encoding="utf-8",
+            )
+            broken_audit, _, _ = self.validator._validate_done_artifact(
+                "GOV-2-OUTCOME-FIRST",
+                "full-audit.yml",
+                "match_gov2_full_audit",
+                project_root=root,
+                verify_runtime=False,
+                runtime_cache={},
+            )
+            self.assertTrue(broken_audit)
+            self.assertTrue(any("timeout" in blocker for blocker in broken_audit))
+
 
 def _tracker_with_artifact(path: str, must: str) -> dict[str, object]:
     return {
